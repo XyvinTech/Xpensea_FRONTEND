@@ -44,7 +44,7 @@ export default function App() {
 
   return (
     <div>
-<StyledSidebar/>
+
       <StyledButton variant="primary" name="Sign in" />
       <StyledButton variant="secondary" name="Cancel" />
       <StyledButton
