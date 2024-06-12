@@ -27,6 +27,7 @@ import { StaffIcon } from "../assets/icons/StaffIcon";
 import { TierIcon } from "../assets/icons/TierIcon";
 import { PolicyIcon } from "../assets/icons/PolicyIcon";
 import StyledSearchbar from "../ui/StyledSearchbar";
+import { NotificationIcon } from "../assets/icons/NotificationIcon";
 
 
 const drawerWidth = 240;
@@ -74,7 +75,7 @@ const Layout = ({ children }) => {
             <Typography color="#000" variant="h2" noWrap component="div">
               Dashboard 
             </Typography>
-            <StyledSearchbar/>
+            <StyledSearchbar/> <NotificationIcon />
           </Toolbar>
         </AppBar>
         <Drawer
