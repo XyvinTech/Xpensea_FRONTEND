@@ -26,6 +26,8 @@ import { FinanceIcon } from "../assets/icons/FinanceIcon";
 import { StaffIcon } from "../assets/icons/StaffIcon";
 import { TierIcon } from "../assets/icons/TierIcon";
 import { PolicyIcon } from "../assets/icons/PolicyIcon";
+import StyledSearchbar from "../ui/StyledSearchbar";
+
 
 const drawerWidth = 240;
 
@@ -68,10 +70,11 @@ const Layout = ({ children }) => {
             boxShadow: `none`,
           }}
         >
-          <Toolbar sx={{ height: "88px", bgcolor: "#fff" }}>
+          <Toolbar sx={{ height: "88px", bgcolor: "#ffffff" }}>
             <Typography color="#000" variant="h2" noWrap component="div">
-              Dashboard
+              Dashboard 
             </Typography>
+            <StyledSearchbar/>
           </Toolbar>
         </AppBar>
         <Drawer
