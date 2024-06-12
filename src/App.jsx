@@ -15,7 +15,7 @@ import { userColumns, userData } from "./assets/json/TableData";
 
 export default function App() {
   const [isChecked, setIsChecked] = useState(false);
-  const [sliderValue, setSliderValue] = useState([30, 60]);
+  const [sliderValue, setSliderValue] = useState([50, 80]);
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleCheckboxChange = (event) => {
