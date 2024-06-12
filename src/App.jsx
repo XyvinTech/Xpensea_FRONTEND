@@ -12,7 +12,7 @@ import StyledTexrField from "./ui/StyledTextField";
 import StyledSlider from "./ui/StyledSlider";
 import StyledTable from "./ui/StyledTable";
 import { userColumns, userData } from "./assets/json/TableData";
-import Styledsidebar from "./ui/Styledsidebar";
+
 
 export default function App() {
   const [isChecked, setIsChecked] = useState(false);
@@ -97,7 +97,7 @@ export default function App() {
       <StyledTexrField label={"Name"} />
       <StyledSlider value={sliderValue} onChange={handleSliderChange} />
       <StyledTable columns={userColumns} data={userData} onSelectionChange={handleSelectionChange} />
-     <Styledsidebar/>
+    
     </div>
   );
 }

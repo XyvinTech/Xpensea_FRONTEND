@@ -63,7 +63,7 @@ const StyledTable = ({ columns, data, onSelectionChange }) => {
   const isSelected = (id) => selectedIds.includes(id);
 
   return (
-    <Box padding={6}>
+    <Box padding={6} >
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
