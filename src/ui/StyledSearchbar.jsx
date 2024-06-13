@@ -5,6 +5,7 @@ import { SearchIcon } from "../assets/icons/SearchIcon";
 
 
 const Search = styled("div")(({ theme }) => ({
+  
   borderRadius: "24px",
   paddingTop:'4px',
   marginRight:'11px',
