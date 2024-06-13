@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -51,12 +51,27 @@ const subNavigation = [
 ];
 
 const Layout = ({ children }) => {
+  const location = useLocation();
   const [open, setOpen] = useState(false);
-
+ 
   const handleClick = () => {
     setOpen(!open);
   };
-
+  const getCurrentPageName = () => {
+    for (const item of subNavigation) {
+      if (item.to === location.pathname) {
+        return item.name;
+      }
+      if (item.subItems) {
+        for (const subItem of item.subItems) {
+          if (subItem.to === location.pathname) {
+            return subItem.name;
+          }
+        }
+      }
+    }
+    return "Dashboard"; // Default title
+  };
   return (
     <div>
       <Box sx={{ display: "flex" }}>
@@ -72,7 +87,7 @@ const Layout = ({ children }) => {
         >
           <Toolbar sx={{ height: "88px", bgcolor: "#ffffff" }}>
             <Typography color="#000" variant="h2" noWrap component="div">
-              Dashboard
+            {getCurrentPageName()}
             </Typography>
             <StyledSearchbar /> <NotificationIcon />
           </Toolbar>
