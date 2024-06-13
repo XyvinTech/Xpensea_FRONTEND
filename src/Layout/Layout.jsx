@@ -29,7 +29,6 @@ import { PolicyIcon } from "../assets/icons/PolicyIcon";
 import StyledSearchbar from "../ui/StyledSearchbar";
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
 
-
 const drawerWidth = 240;
 
 const subNavigation = [
@@ -73,9 +72,9 @@ const Layout = ({ children }) => {
         >
           <Toolbar sx={{ height: "88px", bgcolor: "#ffffff" }}>
             <Typography color="#000" variant="h2" noWrap component="div">
-              Dashboard 
+              Dashboard
             </Typography>
-            <StyledSearchbar/> <NotificationIcon/>
+            <StyledSearchbar /> <NotificationIcon />
           </Toolbar>
         </AppBar>
         <Drawer
@@ -108,7 +107,13 @@ const Layout = ({ children }) => {
               item.name === "Sub-admin" ? (
                 <div key={item.name}>
                   <ListItem sx={{ paddingBottom: "8px" }} disablePadding>
-                    <ListItemButton onClick={handleClick}>
+                    <ListItemButton onClick={handleClick}   sx={{
+                              color: "#919099",
+                              "&:hover": {
+                                color: "#fff",
+                                backgroundColor: "#79001D",
+                              },
+                            }}>
                       <ListItemIcon
                         sx={{ marginRight: "0", paddingLeft: "20px" }}
                       >
@@ -130,13 +135,22 @@ const Layout = ({ children }) => {
                           sx={{ paddingBottom: "8px" }}
                           disablePadding
                         >
-                          <ListItemButton component={Link} to={subItem.to}>
+                          <ListItemButton
+                            component={Link}
+                            to={subItem.to}
+                          
+                          >
                             <ListItemIcon
                               sx={{ marginRight: "0", paddingLeft: "10px" }}
                             >
                               {subItem.icon}
                             </ListItemIcon>
-                            <ListItemText primary={subItem.name} />
+                            <ListItemText
+                              primary={subItem.name}
+                              primaryTypographyProps={{
+                                variant: "h3",
+                              }}
+                            />
                           </ListItemButton>
                         </ListItem>
                       ))}
@@ -153,6 +167,7 @@ const Layout = ({ children }) => {
                     component={Link}
                     to={item.to}
                     sx={{
+                      color: "#919099",
                       "&:hover": { color: "#fff", backgroundColor: "#79001D" },
                     }}
                   >
@@ -161,13 +176,20 @@ const Layout = ({ children }) => {
                         marginRight: "0",
                         paddingLeft: "20px",
                         "&:hover": {
-                          "& svg": { color: "#fff" }, 
+                          "& svg": { color: "#fff" },
                         },
                       }}
                     >
                       {item.icon}
                     </ListItemIcon>
-                    <ListItemText primary={item.name} />
+                    <ListItemText
+                      primary={item.name}
+                      primaryTypographyProps={{
+                        variant: "h3",
+                        // color: "#919099",
+                        // sx: { "&:hover": { color: "#fff" } },
+                      }}
+                    />
                   </ListItemButton>
                 </ListItem>
               )
