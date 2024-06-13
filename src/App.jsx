@@ -12,6 +12,7 @@ import StyledTexrField from "./ui/StyledTextField";
 import StyledSlider from "./ui/StyledSlider";
 import StyledTable from "./ui/StyledTable";
 import { userColumns, userData } from "./assets/json/TableData";
+import StyledCalendar from "./ui/StyledCalendar";
 
 
 export default function App() {
@@ -97,7 +98,7 @@ export default function App() {
       <StyledTexrField label={"Name"} />
       <StyledSlider value={sliderValue} onChange={handleSliderChange} />
       <StyledTable columns={userColumns} data={userData} onSelectionChange={handleSelectionChange} />
-    
+      <StyledCalendar/>
     </div>
   );
 }

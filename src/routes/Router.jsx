@@ -29,6 +29,10 @@ const router = createBrowserRouter([
   {
     path:'/approvals',
     element:<Layout><Text/></Layout>
+  },
+  {
+    path: '/demo',
+    element:<App/>
   }
 ]);
 
