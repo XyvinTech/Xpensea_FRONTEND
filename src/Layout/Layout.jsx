@@ -70,7 +70,7 @@ const Layout = ({ children }) => {
         }
       }
     }
-    return "Dashboard"; // Default title
+    return "Dashboard"; 
   };
   return (
     <div>
