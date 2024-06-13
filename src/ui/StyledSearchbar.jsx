@@ -10,7 +10,7 @@ const Search = styled("div")(({ theme }) => ({
   position: "relative",
   height: '48px',
   alignItems: "center",
-  backgroundColor: "white",
+  backgroundColor: "g",
   marginLeft: 0,
   width: "100%",
   boxShadow: '0 -4px 8px rgba(150, 150, 150, 0.1)', 

@@ -1,19 +1,9 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 body {
-    font-family: 'Inter', sans-serif;
-  }
-  .Login{
+  font-family: "Inter", sans-serif;
+}
 
-    width: 592.96px;
-    height: 631.43px;
-   
-    
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    
-    margin: auto;
-  }
+*{
+  padding: 0;
+  margin: 0;
+}
