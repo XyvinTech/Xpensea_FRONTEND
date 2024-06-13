@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -29,10 +29,10 @@ import { PolicyIcon } from "../assets/icons/PolicyIcon";
 import StyledSearchbar from "../ui/StyledSearchbar";
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
 
-const drawerWidth = 240;
+const drawerWidth = 301;
 
 const subNavigation = [
-  { name: "Dashboard", to: "/dashboard", icon: <DashboardIcon /> },
+  { name: "Dashboard", to: "/", icon: <DashboardIcon /> },
   { name: "Approvals", to: "/approvals", icon: <VectorIcon /> },
   { name: "Events", to: "/events", icon: <EventIcon /> },
   {
@@ -51,12 +51,27 @@ const subNavigation = [
 ];
 
 const Layout = ({ children }) => {
+  const location = useLocation();
   const [open, setOpen] = useState(false);
-
+ 
   const handleClick = () => {
     setOpen(!open);
   };
-
+  const getCurrentPageName = () => {
+    for (const item of subNavigation) {
+      if (item.to === location.pathname) {
+        return item.name;
+      }
+      if (item.subItems) {
+        for (const subItem of item.subItems) {
+          if (subItem.to === location.pathname) {
+            return subItem.name;
+          }
+        }
+      }
+    }
+    return "Dashboard"; 
+  };
   return (
     <div>
       <Box sx={{ display: "flex" }}>
@@ -72,7 +87,7 @@ const Layout = ({ children }) => {
         >
           <Toolbar sx={{ height: "88px", bgcolor: "#ffffff" }}>
             <Typography color="#000" variant="h2" noWrap component="div">
-              Dashboard
+            {getCurrentPageName()}
             </Typography>
             <StyledSearchbar /> <NotificationIcon />
           </Toolbar>
@@ -107,13 +122,16 @@ const Layout = ({ children }) => {
               item.name === "Sub-admin" ? (
                 <div key={item.name}>
                   <ListItem sx={{ paddingBottom: "8px" }} disablePadding>
-                    <ListItemButton onClick={handleClick}   sx={{
-                              color: "#919099",
-                              "&:hover": {
-                                color: "#fff",
-                                backgroundColor: "#79001D",
-                              },
-                            }}>
+                    <ListItemButton
+                      onClick={handleClick}
+                      sx={{
+                        color: "#919099",
+                        "&:hover": {
+                          color: "#fff",
+                          backgroundColor: "#79001D",
+                        },
+                      }}
+                    >
                       <ListItemIcon
                         sx={{ marginRight: "0", paddingLeft: "20px" }}
                       >
@@ -123,32 +141,28 @@ const Layout = ({ children }) => {
                       {open ? <ExpandLess /> : <ExpandMore />}
                     </ListItemButton>
                   </ListItem>
-                  <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List
-                      component="div"
-                      disablePadding
-                      sx={{ paddingLeft: "10px" }}
-                    >
+                  <Collapse in={open}  >
+                    <List component="div">
                       {item.subItems.map((subItem) => (
-                        <ListItem
-                          key={subItem.name}
-                          sx={{ paddingBottom: "8px" }}
-                          disablePadding
-                        >
+                        <ListItem key={subItem.name} sx={{paddingBottom:"8px"}} disablePadding>
                           <ListItemButton
                             component={Link}
                             to={subItem.to}
-                          
+                            sx={{
+                              color: "#4D515A",
+                              marginLeft: "50px",
+                              marginRight: "60px",
+                              "&:hover": {
+                                color: "#79001D",
+                                backgroundColor: "#FFF7F3",
+                                border: "1px solid #79001D ",
+                              },
+                            }}
                           >
-                            <ListItemIcon
-                              sx={{ marginRight: "0", paddingLeft: "10px" }}
-                            >
-                              {subItem.icon}
-                            </ListItemIcon>
                             <ListItemText
                               primary={subItem.name}
                               primaryTypographyProps={{
-                                variant: "h3",
+                                variant: "h4",
                               }}
                             />
                           </ListItemButton>

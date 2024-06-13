@@ -68,7 +68,7 @@ const StyledTable = ({ columns, data, onSelectionChange }) => {
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <TableCell padding="checkbox">
+              <TableCell padding="checkbox"sx={{ paddingLeft: 2 }}>
                 <StyledCheckbox
                   checked={
                     data.length > 0 && selectedIds.length === data.length
@@ -93,7 +93,7 @@ const StyledTable = ({ columns, data, onSelectionChange }) => {
                 key={row.id}
                 selected={isSelected(row.id)}
               >
-                <TableCell padding="checkbox">
+                <TableCell padding="checkbox" sx={{ paddingLeft: 2 }}>
                   <StyledCheckbox
                     checked={isSelected(row.id)}
                     onChange={(event) => handleRowCheckboxChange(event, row.id)}
