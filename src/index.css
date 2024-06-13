@@ -3,3 +3,17 @@
 body {
     font-family: 'Inter', sans-serif;
   }
+  .Login{
+
+    width: 592.96px;
+    height: 631.43px;
+   
+    
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+  }

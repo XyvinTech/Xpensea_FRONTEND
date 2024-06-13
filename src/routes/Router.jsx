@@ -15,6 +15,7 @@ import StaffPage from "../pages/StaffPage";
 import TierPage from "../pages/TierPage";
 import PolicyPage from "../pages/PolicyPage";
 
+
 const router = createBrowserRouter([
   {
     path: "/test",
@@ -27,6 +28,9 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignupPage />,
+  },  {
+    path: "/app",
+    element: <App />,
   },
   {
     path: "/",

@@ -97,7 +97,7 @@ export default function App() {
       <StyledTexrField label={"Name"} />
       <StyledSlider value={sliderValue} onChange={handleSliderChange} />
       <StyledTable columns={userColumns} data={userData} onSelectionChange={handleSelectionChange} />
-    
+   
     </div>
   );
 }
