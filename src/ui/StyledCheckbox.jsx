@@ -43,3 +43,4 @@ const StyledCheckbox = ({ checked, disabled, onChange,variant }) => {
 };
 
 export default StyledCheckbox;
+

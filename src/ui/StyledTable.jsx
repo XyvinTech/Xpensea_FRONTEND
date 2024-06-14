@@ -149,4 +149,5 @@ const StyledTable = ({ columns, data, onSelectionChange }) => {
   );
 };
 
+
 export default StyledTable;

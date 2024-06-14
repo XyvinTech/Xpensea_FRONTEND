@@ -52,4 +52,5 @@ const StyledSpan = ({ text, variant }) => {
   return <SpanContainer variant={variant}>{text}</SpanContainer>;
 };
 
+
 export default StyledSpan;

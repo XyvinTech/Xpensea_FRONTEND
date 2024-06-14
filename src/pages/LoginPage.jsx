@@ -2,6 +2,7 @@ import { Height } from '@mui/icons-material';
 import { Avatar, Box, Button, Divider, Grid, Paper, TextField, Typography } from '@mui/material'
 import React from 'react'
 import { XpenseaIcon } from '../assets/icons/XpenseaIcon';
+import StyledInput from '../ui/StyledInput';
 
 
 
@@ -15,7 +16,7 @@ const LoginPage = () => {
 <Grid>
 <Paper elevation={2} sx={{height:'631.43px', textAlign:'center', display:'flex', justifyContent:'center', }}><XpenseaIcon/><Typography variant="h1" sx={{ ml: 1 }}>
                 Xpensea
-              </Typography>   <Divider/>
+              </Typography>  <StyledInput/> <Divider/>
               </Paper>
            
 </Grid>
