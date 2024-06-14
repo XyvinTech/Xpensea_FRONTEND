@@ -30,7 +30,7 @@ import { PolicyIcon } from "../assets/icons/PolicyIcon";
 const drawerWidth = 240;
 
 const subNavigation = [
-  { name: "Dashboard", to: "/dashboard", icon: <DashboardIcon /> },
+  { name: "Dashboard", to: "/", icon: <DashboardIcon /> },
   { name: "Approvals", to: "/approvals", icon: <VectorIcon /> },
   { name: "Events", to: "/events", icon: <EventIcon /> },
   {
