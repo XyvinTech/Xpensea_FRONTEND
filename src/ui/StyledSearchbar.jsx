@@ -1,67 +1,40 @@
-import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
-import { SearchIcon } from "../assets/icons/SearchIcon";
-
-const Search = styled("div")(({ theme }) => ({
-  borderRadius: "24px",
-  paddingTop: '4px',
-  marginRight: '11px',
-  position: "relative",
-  height: '48px',
-  alignItems: "center",
-  backgroundColor: "g",
-  marginLeft: 0,
-  width: "100%",
-  boxShadow: '0 -4px 8px rgba(150, 150, 150, 0.03)', 
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: "35em",
-    width: "320px",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  color: "#828282",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "#828282",
-  alignItems: "center",
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
+import React from 'react'
+import { Box, TextField, InputAdornment } from '@mui/material'
+import { SearchIcon } from '../assets/icons/SearchIcon'
 
 const StyledSearchbar = () => {
   return (
-    <div>
-      <Search>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
-          placeholder="Search Event"
-          inputProps={{ "aria-label": "search" }}
-        />
-      </Search>
-    </div>
-  );
-};
+    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <TextField
+        variant="outlined"
+        placeholder="Search Event"
+        sx={{
+          width: '320px',
+          height: '48px',
+          '& .MuiOutlinedInput-root': {
+            borderRadius: '24px',
+            height: '48px',
+            boxShadow: '0 -4px 6px -1px rgba(0, 0, 0, 0.01), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)', 
+            '& input': {
+              height: '48px',
+              padding: '0 14px',
+            },
+            '& fieldset': {
+              border: 'none', 
+              borderRadius: '24px',
+            },
+          },
+        }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
+      />
+    </Box>
+  )
+}
 
-export default StyledSearchbar;
+export default StyledSearchbar

@@ -202,7 +202,7 @@ function ResponsiveDrawer(props) {
           <Typography color="#000" variant="h2" noWrap component="div">
             Dashboard
           </Typography>
-          <StyledSearchbar />
+         
           <NotificationIcon />
         </Toolbar>
       </AppBar>
