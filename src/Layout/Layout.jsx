@@ -80,10 +80,10 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <Toolbar sx={{ height: "88px", display: "flex", alignItems: "center", padding: "15px" }}>
-        <XpenseaIcon />
+      <Toolbar sx={{ height: "88px", display: "flex", alignItems: "center", padding: "15px" , flexDirection:'column'}}>
+      
         <Typography variant="h1" sx={{ ml: 1 }}>
-          Xpensea
+        <XpenseaIcon /> Xpensea
         </Typography>
         <StyledSearchbar />
       </Toolbar>
