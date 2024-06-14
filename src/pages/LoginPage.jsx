@@ -2,6 +2,7 @@ import {
   Box,
   Divider,
   Paper,
+  TextField,
   Typography,
 } from "@mui/material";
 import React from "react";
@@ -59,8 +60,11 @@ const LoginPage = () => {
           }}
         >
    
-        </Box>
+<h2>Sign In</h2>
 
+Login to your account to continue the process
+
+        </Box>
 
         
       </Paper>

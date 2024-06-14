@@ -13,7 +13,7 @@ const Search = styled("div")(({ theme }) => ({
   backgroundColor: "g",
   marginLeft: 0,
   width: "100%",
-  boxShadow: '0 -4px 8px rgba(150, 150, 150, 0.1)', 
+  boxShadow: '0 -4px 8px rgba(150, 150, 150, 0.03)', 
   [theme.breakpoints.up("sm")]: {
     marginLeft: "35em",
     width: "320px",
