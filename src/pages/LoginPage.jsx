@@ -8,6 +8,7 @@ import {
 import React from "react";
 import { XpenseaIcon } from "../assets/icons/XpenseaIcon";
 import Loginbackground from "../assets/images/loginbackground.png";
+import StyledTextField from "../ui/StyledTextField";
 
 const LoginPage = () => {
   return (
@@ -34,6 +35,7 @@ const LoginPage = () => {
           paddingTop: "30px",
           borderRadius: "8.75px",
           margin: "auto",
+        
         }}
       >
         <Box
@@ -55,22 +57,32 @@ const LoginPage = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            width: "80%",
+            alignItems: "flex-start", // Changed from 'left' to 'flex-start'
+            justifyContent: "flex-start", // Changed from 'left' to 'flex-start'
+            width: "85%",
+            marginTop:'10px'
           }}
         >
-   
-<h2>Sign In</h2>
+          <Typography variant="h2" sx={{ mb: 1, marginBottom:'10px' }}>Sign In</Typography>
+          <Typography variant="body1" sx={{ mb: 3 }}>Login to your account to continue the process</Typography>
 
-Login to your account to continue the process
+<Box >
+<StyledTextField />
+     <StyledTextField/>
+
+
+</Box>
+
+
+     
+
 
         </Box>
-
-        
       </Paper>
-    
     </div>
   );
 };
+
+
 
 export default LoginPage;
