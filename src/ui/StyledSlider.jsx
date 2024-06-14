@@ -35,3 +35,4 @@ const StyledSlider = ({value,onChange}) => {
 };
 
 export default StyledSlider;
+

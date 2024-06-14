@@ -44,4 +44,5 @@ const StyledSwitch = ({ checked, onChange, variant }) => {
   );
 };
 
+
 export default StyledSwitch;

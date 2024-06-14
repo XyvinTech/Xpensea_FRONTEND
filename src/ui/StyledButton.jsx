@@ -95,3 +95,4 @@ const StyledButton = ({ name, variant,color }) => {
 };
 
 export default StyledButton;
+

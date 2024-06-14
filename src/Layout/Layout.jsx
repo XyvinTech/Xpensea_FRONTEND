@@ -173,22 +173,17 @@ const Layout = ({ children }) => {
 
   return (
     <div>
-      <Box sx={{ display: "flex" }}>
+      <Box sx={{ flexGrow: 1 }}>
         <CssBaseline />
 
-        <AppBar
-          sx={{
-            width: `calc(100% - ${drawerWidth}px)`,
-            ml: `${drawerWidth}px`,
-            background: `white`,
-            boxShadow: `none`,
-          }}
-        >
-         <Toolbar sx={{ height: "88px", bgcolor: "#ffffff" }}>
-            <Typography color="#000" variant="h2" noWrap component="div">
-              {getCurrentPageName()}
-            </Typography>
-            <Box sx={{ flexGrow: 1 }} /> 
+       
+        <AppBar position="static">
+          <Toolbar sx={{ height: "88px", bgcolor: "#ffffff", justifyContent: "space-between" }}>
+            <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <Typography color="#000" variant="h2" noWrap component="div">
+                {getCurrentPageName()}
+              </Typography>
+            </Box>
             <StyledSearchbar />
             <Box sx={{ mx: 2 }}>
               <NotificationIcon />
@@ -202,13 +197,13 @@ const Layout = ({ children }) => {
               gap={1}
               display={"flex"}
               alignItems={"center"}
-              onClick={handleDialogOpen} 
-              sx={{ cursor: "pointer" }} 
+              onClick={handleDialogOpen}
+              sx={{ cursor: "pointer" }}
             >
               <Avatar
                 alt="Remy Sharp"
                 src={profile}
-                sx={{ width: 40, height: 40 }} 
+                sx={{ width: 40, height: 40 }}
               />
               <Box>
                 <Typography variant="h5" color={"#292D32"}>
@@ -244,6 +239,8 @@ const Layout = ({ children }) => {
               </Typography>
             </Box>
           </Toolbar>
+
+          <Divider />
 
           <Divider />
 

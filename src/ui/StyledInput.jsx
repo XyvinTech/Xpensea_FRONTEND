@@ -37,3 +37,4 @@ const StyledInput = ({ placeholder }) => {
 };
 
 export default StyledInput;
+
