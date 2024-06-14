@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   AppBar,
-  Avatar,
   Box,
   Collapse,
   CssBaseline,
@@ -15,12 +14,6 @@ import {
   ListItemText,
   Toolbar,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  Stack,
 } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -33,18 +26,11 @@ import { FinanceIcon } from "../assets/icons/FinanceIcon";
 import { StaffIcon } from "../assets/icons/StaffIcon";
 import { TierIcon } from "../assets/icons/TierIcon";
 import { PolicyIcon } from "../assets/icons/PolicyIcon";
-import StyledSearchbar from "../ui/StyledSearchbar";
-import { NotificationIcon } from "../assets/icons/NotificationIcon";
-import profile from "../assets/images/profile.png";
-import { ExpandMoreIcon } from "../assets/icons/ExpandMoreIcon";
-import { LogoutIcon } from "../assets/icons/LogoutIcon";
-import { EmailIcon } from "../assets/icons/EmailIcon";
-import { PhoneIcon } from "../assets/icons/PhoneIcon";
 
-const drawerWidth = 301;
+const drawerWidth = 240;
 
 const subNavigation = [
-  { name: "Dashboard", to: "/", icon: <DashboardIcon /> },
+  { name: "Dashboard", to: "/dashboard", icon: <DashboardIcon /> },
   { name: "Approvals", to: "/approvals", icon: <VectorIcon /> },
   { name: "Events", to: "/events", icon: <EventIcon /> },
   {
@@ -62,159 +48,30 @@ const subNavigation = [
   { name: "Policy", to: "/policy", icon: <PolicyIcon /> },
 ];
 
-const SimpleDialog = ({ open, onClose }) => {
-  return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      PaperProps={{
-        sx: {
-          position: "fixed",
-          top: 50,
-          right: 50,
-          m: 0,
-          height: "330px",
-          width: "270px",
-          borderRadius: "10px",
-          boxShadow: "rgba(0, 0, 0, 0.25)",
-        },
-      }}
-    >
-      <Stack spacing={2} borderRadius={3} padding="10px" paddingTop={"20px"}>
-        <Stack direction="row" alignItems="center" spacing={3}>
-          <Avatar
-            alt="Remy Sharp"
-            src={profile}
-            sx={{ width: 60, height: 60 }}
-          />
-          <Box>
-            <Typography variant="h3" color="#292D32" paddingBottom={1}>
-              Alex Meian
-            </Typography>
-            <Typography variant="h4" color="rgba(41, 45, 50, 0.44)">
-              Product manager
-            </Typography>
-          </Box>
-        </Stack>
-        <Divider />
-        <Stack spacing={2} padding={1}>
-          <Stack
-            direction="row"
-            spacing={1}
-            paddingTop={2}
-            paddingBottom={2}
-            paddingLeft={1}
-            bgcolor={"#F4F4F5"}
-          >
-            <EmailIcon />
-            <Typography variant="h4">Alexmeian45@gmail.com</Typography>
-          </Stack>
-          <Stack
-            direction="row"
-            paddingTop={2}
-            paddingBottom={2}
-            paddingLeft={1}
-            spacing={1}
-            bgcolor={"#F4F4F5"}
-          >
-            <PhoneIcon />
-            <Typography variant="h4">+91 7452136556</Typography>
-          </Stack>
-        </Stack>
-        <Divider />
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          spacing={2}
-        >
-          <LogoutIcon />
-          <Typography variant="h4" color="#F22E22">
-            Logout
-          </Typography>
-        </Stack>
-      </Stack>
-    </Dialog>
-  );
-};
-
 const Layout = ({ children }) => {
-  const location = useLocation();
   const [open, setOpen] = useState(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   };
 
-  const handleDialogOpen = () => {
-    setDialogOpen(true);
-  };
-
-  const handleDialogClose = () => {
-    setDialogOpen(false);
-  };
-
-  const getCurrentPageName = () => {
-    for (const item of subNavigation) {
-      if (item.to === location.pathname) {
-        return item.name;
-      }
-      if (item.subItems) {
-        for (const subItem of item.subItems) {
-          if (subItem.to === location.pathname) {
-            return subItem.name;
-          }
-        }
-      }
-    }
-    return "Dashboard";
-  };
-
   return (
     <div>
-      <Box sx={{ flexGrow: 1 }}>
+      <Box sx={{ display: "flex" }}>
         <CssBaseline />
 
-       
-        <AppBar position="static">
-          <Toolbar sx={{ height: "88px", bgcolor: "#ffffff", justifyContent: "space-between" }}>
-            <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <Typography color="#000" variant="h2" noWrap component="div">
-                {getCurrentPageName()}
-              </Typography>
-            </Box>
-            <StyledSearchbar />
-            <Box sx={{ mx: 2 }}>
-              <NotificationIcon />
-            </Box>
-            <Box
-              borderRadius="24px"
-              padding={"5px 20px 5px 5px"}
-              border={"1px solid rgba(0, 0, 0, 0.12)"}
-              width={"200px"}
-              color={"#000"}
-              gap={1}
-              display={"flex"}
-              alignItems={"center"}
-              onClick={handleDialogOpen}
-              sx={{ cursor: "pointer" }}
-            >
-              <Avatar
-                alt="Remy Sharp"
-                src={profile}
-                sx={{ width: 40, height: 40 }}
-              />
-              <Box>
-                <Typography variant="h5" color={"#292D32"}>
-                  Alex meian
-                </Typography>
-                <Typography variant="h6" color={"rgba(41, 45, 50, 0.44)"}>
-                  Product manager
-                </Typography>
-              </Box>
-              <ExpandMoreIcon />
-            </Box>
+        <AppBar
+          sx={{
+            width: `calc(100% - ${drawerWidth}px)`,
+            ml: `${drawerWidth}px`,
+            background: `white`,
+            boxShadow: `none`,
+          }}
+        >
+          <Toolbar sx={{ height: "88px", bgcolor: "#fff" }}>
+            <Typography color="#000" variant="h2" noWrap component="div">
+              Dashboard
+            </Typography>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -242,14 +99,12 @@ const Layout = ({ children }) => {
 
           <Divider />
 
-          <Divider />
-
           <List sx={{ paddingLeft: "5px" }}>
             {subNavigation.map((item) =>
               item.name === "Sub-admin" ? (
                 <div key={item.name}>
                   <ListItem sx={{ paddingBottom: "8px" }} disablePadding>
-                    <ListItemButton
+                  <ListItemButton
                       onClick={handleClick}
                       sx={{
                         color: "#919099",
@@ -281,8 +136,8 @@ const Layout = ({ children }) => {
                             to={subItem.to}
                             sx={{
                               color: "#4D515A",
-                              marginLeft: "50px",
-                              marginRight: "60px",
+                             paddingLeft: "50px",
+                              paddingRight: "60px",
                               "&:hover": {
                                 color: "#79001D",
                                 backgroundColor: "#FFF7F3",
@@ -344,7 +199,6 @@ const Layout = ({ children }) => {
           {children}
         </Box>
       </Box>
-      <SimpleDialog open={dialogOpen} onClose={handleDialogClose} />
     </div>
   );
 };
