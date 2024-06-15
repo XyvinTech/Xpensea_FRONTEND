@@ -1,16 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { userColumns, userData } from "../assets/json/TableData";
-import StyledTable from '../ui/StyledTable';
+import StyledTable from "../ui/StyledTable";
+import StyledChart from "../ui/StyledChart";
+import { Box } from "@mui/material";
+import StyledFilter from "../ui/StyledFilter";
 const Text = () => {
-    const [selectedRows, setSelectedRows] = useState([]);
-    const handleSelectionChange = (newSelectedIds) => {
-        setSelectedRows(newSelectedIds);
-        console.log("Selected items:", newSelectedIds);
-      };
-    
-  return (
-    <StyledTable columns={userColumns} data={userData} onSelectionChange={handleSelectionChange} />
-  )
-}
+  const [selectedRows, setSelectedRows] = useState([]);
+  const handleSelectionChange = (newSelectedIds) => {
+    setSelectedRows(newSelectedIds);
+    console.log("Selected items:", newSelectedIds);
+  };
+  const handleView = (id) => {
+    console.log("View item:", id);
+  };
 
-export default Text
+  const handleDelete = (id) => {
+    console.log("Delete item :", id);
+  };
+  const handleSort = (field) => {
+    console.log(`Sorting by ${field}`);
+    
+  };
+  return (
+    <>
+      <StyledTable
+        columns={userColumns}
+        data={userData}
+        onSelectionChange={handleSelectionChange}
+        onView={handleView}
+        onSort={handleSort}
+        onDelete={handleDelete}
+      /><br/><br></br><Box height={"400px"} width={"400px"}> 
+      <StyledChart />
+      </Box><StyledFilter/>
+     
+    </>
+  );
+};
+
+export default Text;
