@@ -14,12 +14,13 @@ import FinancePage from "../pages/FinancePage";
 import StaffPage from "../pages/StaffPage";
 import TierPage from "../pages/TierPage";
 import PolicyPage from "../pages/PolicyPage";
+import Text from "../pages/Text";
 
 
 const router = createBrowserRouter([
   {
     path: "/test",
-    element: <App/>,
+    element: <Text/>,
   },
   {
     path: "/login",

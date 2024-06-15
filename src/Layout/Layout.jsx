@@ -33,7 +33,8 @@ import { PolicyIcon } from "../assets/icons/PolicyIcon";
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
 import { Link } from "react-router-dom";
 import { Avatar, Collapse, Dialog, Stack } from "@mui/material";
-const drawerWidth = 240;
+import StyledSearchbar from "../ui/StyledSearchbar";
+const drawerWidth = 300;
 const subNavigation = [
   { name: "Dashboard", to: "/", icon: <DashboardIcon /> },
   { name: "Approvals", to: "/approvals", icon: <VectorIcon /> },
@@ -226,8 +227,8 @@ const Layout = (props) => {
                         to={subItem.to}
                         sx={{
                           color: "#4D515A",
-                          paddingLeft: "50px",
-                          paddingRight: "60px",
+                          marginLeft: "20px",
+                          marginRight: "20px",
                           "&:hover": {
                             color: "#79001D",
                             backgroundColor: "#FFF7F3",
@@ -255,7 +256,7 @@ const Layout = (props) => {
             >
               <ListItemButton
                 component={Link}
-                to={item.to}
+                to={item.to} 
                 sx={{
                   color: "#919099",
                   "&:hover": { color: "#fff", backgroundColor: "#79001D" },
@@ -323,6 +324,7 @@ const Layout = (props) => {
             </Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
+            <StyledSearchbar/>
             <NotificationIcon />
             <Box
               borderRadius="24px"
@@ -373,7 +375,7 @@ const Layout = (props) => {
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: drawerWidth,
+              width: drawerWidth,overflow: "hidden",
             },
           }}
         >
@@ -385,7 +387,7 @@ const Layout = (props) => {
             display: { xs: "none", sm: "block" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: drawerWidth,
+              width: drawerWidth,overflow: "hidden",
             },
           }}
           open

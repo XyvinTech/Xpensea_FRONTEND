@@ -5,11 +5,12 @@ const SpanContainer = styled.span`
   display: flex;
   align-items: center;
   justify-content:center;
+  gap:2px;
   padding: 6px 14px;
   font-family: "Inter", "sans-serif";
   font-weight: 500;
   font-size: 16px;
-  border-radius: 20px;
+  border-radius: 8px;
 
   ${(props) =>
     props.variant === "green" &&

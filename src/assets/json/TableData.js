@@ -1,9 +1,9 @@
 export const userColumns = [
-  { title: "Name", field: "name", padding: "none" },
-  { title: "Role", field: "role" },
-  { title: "Email", field: "email" },
-  { title: "Contact No", field: "contact" },
-  { title: "Status", field: "status" },
+  { title: "Name", field: "name", sortable: false },
+  { title: "Role", field: "role",sortable: true  },
+  { title: "Email", field: "email",sortable: true  },
+  { title: "Contact No", field: "contact",sortable: true  },
+  { title: "Status", field: "status",sortable: true  },
 ];
 
 export const userData = [
