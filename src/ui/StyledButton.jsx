@@ -74,7 +74,7 @@ const buttonVariants = css`
 `;
 
 const ButtonContainer = styled.button`
-  padding: 14px;
+  padding: 20px;
   text-align: center;
   width: 100%;
   font-family: "Inter", "sans-serif";
