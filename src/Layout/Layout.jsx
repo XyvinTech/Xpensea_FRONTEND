@@ -32,8 +32,10 @@ import { TierIcon } from "../assets/icons/TierIcon";
 import { PolicyIcon } from "../assets/icons/PolicyIcon";
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
 import { Link } from "react-router-dom";
-import { Avatar, Collapse, Dialog, Stack } from "@mui/material";
+import { Avatar, Badge, Collapse, Dialog, Stack } from "@mui/material";
 import StyledSearchbar from "../ui/StyledSearchbar";
+import styled from "styled-components";
+import { SyncIcon } from "../assets/icons/SyncIcon";
 const drawerWidth = 300;
 const subNavigation = [
   { name: "Dashboard", to: "/", icon: <DashboardIcon /> },
@@ -196,13 +198,15 @@ const Layout = (props) => {
                   onClick={handleClick}
                   sx={{
                     color: "#919099",
+                    marginLeft: "20px",
+                    marginRight: "10px",
                     "&:hover": {
                       color: "#fff",
                       backgroundColor: "#79001D",
                     },
                   }}
                 >
-                  <ListItemIcon sx={{ marginRight: "0", paddingLeft: "20px" }}>
+                  <ListItemIcon sx={{ minWidth: 24, marginRight: 1 }}>
                     {item.icon}
                   </ListItemIcon>
                   <ListItemText
@@ -227,8 +231,8 @@ const Layout = (props) => {
                         to={subItem.to}
                         sx={{
                           color: "#4D515A",
-                          marginLeft: "20px",
-                          marginRight: "20px",
+                          marginLeft: "40px",
+                          marginRight: "40px",
                           "&:hover": {
                             color: "#79001D",
                             backgroundColor: "#FFF7F3",
@@ -250,36 +254,29 @@ const Layout = (props) => {
             </div>
           ) : (
             <ListItem
-              sx={{ paddingBottom: "8px" }}
+              sx={{ paddingBottom: "20px" }}
               key={item.name}
               disablePadding
             >
-              <ListItemButton
+              <StyledListItemButton
                 component={Link}
-                to={item.to} 
+                to={item.to}
                 sx={{
                   color: "#919099",
+                  marginLeft: "20px",
+                  marginRight: "10px",
                   "&:hover": { color: "#fff", backgroundColor: "#79001D" },
                 }}
               >
-                <ListItemIcon
-                  sx={{
-                    marginRight: "0",
-                    paddingLeft: "20px",
-                    "&:hover": {
-                      "& svg": { color: "#fff" },
-                    },
-                  }}
-                >
+                <ListItemIcon sx={{ minWidth: 24, marginRight: 1 }}>
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText
                   primary={item.name}
-                  primaryTypographyProps={{
-                    variant: "h3",
-                  }}
-                />
-              </ListItemButton>
+                  primaryTypographyProps={{ variant: "h3" }}
+                />{" "}
+                <StyledBadge badgeContent={"20"}></StyledBadge>
+              </StyledListItemButton>
             </ListItem>
           )
         )}
@@ -309,7 +306,14 @@ const Layout = (props) => {
             paddingRight: "20px",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", padding: "15px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              padding: "15px",
+            }}
+          >
             <IconButton
               color="#000"
               aria-label="open drawer"
@@ -322,9 +326,27 @@ const Layout = (props) => {
             <Typography variant="h2" color="#000" noWrap component="div">
               {getCurrentPageName()}
             </Typography>
+            <Typography
+              variant="h5"
+              color={"#BDBDBD"}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              {"Lat synced "}
+              <span 
+                style={{
+                  color: "#27AE60",
+                  marginLeft: "5px",
+                  marginRight: "5px",backgroundColor:"red"
+                }}
+              >
+                4 minutes ago
+              </span>{" "}
+              <SyncIcon />
+            </Typography>
           </Box>
+
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <StyledSearchbar/>
+            <StyledSearchbar />
             <NotificationIcon />
             <Box
               borderRadius="24px"
@@ -375,7 +397,8 @@ const Layout = (props) => {
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: drawerWidth,overflow: "hidden",
+              width: drawerWidth,
+              overflow: "hidden",
             },
           }}
         >
@@ -387,7 +410,8 @@ const Layout = (props) => {
             display: { xs: "none", sm: "block" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: drawerWidth,overflow: "hidden",
+              width: drawerWidth,
+              overflow: "hidden",
             },
           }}
           open
@@ -416,3 +440,30 @@ Layout.propTypes = {
 };
 
 export default Layout;
+const StyledBadge = styled(Badge)`
+  & .MuiBadge-badge {
+    right: -3px;
+    top: 3px;
+    border: 2px solid #79001d;
+    padding: 0;
+    border-radius: 50%;
+    min-width: 20px;
+    height: 20px;
+    line-height: 20px;
+    display: flex;
+    background-color: #79001d;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+const StyledListItemButton = styled(ListItemButton)`
+  width: 100%;
+  &:hover {
+    .MuiBadge-badge {
+      background-color: #fff;
+      border: 2px solid #fff;
+      color: #79001d;
+    }
+  }
+`;

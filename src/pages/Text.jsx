@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { userColumns, userData } from "../assets/json/TableData";
 import StyledTable from "../ui/StyledTable";
-import StyledChart from "../ui/StyledChart";
-import { Box } from "@mui/material";
-import StyledFilter from "../ui/StyledFilter";
+import { Box, Button } from "@mui/material";
+import StyledDropDown from "../ui/StyledDropDown";
+import StyledChart from "../components/StyledChart";
+import StyledFilter from "../components/StyledFilter";
 const Text = () => {
   const [selectedRows, setSelectedRows] = useState([]);
+  const [filterOpen, setFilterOpen] = useState(false);
+
+ 
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
@@ -21,6 +25,13 @@ const Text = () => {
     console.log(`Sorting by ${field}`);
     
   };
+  const handleOpenFilter = () => {
+    setFilterOpen(true);
+  };
+
+  const handleCloseFilter = () => {
+    setFilterOpen(false);
+  };
   return (
     <>
       <StyledTable
@@ -32,7 +43,10 @@ const Text = () => {
         onDelete={handleDelete}
       /><br/><br></br><Box height={"400px"} width={"400px"}> 
       <StyledChart />
-      </Box><StyledFilter/>
+      </Box><StyledDropDown/><br /><br /><br />    <Button variant="outlined" onClick={handleOpenFilter}>
+        Open Filter
+      </Button>
+      <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
      
     </>
   );
