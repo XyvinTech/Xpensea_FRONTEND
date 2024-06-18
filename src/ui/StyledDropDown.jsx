@@ -58,7 +58,7 @@ const SearchInputWrapper = styled.div`
 
 const StyledSearchInput = styled.input`
   width: 100%;
-  padding: 8px 8px 8px 30px; // Adjust padding to make space for the icon
+  padding: 8px 8px 8px 30px; 
   margin: 0;
   border: none;
   color: black;
