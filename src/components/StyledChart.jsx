@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,6 +10,9 @@ import {
   Legend,
   Tooltip,
 } from "chart.js";
+import { Box, Divider, Stack, Typography } from "@mui/material";
+import { FilterIcon } from "../assets/icons/FilterIcon";
+import StyledFilter from "./StyledFilter";
 
 ChartJS.register(
   LineElement,
@@ -61,26 +64,71 @@ const options = {
   plugins: {
     legend: {
       display: true,
-      position: 'bottom', 
+      position: "bottom",
     },
-   
   },
   scales: {
     y: {
       ticks: {
-        stepSize: 1000, 
+        stepSize: 1000,
       },
       min: 0,
-      max: 6000, 
+      max: 6000,
     },
   },
 };
 
 const StyledChart = () => {
+  const [filterOpen, setFilterOpen] = useState(false);
+
+  const handleOpenFilter = () => {
+    setFilterOpen(true);
+  };
+
+  const handleCloseFilter = () => {
+    setFilterOpen(false);
+  };
+
   return (
-    <div>
-      <Line data={data} options={options} />
-    </div>
+    <Box sx={{ backgroundColor: "white",borderRadius:"8px"}}>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        padding={2}
+        alignItems="center"
+       
+      >
+        <Stack direction="column" paddingTop={2}>
+          <Typography variant="h9" color={"#828282"}>
+            Total Expense
+          </Typography>
+          <Typography variant="h10" color="#0B1354" fontWeight="bold">
+            5.987,37
+          </Typography>
+        </Stack>
+        <Stack direction="row">
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            width={"44px"}
+            height={"44px"}
+            borderRadius={"7px"}
+            boxShadow={
+              "0 -4px 6px -1px rgba(0, 0, 0, 0.01), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)"
+            }
+            onClick={handleOpenFilter}
+          >
+            <FilterIcon />
+          </Box>
+        </Stack>
+      </Stack>
+      <Divider />
+      <Box padding={2} height="370px">
+        <Line data={data} options={options} />
+      </Box>
+      <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
+    </Box>
   );
 };
 

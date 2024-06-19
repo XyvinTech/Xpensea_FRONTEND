@@ -32,7 +32,7 @@ import { TierIcon } from "../assets/icons/TierIcon";
 import { PolicyIcon } from "../assets/icons/PolicyIcon";
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
 import { Link } from "react-router-dom";
-import { Avatar, Badge, Collapse, Dialog, Stack } from "@mui/material";
+import { Avatar, Badge, Collapse, Dialog, Stack, useMediaQuery, useTheme } from "@mui/material";
 import StyledSearchbar from "../ui/StyledSearchbar";
 import styled from "styled-components";
 import { SyncIcon } from "../assets/icons/SyncIcon";
@@ -135,7 +135,8 @@ const Layout = (props) => {
   const { window, children } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
@@ -309,7 +310,7 @@ const Layout = (props) => {
           <Box
             sx={{
               display: "flex",
-              flexDirection: "column",
+              flexDirection: isMobile ? "row" : "column",
               alignItems: "flex-start",
               padding: "15px",
             }}
@@ -323,15 +324,15 @@ const Layout = (props) => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h2" color="#000" noWrap component="div">
+            <Typography variant="h2" color="#000" noWrap component="div" display={isMobile &&"none"}>
               {getCurrentPageName()}
             </Typography>
             <Typography
-              variant="h5"
+              variant="h5" 
               color={"#BDBDBD"}
-              sx={{ display: "flex", alignItems: "center" }}
+              sx={{ display:isMobile?"none": "flex", alignItems: "center" }}
             >
-              {"Lat synced "}
+              {"Last synced "}
               <span 
                 style={{
                   color: "#27AE60",
@@ -346,7 +347,7 @@ const Layout = (props) => {
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <StyledSearchbar />
+          <Box display={isMobile && "none"}> <StyledSearchbar /></Box> 
             <NotificationIcon />
             <Box
               borderRadius="24px"
@@ -423,7 +424,7 @@ const Layout = (props) => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: 1,backgroundColor:"#F3F3F3",
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >

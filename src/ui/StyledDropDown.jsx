@@ -76,7 +76,7 @@ const StyledSearchInput = styled.input`
 const SearchIconWrapper = styled.div`
   position: absolute;
   top: 50%;
-  left: 10px; // Adjust based on icon size and padding
+  left: 10px; 
   transform: translateY(-50%);
   pointer-events: none;
 `;
@@ -85,10 +85,10 @@ const StyledShowMore = styled.button`
   padding: 8px 16px;
   background: none;
   border: none;
-  color: #007bff;
+  color:#79001D;
   cursor: pointer;
   &:hover {
-    text-decoration: underline;
+    text-decoration: none;
   }
 `;
 

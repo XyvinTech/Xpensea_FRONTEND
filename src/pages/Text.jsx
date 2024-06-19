@@ -5,6 +5,8 @@ import { Box, Button } from "@mui/material";
 import StyledDropDown from "../ui/StyledDropDown";
 import StyledChart from "../components/StyledChart";
 import StyledFilter from "../components/StyledFilter";
+import StyledCalender from "../components/StyledCalender";
+import PendingApprovel from "../components/dashboard/PendingApprovel";
 const Text = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -47,6 +49,7 @@ const Text = () => {
         Open Filter
       </Button>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
+      <StyledCalender/><PendingApprovel/>
      
     </>
   );
