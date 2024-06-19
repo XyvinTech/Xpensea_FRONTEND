@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { XpenseaIcon } from "../assets/icons/XpenseaIcon";
 import Loginbackground from "../assets/images/loginbackground.png";
 import StyledInput from "../ui/StyledInput";
@@ -17,6 +17,12 @@ import { PasswordIcon } from "../assets/icons/PasswordIcon";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div
       className="Login"
@@ -29,7 +35,6 @@ const LoginPage = () => {
         justifyContent: "center",
         alignItems: "center",
         padding: "16px",
-        
       }}
     >
       <Paper
@@ -38,7 +43,6 @@ const LoginPage = () => {
           height: { xs: "auto", md: "631.43px" },
           textAlign: "center",
           display: "flex",
-         
           flexDirection: "column",
           alignItems: "center",
           paddingTop: "30px",
@@ -89,9 +93,10 @@ const LoginPage = () => {
           </Box>
           <Box sx={{ marginBottom: "10px", width: "100%" }}>
             <StyledInput
+              type={showPassword ? "text" : "password"}
               placeholder={"Enter your password"}
               startIcon={<LockIcon />}
-              endIcon={<PasswordIcon />}
+              endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
             />
           </Box>
 

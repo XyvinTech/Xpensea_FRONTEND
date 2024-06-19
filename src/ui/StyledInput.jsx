@@ -3,7 +3,7 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import React from "react";
 
-const StyledInput = ({ placeholder,startIcon,endIcon }) => {
+const StyledInput = ({ placeholder, startIcon, endIcon, type }) => {
   return (
     <FormControl sx={{ width: "100%" }} variant="outlined">
       <OutlinedInput
@@ -11,14 +11,18 @@ const StyledInput = ({ placeholder,startIcon,endIcon }) => {
         placeholder={placeholder}
         startAdornment={
           startIcon ? (
-            <InputAdornment position="start" sx={{marginLeft:"12px"}}>
+            <InputAdornment position="start" sx={{ marginLeft: "12px" }}>
               {startIcon}
             </InputAdornment>
           ) : null
         }
         endAdornment={
           endIcon ? (
-            <InputAdornment position="end" sx={{marginRight:"12px"}}>
+            <InputAdornment
+              position="end"
+              sx={{ marginRight: "12px", cursor: "pointer" }}
+              onClick={() => endIcon.props.onClick && endIcon.props.onClick()}
+            >
               {endIcon}
             </InputAdornment>
           ) : null
@@ -38,7 +42,7 @@ const StyledInput = ({ placeholder,startIcon,endIcon }) => {
             borderColor: "rgba(0, 0, 0, 0.2)",
           },
           "& .MuiInputBase-input": {
-            color: "", 
+            color: "",
             padding: "14px",
           },
           "& input::placeholder": {
