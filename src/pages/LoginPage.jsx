@@ -11,6 +11,10 @@ import { XpenseaIcon } from "../assets/icons/XpenseaIcon";
 import Loginbackground from "../assets/images/loginbackground.png";
 import StyledInput from "../ui/StyledInput";
 import StyledButton from "../ui/StyledButton";
+import { EmailIcon } from "../assets/icons/EmailIcon";
+import { LockIcon } from "../assets/icons/LockIcon";
+import { PasswordIcon } from "../assets/icons/PasswordIcon";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   return (
@@ -25,6 +29,7 @@ const LoginPage = () => {
         justifyContent: "center",
         alignItems: "center",
         padding: "16px",
+        
       }}
     >
       <Paper
@@ -33,6 +38,7 @@ const LoginPage = () => {
           height: { xs: "auto", md: "631.43px" },
           textAlign: "center",
           display: "flex",
+         
           flexDirection: "column",
           alignItems: "center",
           paddingTop: "30px",
@@ -76,11 +82,18 @@ const LoginPage = () => {
           </Box>
 
           <Box sx={{ marginBottom: "2em", width: "100%" }}>
-            <StyledInput placeholder={"Enter your email"} />
+            <StyledInput
+              placeholder={"Enter your email"}
+              startIcon={<EmailIcon />}
+            />
           </Box>
-          <Box sx={{ marginBottom: "2em", width: "100%" }}>
-  <StyledInput type="password" placeholder="Enter your password" />
-</Box>
+          <Box sx={{ marginBottom: "10px", width: "100%" }}>
+            <StyledInput
+              placeholder={"Enter your password"}
+              startIcon={<LockIcon />}
+              endIcon={<PasswordIcon />}
+            />
+          </Box>
 
           <Box sx={{ marginBottom: "5em", width: "100%" }}></Box>
 
@@ -89,118 +102,12 @@ const LoginPage = () => {
           </Box>
 
           <Box sx={{ marginBottom: "1em", textAlign: "left" }}>
-            <a href="" style={{ color: "#2D9CDB", textDecoration: "none" }}>
+            <Link style={{ color: "#2D9CDB", textDecoration: "none" }}>
               {" "}
               Forgot Your Password ?
-            </a>
+            </Link>
           </Box>
         </Box>
-
-        <Paper
-          sx={{
-            width: { xs: "90%", sm: "80%", md: "544px" },
-            height: { xs: "auto", md: "415px" },
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            paddingTop: "30px",
-            borderRadius: "8.75px",
-            margin: "auto",
-          }}
-        >
-        
-        <Box
-          component="form"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            justifyContent: "flex-start",
-            width: "85%",
-            marginTop: "10px",
-            marginBottom: "3em",
-          }}
-        >
-
-
-<Box sx={{ marginBottom: "1em", textAlign: "left" }}>
-            <Typography variant="h2" sx={{ mb: 1, marginBottom: "10px" }}>
-            Changing Password
-            </Typography>
-            <Typography variant="body1" sx={{ mb: 3 }}>
-            Enter your new password
-            </Typography>
-          </Box>
-          <Box sx={{ marginBottom: "4em", width: "100%" }}>
-  <StyledInput type="password" placeholder="Enter your password" />
-</Box>
-<Box sx={{ marginBottom: "2em", width: "100%" }}>
-  <StyledInput type="password" placeholder="Enter your password again" />
-</Box>
-
-
-
-          <Box sx={{ marginBottom: "auto", width: "100%" }}>
-            <StyledButton  variant="primary" name="Confirm" />
-          </Box>
-
-
-          </Box>
-        
-        
-           </Paper>
-
-<br />
-           <Paper
-          sx={{
-            width: { xs: "90%", sm: "80%", md: "544px" },
-            height: { xs: "auto", md: "223px" },
-            textAlign: "center",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            paddingTop: "30px",
-            borderRadius: "8.75px",
-            margin: "auto",
-          }}
-        >
-        
-        <Box
-          component="form"
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            justifyContent: "flex-start",
-            width: "85%",
-            marginTop: "10px",
-            marginBottom: "3em",
-          }}
-        >
-
-
-<Box sx={{ marginBottom: "1em", textAlign: "left" }}>
-            <Typography variant="h2" sx={{ mb: 1, marginBottom: "10px" }}>
-            Changing Password
-            </Typography>
-    
-</Box>
-
-
-
-          <Box sx={{ marginBottom: "auto", width: "100%" }}>
-            <StyledButton  variant="primary" name="Try logging in again" />
-          </Box>
-
-
-          </Box>
-        
-        
-           </Paper>
-
-
-
       </Paper>
     </div>
   );

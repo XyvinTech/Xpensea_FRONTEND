@@ -74,7 +74,7 @@ const buttonVariants = css`
 `;
 
 const ButtonContainer = styled.button`
-  padding: 14px;
+  padding: 15px;
   text-align: center;
   width: 100%;
   font-family: "Inter", "sans-serif";
@@ -86,10 +86,10 @@ const ButtonContainer = styled.button`
   ${buttonVariants}
 `;
 
-const StyledButton = ({ name, variant,color }) => {
+const StyledButton = ({ name, variant,color ,onClick}) => {
   return (
     <div>
-      <ButtonContainer variant={variant} color={color}>{name}</ButtonContainer>
+      <ButtonContainer variant={variant} color={color} onClick={onClick}>{name}</ButtonContainer>
     </div>
   );
 };
