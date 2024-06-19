@@ -28,7 +28,12 @@ const StyledFilter = ({ open, onClose }) => {
     console.log("Selected States:", selectedStates);
     console.log("Selected Locations:", selectedLocations);
   };
-
+  const handleClear = () => {
+    setSelectedTiers([]);
+    setSelectedStates([]);
+    setSelectedLocations([]);
+    onClose(); 
+  };
   return (
     <Dialog open={open} onClose={onClose} maxWidth="481px">
       <DialogContent sx={{ height: "auto", width: "380px", padding: 0 }}>
@@ -42,7 +47,7 @@ const StyledFilter = ({ open, onClose }) => {
           paddingBottom={0}
         >
           <Typography variant="h4">Filter</Typography>
-          <Typography onClick={onClose} color="#E71D36">
+          <Typography  onClick={handleClear} color="#E71D36"style={{ cursor: "pointer" }}>
             Clear
           </Typography>
         </Box>

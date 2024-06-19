@@ -424,7 +424,7 @@ const Layout = (props) => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: 1,backgroundColor:"#F3F3F3",
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >

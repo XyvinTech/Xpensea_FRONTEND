@@ -28,7 +28,7 @@ import { SortIcon } from "../assets/icons/SortIcon";
 
 const StyledTableCell = styled(TableCell)`
   &.${tableCellClasses.head} {
-    background-color: #ffffff;
+    background-color:#F3F3F3;
     color: #4D515A;
     text-transform: uppercase;
      font-size: 14px;
@@ -48,7 +48,7 @@ const StyledTableCell = styled(TableCell)`
 
 const StyledTableRow = styled(TableRow)`
   &:nth-of-type(odd) {
-    background-color: #f8fafc;
+    background-color: #fff;
   }
   &:last-child td,
   &:last-child th {
@@ -120,8 +120,8 @@ const StyledTable = ({
   };
 
   return (
-    <Box padding={6}>
-      <TableContainer component={Paper}>
+    <Box>
+      <TableContainer component={Paper} >
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
