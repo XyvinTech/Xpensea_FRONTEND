@@ -336,7 +336,7 @@ const Layout = (props) => {
                 style={{
                   color: "#27AE60",
                   marginLeft: "5px",
-                  marginRight: "5px",backgroundColor:"red"
+                  marginRight: "5px"
                 }}
               >
                 4 minutes ago
