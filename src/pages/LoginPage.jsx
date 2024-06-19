@@ -112,8 +112,160 @@ const LoginPage = () => {
               Forgot Your Password ?
             </Link>
           </Box>
+
+
+
+          
         </Box>
+        <Paper
+        sx={{
+          width: { xs: "100%", sm: "80%", md: "544px" },
+          height: { xs: "auto", md: "325px" },
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          paddingTop: "30px",
+          borderRadius: "8.75px",
+          margin: "auto",
+        }}
+      >
+        <Box
+          component="form"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+            width: "85%",
+            marginTop: "10px",
+            marginBottom: "3em",
+          }}
+        >
+          <Box sx={{ marginBottom: "15px", textAlign: "left" }}>
+            <Typography variant="h2" sx={{ mb: 1, marginBottom: "10px" }}>
+            Forgot Your Password?            </Typography>
+            <Typography variant="body1" sx={{ mb: 3 }}>
+            We will send you a reset link          </Typography>
+          </Box>
+
+          <Box sx={{ marginBottom: "3em", width: "100%" }}>
+            <StyledInput
+              placeholder={"Enter your email"}
+              startIcon={<EmailIcon />}
+            />
+          </Box>
+         
+
+
+          <Box sx={{ marginBottom: "3em", width: "100%" }}>
+            <StyledButton variant="primary" name="Sign in" />
+          </Box>
+</Box>
+</Paper>
+
+
+<Paper
+        sx={{
+          width: { xs: "100%", sm: "80%", md: "544px" },
+          height: { xs: "auto", md: "415px" },
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          paddingTop: "30px",
+          borderRadius: "8.75px",
+          margin: "auto",
+        }}
+      >
+        <Box
+          component="form"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+            width: "85%",
+            marginTop: "10px",
+            marginBottom: "3em",
+          }}
+        >
+          <Box sx={{ marginBottom: "15px", textAlign: "left" }}>
+            <Typography variant="h2" sx={{ mb: 1, marginBottom: "10px" }}>
+            Changing Password          </Typography>
+            <Typography variant="body1" sx={{ mb: 3 }}>
+            Enter your new password         </Typography>
+          </Box>
+
+          <Box sx={{ marginBottom: "3.5em", width: "100%" }}>
+            <StyledInput
+              type={showPassword ? "text" : "password"}
+              placeholder={"Enter your password"}
+              startIcon={<LockIcon />}
+              endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
+            />
+          </Box>
+          <Box sx={{ marginBottom: "2em", width: "100%" }}>
+            <StyledInput
+              type={showPassword ? "text" : "password"}
+              placeholder={"Enter your password again"}
+              startIcon={<LockIcon />}
+              endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
+            />
+          </Box>
+         
+
+
+          <Box sx={{ marginBottom: "1em", width: "100%" }}>
+            <StyledButton variant="primary" name="Confirm" />
+          </Box>
+</Box>
+</Paper>
+
+<Paper
+        sx={{
+          width: { xs: "100%", sm: "80%", md: "544px" },
+          height: { xs: "auto", md: "415px" },
+          textAlign: "center",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          paddingTop: "30px",
+          borderRadius: "8.75px",
+          margin: "auto",
+        }}
+      >
+        <Box
+          component="form"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+            width: "85%",
+            marginTop: "10px",
+            marginBottom: "3em",
+          }}
+        >
+          <Box sx={{ marginBottom: "30px", textAlign: "left" }}>
+            <Typography variant="h2" sx={{ mb: 1, marginBottom: "10px" }}>
+            Changing Password          </Typography>
+          
+          </Box>
+
+       
+
+
+          <Box sx={{ marginBottom: "2em", width: "100%" }}>
+            <StyledButton variant="primary" name="Confirm" />
+          </Box>
+</Box>
+</Paper>
+
       </Paper>
+
+
+      
     </div>
   );
 };
