@@ -3,7 +3,7 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import React from "react";
 
-const StyledInput = ({ placeholder,startIcon,endIcon }) => {
+const StyledInput = ({ placeholder,startIcon,endIcon,type }) => {
   return (
     <FormControl sx={{ width: "100%" }} variant="outlined">
       <OutlinedInput
