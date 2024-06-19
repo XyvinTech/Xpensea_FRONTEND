@@ -2,10 +2,11 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import React from "react";
 
-const StyledInput = ({ placeholder }) => {
+const StyledInput = ({ placeholder, type = "text" }) => {
   return (
     <FormControl sx={{ width: "100%" }} variant="outlined">
       <OutlinedInput
+        type={type}
         placeholder={placeholder}
         sx={{
           width: "100%",
@@ -27,9 +28,8 @@ const StyledInput = ({ placeholder }) => {
           },
           "& input::placeholder": {
             color: "#000000",
-            fontWeight:"500"
+            fontWeight: "500",
           },
-          
         }}
       />
     </FormControl>
@@ -37,4 +37,3 @@ const StyledInput = ({ placeholder }) => {
 };
 
 export default StyledInput;
-
