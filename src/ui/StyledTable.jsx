@@ -24,31 +24,34 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import StyledSpan from "./StyledSpan";
 import { ViewIcon } from "../assets/icons/ViewIcon";
 import { DeleteIcon } from "../assets/icons/DeleteIcon";
-import { SortIcon } from "../assets/icons/SortIcon"; 
+import { SortIcon } from "../assets/icons/SortIcon";
+import { EventIcon } from "../assets/icons/EventIcon";
+import { Icon1 } from "../assets/icons/Icon1";
+import { Icon2 } from "../assets/icons/Icon2";
 
 const StyledTableCell = styled(TableCell)`
   &.${tableCellClasses.head} {
-    background-color:#F3F3F3;
-    color: #4D515A;
+    background-color: #fff;
+    color: #454545;
     text-transform: uppercase;
-     font-size: 14px;
+    font-size: 16px;
     padding: 16px;
-     font-family: inter;
+    font-family: inter;
     text-align: center;
-    
+    font-weight: 600;
   }
   &.${tableCellClasses.body} {
-    font-size: 14px;
+    font-size: 16px;
     font-family: inter;
     padding: 16px;
-      color: #4D515A;
+    color: #4d515a;
     text-align: center;
   }
 `;
 
 const StyledTableRow = styled(TableRow)`
   &:nth-of-type(odd) {
-    background-color: #fff;
+    background-color: #f8fafc;
   }
   &:last-child td,
   &:last-child th {
@@ -61,7 +64,8 @@ const StyledTable = ({
   data,
   onSelectionChange,
   onView,
-  onDelete,onSort
+  onDelete,
+  onSort,dashboard
 }) => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -112,16 +116,25 @@ const StyledTable = ({
         return "green";
       case "in-progress":
         return "blue";
-      case "cancelled":
-        return "red";
+      case "rejected":
+        return "rejected";
       default:
         return "default";
     }
   };
-
+  const getEventIcon = (event) => {
+    switch (event) {
+      case "program":
+        return <Icon1 />;
+      case "trip":
+        return <Icon2 />;
+      default:
+        return null;
+    }
+  };
   return (
     <Box>
-      <TableContainer component={Paper} >
+      <TableContainer sx={{ border: "none" }}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -139,11 +152,12 @@ const StyledTable = ({
                   padding={column.padding || "normal"}
                 >
                   {column.sortable ? (
-                    <TableSortLabel
+                   
+                    <TableSortLabel  sx={{ marginRight: "10px" }} 
                       IconComponent={SortIcon}
                       onClick={() => onSort(column.field)}
                     >
-                      {column.title}
+                     <Box marginRight={1}> {column.title}</Box> 
                     </TableSortLabel>
                   ) : (
                     column.title
@@ -166,21 +180,40 @@ const StyledTable = ({
                     onChange={(event) => handleRowCheckboxChange(event, row.id)}
                   />
                 </StyledTableCell>
-                {columns.map((column) => (
+                {columns.map((column, index) => (
                   <StyledTableCell
                     key={column.field}
                     padding={column.padding || "normal"}
                   >
-                    {column.field === "status" ? (
-                      <StyledSpan
-                        variant={getStatusVariant(row[column.field])}
-                        text={row[column.field]}
-                      />
-                    ) : (
-                      row[column.field]
+                    {index === 0 && (
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        {getEventIcon(row.event)}{" "}
+                        {column.field === "status" ? (
+                          <StyledSpan
+                            variant={getStatusVariant(row[column.field])}
+                            text={row[column.field]}
+                          />
+                        ) : (
+                          row[column.field]
+                        )}
+                      </Box>
                     )}
+                    {index !== 0 &&
+                      (column.field === "status" ? (
+                        <StyledSpan
+                          variant={getStatusVariant(row[column.field])}
+                          text={row[column.field]}
+                        />
+                      ) : (
+                        row[column.field]
+                      ))}
                   </StyledTableCell>
                 ))}
+
                 <StyledTableCell padding="normal">
                   <IconButton
                     aria-controls="simple-menu"
@@ -224,6 +257,8 @@ const StyledTable = ({
           </TableBody>
         </Table>
         <Divider />
+{/* in dashboard not show */}
+{!dashboard && (
         <Stack
           padding={2}
           component="div"
@@ -241,30 +276,40 @@ const StyledTable = ({
               <StyledButton variant="action" color="red" name="Delete" />
             </Stack>
           )}
-          <Stack direction="row" alignItems="center">
-            <Typography variant="body2" sx={{ paddingRight: 1 }}>
-              Rows per page:
-            </Typography>
-            <TablePagination
-              component="div"
-              labelDisplayedRows={({ from, to, count }) =>
-                `${from}-${to} of ${count}`
-              }
-              rowsPerPageOptions={[]}
-              ActionsComponent={() => (
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  height={"52px"}
-                  paddingLeft={2}
-                >
-                  <StyledButton variant="action" name="Previous" />
-                  <StyledButton variant="action" name="Next" />
-                </Stack>
-              )}
-            />
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Box display="flex" alignItems="center">
+              <TablePagination
+                component="div"
+                labelDisplayedRows={({ from, to, count }) =>
+                  `${from}-${to} of ${count}`
+                }
+                ActionsComponent={({ onPageChange }) => (
+                  <Stack
+                    direction="row"
+                    spacing={1}
+                    alignItems="center"
+                    marginLeft={2}
+                  >
+                    <StyledButton
+                      variant="action"
+                      name="Previous"
+                      onClick={() => onPageChange(null, "prev")}
+                    />
+                    <StyledButton
+                      variant="action"
+                      name="Next"
+                      onClick={() => onPageChange(null, "next")}
+                    />
+                  </Stack>
+                )}
+              />
+            </Box>
           </Stack>
-        </Stack>
+        </Stack>)}
       </TableContainer>
     </Box>
   );

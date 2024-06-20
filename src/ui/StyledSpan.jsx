@@ -30,7 +30,13 @@ const TextSpan = styled.span`
       color: #E11D48;
       background-color: rgba(255, 228, 230, 0.5);
     `}
-
+ ${(props) =>
+    props.variant === "rejected" &&
+    `padding: 6px 14px;
+     border-radius:20px;
+      color: #E11D48;
+      background-color: rgba(255, 228, 230, 0.5);
+    `}
   ${(props) =>
     props.variant === "yellow" &&
     `

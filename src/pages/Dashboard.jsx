@@ -28,11 +28,11 @@ const Dashboard = () => {
         <Grid item xs={12} md={8}>
           <StyledChart />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} >
           <PendingApprovals />
         </Grid>
         <Grid item xs={12} md={8}>
-          <Box bgcolor="white" padding={2} borderRadius={"8px"}>
+          <Box bgcolor="white" padding={2} paddingBottom={0} borderRadius={"8px"}>
             <Box paddingBottom={2}>
               {" "}
               <Typography variant="h8" fontWeight="600" padding={2}>
@@ -45,7 +45,7 @@ const Dashboard = () => {
               onSelectionChange={handleSelectionChange}
               onView={handleView}
               onSort={handleSort}
-              onDelete={handleDelete}
+              onDelete={handleDelete}dashboard
             />
           </Box>
         </Grid>

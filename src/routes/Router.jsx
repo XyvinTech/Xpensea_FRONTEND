@@ -5,7 +5,6 @@ import App from "../App";
 import Layout from "../Layout/Layout";
 import LoginPage from "../pages/LoginPage";
 import SignupPage from "../pages/SignupPage";
-import ApprovelPage from "../pages/ApprovelPage";
 import EventsPage from "../pages/EventsPage";
 import AdminManagementPage from "../pages/subAdmin/AdminManagementPage";
 import RoleManagementPage from "../pages/subAdmin/RoleManagementPage";
@@ -15,6 +14,7 @@ import StaffPage from "../pages/StaffPage";
 import TierPage from "../pages/TierPage";
 import PolicyPage from "../pages/PolicyPage";
 import Text from "../pages/Text";
+import MainPage from "../pages/Approval/MainPage";
 
 
 const router = createBrowserRouter([
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
     path: "/approvals",
     element: (
       <Layout>
-        <ApprovelPage />
+        <MainPage />
       </Layout>
     ),
   },

@@ -9,4 +9,6 @@ export const userData = [
   { id: 1, expenseTitle: "Trip to Kozhikode", amount: "Rs 1,401", date: "September 5, 2023 12:00 AM", status: "rejected" },
   { id: 2, expenseTitle: "Trip to Kozhikode", amount: "Rs 1,401", date: "September 5, 2023 12:00 AM", status: "rejected" },
   { id: 3, expenseTitle: "Trip to Kozhikode", amount: "Rs 1,401", date: "September 5, 2023 12:00 AM", status: "rejected" },
+  { id: 4, expenseTitle: "Trip to Kozhikode", amount: "Rs 1,401", date: "September 5, 2023 12:00 AM", status: "rejected" },
+  { id: 5, expenseTitle: "Trip to Kozhikode", amount: "Rs 1,401", date: "September 5, 2023 12:00 AM", status: "pending" },
 ];

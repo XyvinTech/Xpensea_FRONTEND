@@ -7,6 +7,8 @@ import StyledChart from "../components/StyledChart";
 import StyledFilter from "../components/StyledFilter";
 import StyledCalender from "../components/StyledCalender";
 import PendingApprovel from "../components/dashboard/PendingApprovel";
+import StaffDetails from "../components/approvals/StaffDetails";
+import ApprovalPage from "./Approval/ApprovelPage";
 const Text = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -50,7 +52,7 @@ const Text = () => {
       </Button>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
       <StyledCalender/><PendingApprovel/>
-     
+     <StaffDetails/><ApprovalPage/>
     </>
   );
 };

@@ -50,6 +50,11 @@ const theme = createTheme({
       fontSize: "34px",
       fontWeight: 500,
     },
+    h11: {
+      fontSize: "22px",
+      fontWeight: 700,
+
+    },
   },
   overrides: {
     MuiCssBaseline: {
