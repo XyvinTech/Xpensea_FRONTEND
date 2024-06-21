@@ -9,6 +9,7 @@ import StyledCalender from "../components/StyledCalender";
 import PendingApprovel from "../components/dashboard/PendingApprovel";
 import StaffDetails from "../components/approvals/StaffDetails";
 import ApprovalPage from "./Approval/ApprovelPage";
+import CreateEvent from "./events/CreateEvent";
 const Text = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -53,6 +54,9 @@ const Text = () => {
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
       <StyledCalender/><PendingApprovel/>
      <StaffDetails/><ApprovalPage/>
+
+
+     <CreateEvent/>
     </>
   );
 };

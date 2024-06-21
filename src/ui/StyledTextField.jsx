@@ -31,12 +31,14 @@ const CustomTextField = styled(({ ...props }) => <TextField {...props} />)`
   }
 `;
 
-const StyledTextField = ({ label }) => {
+const StyledTextField = ({ label,rows }) => {
   return (
     <CustomTextField
       fullWidth
       label={label}
       variant="outlined"
+      multiline
+      rows={rows}
     />
   );
 }
