@@ -1,10 +1,10 @@
 import { Box, Stack } from "@mui/material";
 import React from "react";
-import StyledTextField from "../../ui/StyledTextField";
 import StyledSelectField from "../../ui/StyledSelectField";
 import StyledButton from "../../ui/StyledButton";
 import { MoreVert } from "@mui/icons-material";
-import { Typography } from "antd";
+import StyledTextArea from "../../ui/StyledTextArea";
+import StyledTextField from "../../ui/StyledTextField";
 
 const options = [
   { value: "option1", label: "Option 1" },
@@ -49,7 +49,7 @@ const CreateEvent = () => {
           <StyledSelectField placeholder={"Choose End Time"} options={options} sx={{ flex: 1 }} />
         </Stack>
         
-        <StyledTextField label={"Description"} rows={"4"} />
+        <StyledTextArea placeholder={"Description"} />
         
         <Stack direction="row" spacing={2} justifyContent="flex-end">
           <StyledButton

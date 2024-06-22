@@ -13,7 +13,7 @@ import StyledTextArea from "../ui/StyledTextArea";
 import LiveLocation from "../components/approvals/LiveLocation";
 import StaffDetail from "../components/staff/StaffDetail";
 import Report from "../components/staff/Report";
-import CreateEvent from "./events/CreateEvent";
+import CreateEvent from "../components/events/CreateEvent";
 const Text = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);

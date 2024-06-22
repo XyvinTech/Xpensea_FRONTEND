@@ -5,7 +5,7 @@ const TextArea = styled.textarea`
   width: 100%;
   height: 200px;
   padding: 20px;
-  border: 1px solid #79747E;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   background-color: #fff;
   color: #b0b0b0;
@@ -14,7 +14,7 @@ const TextArea = styled.textarea`
   outline: none;
 
   &::placeholder {
-    color: #bdbdbd;
+    color: #79747E;
   }
 `;
 const StyledTextArea = ({ placeholder, onChange }) => {
