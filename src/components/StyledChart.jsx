@@ -13,6 +13,9 @@ import {
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import { FilterIcon } from "../assets/icons/FilterIcon";
 import StyledFilter from "./StyledFilter";
+import ExpenseDetail from "./approvals/ExpenseDetail";
+import RejectedForm from "./approvals/RejectedForm";
+import RoleManagement from "./subAdmin/RoleManagement";
 
 ChartJS.register(
   LineElement,
@@ -127,7 +130,10 @@ const StyledChart = () => {
       <Box padding={2} height="370px">
         <Line data={data} options={options} />
       </Box>
-      <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
+      {/* <ExpenseDetail open={filterOpen} onClose={handleCloseFilter} /> */}
+      {/* <StyledFilter open={filterOpen} onClose={handleCloseFilter} /> */}
+      {/* <RejectedForm open={filterOpen} onClose={handleCloseFilter} /> */}
+      <RoleManagement open={filterOpen} onClose={handleCloseFilter} />
     </Box>
   );
 };

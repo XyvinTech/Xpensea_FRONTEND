@@ -8,7 +8,7 @@ const SwitchContainer = styled.label`
   height: 15px;
   border-radius: 23px;
   background: ${(props) => (props.checked ? (props.variant === 'primary' ? '#14AE5C' : '#E00D00') : '#b3b3b3')};
-  padding: 4px;
+  padding: 10px;
   transition: 300ms all;
   cursor: pointer;
 `;
@@ -23,7 +23,7 @@ const SwitchHandle = styled.div`
     if (props.variant === 'primary') {
       return props.checked ? '4px' : '32px';
     } else {
-      return props.checked ? '32px' : '4px';
+      return props.checked ? '22px' : '4px';
     }
   }};
   background: white;

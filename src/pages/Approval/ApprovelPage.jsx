@@ -21,11 +21,10 @@ const ApprovalPage = () => {
         >
           <Stack direction={"row"} justifyContent={"space-between"} padding={2}>
             <Typography variant="h11" fontWeight={600} color={"#333333"} > Approvals<span style={{margin:"10px"}}><GtIcon/></span> Report</Typography>
-            <Stack direction={"row"} spacing={2}>
-              {" "}
-              <StyledButton variant="green" name={"Approve"}/>
-              <StyledButton variant="danger" name="Reject" />
-            </Stack>
+            <Box display="flex" justifyContent="space-between" width="30%" padding={3} gap={2}>
+              <StyledButton variant="green" name="Approve"  />
+              <StyledButton variant="danger" name="Reject"  />
+            </Box>
           </Stack>
         </Grid>
         <Grid item xs={12} md={6}>
