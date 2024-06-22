@@ -14,6 +14,8 @@ import LiveLocation from "../components/approvals/LiveLocation";
 import StaffDetail from "../components/staff/StaffDetail";
 import Report from "../components/staff/Report";
 import CreateEvent from "../components/events/CreateEvent";
+import AddNewRole from "../components/subAdmin/AddNewRole";
+import StaffDetailsAdd from "../components/staff/StaffDetailsAdd";
 const Text = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -73,6 +75,11 @@ const Text = () => {
 
 
      <CreateEvent/>
+
+
+    <AddNewRole/>
+
+    <StaffDetailsAdd/>
     </>
   );
 };
