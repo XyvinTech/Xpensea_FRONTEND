@@ -13,6 +13,7 @@ import StyledTextArea from "../ui/StyledTextArea";
 import LiveLocation from "../components/approvals/LiveLocation";
 import StaffDetail from "../components/staff/StaffDetail";
 import Report from "../components/staff/Report";
+import CreateEvent from "./events/CreateEvent";
 const Text = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -67,6 +68,11 @@ const Text = () => {
       <ApprovalPage />
       <StyledTextArea placeholder={"Description"} />
       <LiveLocation /><StaffDetail/><Report/>
+      <StyledCalender/><PendingApprovel/>
+     <StaffDetails/><ApprovalPage/>
+
+
+     <CreateEvent/>
     </>
   );
 };

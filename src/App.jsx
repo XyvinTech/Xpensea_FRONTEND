@@ -8,7 +8,7 @@ import StyledSpan from "./ui/StyledSpan";
 import AddIcon from "@mui/icons-material/Add";
 import StyledInput from "./ui/StyledInput";
 import StyledSelectField from "./ui/StyledSelectField";
-import StyledTexrField from "./ui/StyledTextField";
+import StyledTextField from "./ui/StyledTextField";
 import StyledSlider from "./ui/StyledSlider";
 import StyledTable from "./ui/StyledTable";
 import { userColumns, userData } from "./assets/json/TableData";
@@ -95,7 +95,7 @@ export default function App() {
       <StyledInput placeholder={"Phone Number"} />
       <StyledSelectField placeholder={"Designation"} options={options} />
       <br></br>
-      <StyledTexrField label={"Name"} />
+      <StyledTextField label={"Names"} />
       <StyledSlider value={sliderValue} onChange={handleSliderChange} />
       <StyledTable columns={userColumns} data={userData} onSelectionChange={handleSelectionChange} />
       <StyledSearchbar/>
