@@ -16,6 +16,7 @@ import Report from "../components/staff/Report";
 import CreateEvent from "../components/events/CreateEvent";
 import AddNewRole from "../components/subAdmin/AddNewRole";
 import StaffDetailsAdd from "../components/staff/StaffDetailsAdd";
+import PolicyEdit from "../components/policy/PolicyEdit";
 const Text = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -80,6 +81,9 @@ const Text = () => {
     <AddNewRole/>
 
     <StaffDetailsAdd/>
+
+
+    <PolicyEdit/>
     </>
   );
 };
