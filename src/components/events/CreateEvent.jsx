@@ -18,13 +18,13 @@ const CreateEvent = ({ open, onClose }) => {
       
     <Box padding={3}>
       <Stack spacing={2}>
-      <Box display="flex" justifyContent="space-between" alignItems="center" position="relative">
-      <Box flexGrow={1} />
-      <h2 style={{ flexGrow: 1 }}>Create an Event</h2>
-      <Box position="absolute" right={0}>
-        <MoreVert />
-      </Box>
-    </Box>
+        <Box display="flex" justifyContent="space-between" alignItems="center" position="relative">
+          <Box flexGrow={1} />
+          <h2 style={{ flexGrow: 1 }}>Create an Event</h2>
+          <Box position="absolute" right={0}>
+            <MoreVert />
+          </Box>
+        </Box>
         
         <Stack direction="row" spacing={2}>
           <StyledTextField label={"Event Title"} sx={{ flex: 1 }} />
@@ -53,7 +53,7 @@ const CreateEvent = ({ open, onClose }) => {
         
         <StyledTextArea placeholder={"Description"} />
         
-        <Stack direction="row" spacing={2} justifyContent="flex-end" width={"50%"}>
+        <Stack direction="row" spacing={2} justifyContent="flex-end">
           <StyledButton
             variant="secondary"
            padding='15px 50px 15px 50px'
