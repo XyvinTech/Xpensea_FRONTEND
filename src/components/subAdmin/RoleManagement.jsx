@@ -19,11 +19,12 @@ import {
 import StyledSwitch from "../../ui/StyledSwitch";
 import StyledInput from "../../ui/StyledInput";
 import rows from "../../assets/json/RoleManagementData";
-
+import Select from 'react-select';
+import StyledSelectField from "../../ui/StyledSelectField";
 const RoleManagement = ({ open, onClose }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [selectedTab, setSelectedTab] = useState('functional'); 
-
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const handleSubmit = () => {
     console.log("clicked");
   };
@@ -40,7 +41,9 @@ const RoleManagement = ({ open, onClose }) => {
     console.log(itemId);
   };
   
-  
+  const handleSelectChange = (selected) => {
+    setSelectedOptions(selected);
+  };
   const tableCellStyle = {
     color: "#4D515A",
     fontSize: "18px",
@@ -56,10 +59,15 @@ const RoleManagement = ({ open, onClose }) => {
     border: "4px solid rgba(121, 0, 29, 0.5)",
     cursor: "pointer",
   });
-
+  const options = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+    // Add more options as needed
+  ];
   return (
     <Dialog open={open} onClose={onClose} maxWidth="481px">
-      <DialogContent sx={{ height: "auto", width: "480px", padding: 0 }}>
+      <DialogContent sx={{ height: "auto", width: "480px", padding: 0 ,minHeight:"590px"}}>
         <Box
           display="flex"
           justifyContent="space-between"
@@ -142,7 +150,13 @@ const RoleManagement = ({ open, onClose }) => {
           </TableContainer>
         ) : (
           <Box padding={2}>
-            <Typography>Hi</Typography>
+              <StyledSelectField
+              placeholder="Select options"
+              options={options}
+              value={selectedOptions}
+              onChange={handleSelectChange}
+              isMulti={true}
+            />
           </Box>
         )}
       </DialogContent>

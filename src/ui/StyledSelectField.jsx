@@ -7,13 +7,12 @@ const SelectContainer = styled.div`
   width: 100%;
 `;
 
-const StyledSelectField = ({ placeholder, options, onChange, value }) => {
+const StyledSelectField = ({ placeholder, options, onChange, value, isMulti }) => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
       width: "100%",
-      
-       padding: "8px",
+      padding: "8px",
       border: "1px solid rgba(0, 0, 0, 0.2)",
       borderRadius: "4px",
       backgroundColor: "#ffffff",
@@ -30,7 +29,6 @@ const StyledSelectField = ({ placeholder, options, onChange, value }) => {
     }),
     option: (provided, state) => ({
       ...provided,
-    
       backgroundColor: state.isFocused ? "#79747E" : "transparent",
       color: state.isFocused ? "#ffffff" : "#000000",
       cursor: "pointer",
@@ -40,18 +38,18 @@ const StyledSelectField = ({ placeholder, options, onChange, value }) => {
     }),
     menu: (provided) => ({
       ...provided,
-      position:"relative",
+      position: "absolute",
       backgroundColor: "#ffffff",
       color: "#B5B8C5",
     }),
     singleValue: (provided) => ({
       ...provided,
-      color: "##F7F8FC",
+      color: "#000000",
     }),
     placeholder: (provided) => ({
-        ...provided,
-        color: "#79747E",
-      }),
+      ...provided,
+      color: "#79747E",
+    }),
   };
 
   return (
@@ -60,10 +58,12 @@ const StyledSelectField = ({ placeholder, options, onChange, value }) => {
         placeholder={placeholder}
         options={options}
         onChange={onChange}
+        value={value}
+        isMulti={isMulti}
         styles={customStyles}
       />
     </SelectContainer>
   );
 };
-export default StyledSelectField;
 
+export default StyledSelectField;

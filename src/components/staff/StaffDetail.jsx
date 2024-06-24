@@ -5,9 +5,9 @@ import StyledSwitch from "../../ui/StyledSwitch";
 import data from "../../assets/json/StaffDetail";
 const StaffDetail = () => {
   return (
-    <>
+    <Box bgcolor={"#fff"} height={"338px"}display={"flex"} alignItems={"center"} justifyContent={"center"}  >
       {data.map((item) => (
-        <Grid container spacing={6} key={item.id}>
+        <Grid container spacing={2} key={item.id}  >
           <Grid item md={4}>
             <Stack alignItems={"center"}>
               <img
@@ -74,7 +74,7 @@ const StaffDetail = () => {
           </Grid>
         </Grid>
       ))}
-    </>
+    </Box>
   );
 };
 

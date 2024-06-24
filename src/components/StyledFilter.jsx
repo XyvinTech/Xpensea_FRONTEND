@@ -35,7 +35,7 @@ const StyledFilter = ({ open, onClose }) => {
     onClose(); 
   };
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="481px">
+    <Dialog open={open} onClose={onClose}>
       <DialogContent sx={{ height: "auto", width: "380px", padding: 0 }}>
         <Box
           display="flex"

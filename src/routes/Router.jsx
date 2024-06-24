@@ -15,6 +15,7 @@ import TierPage from "../pages/TierPage";
 import PolicyPage from "../pages/PolicyPage";
 import Text from "../pages/Text";
 import MainPage from "../pages/Approval/MainPage";
+import ApprovalPage from "../pages/Approval/ApprovelPage";
 
 
 const router = createBrowserRouter([
@@ -49,6 +50,15 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
+  {
+    path:"/approvals/view",
+    element: (
+      <Layout>
+        <ApprovalPage />
+      </Layout>
+    ),
+  },
+
   {
     path: "/events",
     element: (

@@ -18,7 +18,7 @@ const RejectedForm = ({ open, onClose }) => {
               justifyContent="end"
               alignItems="center"
               mb={2}
-              marginTop={"10px"}
+             
               padding={3}
               paddingBottom={0}
             >

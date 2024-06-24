@@ -1,9 +1,20 @@
 import { Grid, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { ProgramIcon } from "../../assets/icons/ProgramIcon";
 import expense from "../../assets/json/ApprovalExpenseData";
+import ExpenseDetail from "./ExpenseDetail";
 
 const Expenses = () => {
+  const [detailOpen, setDetailOpen] = useState(false);
+
+  const handleOpenDetail = () => {
+    setDetailOpen(true);
+  };
+
+  const handleCloseDetail = () => {
+    setDetailOpen(false);
+  };
+
   return (
     <Stack spacing={1} bgcolor={"#fff"} borderRadius={"12px"}>
       <Typography
@@ -17,7 +28,7 @@ const Expenses = () => {
       </Typography>{" "}
       <Grid container  >
       {expense.map((item) => (
-        <Grid item key={item.id} md={3} padding={2} paddingBottom={4}>
+        <Grid item key={item.id} md={3} padding={2} paddingBottom={4}   onClick={handleOpenDetail} sx={{cursor:"pointer"}}>
           <Stack spacing={2}>
             <Stack
               direction="row"
@@ -61,7 +72,7 @@ const Expenses = () => {
             </Stack>
           </Stack>
         </Grid>
-      ))}</Grid>
+      ))}</Grid><ExpenseDetail open={detailOpen} onClose={handleCloseDetail} />
     </Stack>
   );
 };

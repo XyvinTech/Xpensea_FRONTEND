@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Dialog, Stack } from "@mui/material";
 import React from "react";
 import StyledSelectField from "../../ui/StyledSelectField";
 import StyledButton from "../../ui/StyledButton";
@@ -12,8 +12,10 @@ const options = [
   { value: "option3", label: "Option 3" },
 ];
 
-const CreateEvent = () => {
+const CreateEvent = ({ open, onClose }) => {
   return (
+    <Dialog open={open} onClose={onClose}maxWidth="lg" fullWidth>
+      
     <Box padding={3}>
       <Stack spacing={2}>
       <Box display="flex" justifyContent="space-between" alignItems="center" position="relative">
@@ -51,7 +53,7 @@ const CreateEvent = () => {
         
         <StyledTextArea placeholder={"Description"} />
         
-        <Stack direction="row" spacing={2} justifyContent="flex-end">
+        <Stack direction="row" spacing={2} justifyContent="flex-end" width={"50%"}>
           <StyledButton
             variant="secondary"
            padding='15px 50px 15px 50px'
@@ -66,7 +68,7 @@ const CreateEvent = () => {
           />
         </Stack>
       </Stack>
-    </Box>
+    </Box></Dialog>
   );
 };
 

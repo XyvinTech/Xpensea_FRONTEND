@@ -1,9 +1,10 @@
-import { Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import { VerticalIcon } from "../../assets/icons/VerticalIcon";
 
 const Report = () => {
   return (
+    <Box bgcolor={"#fff"} height={"338px"}display={"flex"} alignItems={"center"} justifyContent={"center"}>
     <Grid container spacing={2}>
       <Grid item xs={6}>
         <Stack
@@ -61,7 +62,7 @@ const Report = () => {
           </Typography>
         </Stack>
       </Grid>
-    </Grid>
+    </Grid></Box>
   );
 };
 
