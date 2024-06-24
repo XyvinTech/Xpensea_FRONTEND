@@ -1,6 +1,7 @@
 import {
   Box,
   Divider,
+  Grid,
   Paper,
   Typography,
 } from "@mui/material";
@@ -13,6 +14,8 @@ import { EmailIcon } from "../assets/icons/EmailIcon";
 import { LockIcon } from "../assets/icons/LockIcon";
 import { PasswordIcon } from "../assets/icons/PasswordIcon";
 import { Link } from "react-router-dom";
+import { CloseIcon } from "../assets/icons/CloseIcon";
+
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +25,11 @@ const LoginPage = () => {
     setShowPassword(!showPassword);
   };
 
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleGoBack = () => {
+    setCurrentPaper(1);
+  };
   return (
     <div
       className="Login"
@@ -146,9 +154,18 @@ const LoginPage = () => {
             }}
           >
             <Box sx={{ marginBottom: "15px", textAlign: "left" }}>
-              <Typography variant="h2" sx={{ mb: 1, marginBottom: "10px" }}>
-                Forgot Your Password?
-              </Typography>
+
+              <Grid container alignItems="center">
+                <Grid item xs>
+                  <Typography variant="h2" sx={{ marginBottom: "10px" }}>
+                    Forgot Your Password?
+                  </Typography>
+                </Grid>
+                <Grid item sx={{ marginLeft: '10.3em', cursor: 'pointer' }} onClick={handleGoBack}>
+                  <CloseIcon />
+                </Grid>
+              </Grid>
+
               <Typography variant="body1" sx={{ mb: 3 }}>
                 We will send you a reset link
               </Typography>
@@ -265,8 +282,8 @@ const LoginPage = () => {
               <Typography variant="h2" sx={{ mb: 1, marginBottom: "10px" }}>
                 Changing Password
               </Typography>
-              <Typography variant="body1" sx={{ mb: 3,color:'#05A660' }}>
-              Password Reset Successful              </Typography>
+              <Typography variant="body1" sx={{ mb: 3, color: '#05A660' }}>
+                Password Reset Successful              </Typography>
             </Box>
 
             <Box sx={{ marginBottom: "2em", width: "100%" }}>
