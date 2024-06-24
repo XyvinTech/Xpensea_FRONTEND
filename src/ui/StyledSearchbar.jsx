@@ -10,6 +10,7 @@ const StyledSearchbar = () => {
         placeholder="Search Event"
         sx={{
           width: '320px',
+          bgcolor:"white",
           height: '48px',
           '& .MuiOutlinedInput-root': {
             borderRadius: '24px',

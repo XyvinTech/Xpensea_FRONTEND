@@ -2,7 +2,6 @@ import React from 'react';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
 
-
 const CustomTextField = styled(({ ...props }) => <TextField {...props} />)`
   & .MuiInputBase-root {
     color: #000000; 
@@ -31,17 +30,18 @@ const CustomTextField = styled(({ ...props }) => <TextField {...props} />)`
   }
 `;
 
-const StyledTextField = ({ label }) => {
+const StyledTextField = ({ label, value, onChange, disabled }) => {
   return (
     <CustomTextField
       fullWidth
       label={label}
       variant="outlined"
       multiline
-     
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
     />
   );
 }
-
 
 export default StyledTextField;

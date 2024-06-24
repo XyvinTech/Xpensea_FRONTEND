@@ -16,6 +16,7 @@ import StyledFilter from "./StyledFilter";
 import ExpenseDetail from "./approvals/ExpenseDetail";
 import RejectedForm from "./approvals/RejectedForm";
 import RoleManagement from "./subAdmin/RoleManagement";
+import AddExpense from "./tier/AddExpense";
 
 ChartJS.register(
   LineElement,
@@ -131,9 +132,10 @@ const StyledChart = () => {
         <Line data={data} options={options} />
       </Box>
       {/* <ExpenseDetail open={filterOpen} onClose={handleCloseFilter} /> */}
-      {/* <StyledFilter open={filterOpen} onClose={handleCloseFilter} /> */}
+      <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
       {/* <RejectedForm open={filterOpen} onClose={handleCloseFilter} /> */}
-      <RoleManagement open={filterOpen} onClose={handleCloseFilter} />
+      {/* <RoleManagement open={filterOpen} onClose={handleCloseFilter} /> */}
+      {/* <AddExpense open={filterOpen} onClose={handleCloseFilter} /> */}
     </Box>
   );
 };

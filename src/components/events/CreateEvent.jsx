@@ -1,4 +1,4 @@
-import { Box, Dialog, Stack } from "@mui/material";
+import { Box, Dialog, Grid, Stack } from "@mui/material";
 import React from "react";
 import StyledSelectField from "../../ui/StyledSelectField";
 import StyledButton from "../../ui/StyledButton";
@@ -13,6 +13,9 @@ const options = [
 ];
 
 const CreateEvent = ({ open, onClose }) => {
+  const handleClear = () => {
+    onClose();
+  };
   return (
     <Dialog open={open} onClose={onClose}maxWidth="lg" fullWidth>
       
@@ -52,13 +55,17 @@ const CreateEvent = ({ open, onClose }) => {
         </Stack>
         
         <StyledTextArea placeholder={"Description"} />
-        
+        <Grid container spacing={1}>
+            <Grid item md={6} sm={6}>
+            
+            </Grid>
+            <Grid item md={6} sm={6}>
         <Stack direction="row" spacing={2} justifyContent="flex-end">
           <StyledButton
             variant="secondary"
            padding='15px 50px 15px 50px'
             name="Back"
-            onClick={() => onPageChange(null, "prev")}
+            onClick={handleClear}
           />
           <StyledButton
             variant="primary"
@@ -67,6 +74,8 @@ const CreateEvent = ({ open, onClose }) => {
             onClick={() => onPageChange(null, "next")}
           />
         </Stack>
+        </Grid>
+          </Grid>
       </Stack>
     </Box></Dialog>
   );

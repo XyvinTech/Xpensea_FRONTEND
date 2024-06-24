@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Dialog, Stack } from "@mui/material";
 import React, { useState } from "react";
 import StyledTextField from "../../ui/StyledTextField";
 import StyledButton from "../../ui/StyledButton";
@@ -13,13 +13,13 @@ const options = [
   { value: "option3", label: "Option 3" },
 ];
 
-const AddNewRole = () => {
+const AddNewRole = ({ open, onClose }) => {
     const [isChecked, setIsChecked] = useState(false);
     const handleSwitchChange = (event) => {
         setIsChecked(event.target.checked);
       };
   return (
-    <div>
+    <Dialog open={open} onClose={onClose}maxWidth="xs" fullWidth>
       <Box padding={3}>
         <Stack spacing={2}>
           <Box display="flex" justifyContent="space-between">
@@ -78,7 +78,7 @@ const AddNewRole = () => {
           </Stack>
         </Stack>
       </Box>
-    </div>
+      </Dialog>
   );
 };
 
