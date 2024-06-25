@@ -6,6 +6,7 @@ import StyledTextField from '../../ui/StyledTextField';
 import StyledButton from '../../ui/StyledButton';
 import StyledInput from '../../ui/StyledInput';
 import { UploadImageIcon } from '../../assets/icons/UploadImageIcon';
+import StyledInputFile from '../../ui/StyledInputfile';
 
 const options = [
   { value: "option1", label: "Option 1" },
@@ -20,9 +21,10 @@ const StaffDetailsAdd = ({ onPageChange }) => {
     setIsChecked(event.target.checked);
   };
 
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    console.log("Selected file:", file);
+    console.log(file); // Handle file change
   };
 
   return (
@@ -54,12 +56,11 @@ const StaffDetailsAdd = ({ onPageChange }) => {
 
           <Stack direction="row" spacing={2}>
             <StyledTextField label={"Ph No"} sx={{ flex: 1 }} />
-            <StyledInput
-              type="file"
-              placeholder="Upload Image"
-              endIcon={<UploadImageIcon />}
-              onChange={handleFileChange}
-            />
+            <StyledInputFile
+        placeholder="Upload Image"
+        endIcon={<UploadImageIcon />}
+        onChange={handleFileChange}
+      />
           </Stack>
 
           <Grid container spacing={1}>
