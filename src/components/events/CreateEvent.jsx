@@ -69,7 +69,7 @@ const CreateEvent = ({ open, onClose }) => {
               />
             </Stack>
             <Stack direction="row" spacing={2} paddingBottom={2}>
-            <Controller
+              <Controller
                 name="role"
                 control={control}
                 defaultValue=""
@@ -97,7 +97,7 @@ const CreateEvent = ({ open, onClose }) => {
               />
             </Stack>
             <Stack direction="row" spacing={2} paddingBottom={2}>
-            <Controller
+              <Controller
                 name="staff"
                 control={control}
                 defaultValue=""
@@ -110,7 +110,7 @@ const CreateEvent = ({ open, onClose }) => {
                   />
                 )}
               />
-               <Controller
+              <Controller
                 name="day"
                 control={control}
                 defaultValue=""
@@ -149,17 +149,17 @@ const CreateEvent = ({ open, onClose }) => {
               />
             </Stack>
             <Controller
-                name="description"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledTextArea
-                    {...field}
-                    placeholder="Description"
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
+              name="description"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <StyledTextArea
+                  {...field}
+                  placeholder="Description"
+                  sx={{ flex: 1 }}
+                />
+              )}
+            />
             <Grid container spacing={1}>
               <Grid item md={6} sm={6}></Grid>
               <Grid item md={6} sm={6}>
