@@ -16,6 +16,7 @@
     "@mui/material": "^5.15.20",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "antd": "^5.18.3",
+    "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "date-fns": "^3.6.0",
     "moment": "^2.30.1",
@@ -27,7 +28,8 @@
     "react-multi-select-component": "^4.3.4",
     "react-router-dom": "^6.23.1",
     "react-select": "^5.8.0",
-    "styled-components": "^6.1.11"
+    "styled-components": "^6.1.11",
+    "zustand": "^4.5.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

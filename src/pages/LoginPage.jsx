@@ -1,10 +1,4 @@
-import {
-  Box,
-  Divider,
-  Paper,
-  Typography,
-  Stack,
-} from "@mui/material";
+import { Box, Divider, Paper, Typography, Stack } from "@mui/material";
 import React, { useState } from "react";
 import { XpenseaIcon } from "../assets/icons/XpenseaIcon";
 import Loginbackground from "../assets/images/loginbackground.png";
@@ -16,6 +10,7 @@ import { PasswordIcon } from "../assets/icons/PasswordIcon";
 import { Link } from "react-router-dom";
 import { CloseIcon } from "../assets/icons/CloseIcon";
 import { Controller, useForm } from "react-hook-form";
+import { getLogin } from "../api/adminapi";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,9 +29,13 @@ const LoginPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  
-  const onSubmit = data => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      const user = await getLogin(data);
+      console.log(user)
+    } catch (error) {
+      console.error("error", error);
+    }
     // Handle different submissions based on currentPaper state
     // if (currentPaper === 1) {
     //   // Handle sign-in
@@ -103,7 +102,7 @@ const LoginPage = () => {
               marginBottom: "3em",
             }}
           >
-            <Stack spacing={2} sx={{ width: '100%', textAlign: 'left' }}>
+            <Stack spacing={2} sx={{ width: "100%", textAlign: "left" }}>
               <Typography variant="h2" sx={{ marginBottom: "10px" }}>
                 Sign In
               </Typography>
@@ -147,7 +146,11 @@ const LoginPage = () => {
               )}
               <StyledButton type="submit" variant="primary" name="Sign in" />
               <Link
-                style={{ color: "#2D9CDB", textDecoration: "none", cursor: "pointer" }}
+                style={{
+                  color: "#2D9CDB",
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
                 onClick={() => setCurrentPaper(2)}
               >
                 Forgot Your Password?
@@ -184,12 +187,16 @@ const LoginPage = () => {
               marginBottom: "3em",
             }}
           >
-            <Stack spacing={2} sx={{ width: '100%', textAlign: 'left' }}>
-              <Stack direction="row" justifyContent="space-between" alignItems="center">
+            <Stack spacing={2} sx={{ width: "100%", textAlign: "left" }}>
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
                 <Typography variant="h2" sx={{ marginBottom: "10px" }}>
                   Forgot Your Password?
                 </Typography>
-                <Box onClick={handleGoBack} sx={{ cursor: 'pointer' }}>
+                <Box onClick={handleGoBack} sx={{ cursor: "pointer" }}>
                   <CloseIcon />
                 </Box>
               </Stack>
@@ -210,7 +217,9 @@ const LoginPage = () => {
                 rules={{ required: "Email is required" }}
               />
               {errors.forgotEmail && (
-                <span className="text-red-500">{errors.forgotEmail.message}</span>
+                <span className="text-red-500">
+                  {errors.forgotEmail.message}
+                </span>
               )}
               <StyledButton type="submit" variant="primary" name="Send" />
             </Stack>
@@ -245,7 +254,7 @@ const LoginPage = () => {
               marginBottom: "3em",
             }}
           >
-            <Stack spacing={2} sx={{ width: '100%', textAlign: 'left' }}>
+            <Stack spacing={2} sx={{ width: "100%", textAlign: "left" }}>
               <Typography variant="h2" sx={{ marginBottom: "10px" }}>
                 Changing Password
               </Typography>
@@ -268,7 +277,9 @@ const LoginPage = () => {
                 rules={{ required: "New password is required" }}
               />
               {errors.newPassword && (
-                <span className="text-red-500">{errors.newPassword.message}</span>
+                <span className="text-red-500">
+                  {errors.newPassword.message}
+                </span>
               )}
               <Controller
                 name="confirmPassword"
@@ -286,7 +297,9 @@ const LoginPage = () => {
                 rules={{ required: "Confirm password is required" }}
               />
               {errors.confirmPassword && (
-                <span className="text-red-500">{errors.confirmPassword.message}</span>
+                <span className="text-red-500">
+                  {errors.confirmPassword.message}
+                </span>
               )}
               <StyledButton type="submit" variant="primary" name="Confirm" />
             </Stack>
@@ -319,11 +332,11 @@ const LoginPage = () => {
               marginBottom: "3em",
             }}
           >
-            <Stack spacing={2} sx={{ width: '100%', textAlign: 'left' }}>
+            <Stack spacing={2} sx={{ width: "100%", textAlign: "left" }}>
               <Typography variant="h2" sx={{ marginBottom: "10px" }}>
                 Changing Password
               </Typography>
-              <Typography variant="body1" sx={{ mb: 3, color: '#05A660' }}>
+              <Typography variant="body1" sx={{ mb: 3, color: "#05A660" }}>
                 Password Reset Successful
               </Typography>
               <StyledButton
