@@ -18,6 +18,9 @@ import RejectedForm from "./approvals/RejectedForm";
 import RoleManagement from "./subAdmin/RoleManagement";
 import AddExpense from "./tier/AddExpense";
 import ShareVia from "./policy/ShareVia";
+import Reimbursement from "./finance/Reimbursement";
+import DeleteComponent from "./DeleteComponent";
+import ApproveComponent from "./ApproveComponent";
 
 ChartJS.register(
   LineElement,
@@ -132,11 +135,9 @@ const StyledChart = () => {
       <Box padding={2} height="370px">
         <Line data={data} options={options} />
       </Box>
-      {/* <ExpenseDetail open={filterOpen} onClose={handleCloseFilter} /> */}
+     
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      {/* <RejectedForm open={filterOpen} onClose={handleCloseFilter} /> */}
-      {/* <RoleManagement open={filterOpen} onClose={handleCloseFilter} /> */}
-      {/* <ShareVia open={filterOpen} onClose={handleCloseFilter} /> */}
+     
     </Box>
   );
 };
