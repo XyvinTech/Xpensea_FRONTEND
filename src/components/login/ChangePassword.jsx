@@ -58,7 +58,7 @@ const ChangePassword = ({ setCurrentPaper }) => {
         }}
       >
         <Stack spacing={2} sx={{ width: '100%', textAlign: 'left' }}>
-          <Typography variant="h6" sx={{ marginBottom: '10px' }}>
+          <Typography variant="h2" sx={{ marginBottom: '10px' }}>
             Changing Password
           </Typography>
           <Typography variant="body1" sx={{ mb: 3 }}>

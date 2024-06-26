@@ -61,7 +61,7 @@ const ForgotPassword = ({ setCurrentPaper }) => {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h6" sx={{ marginBottom: '10px' }}>
+            <Typography variant="h2" sx={{ marginBottom: '10px' }}>
               Forgot Your Password
             </Typography>
             <Box onClick={handleGoBack} sx={{ cursor: 'pointer' }}>

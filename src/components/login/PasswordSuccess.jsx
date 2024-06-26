@@ -30,7 +30,7 @@ const PasswordSuccess = ({ setCurrentPaper }) => {
         }}
       >
         <Stack spacing={2} sx={{ width: '100%', textAlign: 'left' }}>
-          <Typography variant="h6" sx={{ marginBottom: '10px' }}>
+          <Typography variant="h2" sx={{ marginBottom: '10px' }}>
             Password Reset Successful
           </Typography>
           <Typography variant="body1" sx={{ mb: 3, color: '#05A660' }}>
