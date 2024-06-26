@@ -1,9 +1,9 @@
 import {
   Box,
   Divider,
-  Grid,
   Paper,
   Typography,
+  Stack,
 } from "@mui/material";
 import React, { useState } from "react";
 import { XpenseaIcon } from "../assets/icons/XpenseaIcon";
@@ -15,7 +15,7 @@ import { LockIcon } from "../assets/icons/LockIcon";
 import { PasswordIcon } from "../assets/icons/PasswordIcon";
 import { Link } from "react-router-dom";
 import { CloseIcon } from "../assets/icons/CloseIcon";
-
+import { useForm } from "react-hook-form";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -25,11 +25,11 @@ const LoginPage = () => {
     setShowPassword(!showPassword);
   };
 
-  const [isOpen, setIsOpen] = useState(true);
-
   const handleGoBack = () => {
+    console.log("Go back clicked");
     setCurrentPaper(1);
   };
+
   return (
     <div
       className="Login"
@@ -84,45 +84,31 @@ const LoginPage = () => {
               marginBottom: "3em",
             }}
           >
-            <Box sx={{ marginBottom: "1em", textAlign: "left" }}>
-              <Typography variant="h2" sx={{ mb: 1, marginBottom: "10px" }}>
+            <Stack spacing={2} sx={{ width: '100%', textAlign: 'left' }}>
+              <Typography variant="h2" sx={{ marginBottom: "10px" }}>
                 Sign In
               </Typography>
-              <Typography variant="body1" sx={{ mb: 3 }}>
+              <Typography variant="body1">
                 Login to your account to continue the process
               </Typography>
-            </Box>
-
-            <Box sx={{ marginBottom: "2em", width: "100%" }}>
               <StyledInput
-                placeholder={"Enter your email"}
+                placeholder="Enter your email"
                 startIcon={<EmailIcon />}
               />
-            </Box>
-            <Box sx={{ marginBottom: "10px", width: "100%" }}>
               <StyledInput
                 type={showPassword ? "text" : "password"}
-                placeholder={"Enter your password"}
+                placeholder="Enter your password"
                 startIcon={<LockIcon />}
                 endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
               />
-            </Box>
-
-            <Box sx={{ marginBottom: "5em", width: "100%" }}></Box>
-
-            <Box sx={{ marginBottom: "3em", width: "100%" }}>
               <StyledButton variant="primary" name="Sign in" />
-            </Box>
-
-            <Box sx={{ marginBottom: "1em", textAlign: "left" }}>
               <Link
                 style={{ color: "#2D9CDB", textDecoration: "none" }}
                 onClick={() => setCurrentPaper(2)}
               >
-                {" "}
-                Forgot Your Password ?
+                Forgot Your Password?
               </Link>
-            </Box>
+            </Stack>
           </Box>
         </Paper>
       )}
@@ -153,38 +139,28 @@ const LoginPage = () => {
               marginBottom: "3em",
             }}
           >
-            <Box sx={{ marginBottom: "15px", textAlign: "left" }}>
-
-              <Grid container alignItems="center">
-                <Grid item xs>
-                  <Typography variant="h2" sx={{ marginBottom: "10px" }}>
-                    Forgot Your Password?
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ marginLeft: '10.3em', cursor: 'pointer' }} onClick={handleGoBack}>
+            <Stack spacing={2} sx={{ width: '100%', textAlign: 'left' }}>
+              <Stack direction="row" justifyContent="space-between" alignItems="center">
+                <Typography variant="h2" sx={{ marginBottom: "10px" }}>
+                  Forgot Your Password?
+                </Typography>
+                <Box onClick={handleGoBack} sx={{ cursor: 'pointer' }}>
                   <CloseIcon />
-                </Grid>
-              </Grid>
-
+                </Box>
+              </Stack>
               <Typography variant="body1" sx={{ mb: 3 }}>
                 We will send you a reset link
               </Typography>
-            </Box>
-
-            <Box sx={{ marginBottom: "3em", width: "100%" }}>
               <StyledInput
-                placeholder={"Enter your email"}
+                placeholder="Enter your email"
                 startIcon={<EmailIcon />}
               />
-            </Box>
-
-            <Box sx={{ marginBottom: "3em", width: "100%" }}>
               <StyledButton
                 variant="primary"
                 name="Send"
                 onClick={() => setCurrentPaper(3)}
               />
-            </Box>
+            </Stack>
           </Box>
         </Paper>
       )}
@@ -215,39 +191,31 @@ const LoginPage = () => {
               marginBottom: "3em",
             }}
           >
-            <Box sx={{ marginBottom: "15px", textAlign: "left" }}>
-              <Typography variant="h2" sx={{ mb: 1, marginBottom: "10px" }}>
+            <Stack spacing={2} sx={{ width: '100%', textAlign: 'left' }}>
+              <Typography variant="h2" sx={{ marginBottom: "10px" }}>
                 Changing Password
               </Typography>
               <Typography variant="body1" sx={{ mb: 3 }}>
                 Enter your new password
               </Typography>
-            </Box>
-
-            <Box sx={{ marginBottom: "3.5em", width: "100%" }}>
               <StyledInput
                 type={showPassword ? "text" : "password"}
-                placeholder={"Enter your password"}
+                placeholder="Enter your password"
                 startIcon={<LockIcon />}
                 endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
               />
-            </Box>
-            <Box sx={{ marginBottom: "2em", width: "100%" }}>
               <StyledInput
                 type={showPassword ? "text" : "password"}
-                placeholder={"Enter your password again"}
+                placeholder="Enter your password again"
                 startIcon={<LockIcon />}
                 endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
               />
-            </Box>
-
-            <Box sx={{ marginBottom: "1em", width: "100%" }}>
               <StyledButton
                 variant="primary"
                 name="Confirm"
                 onClick={() => setCurrentPaper(4)}
               />
-            </Box>
+            </Stack>
           </Box>
         </Paper>
       )}
@@ -278,21 +246,19 @@ const LoginPage = () => {
               marginBottom: "3em",
             }}
           >
-            <Box sx={{ marginBottom: "30px", textAlign: "left" }}>
-              <Typography variant="h2" sx={{ mb: 1, marginBottom: "10px" }}>
+            <Stack spacing={2} sx={{ width: '100%', textAlign: 'left' }}>
+              <Typography variant="h2" sx={{ marginBottom: "10px" }}>
                 Changing Password
               </Typography>
               <Typography variant="body1" sx={{ mb: 3, color: '#05A660' }}>
-                Password Reset Successful              </Typography>
-            </Box>
-
-            <Box sx={{ marginBottom: "2em", width: "100%" }}>
+                Password Reset Successful
+              </Typography>
               <StyledButton
                 variant="primary"
                 name="Try logging in again"
                 onClick={() => setCurrentPaper(1)}
               />
-            </Box>
+            </Stack>
           </Box>
         </Paper>
       )}
