@@ -174,11 +174,11 @@ const StyledTable = ({
                   padding={column.padding || "normal"}
                 >
                   {column.sortable ? (
-                    <TableSortLabel
+                    <TableSortLabel 
                       IconComponent={SortIcon}
                       onClick={() => onSort(column.field)}
                     >
-                      {column.title}
+                          <Box marginRight={1}> {column.title}</Box> 
                     </TableSortLabel>
                   ) : (
                     column.title
