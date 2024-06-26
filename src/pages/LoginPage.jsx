@@ -15,7 +15,7 @@ import { LockIcon } from "../assets/icons/LockIcon";
 import { PasswordIcon } from "../assets/icons/PasswordIcon";
 import { Link } from "react-router-dom";
 import { CloseIcon } from "../assets/icons/CloseIcon";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,8 +26,26 @@ const LoginPage = () => {
   };
 
   const handleGoBack = () => {
-    console.log("Go back clicked");
     setCurrentPaper(1);
+  };
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  
+  const onSubmit = data => {
+    console.log(data);
+    // Handle different submissions based on currentPaper state
+    if (currentPaper === 1) {
+      // Handle sign-in
+    } else if (currentPaper === 2) {
+      // Handle forgot password
+    } else if (currentPaper === 3) {
+      // Handle change password
+      setCurrentPaper(4);
+    }
   };
 
   return (
@@ -74,6 +92,7 @@ const LoginPage = () => {
           <Divider sx={{ width: "100%", marginBottom: "3em" }} />
           <Box
             component="form"
+            onSubmit={handleSubmit(onSubmit)}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -91,19 +110,44 @@ const LoginPage = () => {
               <Typography variant="body1">
                 Login to your account to continue the process
               </Typography>
-              <StyledInput
-                placeholder="Enter your email"
-                startIcon={<EmailIcon />}
+              <Controller
+                name="email"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledInput
+                    {...field}
+                    placeholder="Enter your email"
+                    startIcon={<EmailIcon />}
+                  />
+                )}
+                rules={{ required: "Email is required" }}
               />
-              <StyledInput
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                startIcon={<LockIcon />}
-                endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
+              {errors.email && (
+                <span className="text-red-500">{errors.email.message}</span>
+              )}
+
+              <Controller
+                name="password"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledInput
+                    {...field}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    startIcon={<LockIcon />}
+                    endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
+                  />
+                )}
+                rules={{ required: "Password is required" }}
               />
-              <StyledButton variant="primary" name="Sign in" />
+              {errors.password && (
+                <span className="text-red-500">{errors.password.message}</span>
+              )}
+              <StyledButton type="submit" variant="primary" name="Sign in" />
               <Link
-                style={{ color: "#2D9CDB", textDecoration: "none" }}
+                style={{ color: "#2D9CDB", textDecoration: "none", cursor: "pointer" }}
                 onClick={() => setCurrentPaper(2)}
               >
                 Forgot Your Password?
@@ -129,6 +173,7 @@ const LoginPage = () => {
         >
           <Box
             component="form"
+            onSubmit={handleSubmit(onSubmit)}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -151,15 +196,23 @@ const LoginPage = () => {
               <Typography variant="body1" sx={{ mb: 3 }}>
                 We will send you a reset link
               </Typography>
-              <StyledInput
-                placeholder="Enter your email"
-                startIcon={<EmailIcon />}
+              <Controller
+                name="forgotEmail"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledInput
+                    {...field}
+                    placeholder="Enter your email"
+                    startIcon={<EmailIcon />}
+                  />
+                )}
+                rules={{ required: "Email is required" }}
               />
-              <StyledButton
-                variant="primary"
-                name="Send"
-                onClick={() => setCurrentPaper(3)}
-              />
+              {errors.forgotEmail && (
+                <span className="text-red-500">{errors.forgotEmail.message}</span>
+              )}
+              <StyledButton type="submit" variant="primary" name="Send" />
             </Stack>
           </Box>
         </Paper>
@@ -181,6 +234,7 @@ const LoginPage = () => {
         >
           <Box
             component="form"
+            onSubmit={handleSubmit(onSubmit)}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -198,23 +252,43 @@ const LoginPage = () => {
               <Typography variant="body1" sx={{ mb: 3 }}>
                 Enter your new password
               </Typography>
-              <StyledInput
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password"
-                startIcon={<LockIcon />}
-                endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
+              <Controller
+                name="newPassword"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledInput
+                    {...field}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    startIcon={<LockIcon />}
+                    endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
+                  />
+                )}
+                rules={{ required: "New password is required" }}
               />
-              <StyledInput
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter your password again"
-                startIcon={<LockIcon />}
-                endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
+              {errors.newPassword && (
+                <span className="text-red-500">{errors.newPassword.message}</span>
+              )}
+              <Controller
+                name="confirmPassword"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledInput
+                    {...field}
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password again"
+                    startIcon={<LockIcon />}
+                    endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
+                  />
+                )}
+                rules={{ required: "Confirm password is required" }}
               />
-              <StyledButton
-                variant="primary"
-                name="Confirm"
-                onClick={() => setCurrentPaper(4)}
-              />
+              {errors.confirmPassword && (
+                <span className="text-red-500">{errors.confirmPassword.message}</span>
+              )}
+              <StyledButton type="submit" variant="primary" name="Confirm" />
             </Stack>
           </Box>
         </Paper>
@@ -235,7 +309,6 @@ const LoginPage = () => {
           }}
         >
           <Box
-            component="form"
             sx={{
               display: "flex",
               flexDirection: "column",
