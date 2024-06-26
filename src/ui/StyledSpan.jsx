@@ -54,7 +54,7 @@ const TextSpan = styled.span`
 
   ${(props) =>
     props.variant === "blue" &&
-    `
+    `padding: 10px 30px,
       background-color: #EAF2FF;
       color: #5B93FF;
     `}

@@ -17,67 +17,106 @@ const CreateEvent = ({ open, onClose }) => {
     onClose();
   };
   return (
-    <Dialog open={open} onClose={onClose}maxWidth="lg" fullWidth>
-      
-    <Box padding={3}>
-      <Stack spacing={2}>
-        <Box display="flex" justifyContent="space-between" alignItems="center" position="relative">
-          <Box flexGrow={1} />
-          <h2 style={{ flexGrow: 1 }}>Create an Event</h2>
-          <Box position="absolute" right={0}>
-            <MoreVert />
+    <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
+      <Box padding={3}>
+        <Stack spacing={2}>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            position="relative"
+          >
+            <Box flexGrow={1} />
+            <h2 style={{ flexGrow: 1 }}>Create an Event</h2>
+            <Box position="absolute" right={0}>
+              <MoreVert />
+            </Box>
           </Box>
-        </Box>
-        
-        <Stack direction="row" spacing={2}>
-          <StyledTextField label={"Event Title"} sx={{ flex: 1 }} />
-          <StyledSelectField placeholder={"Choose Tier"} options={options} sx={{ flex: 1 }} />
-        </Stack>
-        
-        <Stack direction="row" spacing={2}>
-          <StyledSelectField placeholder={"Choose Role"} options={options} sx={{ flex: 1 }} />
-          <StyledSelectField placeholder={"Choose Location"} options={options} sx={{ flex: 1 }} />
-        </Stack>
-        
-        <Stack direction="row" spacing={2}>
-          <StyledSelectField placeholder={"Choose Staff"} options={options} sx={{ flex: 1 }} />
-          <StyledSelectField placeholder={"Number of Days"} options={options} sx={{ flex: 1 }} />
-        </Stack>
-        
-        <Stack direction="row" spacing={2}>
-          <StyledSelectField placeholder={"Start Date"} options={options} sx={{ flex: 1 }} />
-          <StyledSelectField placeholder={"End Date"} options={options} sx={{ flex: 1 }} />
-        </Stack>
-        
-        <Stack direction="row" spacing={2}>
-          <StyledSelectField placeholder={"Choose Start Time"} options={options} sx={{ flex: 1 }} />
-          <StyledSelectField placeholder={"Choose End Time"} options={options} sx={{ flex: 1 }} />
-        </Stack>
-        
-        <StyledTextArea placeholder={"Description"} />
-        <Grid container spacing={1}>
+
+          <Stack direction="row" spacing={2}>
+            <StyledTextField label={"Event Title"} sx={{ flex: 1 }} />
+            <StyledSelectField
+              placeholder={"Choose Tier"}
+              options={options}
+              sx={{ flex: 1 }}
+            />
+          </Stack>
+
+          <Stack direction="row" spacing={2}>
+            <StyledSelectField
+              placeholder={"Choose Role"}
+              options={options}
+              sx={{ flex: 1 }}
+            />
+            <StyledSelectField
+              placeholder={"Choose Location"}
+              options={options}
+              sx={{ flex: 1 }}
+            />
+          </Stack>
+
+          <Stack direction="row" spacing={2}>
+            <StyledSelectField
+              placeholder={"Choose Staff"}
+              options={options}
+              sx={{ flex: 1 }}
+            />
+            <StyledSelectField
+              placeholder={"Number of Days"}
+              options={options}
+              sx={{ flex: 1 }}
+            />
+          </Stack>
+
+          <Stack direction="row" spacing={2}>
+            <StyledSelectField
+              placeholder={"Start Date"}
+              options={options}
+              sx={{ flex: 1 }}
+            />
+            <StyledSelectField
+              placeholder={"End Date"}
+              options={options}
+              sx={{ flex: 1 }}
+            />
+          </Stack>
+
+          <Stack direction="row" spacing={2}>
+            <StyledSelectField
+              placeholder={"Choose Start Time"}
+              options={options}
+              sx={{ flex: 1 }}
+            />
+            <StyledSelectField
+              placeholder={"Choose End Time"}
+              options={options}
+              sx={{ flex: 1 }}
+            />
+          </Stack>
+
+          <StyledTextArea placeholder={"Description"} />
+          <Grid container spacing={1}>
+            <Grid item md={6} sm={6}></Grid>
             <Grid item md={6} sm={6}>
-            
+              <Stack direction="row" spacing={2} justifyContent="flex-end">
+                <StyledButton
+                  variant="secondary"
+                  padding="15px 50px 15px 50px"
+                  name="Back"
+                  onClick={handleClear}
+                />
+                <StyledButton
+                  variant="primary"
+                  padding="15px 50px 15px 50px"
+                  name="Save"
+                  onClick={() => onPageChange(null, "next")}
+                />
+              </Stack>
             </Grid>
-            <Grid item md={6} sm={6}>
-        <Stack direction="row" spacing={2} justifyContent="flex-end">
-          <StyledButton
-            variant="secondary"
-           padding='15px 50px 15px 50px'
-            name="Back"
-            onClick={handleClear}
-          />
-          <StyledButton
-            variant="primary"
-                 padding='15px 50px 15px 50px'
-            name="Save"
-            onClick={() => onPageChange(null, "next")}
-          />
-        </Stack>
-        </Grid>
           </Grid>
-      </Stack>
-    </Box></Dialog>
+        </Stack>
+      </Box>
+    </Dialog>
   );
 };
 

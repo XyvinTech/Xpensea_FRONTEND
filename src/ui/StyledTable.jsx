@@ -6,7 +6,6 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import StyledCheckbox from "./StyledCheckbox";
 import {
   Box,
@@ -28,6 +27,7 @@ import { SortIcon } from "../assets/icons/SortIcon";
 import { EventIcon } from "../assets/icons/EventIcon";
 import { Icon1 } from "../assets/icons/Icon1";
 import { Icon2 } from "../assets/icons/Icon2";
+import { EditIcon } from "../assets/icons/EditIcon";
 
 const StyledTableCell = styled(TableCell)`
   &.${tableCellClasses.head} {
@@ -57,6 +57,10 @@ const StyledTableRow = styled(TableRow)`
   &:last-child th {
     border: 0;
   }
+  cursor: ${({ showEdit }) => (showEdit ? "pointer" : "default")};
+  &:hover {
+    background-color: ${({ showEdit }) => (showEdit ? "#f0f0f0" : "inherit")};
+  }
 `;
 
 const StyledTable = ({
@@ -65,7 +69,10 @@ const StyledTable = ({
   onSelectionChange,
   onView,
   onDelete,
-  onSort,dashboard
+  onEdit,
+  onSort,
+  showEdit,
+  showShare
 }) => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -107,6 +114,15 @@ const StyledTable = ({
     handleMenuClose();
   };
 
+  const handleEdit = () => {
+    onEdit(rowId);
+    handleMenuClose();
+  };
+
+  const handleRowClick = (id) => {
+    onView(id);
+  };
+
   const isSelected = (id) => selectedIds.includes(id);
   const getStatusVariant = (status) => {
     switch (status) {
@@ -132,6 +148,7 @@ const StyledTable = ({
         return null;
     }
   };
+
   return (
     <Box>
       <TableContainer sx={{ border: "none" }}>
@@ -152,12 +169,11 @@ const StyledTable = ({
                   padding={column.padding || "normal"}
                 >
                   {column.sortable ? (
-                   
-                    <TableSortLabel  sx={{ marginRight: "10px" }} 
+                    <TableSortLabel
                       IconComponent={SortIcon}
                       onClick={() => onSort(column.field)}
                     >
-                     <Box marginRight={1}> {column.title}</Box> 
+                      {column.title}
                     </TableSortLabel>
                   ) : (
                     column.title
@@ -184,6 +200,8 @@ const StyledTable = ({
                   <StyledTableCell
                     key={column.field}
                     padding={column.padding || "normal"}
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => handleRowClick(row.id)}
                   >
                     {index === 0 && (
                       <Box
@@ -229,27 +247,52 @@ const StyledTable = ({
                     open={Boolean(anchorEl) && rowId === row.id}
                     onClose={handleMenuClose}
                   >
-                    <MenuItem onClick={handleView}>
-                      <StyledSpan
-                        variant={"darkRed"}
-                        text={
-                          <>
-                            <ViewIcon /> View
-                          </>
-                        }
-                      />
-                    </MenuItem>
-                    <MenuItem onClick={handleDelete}>
-                      <StyledSpan
-                        variant={"red"}
-                        text={
-                          <>
-                            <DeleteIcon />
-                            Delete
-                          </>
-                        }
-                      />
-                    </MenuItem>
+                    {!showEdit
+                      ? [
+                          <MenuItem key="view" onClick={handleView}>
+                            <StyledSpan
+                              variant={"darkRed"}
+                              text={
+                                <>
+                                  <ViewIcon /> View
+                                </>
+                              }
+                            />
+                          </MenuItem>,
+                          <MenuItem key="delete" onClick={handleDelete}>
+                            <StyledSpan
+                              variant={"red"}
+                              text={
+                                <>
+                                  <DeleteIcon /> Delete
+                                </>
+                              }
+                            />
+                          </MenuItem>,
+                        ]
+                      : 
+                      [
+                          <MenuItem key="edit" onClick={handleEdit}>
+                            <StyledSpan
+                              variant={"blue"}
+                              text={
+                                <>
+                                  <EditIcon /> Edit
+                                </>
+                              }
+                            />
+                          </MenuItem>,
+                          <MenuItem key="delete" onClick={handleDelete}>
+                            <StyledSpan
+                              variant={"red"}
+                              text={
+                                <>
+                                  <DeleteIcon /> Delete
+                                </>
+                              }
+                            />
+                          </MenuItem>,
+                        ]}
                   </Menu>
                 </StyledTableCell>
               </StyledTableRow>
@@ -257,59 +300,61 @@ const StyledTable = ({
           </TableBody>
         </Table>
         <Divider />
-{/* in dashboard not show */}
-{!dashboard && (
-        <Stack
-          padding={2}
-          component="div"
-          direction={"row"}
-          justifyContent={selectedIds.length > 0 ? "space-between" : "flex-end"}
-          alignItems="center"
-        >
-          {selectedIds.length > 0 && (
-            <Stack direction="row" alignItems="center">
-              <Typography paddingRight={3}>
-                {`${selectedIds.length} item${
-                  selectedIds.length > 1 ? "s" : ""
-                } selected`}
-              </Typography>
-              <StyledButton variant="action" color="red" name="Delete" />
-            </Stack>
-          )}
+        {!showEdit && (
           <Stack
-            direction="row"
+            padding={2}
+            component="div"
+            direction={"row"}
+            justifyContent={
+              selectedIds.length > 0 ? "space-between" : "flex-end"
+            }
             alignItems="center"
-            justifyContent="space-between"
           >
-            <Box display="flex" alignItems="center">
-              <TablePagination
-                component="div"
-                labelDisplayedRows={({ from, to, count }) =>
-                  `${from}-${to} of ${count}`
-                }
-                ActionsComponent={({ onPageChange }) => (
-                  <Stack
-                    direction="row"
-                    spacing={1}
-                    alignItems="center"
-                    marginLeft={2}
-                  >
-                    <StyledButton
-                      variant="action"
-                      name="Previous"
-                      onClick={() => onPageChange(null, "prev")}
-                    />
-                    <StyledButton
-                      variant="action"
-                      name="Next"
-                      onClick={() => onPageChange(null, "next")}
-                    />
-                  </Stack>
-                )}
-              />
-            </Box>
+            {selectedIds.length > 0 && (
+              <Stack direction="row" alignItems="center">
+                <Typography paddingRight={3}>
+                  {`${selectedIds.length} item${
+                    selectedIds.length > 1 ? "s" : ""
+                  } selected`}
+                </Typography>
+                <StyledButton variant="action" color="red" name="Delete" />
+              </Stack>
+            )}
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Box display="flex" alignItems="center">
+                <TablePagination
+                  component="div"
+                  labelDisplayedRows={({ from, to, count }) =>
+                    `${from}-${to} of ${count}`
+                  }
+                  ActionsComponent={({ onPageChange }) => (
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                      alignItems="center"
+                      marginLeft={2}
+                    >
+                      <StyledButton
+                        variant="action"
+                        name="Previous"
+                        onClick={() => onPageChange(null, "prev")}
+                      />
+                      <StyledButton
+                        variant="action"
+                        name="Next"
+                        onClick={() => onPageChange(null, "next")}
+                      />
+                    </Stack>
+                  )}
+                />
+              </Box>
+            </Stack>
           </Stack>
-        </Stack>)}
+        )}
       </TableContainer>
     </Box>
   );

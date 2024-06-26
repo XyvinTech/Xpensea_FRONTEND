@@ -1,4 +1,4 @@
-import { Box, Stack, Grid } from '@mui/material'; // Import Grid from Material-UI
+import { Box, Stack, Grid, Dialog } from '@mui/material'; // Import Grid from Material-UI
 import React, { useState } from 'react';
 import StyledSwitch from '../../ui/StyledSwitch';
 import StyledSelectField from '../../ui/StyledSelectField';
@@ -13,7 +13,7 @@ const options = [
   { value: "option3", label: "Option 3" },
 ];
 
-const StaffDetailsAdd = ({ onPageChange }) => {
+const StaffDetailsAdd = ({ open, onClose }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleSwitchChange = (event) => {
@@ -26,7 +26,7 @@ const StaffDetailsAdd = ({ onPageChange }) => {
   };
 
   return (
-    <div>
+    <Dialog open={open} onClose={onClose}maxWidth="md" fullWidth >
       <Box padding={3}>
         <Stack spacing={2}>
           <Box display="flex" justifyContent="space-between" alignItems="center" position="relative">
@@ -72,20 +72,20 @@ const StaffDetailsAdd = ({ onPageChange }) => {
                   variant="secondary"
                   sx={{ padding: "15px 50px" }}
                   name="Back"
-                  onClick={() => onPageChange && onPageChange(null, "prev")}
+                  // onClick={() => onPageChange && onPageChange(null, "prev")}
                 />
                 <StyledButton
                   variant="primary"
                   sx={{ padding: "15px 50px" }}
                   name="Save"
-                  onClick={() => onPageChange && onPageChange(null, "next")}
+                  // onClick={() => onPageChange && onPageChange(null, "next")}
                 />
               </Stack>
             </Grid>
           </Grid>
         </Stack>
       </Box>
-    </div>
+    </Dialog>
   );
 }
 

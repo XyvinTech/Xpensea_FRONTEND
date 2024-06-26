@@ -91,7 +91,8 @@ const RoleManagementPage = () => {
           columns={userColumns}
           data={userData}
           onSelectionChange={handleSelectionChange}
-          onView={handleView}
+          // onView={handleView}
+          showEdit
           onSort={handleSort}
           onDelete={handleDelete}
         />

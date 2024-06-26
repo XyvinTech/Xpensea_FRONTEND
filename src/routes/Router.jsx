@@ -10,12 +10,13 @@ import AdminManagementPage from "../pages/subAdmin/AdminManagementPage";
 import RoleManagementPage from "../pages/subAdmin/RoleManagementPage";
 import AdminActivityPage from "../pages/subAdmin/AdminActivityPage";
 import FinancePage from "../pages/FinancePage";
-import StaffPage from "../pages/StaffPage";
+import StaffPage from "../pages/Staff/StaffPage";
 import TierPage from "../pages/TierPage";
 import PolicyPage from "../pages/PolicyPage";
 import Text from "../pages/Text";
 import MainPage from "../pages/Approval/MainPage";
 import ApprovalPage from "../pages/Approval/ApprovelPage";
+import StaffView from "../pages/Staff/StaffView";
 
 
 const router = createBrowserRouter([
@@ -58,6 +59,7 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
+
 
   {
     path: "/events",
@@ -123,6 +125,15 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
+  {
+    path:"/staffs/view",
+    element: (
+      <Layout>
+        <StaffView />
+      </Layout>
+    ),
+  },
+
 ]);
 
 export default router;

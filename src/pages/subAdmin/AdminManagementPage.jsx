@@ -17,10 +17,7 @@ const AdminManagementPage = () => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
   };
-  const handleView = (id) => {
-    console.log("View item:", id);
-    navigate(`/approvals/view`);
-  };
+ 
 
   const handleDelete = (id) => {
     console.log("Delete item :", id);
@@ -90,7 +87,8 @@ const AdminManagementPage = () => {
           columns={userColumns}
           data={userData}
           onSelectionChange={handleSelectionChange}
-          onView={handleView}
+          // onView={handleView}
+          showEdit
           onSort={handleSort}
           onDelete={handleDelete}
         />

@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import StyledDropDown from "../ui/StyledDropDown";
 import StyledButton from "../ui/StyledButton";
+import StyledMinMax from "./StyledMinMax";
 
 const tierOptions = ["Tier 1", "Tier 2", "Tier 3"];
 const stateOptions = ["California", "Texas", "Florida", "New York"];
@@ -80,6 +81,10 @@ const StyledFilter = ({ open, onClose }) => {
             onSelectionChange={setSelectedLocations}
             open={openDropdown === "location"}
             onToggle={() => handleDropdownToggle("location")}
+          />
+        </Box>
+        <Box mb={2} p={1}>
+          <StyledMinMax
           />
         </Box>
       </DialogContent>

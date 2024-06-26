@@ -17,6 +17,8 @@ import CreateEvent from "../components/events/CreateEvent";
 import AddNewRole from "../components/subAdmin/AddNewRole";
 import StaffDetailsAdd from "../components/staff/StaffDetailsAdd";
 import PolicyEdit from "../components/policy/PolicyEdit";
+import CalendarInput from "../ui/CalenderInput";
+import UpoloadBulk from "../components/staff/UploadBulk";
 const Text = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -51,6 +53,7 @@ const Text = () => {
         onView={handleView}
         onSort={handleSort}
         onDelete={handleDelete}
+        showEdit
       />
       <br />
       <br></br>
@@ -83,7 +86,8 @@ const Text = () => {
     <StaffDetailsAdd/>
 
 
-    <PolicyEdit/>
+    <PolicyEdit/><CalendarInput/>
+    <UpoloadBulk/>
     </>
   );
 };

@@ -48,95 +48,96 @@ const EventsPage = () => {
         justifyContent={"space-between"}
         paddingBottom={2}
       >
-          <Box display="flex" width={"50%"} gap={1}>
-            <Button
-              style={{
-                cursor: 'pointer',
-                textTransform: "none",
-                backgroundColor:  '#79001D',
-                borderRadius:"8px",
-                border: "1px solid rgba(226, 232, 240, 1)",
-                padding: "10px",
-                color: '#fff'
-              }}
-              // onClick={() => setSelectedTab('functional')}
-            >
-              All
-            </Button>
-           
-            <Button
-              style={{
-                cursor: 'pointer',
-                textTransform: "none",
-                backgroundColor:  "#fff",
-                borderRadius:"8px",
-                border: "1px solid rgba(226, 232, 240, 1)",
-                padding: "10px",
-                color: "#4D515A"
-              }}
-              // onClick={() => setSelectedTab('locational')}
-            >
-              Pending
-            </Button>
-            <Button
-              style={{
-                cursor: 'pointer',
-                textTransform: "none",
-                backgroundColor:  "#fff",
-                border: "1px solid rgba(226, 232, 240, 1)",
-                borderRadius:"8px",
-                padding: "10px",
-                color: "#4D515A"
-              }}
-              // onClick={() => setSelectedTab('locational')}
-            >
-              Approved
-            </Button>
-            <Button
-              style={{
-                cursor: 'pointer',
-                textTransform: "none",
-                borderRadius:"8px",
-                backgroundColor:  "#fff",
-                border: "1px solid rgba(226, 232, 240, 1)",
-                padding: "10px",
-                color: "#4D515A"
-              }}
-              // onClick={() => setSelectedTab('locational')}
-            >
-              Rejected
-            </Button>
-          </Box><Stack direction={"row"} spacing={2}>
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          width={"44px"}
-          height={"44px"}
-          borderRadius={"7px"}
-          boxShadow={
-            "0 -4px 6px -1px rgba(0, 0, 0, 0.01), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)"
-          }
-          onClick={handleOpenFilter}
-          sx={{ cursor: "pointer" }}
-          bgcolor={"#fff"}
-        >
-          <FilterIcon />
+        <Box display="flex" width={"50%"} gap={1}>
+          <Button
+            style={{
+              cursor: "pointer",
+              textTransform: "none",
+              backgroundColor: "#79001D",
+              borderRadius: "8px",
+              border: "1px solid rgba(226, 232, 240, 1)",
+              padding: "10px",
+              color: "#fff",
+            }}
+            // onClick={() => setSelectedTab('functional')}
+          >
+            All
+          </Button>
+
+          <Button
+            style={{
+              cursor: "pointer",
+              textTransform: "none",
+              backgroundColor: "#fff",
+              borderRadius: "8px",
+              border: "1px solid rgba(226, 232, 240, 1)",
+              padding: "10px",
+              color: "#4D515A",
+            }}
+            // onClick={() => setSelectedTab('locational')}
+          >
+            Pending
+          </Button>
+          <Button
+            style={{
+              cursor: "pointer",
+              textTransform: "none",
+              backgroundColor: "#fff",
+              border: "1px solid rgba(226, 232, 240, 1)",
+              borderRadius: "8px",
+              padding: "10px",
+              color: "#4D515A",
+            }}
+            // onClick={() => setSelectedTab('locational')}
+          >
+            Approved
+          </Button>
+          <Button
+            style={{
+              cursor: "pointer",
+              textTransform: "none",
+              borderRadius: "8px",
+              backgroundColor: "#fff",
+              border: "1px solid rgba(226, 232, 240, 1)",
+              padding: "10px",
+              color: "#4D515A",
+            }}
+            // onClick={() => setSelectedTab('locational')}
+          >
+            Rejected
+          </Button>
         </Box>
-        <Button
-              style={{
-                cursor: 'pointer',
-                textTransform: "none",
-                backgroundColor:  '#79001D',
-                borderRadius:"8px",
-                border: "1px solid rgba(226, 232, 240, 1)",
-                padding: "10px",
-                color: '#fff'
-              }}
-              onClick={handleOpenEvent}
-            >
-              Create New
-            </Button>
+        <Stack direction={"row"} spacing={2}>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            width={"44px"}
+            height={"44px"}
+            borderRadius={"7px"}
+            boxShadow={
+              "0 -4px 6px -1px rgba(0, 0, 0, 0.01), 0 -2px 4px -1px rgba(0, 0, 0, 0.06)"
+            }
+            onClick={handleOpenFilter}
+            sx={{ cursor: "pointer" }}
+            bgcolor={"#fff"}
+          >
+            <FilterIcon />
+          </Box>
+          <Button
+            style={{
+              cursor: "pointer",
+              textTransform: "none",
+              backgroundColor: "#79001D",
+              borderRadius: "8px",
+              border: "1px solid rgba(226, 232, 240, 1)",
+              padding: "10px",
+              color: "#fff",
+            }}
+            onClick={handleOpenEvent}
+          >
+            Create New
+          </Button>
         </Stack>
       </Stack>
       <Box bgcolor={"white"} paddingTop={0}>

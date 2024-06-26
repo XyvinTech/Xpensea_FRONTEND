@@ -1,5 +1,5 @@
 import { Box, Stack } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import StyledTextField from "../../ui/StyledTextField";
 import StyledSelectField from "../../ui/StyledSelectField";
 import StyledTextArea from "../../ui/StyledTextArea";
@@ -7,6 +7,7 @@ import StyledButton from "../../ui/StyledButton";
 import StyledInput from "../../ui/StyledInput";
 import { PolicyDateIcon } from "../../assets/icons/PolicyDateIcon";
 import { Grid } from "@mui/material"; // Make sure to import Grid from @mui/material
+import CalendarInput from "../../ui/CalenderInput";
 
 const options = [
   { value: "option1", label: "Option 1" },
@@ -15,6 +16,11 @@ const options = [
 ];
 
 const PolicyEdit = ({ onPageChange }) => {
+  const [dateValue, setDateValue] = useState("");
+
+  const handleDateChange = (newDate) => {
+    setDateValue(newDate);
+  };
   return (
     <div>
       <Box padding={3}>
@@ -45,11 +51,16 @@ const PolicyEdit = ({ onPageChange }) => {
               options={options}
               sx={{ flex: 1 }}
             />
-
-            <StyledTextField
-              label={"Activation Date"}
-              endIcon={<PolicyDateIcon />}
+            {/* <StyledInput
+              placeholder="Enter RFID Expiry date"
+              endIcon={<CalendarInput onDateChange={handleDateChange} />}
+              // value={expiryDate}
+              readOnly
               sx={{ flex: 1 }}
+            /> */}
+            <CalendarInput
+              dateValue={dateValue}
+              onDateChange={handleDateChange}
             />
           </Stack>
 
@@ -61,15 +72,20 @@ const PolicyEdit = ({ onPageChange }) => {
             />
           </Stack>
 
-          <Stack direction="row" spacing={2}>  <StyledTextArea placeholder={"Description"} /></Stack>
-        
+          <Stack direction="row" spacing={2}>
+            {" "}
+            <StyledTextArea placeholder={"Description"} />
+          </Stack>
 
           <Grid container spacing={1}>
+            <Grid item md={6} sm={6}></Grid>
             <Grid item md={6} sm={6}>
-            
-            </Grid>
-            <Grid item md={6} sm={6}>
-              <Stack direction="row" spacing={2} marginRight={"8px"} justifyContent="flex-end">
+              <Stack
+                direction="row"
+                spacing={2}
+                marginRight={"8px"}
+                justifyContent="flex-end"
+              >
                 <StyledButton
                   variant="secondary"
                   sx={{ padding: "15px 50px" }}
