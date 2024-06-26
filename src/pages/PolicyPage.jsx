@@ -6,18 +6,21 @@ import { FilterIcon } from "../assets/icons/FilterIcon";
 import StyledTable from "../ui/StyledTable";
 import StyledFilter from "../components/StyledFilter";
 import CreateEvent from "../components/events/CreateEvent";
+import ShareVia from "../components/policy/ShareVia";
+import PolicyEdit from "../components/policy/PolicyEdit";
 const PolicyPage = () => {
   const navigate = useNavigate();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
-  const [eventOpen, setEventOpen] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [policyOpen, setPolicyOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
   };
-  const handleView = (id) => {
+  const handleShare = (id) => {
     console.log("View item:", id);
-    navigate(`/approvals/view`);
+    setShareOpen(true);
   };
 
   const handleDelete = (id) => {
@@ -34,12 +37,14 @@ const PolicyPage = () => {
   const handleCloseFilter = () => {
     setFilterOpen(false);
   };
-  const handleOpenEvent = () => {
-    setEventOpen(true);
+  const handleOpenPolicy = () => {
+    setPolicyOpen(true);
   };
-
-  const handleCloseEvent = () => {
-    setEventOpen(false);
+  const handleClosePolicy = () => {
+    setPolicyOpen(false);
+  };
+  const handleCloseShare = () => {
+    setShareOpen(false);
   };
   return (
     <>
@@ -134,7 +139,7 @@ const PolicyPage = () => {
               padding: "10px",
               color: "#fff",
             }}
-            onClick={handleOpenEvent}
+            onClick={handleOpenPolicy}
           >
             Create New
           </Button>
@@ -145,14 +150,15 @@ const PolicyPage = () => {
           columns={userColumns}
           data={userData}
           onSelectionChange={handleSelectionChange}
-          onView={handleView}
+          onShare={handleShare}
           onSort={handleSort}
           onDelete={handleDelete}
           showShare
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <CreateEvent open={eventOpen} onClose={handleCloseEvent} />
+      <PolicyEdit open={policyOpen} onClose={handleClosePolicy} />
+      <ShareVia open={shareOpen} onClose={handleCloseShare} />
     </>
   );
 };

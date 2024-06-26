@@ -71,8 +71,10 @@ const StyledTable = ({
   onDelete,
   onEdit,
   onSort,
+  onShare,
   showEdit,
-  showShare
+  showShare,
+  dashboard,
 }) => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -118,7 +120,10 @@ const StyledTable = ({
     onEdit(rowId);
     handleMenuClose();
   };
-
+  const handleShare = () => {
+    onShare(rowId);
+    handleMenuClose();
+  };
   const handleRowClick = (id) => {
     onView(id);
   };
@@ -247,14 +252,14 @@ const StyledTable = ({
                     open={Boolean(anchorEl) && rowId === row.id}
                     onClose={handleMenuClose}
                   >
-                    {!showEdit
+                    {showShare
                       ? [
-                          <MenuItem key="view" onClick={handleView}>
+                          <MenuItem key="view" onClick={handleShare}>
                             <StyledSpan
                               variant={"darkRed"}
                               text={
                                 <>
-                                  <ViewIcon /> View
+                                  <ViewIcon /> share
                                 </>
                               }
                             />
@@ -270,14 +275,36 @@ const StyledTable = ({
                             />
                           </MenuItem>,
                         ]
-                      : 
-                      [
+                      : showEdit
+                      ? [
                           <MenuItem key="edit" onClick={handleEdit}>
                             <StyledSpan
                               variant={"blue"}
                               text={
                                 <>
                                   <EditIcon /> Edit
+                                </>
+                              }
+                            />
+                          </MenuItem>,
+                          <MenuItem key="delete" onClick={handleDelete}>
+                            <StyledSpan
+                              variant={"red"}
+                              text={
+                                <>
+                                  <DeleteIcon /> Delete
+                                </>
+                              }
+                            />
+                          </MenuItem>,
+                        ]
+                      : [
+                          <MenuItem key="view" onClick={handleView}>
+                            <StyledSpan
+                              variant={"darkRed"}
+                              text={
+                                <>
+                                  <ViewIcon /> view
                                 </>
                               }
                             />
@@ -300,7 +327,7 @@ const StyledTable = ({
           </TableBody>
         </Table>
         <Divider />
-        {!showEdit && (
+        {!dashboard && (
           <Stack
             padding={2}
             component="div"

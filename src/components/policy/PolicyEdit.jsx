@@ -1,4 +1,4 @@
-import { Box, Stack } from "@mui/material";
+import { Box, Dialog, Stack } from "@mui/material";
 import React, { useState } from "react";
 import StyledTextField from "../../ui/StyledTextField";
 import StyledSelectField from "../../ui/StyledSelectField";
@@ -15,14 +15,14 @@ const options = [
   { value: "option3", label: "Option 3" },
 ];
 
-const PolicyEdit = ({ onPageChange }) => {
+const PolicyEdit = ({ open, onClose }) => {
   const [dateValue, setDateValue] = useState("");
 
   const handleDateChange = (newDate) => {
     setDateValue(newDate);
   };
   return (
-    <div>
+    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <Box padding={3}>
         <Stack spacing={2}>
           <Box
@@ -103,7 +103,7 @@ const PolicyEdit = ({ onPageChange }) => {
           </Grid>
         </Stack>
       </Box>
-    </div>
+    </Dialog>
   );
 };
 
