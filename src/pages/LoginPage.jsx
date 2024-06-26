@@ -38,14 +38,14 @@ const LoginPage = () => {
   const onSubmit = data => {
     console.log(data);
     // Handle different submissions based on currentPaper state
-    if (currentPaper === 1) {
-      // Handle sign-in
-    } else if (currentPaper === 2) {
-      // Handle forgot password
-    } else if (currentPaper === 3) {
-      // Handle change password
-      setCurrentPaper(4);
-    }
+    // if (currentPaper === 1) {
+    //   // Handle sign-in
+    // } else if (currentPaper === 2) {
+    //   // Handle forgot password
+    // } else if (currentPaper === 3) {
+    //   // Handle change password
+    //   setCurrentPaper(4);
+    // }
   };
 
   return (

@@ -3,43 +3,52 @@ import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import React from "react";
 
-const StyledInput = ({ placeholder, startIcon, endIcon, value, type }) => {
+const StyledInput = ({ placeholder, startIcon, endIcon, type,onChange }) => {
   return (
-    <FormControl fullWidth variant="outlined">
+    <FormControl sx={{ width: "100%" }} variant="outlined">
       <OutlinedInput
         type={type}
+        onChange={onChange} 
         placeholder={placeholder}
-        value={value}
         startAdornment={
           startIcon ? (
-            <InputAdornment position="start">
+            <InputAdornment position="start" sx={{ marginLeft: "12px" }}>
               {startIcon}
             </InputAdornment>
           ) : null
         }
         endAdornment={
           endIcon ? (
-            <InputAdornment position="end" onClick={endIcon.props.onClick}>
+            <InputAdornment
+              position="end"
+              sx={{ marginRight: "12px", cursor: "pointer" }}
+              onClick={() => endIcon.props.onClick && endIcon.props.onClick()}
+            >
               {endIcon}
             </InputAdornment>
           ) : null
         }
         sx={{
-          '& .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'rgba(0, 0, 0, 0.2)',
+          width: "100%",
+          padding: "3px",
+          backgroundColor: "#ffffff",
+          borderRadius: "5px",
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "1px solid rgba(0, 0, 0, 0.2)",
           },
-          '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'rgba(0, 0, 0, 0.2)',
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "rgba(0, 0, 0, 0.2)",
           },
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'rgba(0, 0, 0, 0.2)',
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "rgba(0, 0, 0, 0.2)",
           },
-          '& .MuiInputBase-input': {
-            padding: '14px',
+          "& .MuiInputBase-input": {
+            color: "",
+            padding: "14px",
           },
-          '& input::placeholder': {
-            color: '#000000',
-            fontWeight: '500',
+          "& input::placeholder": {
+            color: "#000000",
+            fontWeight: "500",
           },
         }}
       />
