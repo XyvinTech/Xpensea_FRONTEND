@@ -19,6 +19,9 @@ import StaffDetailsAdd from "../components/staff/StaffDetailsAdd";
 import PolicyEdit from "../components/policy/PolicyEdit";
 import CalendarInput from "../ui/CalenderInput";
 import UpoloadBulk from "../components/staff/UploadBulk";
+import PasswordSuccess from "../components/login/PasswordSuccess";
+import ChangePassword from "../components/login/ChangePassword";
+import ForgotPassword from "../components/login/ForgotPassword";
 const Text = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -88,6 +91,10 @@ const Text = () => {
 
     <PolicyEdit/><CalendarInput/>
     <UpoloadBulk/>
+
+    <PasswordSuccess/>
+    <ChangePassword/>
+    <ForgotPassword/>
     </>
   );
 };
