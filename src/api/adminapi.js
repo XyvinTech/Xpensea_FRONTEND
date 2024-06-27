@@ -11,3 +11,12 @@ export const getLogin = async (datas) => {
     console.error("Error caught:", error);
   }
 };
+export const getAdmin = async () => {
+  try {
+    const response = await axiosInstance.get("/admin");
+    console.log("response",response.data)
+    return response.data;
+  } catch (error) {
+    console.error("Error caught:", error);
+  }
+};

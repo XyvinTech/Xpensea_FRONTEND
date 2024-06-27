@@ -126,7 +126,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path:"/staffs/view",
+    path: "/staffs/:id",
     element: (
       <Layout>
         <StaffView />

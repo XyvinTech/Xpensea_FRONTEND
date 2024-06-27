@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StyledTable from "../../ui/StyledTable";
-import { userColumns, userData } from "../../assets/json/AllData";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import StyledFilter from "../../components/StyledFilter";
 import { FilterIcon } from "../../assets/icons/FilterIcon";
 import UpoloadBulk from "../../components/staff/UploadBulk";
 import StaffDetailsAdd from "../../components/staff/StaffDetailsAdd";
+import { useListStore } from "../../store/listStore";
 const StaffPage = () => {
+
   const navigate = useNavigate();
+  const { lists, fetchLists } = useListStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [bulkOpen, setBulkOpen] = useState(false);
@@ -23,7 +25,7 @@ const StaffPage = () => {
   };
   const handleView = (id) => {
     console.log("View item:", id);
-    navigate('/staffs/view')
+    navigate(`/staffs/${id}`);
    
   };
   const handleDelete = (id) => {
@@ -54,6 +56,22 @@ const StaffPage = () => {
   const handleCloseStaff = () => {
     setStaffOpen(false);
   };
+  const userColumns = [
+    { title: "Name", field: "name", sortable: false },
+    { title: "Date of join", field: "createdAt",sortable: true  },
+    { title: "Position", field: "userType",sortable: true  },
+    { title: "Tier", field: "tier",sortable: true  },
+    { title: "Status", field: "status",sortable: true  },
+    { title: "e-mail", field: "email",sortable: true  },
+    { title: "Locations", field: "location",sortable: false  },
+    { title: "contact number", field: "contact number",sortable: false },
+  ];
+  useEffect(() => {
+    let filter = {};
+    filter.type ='users' ;
+    fetchLists(filter);
+  }, []);
+  console.log(lists)
   return (
     <>
       <Stack
@@ -170,7 +188,7 @@ const StaffPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          data={userData}
+          data={lists}
           onSelectionChange={handleSelectionChange}
           onEdit={handleEdit}
           onSort={handleSort}

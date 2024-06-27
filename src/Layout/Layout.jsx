@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -36,6 +36,7 @@ import { Avatar, Badge, Collapse, Dialog, Stack, useMediaQuery, useTheme } from 
 import StyledSearchbar from "../ui/StyledSearchbar";
 import styled from "styled-components";
 import { SyncIcon } from "../assets/icons/SyncIcon";
+import { useAdminStore } from "../store/adminStore";
 const drawerWidth = 300;
 const subNavigation = [
   { name: "Dashboard", to: "/", icon: <DashboardIcon /> },
@@ -56,6 +57,11 @@ const subNavigation = [
   { name: "Policy", to: "/policy", icon: <PolicyIcon /> },
 ];
 const SimpleDialog = ({ open, onClose }) => {
+  const { admin, getAdmin,isChange } = useAdminStore();
+  useEffect(() => {
+    getAdmin();
+  }, [isChange]);
+  console.log("user",admin)
   return (
     <Dialog
       open={open}
@@ -82,10 +88,10 @@ const SimpleDialog = ({ open, onClose }) => {
           />
           <Box>
             <Typography variant="h3" color="#292D32" paddingBottom={1}>
-              Alex Meian
+            {admin?.name}
             </Typography>
             <Typography variant="h4" color="rgba(41, 45, 50, 0.44)">
-              Product manager
+             {admin?.designation}
             </Typography>
           </Box>
         </Stack>
@@ -100,7 +106,7 @@ const SimpleDialog = ({ open, onClose }) => {
             bgcolor={"#F4F4F5"}
           >
             <EmailIcon />
-            <Typography variant="h4">Alexmeian45@gmail.com</Typography>
+            <Typography variant="h4">{admin?.email}</Typography>
           </Stack>
           <Stack
             direction="row"
@@ -132,6 +138,7 @@ const SimpleDialog = ({ open, onClose }) => {
 };
 
 const Layout = (props) => {
+  const{admin}=useAdminStore();
   const { window, children } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -179,6 +186,7 @@ const Layout = (props) => {
     }
     return "Dashboard";
   };
+
   const drawer = (
     <div>
       <Toolbar sx={{ height: "88px" }}>
@@ -368,10 +376,10 @@ const Layout = (props) => {
               />
               <Box>
                 <Typography variant="h5" color={"#292D32"}>
-                  Alex meian
+                 {admin?.name}
                 </Typography>
                 <Typography variant="h6" color={"rgba(41, 45, 50, 0.44)"}>
-                  Product manager
+                {admin?.designation}
                 </Typography>
               </Box>
               <ExpandMoreIcon />

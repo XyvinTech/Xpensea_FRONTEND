@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { userColumns, userData } from "../assets/json/AllData";
+import React, { useEffect, useState } from "react";
+import {  userData } from "../assets/json/AllData";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FilterIcon } from "../assets/icons/FilterIcon";
 import StyledTable from "../ui/StyledTable";
 import StyledFilter from "../components/StyledFilter";
-import CreateEvent from "../components/events/CreateEvent";
-import RoleManagement from "../components/subAdmin/RoleManagement";
 import AddExpense from "../components/tier/AddExpense";
+import { useListStore } from "../store/listStore";
 const TierPage = () => {
   const navigate = useNavigate();
+  const { lists, fetchLists } = useListStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [isChange, setIsChange] = useState(false);
   const [expenseOpen, setExpenseOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
@@ -43,6 +44,23 @@ const TierPage = () => {
   const handleCloseExpense = () => {
     setExpenseOpen(false);
   };
+  const userColumns = [
+    { title: "Tier Title", field: "title", sortable: false },
+    { title: "Date", field: "activationDate",sortable: true  },
+    { title: "No of Employe", field: "date",sortable: true  },
+    { title: "Max Amount", field: "totalAmount",sortable: true  },
+    { title: "No of allowance", field: "total",sortable: true  },
+  ];
+  const handleChange = () => {
+    setIsChange(!isChange); // Toggle isChange to trigger re-fetch
+  };
+  useEffect(() => {
+    let filter = {};
+    filter.type ='tiers' ;
+    fetchLists(filter);
+  }, [isChange]);
+  console.log(lists)
+
   return (
     <>
       <Stack
@@ -145,7 +163,7 @@ const TierPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          data={userData}
+          data={lists}
           onSelectionChange={handleSelectionChange}
           onView={handleView}
           onSort={handleSort}
@@ -153,7 +171,7 @@ const TierPage = () => {
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <AddExpense open={expenseOpen} onClose={handleCloseExpense} />
+      <AddExpense open={expenseOpen} onClose={handleCloseExpense}  onChange={handleChange} />
     </>
   );
 };

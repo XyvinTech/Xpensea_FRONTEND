@@ -20,19 +20,22 @@ const PolicyEdit = ({ open, onClose }) => {
   const { control, handleSubmit, reset } = useForm();
   const handleClear = () => {
     onClose();
+    reset();
   };
 
   const onSubmit = (data) => {
-    console.log("Form data:", data);
+    const formData = {
+      ...data,
+      tier: data.tier.value,
+      submitter: data.submitter.value,
+      location: data.location.value,
+    };
+    console.log("Form data:", formData);
     onClose();
     reset();
   };
 
-  const [dateValue, setDateValue] = useState("");
-
-  const handleDateChange = (newDate) => {
-    setDateValue(newDate);
-  };
+ 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <Box padding={3}>
@@ -56,7 +59,7 @@ const PolicyEdit = ({ open, onClose }) => {
                 render={({ field }) => (
                   <StyledTextField
                     {...field}
-                    placeholder={"Policy Title"}
+                    label={"Policy Title"}
                     sx={{ flex: 1 }}
                   />
                 )}
@@ -92,16 +95,17 @@ const PolicyEdit = ({ open, onClose }) => {
                 )}
               />
 
-              {/* <StyledInput
-              placeholder="Enter RFID Expiry date"
-              endIcon={<CalendarInput onDateChange={handleDateChange} />}
-              // value={expiryDate}
-              readOnly
-              sx={{ flex: 1 }}
-            /> */}
-              <CalendarInput
-                dateValue={dateValue}
-                onDateChange={handleDateChange}
+              <Controller
+                name="activationDate"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <CalendarInput
+                    {...field}
+                    dateValue={field.value}
+                    onDateChange={field.onChange}
+                  />
+                )}
               />
             </Stack>
 

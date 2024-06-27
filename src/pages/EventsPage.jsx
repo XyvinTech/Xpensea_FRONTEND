@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import { userColumns, userData } from "../assets/json/AllData";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FilterIcon } from "../assets/icons/FilterIcon";
 import StyledTable from "../ui/StyledTable";
 import StyledFilter from "../components/StyledFilter";
 import CreateEvent from "../components/events/CreateEvent";
+import { useListStore } from "../store/listStore";
 const EventsPage = () => {
   const navigate = useNavigate();
+  const { lists, fetchLists } = useListStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
@@ -41,6 +42,20 @@ const EventsPage = () => {
   const handleCloseEvent = () => {
     setEventOpen(false);
   };
+  const userColumns = [
+    { title: "Event Title", field: "eventName", sortable: false },
+    { title: "start Date", field: "startDate",sortable: true  },
+    { title: "End Date", field: "endDate",sortable: true  },
+    { title: "No of Staffs", field: "staffs",sortable: true  },
+    { title: "Locations", field: "location",sortable: true  },
+    { title: "Status", field: "status",sortable: true  },
+  ];
+  useEffect(() => {
+    let filter = {};
+    filter.type ='events' ;
+    fetchLists(filter);
+  }, []);
+  console.log(lists)
   return (
     <>
       <Stack
@@ -143,7 +158,7 @@ const EventsPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          data={userData}
+          data={lists}
           onSelectionChange={handleSelectionChange}
           onView={handleView}
           onSort={handleSort}

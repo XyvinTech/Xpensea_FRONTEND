@@ -28,6 +28,7 @@ import { EventIcon } from "../assets/icons/EventIcon";
 import { Icon1 } from "../assets/icons/Icon1";
 import { Icon2 } from "../assets/icons/Icon2";
 import { EditIcon } from "../assets/icons/EditIcon";
+import { ShareIcon } from "../assets/icons/ShareIcon";
 
 const StyledTableCell = styled(TableCell)`
   &.${tableCellClasses.head} {
@@ -132,8 +133,8 @@ const StyledTable = ({
   const getStatusVariant = (status) => {
     switch (status) {
       case "pending":
-        return "yellow";
-      case "completed":
+        return "pending";
+      case "scheduled":
         return "green";
       case "in-progress":
         return "blue";
@@ -174,11 +175,11 @@ const StyledTable = ({
                   padding={column.padding || "normal"}
                 >
                   {column.sortable ? (
-                    <TableSortLabel 
+                    <TableSortLabel
                       IconComponent={SortIcon}
                       onClick={() => onSort(column.field)}
                     >
-                          <Box marginRight={1}> {column.title}</Box> 
+                      <Box marginRight={1}> {column.title}</Box>
                     </TableSortLabel>
                   ) : (
                     column.title
@@ -192,13 +193,13 @@ const StyledTable = ({
             {data.map((row) => (
               <StyledTableRow
                 role="checkbox"
-                key={row.id}
-                selected={isSelected(row.id)}
+                key={row._id}
+                selected={isSelected(row._id)}
               >
                 <StyledTableCell padding="checkbox">
                   <StyledCheckbox
-                    checked={isSelected(row.id)}
-                    onChange={(event) => handleRowCheckboxChange(event, row.id)}
+                    checked={isSelected(row._id)}
+                    onChange={(event) => handleRowCheckboxChange(event, row._id)}
                   />
                 </StyledTableCell>
                 {columns.map((column, index) => (
@@ -206,7 +207,7 @@ const StyledTable = ({
                     key={column.field}
                     padding={column.padding || "normal"}
                     sx={{ cursor: "pointer" }}
-                    onClick={() => handleRowClick(row.id)}
+                    onClick={() => handleRowClick(row._id)}
                   >
                     {index === 0 && (
                       <Box
@@ -214,7 +215,9 @@ const StyledTable = ({
                         alignItems="center"
                         justifyContent="center"
                       >
-                        {getEventIcon(row.event)}{" "}
+                        {getEventIcon(row.event)}
+                        {/* {getIcon(row.event)} */}
+                        {" "}
                         {column.field === "status" ? (
                           <StyledSpan
                             variant={getStatusVariant(row[column.field])}
@@ -241,7 +244,7 @@ const StyledTable = ({
                   <IconButton
                     aria-controls="simple-menu"
                     aria-haspopup="true"
-                    onClick={(event) => handleMenuOpen(event, row.id)}
+                    onClick={(event) => handleMenuOpen(event, row._id)}
                   >
                     <MoreVertIcon />
                   </IconButton>
@@ -249,37 +252,38 @@ const StyledTable = ({
                     id="simple-menu"
                     anchorEl={anchorEl}
                     keepMounted
-                    open={Boolean(anchorEl) && rowId === row.id}
+                    open={Boolean(anchorEl) && rowId === row._id}
                     onClose={handleMenuClose}
                   >
                     {showShare
                       ? [
-                          <MenuItem key="view" onClick={handleShare}>
+                        <MenuItem key="edit" onClick={handleEdit}>
+                        <StyledSpan
+                          variant={"edit"}
+                          text={
+                            <>
+                              <EditIcon /> Edit
+                            </>
+                          }
+                        />
+                      </MenuItem>,
+                          <MenuItem key="share" onClick={handleShare}>
                             <StyledSpan
-                              variant={"darkRed"}
+                              variant={"share"}
                               text={
                                 <>
-                                  <ViewIcon /> share
+                                  <ShareIcon /> share
                                 </>
                               }
                             />
                           </MenuItem>,
-                          <MenuItem key="delete" onClick={handleDelete}>
-                            <StyledSpan
-                              variant={"red"}
-                              text={
-                                <>
-                                  <DeleteIcon /> Delete
-                                </>
-                              }
-                            />
-                          </MenuItem>,
+                         
                         ]
                       : showEdit
                       ? [
                           <MenuItem key="edit" onClick={handleEdit}>
                             <StyledSpan
-                              variant={"blue"}
+                              variant={"edit"}
                               text={
                                 <>
                                   <EditIcon /> Edit

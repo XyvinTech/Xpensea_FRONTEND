@@ -38,7 +38,7 @@ const TextSpan = styled.span`
       background-color: rgba(255, 228, 230, 0.5);
     `}
   ${(props) =>
-    props.variant === "yellow" &&
+    props.variant === "pending" &&
     `
       color: #E07706;
       background-color: rgba(254, 243, 199, 0.5);
@@ -53,10 +53,20 @@ const TextSpan = styled.span`
     `}
 
   ${(props) =>
-    props.variant === "blue" &&
-    `padding: 10px 30px,
+    props.variant === "edit" &&
+    `padding: 10px 40px;
+    border-radius:8px;
       background-color: #EAF2FF;
       color: #5B93FF;
+      width:100%;
+    `}
+      ${(props) =>
+    props.variant === "share" &&
+    `padding: 10px 40px;
+    border-radius:8px;
+      background-color: #F6EFFE;
+      color: #7B61FF;
+      width:100%;
     `}
 `;
 

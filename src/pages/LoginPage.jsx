@@ -7,7 +7,7 @@ import StyledButton from '../ui/StyledButton';
 import { EmailIcon } from '../assets/icons/EmailIcon';
 import { LockIcon } from '../assets/icons/LockIcon';
 import { PasswordIcon } from '../assets/icons/PasswordIcon';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { getLogin } from '../api/adminapi';
 import ForgotPassword from '../components/login/ForgotPassword';
@@ -21,7 +21,7 @@ const LoginPage = () => {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
+  const navigate = useNavigate();
   const {
     control,
     handleSubmit,
@@ -31,7 +31,9 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     try {
       const user = await getLogin(data);
-      console.log(user);
+      console.log(user.data);
+      localStorage.setItem("token", user.data);
+      navigate("/")
     } catch (error) {
       console.error("error", error);
     }

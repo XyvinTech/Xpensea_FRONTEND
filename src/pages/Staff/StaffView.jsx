@@ -3,8 +3,11 @@ import React from "react";
 import { GtIcon } from "../../assets/icons/GtIcon";
 import StaffDetail from "../../components/staff/StaffDetail";
 import Report from "../../components/staff/Report";
+import { useParams } from "react-router-dom";
 
 const StaffView = () => {
+  const { id } = useParams();
+  console.log("fff",id)
   return (
     <>
       <Box display="flex" alignItems="center" paddingTop={2}>
