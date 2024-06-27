@@ -1,5 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
-import React from "react";
+import {  createBrowserRouter } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import App from "../App";
 import Layout from "../Layout/Layout";
@@ -19,6 +18,11 @@ import ApprovalPage from "../pages/Approval/ApprovelPage";
 import StaffView from "../pages/Staff/StaffView";
 
 
+import { PrivateRoute } from "./PrivateRouter";
+
+
+
+
 const router = createBrowserRouter([
   {
     path: "/test",
@@ -33,7 +37,7 @@ const router = createBrowserRouter([
     element: <SignupPage />,
   },  {
     path: "/app",
-    element: <App />,
+    element: <PrivateRoute><App /></PrivateRoute> ,
   },
   {
     path: "/",
