@@ -8,6 +8,7 @@ import StyledInput from "../../ui/StyledInput";
 import { PolicyDateIcon } from "../../assets/icons/PolicyDateIcon";
 import { Grid } from "@mui/material"; // Make sure to import Grid from @mui/material
 import CalendarInput from "../../ui/CalenderInput";
+import { Controller, useForm } from "react-hook-form";
 
 const options = [
   { value: "option1", label: "Option 1" },
@@ -16,6 +17,17 @@ const options = [
 ];
 
 const PolicyEdit = ({ open, onClose }) => {
+  const { control, handleSubmit, reset } = useForm();
+  const handleClear = () => {
+    onClose();
+  };
+
+  const onSubmit = (data) => {
+    console.log("Form data:", data);
+    onClose();
+    reset();
+  };
+
   const [dateValue, setDateValue] = useState("");
 
   const handleDateChange = (newDate) => {
@@ -35,72 +47,118 @@ const PolicyEdit = ({ open, onClose }) => {
             <h2 style={{ flexGrow: 1 }}>Policy</h2>
             <Box position="absolute" right={0}></Box>
           </Box>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Stack direction="row" spacing={2} paddingBottom={2}>
+              <Controller
+                name="policy title"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledTextField
+                    {...field}
+                    placeholder={"Policy Title"}
+                    sx={{ flex: 1 }}
+                  />
+                )}
+              />
 
-          <Stack direction="row" spacing={2}>
-            <StyledTextField label={"Policy Title"} sx={{ flex: 1 }} />
-            <StyledSelectField
-              placeholder={"Tier"}
-              options={options}
-              sx={{ flex: 1 }}
-            />
-          </Stack>
+              <Controller
+                name="tier"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledSelectField
+                    {...field}
+                    placeholder={"Tier"}
+                    options={options}
+                    sx={{ flex: 1 }}
+                  />
+                )}
+              />
+            </Stack>
 
-          <Stack direction="row" spacing={2}>
-            <StyledSelectField
-              placeholder={"Submitter"}
-              options={options}
-              sx={{ flex: 1 }}
-            />
-            {/* <StyledInput
+            <Stack direction="row" spacing={2} paddingBottom={2}>
+              <Controller
+                name="submitter"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledSelectField
+                    {...field}
+                    placeholder={"Submitter"}
+                    options={options}
+                    sx={{ flex: 1 }}
+                  />
+                )}
+              />
+
+              {/* <StyledInput
               placeholder="Enter RFID Expiry date"
               endIcon={<CalendarInput onDateChange={handleDateChange} />}
               // value={expiryDate}
               readOnly
               sx={{ flex: 1 }}
             /> */}
-            <CalendarInput
-              dateValue={dateValue}
-              onDateChange={handleDateChange}
-            />
-          </Stack>
+              <CalendarInput
+                dateValue={dateValue}
+                onDateChange={handleDateChange}
+              />
+            </Stack>
 
-          <Stack direction="row" sx={{ width: "49.3%" }}>
-            <StyledSelectField
-              placeholder={"Location"}
-              options={options}
-              sx={{ flex: 1 }}
-            />
-          </Stack>
+            <Stack direction="row" sx={{ width: "49.3%" }} paddingBottom={2}>
+              <Controller
+                name="location"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledSelectField
+                    {...field}
+                    placeholder={"Location"}
+                    options={options}
+                    sx={{ flex: 1 }}
+                  />
+                )}
+              />
+            </Stack>
 
-          <Stack direction="row" spacing={2}>
-            {" "}
-            <StyledTextArea placeholder={"Description"} />
-          </Stack>
+            <Stack direction="row" spacing={2} paddingBottom={2}>
+              {" "}
+              <Controller
+                name="description"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledTextArea {...field} placeholder={"Description"} />
+                )}
+              />
+            </Stack>
 
-          <Grid container spacing={1}>
-            <Grid item md={6} sm={6}></Grid>
-            <Grid item md={6} sm={6}>
-              <Stack
-                direction="row"
-                spacing={2}
-                marginRight={"8px"}
-                justifyContent="flex-end"
-              >
-                <StyledButton
-                  variant="secondary"
-                  sx={{ padding: "15px 50px" }}
-                  name="Back"
-                  onClick={() => onPageChange(null, "prev")}
-                />
-                <StyledButton
-                  variant="primary"
-                  sx={{ padding: "15px 50px" }}
-                  name="Save"
-                  onClick={() => onPageChange(null, "next")}
-                />
-              </Stack>
+            <Grid container spacing={1}>
+              <Grid item md={6} sm={6}></Grid>
+              <Grid item md={6} sm={6}>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  marginRight={"8px"}
+                  justifyContent="flex-end"
+                  paddingBottom={2}
+                >
+                  <StyledButton
+                    variant="secondary"
+                    sx={{ padding: "15px 50px" }}
+                    name="Back"
+                    onClick={handleClear}
+                  />
+                  <StyledButton
+                    variant="primary"
+                    type="submit"
+                    sx={{ padding: "15px 50px" }}
+                    name="Save"
+                  />
+                </Stack>
+              </Grid>
             </Grid>
-          </Grid>
+          </form>
         </Stack>
       </Box>
     </Dialog>
