@@ -43,7 +43,7 @@ const CreateEvent = ({ open, onClose }) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack direction="row" spacing={2} paddingBottom={2}>
               <Controller
-                name="eventTitle"
+                name="eventName"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
@@ -98,7 +98,7 @@ const CreateEvent = ({ open, onClose }) => {
             </Stack>
             <Stack direction="row" spacing={2} paddingBottom={2}>
             <Controller
-                name="staff"
+                name="staffs"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
@@ -111,7 +111,7 @@ const CreateEvent = ({ open, onClose }) => {
                 )}
               />
                <Controller
-                name="day"
+                name="days"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
