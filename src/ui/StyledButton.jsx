@@ -72,11 +72,18 @@ const buttonVariants = css`
       background-color: #ffffff;
     `}
 `;
-
+const disabledStyles = css`
+  ${(props) =>
+    props.disabled &&
+    css`
+      opacity: 0.6;
+      cursor: not-allowed;
+    `}
+`;
 const ButtonContainer = styled.button`
   padding: 15px 20px;
   text-align: center;
-  width: 100%;  // Ensure the button container is full width
+  width: 100%; // Ensure the button container is full width
   font-family: "Inter", "sans-serif";
   display: flex;
   justify-content: center;
@@ -84,11 +91,17 @@ const ButtonContainer = styled.button`
   border-radius: 4px;
   cursor: pointer;
   ${buttonVariants}
+  ${disabledStyles}
 `;
 
-const StyledButton = ({ name, variant, color, onClick }) => {
+const StyledButton = ({ name, variant, color, onClick, disabled }) => {
   return (
-    <ButtonContainer variant={variant} color={color} onClick={onClick}>
+    <ButtonContainer
+      variant={variant}
+      color={color}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {name}
     </ButtonContainer>
   );

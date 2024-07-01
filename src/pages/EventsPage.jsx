@@ -15,6 +15,7 @@ const EventsPage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
+  const [status, setStatus] = useState(null);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
@@ -61,10 +62,13 @@ const EventsPage = () => {
     { title: "Status", field: "status",sortable: true  },
   ];
   useEffect(() => {
-    let filter = {};
-    filter.type ='events' ;
+    let filter = {type : 'events'};
+   
+    if (status !== null) {
+      filter.status = status;
+    }
     fetchLists(filter);
-  }, [isChange]);
+  }, [isChange,fetchLists,status]);
   console.log(lists)
   return (
     <>
@@ -78,13 +82,13 @@ const EventsPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: "#79001D",
+              backgroundColor: status === null ? "#79001D" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
-              color: "#fff",
+              color: status === null ? "#fff" : "#4D515A",
             }}
-            // onClick={() => setSelectedTab('functional')}
+            onClick={() => setStatus(null)}
           >
             All
           </Button>
@@ -93,43 +97,43 @@ const EventsPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: "#fff",
+              backgroundColor: status ==='inprogress' ? "#79001D" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
-              color: "#4D515A",
+              color: status === 'inprogress' ? "#fff" : "#4D515A",
             }}
-            // onClick={() => setSelectedTab('locational')}
+            onClick={() => setStatus('inprogress')} 
           >
-            Pending
+            Inprogress
           </Button>
           <Button
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: "#fff",
+              backgroundColor: status ==='scheduled' ? "#79001D" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               borderRadius: "8px",
               padding: "10px",
-              color: "#4D515A",
+              color: status === 'scheduled' ? "#fff" : "#4D515A",
             }}
-            // onClick={() => setSelectedTab('locational')}
+            onClick={() => setStatus('scheduled')} 
           >
-            Approved
+            Scheduled
           </Button>
           <Button
             style={{
               cursor: "pointer",
               textTransform: "none",
               borderRadius: "8px",
-              backgroundColor: "#fff",
+              backgroundColor: status ==='done' ? "#79001D" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
-              color: "#4D515A",
+              color: status === 'done' ? "#fff" : "#4D515A",
             }}
-            // onClick={() => setSelectedTab('locational')}
+            onClick={() => setStatus('done')} 
           >
-            Rejected
+            Done
           </Button>
         </Box>
         <Stack direction={"row"} spacing={2}>

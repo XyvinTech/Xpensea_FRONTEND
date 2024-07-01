@@ -393,12 +393,15 @@ const StyledTable = ({
                       <StyledButton
                         variant="action"
                         name="Previous"
-                        onClick={() => onPageChange(null, "prev")}
+                        onClick={pageDec}
+                        disabled={pageNo === 1}
                       />
                       <StyledButton
                         variant="action"
                         name="Next"
-                        onClick={() => onPageChange(null, "next")}
+                        onClick={pageInc}
+                        disabled={pageNo === Math.ceil(totalCount / rowPerSize)}
+
                       />
                     </Stack>
                   )}

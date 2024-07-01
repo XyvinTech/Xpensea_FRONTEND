@@ -16,7 +16,7 @@ const StaffPage = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [isChange, setIsChange] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
-
+  const [status, setStatus] = useState(null);
   const [bulkOpen, setBulkOpen] = useState(false);
   const [staffOpen, setStaffOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
@@ -80,16 +80,18 @@ const StaffPage = () => {
     { title: "contact number", field: "mobile",sortable: false },
   ];
   useEffect(() => {
-    let filter = {};
-    filter.type ='users' ;
+    let filter = { type: "users" };
+    if (status !== null) {
+      filter.isVerified = status;
+    }
     fetchLists(filter);
-  }, [isChange,fetchLists]);
-  console.log(lists)
+  }, [isChange,fetchLists,status]);
+  console.log(status)
   return (
     <>
       <Stack
         direction={"row"}
-        justifyContent={"space-between"}
+        justifyContent={"space-between"}s
         paddingBottom={2}
       >
           <Box display="flex" width={"50%"} gap={1}>
@@ -97,13 +99,13 @@ const StaffPage = () => {
               style={{
                 cursor: 'pointer',
                 textTransform: "none",
-                backgroundColor:  '#79001D',
+                backgroundColor: status === null ? "#79001D" : "#fff",
                 borderRadius:"8px",
                 border: "1px solid rgba(226, 232, 240, 1)",
                 padding: "10px",
-                color: '#fff'
+                color: status === null ? "#fff" : "#4D515A",
               }}
-              // onClick={() => setSelectedTab('functional')}
+              onClick={() => setStatus(null)}
             >
               All
             </Button>
@@ -112,44 +114,30 @@ const StaffPage = () => {
               style={{
                 cursor: 'pointer',
                 textTransform: "none",
-                backgroundColor:  "#fff",
+                backgroundColor: status ===true ? "#79001D" : "#fff",
                 borderRadius:"8px",
                 border: "1px solid rgba(226, 232, 240, 1)",
                 padding: "10px",
-                color: "#4D515A"
+                color: status === true ? "#fff" : "#4D515A",
               }}
-              // onClick={() => setSelectedTab('locational')}
+              onClick={() => setStatus(true)} 
             >
-              Pending
-            </Button>
+              Activated      </Button>
             <Button
               style={{
                 cursor: 'pointer',
                 textTransform: "none",
-                backgroundColor:  "#fff",
+                backgroundColor: status ===false ? "#79001D" : "#fff",
                 border: "1px solid rgba(226, 232, 240, 1)",
                 borderRadius:"8px",
                 padding: "10px",
-                color: "#4D515A"
+                color: status === false ? "#fff" : "#4D515A",
               }}
-              // onClick={() => setSelectedTab('locational')}
+              onClick={() => setStatus(false)}
             >
-              Approved
+              Deactivated
             </Button>
-            <Button
-              style={{
-                cursor: 'pointer',
-                textTransform: "none",
-                borderRadius:"8px",
-                backgroundColor:  "#fff",
-                border: "1px solid rgba(226, 232, 240, 1)",
-                padding: "10px",
-                color: "#4D515A"
-              }}
-              // onClick={() => setSelectedTab('locational')}
-            >
-              Rejected
-            </Button>
+           
           </Box>
           <Stack direction={"row"} spacing={2}>
           <Box
