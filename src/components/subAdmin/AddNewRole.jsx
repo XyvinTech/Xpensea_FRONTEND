@@ -50,6 +50,13 @@ const AddNewRole = ({ open, onClose, onChange }) => {
   };
 
   const handleClear = () => {
+    reset({
+      name: "",
+      email: "",
+      mobile: "",
+      designation: "",
+      role: "",
+    });
     onClose();
   };
 
