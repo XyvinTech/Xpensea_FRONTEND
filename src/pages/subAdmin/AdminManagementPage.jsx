@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { userColumns, userData } from "../../assets/json/AllData";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { FilterIcon } from "../../assets/icons/FilterIcon";
 import StyledTable from "../../ui/StyledTable";
 import StyledFilter from "../../components/StyledFilter";
-import CreateEvent from "../../components/events/CreateEvent";
 import StyledSearchbar from "../../ui/StyledSearchbar";
 import AddNewRole from "../../components/subAdmin/AddNewRole";
+import { useListStore } from "../../store/listStore";
+import { useAdminStore } from "../../store/adminStore";
 const AdminManagementPage = () => {
-  const navigate = useNavigate();
+  const { isUpdate, updateChange,fetchAdminById ,deleteAdmins} = useAdminStore();
+  const { lists, fetchLists } = useListStore();
+  const [isChange, setIsChange] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
@@ -18,9 +19,19 @@ const AdminManagementPage = () => {
     console.log("Selected items:", newSelectedIds);
   };
  
+  const handleEdit = async(id) => {
+    await fetchAdminById(id)
+    console.log("View item:", isUpdate);
+    updateChange(isUpdate);
+    setEventOpen(true);
 
-  const handleDelete = (id) => {
-    console.log("Delete item :", id);
+  };
+  const handleDelete = async () => {
+    if (selectedRows.length > 0) {
+      await Promise.all(selectedRows.map((id) => deleteAdmins(id))); 
+      setIsChange(!isChange); 
+      setSelectedRows([]); 
+    }
   };
   const handleSort = (field) => {
     console.log(`Sorting by ${field}`);
@@ -40,6 +51,23 @@ const AdminManagementPage = () => {
   const handleCloseEvent = () => {
     setEventOpen(false);
   };
+  const handleChange = () => {
+    setIsChange(!isChange);
+  };
+  const userColumns = [
+    { title: "name", field: "name", sortable: false },
+    { title: "role", field: "role", sortable: true },
+    { title: "email", field: "email", sortable: true },
+    { title: "contact no", field: "mobile", sortable: true },
+    { title: "status", field: "status", sortable: false },
+    { title: "designation", field: "designation", sortable: false },
+  ];
+  useEffect(() => {
+    let filter = {};
+    filter.type = "admins";
+    fetchLists(filter);
+  }, [isChange,fetchLists]);
+  console.log(lists);
   return (
     <>
       <Stack
@@ -85,16 +113,16 @@ const AdminManagementPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          data={userData}
+          data={lists}
           onSelectionChange={handleSelectionChange}
-          // onView={handleView}
+          onEdit={handleEdit}
           showEdit
           onSort={handleSort}
           onDelete={handleDelete}
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <AddNewRole open={eventOpen} onClose={handleCloseEvent} />
+      <AddNewRole open={eventOpen} onClose={handleCloseEvent}isUpdate={isUpdate} onChange={handleChange}/>
     </>
   );
 };

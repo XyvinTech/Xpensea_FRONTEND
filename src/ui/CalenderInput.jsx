@@ -13,7 +13,7 @@ const convertDateFormat = (inputDate) => {
   return new Date(year, month, day);
 };
 
-const CalendarInput = ({ dateValue, onDateChange }) => {
+const CalendarInput = ({ dateValue, onDateChange,placeholder }) => {
   const calDate = dateValue ? convertDateFormat(dateValue) : new Date();
   const [selectedDate, setSelectedDate] = useState(calDate);
   const [isDatePickerOpen, setDatePickerOpen] = useState(false);
@@ -45,7 +45,7 @@ const CalendarInput = ({ dateValue, onDateChange }) => {
   return (
     <div style={{ position: 'relative', display: 'inline-block', width: '100%' }}>
       <StyledInput
-        placeholder="Activation date"
+        placeholder={placeholder}
         endIcon={<CalenderIcon onClick={handleCalendarClick} />}
         value={dateValue || ''}
         readOnly

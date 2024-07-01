@@ -33,7 +33,7 @@ const LoginPage = () => {
       const user = await getLogin(data);
       console.log(user.data);
       localStorage.setItem("token", user.data);
-      navigate("/")
+      navigate("/dashboard")
     } catch (error) {
       console.error("error", error);
     }

@@ -6,11 +6,14 @@ import StyledTable from "../ui/StyledTable";
 import StyledFilter from "../components/StyledFilter";
 import CreateEvent from "../components/events/CreateEvent";
 import { useListStore } from "../store/listStore";
+import { useEventStore } from "../store/eventStore";
 const EventsPage = () => {
   const navigate = useNavigate();
   const { lists, fetchLists } = useListStore();
+  const {deleteEvents} = useEventStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [isChange, setIsChange] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
@@ -18,11 +21,15 @@ const EventsPage = () => {
   };
   const handleView = (id) => {
     console.log("View item:", id);
-    navigate(`/approvals/view`);
+   
   };
 
-  const handleDelete = (id) => {
-    console.log("Delete item :", id);
+  const handleDelete = async () => {
+    if (selectedRows.length > 0) {
+      await Promise.all(selectedRows.map((id) => deleteEvents(id)));
+      setIsChange(!isChange); 
+      setSelectedRows([]); 
+    }
   };
   const handleSort = (field) => {
     console.log(`Sorting by ${field}`);
@@ -42,11 +49,14 @@ const EventsPage = () => {
   const handleCloseEvent = () => {
     setEventOpen(false);
   };
+  const handleChange = () => {
+    setIsChange(!isChange);
+  };
   const userColumns = [
     { title: "Event Title", field: "eventName", sortable: false },
     { title: "start Date", field: "startDate",sortable: true  },
     { title: "End Date", field: "endDate",sortable: true  },
-    { title: "No of Staffs", field: "staffs",sortable: true  },
+    { title: "No of Staffs", field: "staffCount",sortable: true  },
     { title: "Locations", field: "location",sortable: true  },
     { title: "Status", field: "status",sortable: true  },
   ];
@@ -54,7 +64,7 @@ const EventsPage = () => {
     let filter = {};
     filter.type ='events' ;
     fetchLists(filter);
-  }, []);
+  }, [isChange]);
   console.log(lists)
   return (
     <>
@@ -166,7 +176,7 @@ const EventsPage = () => {
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <CreateEvent open={eventOpen} onClose={handleCloseEvent} />
+      <CreateEvent open={eventOpen} onClose={handleCloseEvent} onChange={handleChange} />
     </>
   );
 };

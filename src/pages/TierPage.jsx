@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  userData } from "../assets/json/AllData";
+import { userData } from "../assets/json/AllData";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FilterIcon } from "../assets/icons/FilterIcon";
@@ -7,25 +7,37 @@ import StyledTable from "../ui/StyledTable";
 import StyledFilter from "../components/StyledFilter";
 import AddExpense from "../components/tier/AddExpense";
 import { useListStore } from "../store/listStore";
+import { useTierStore } from "../store/tierStore";
 const TierPage = () => {
   const navigate = useNavigate();
   const { lists, fetchLists } = useListStore();
+  const { isUpdate, updateChange,fetchTierById,deleteTiers } = useTierStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
+  // const [action, setAction] = useState('');
   const [expenseOpen, setExpenseOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
   };
-  const handleView = (id) => {
-    console.log("View item:", id);
-    navigate(`/approvals/view`);
-  };
 
-  const handleDelete = (id) => {
-    console.log("Delete item :", id);
+  const handleEdit = async(id) => {
+    await fetchTierById(id)
+    console.log("View item:", isUpdate);
+    updateChange(isUpdate);
+    // setAction('edit')
+    setExpenseOpen(true);
+
   };
+  const handleDelete = async () => {
+    if (selectedRows.length > 0) {
+      await Promise.all(selectedRows.map((id) => deleteTiers(id))); 
+      setIsChange(!isChange);
+      setSelectedRows([]); 
+    }
+  };
+  
   const handleSort = (field) => {
     console.log(`Sorting by ${field}`);
   };
@@ -46,20 +58,20 @@ const TierPage = () => {
   };
   const userColumns = [
     { title: "Tier Title", field: "title", sortable: false },
-    { title: "Date", field: "activationDate",sortable: true  },
-    { title: "No of Employe", field: "date",sortable: true  },
-    { title: "Max Amount", field: "totalAmount",sortable: true  },
-    { title: "No of allowance", field: "total",sortable: true  },
+    { title: "Date", field: "activationDate", sortable: true },
+    { title: "No of Employe", field: "date", sortable: true },
+    { title: "Max Amount", field: "totalAmount", sortable: true },
+    { title: "No of allowance", field: "total", sortable: true },
   ];
   const handleChange = () => {
-    setIsChange(!isChange); // Toggle isChange to trigger re-fetch
+    setIsChange(!isChange);
   };
   useEffect(() => {
     let filter = {};
-    filter.type ='tiers' ;
+    filter.type = "tiers";
     fetchLists(filter);
-  }, [isChange]);
-  console.log(lists)
+  }, [isChange,fetchLists]);
+  console.log(lists);
 
   return (
     <>
@@ -165,13 +177,22 @@ const TierPage = () => {
           columns={userColumns}
           data={lists}
           onSelectionChange={handleSelectionChange}
-          onView={handleView}
-          onSort={handleSort}
+   
           onDelete={handleDelete}
+          onSort={handleSort}
+          showEdit
+          onEdit={handleEdit}
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <AddExpense open={expenseOpen} onClose={handleCloseExpense}  onChange={handleChange} />
+      <AddExpense
+        open={expenseOpen}
+        onClose={handleCloseExpense}
+        onChange={handleChange}
+        // isUpdate={isUpdate}
+        // action={action}
+        // setAction={setAction}
+      />
     </>
   );
 };

@@ -3,12 +3,12 @@ import React from "react";
 import img from "../../assets/images/staff.png";
 import StyledSwitch from "../../ui/StyledSwitch";
 import data from "../../assets/json/StaffDetail";
-const StaffDetail = () => {
+const StaffDetail = ({ user }) => {
   return (
     <Box bgcolor={"#fff"} height={"338px"}display={"flex"} alignItems={"center"} justifyContent={"center"}  >
-      {data.map((item) => (
-        <Grid container spacing={2} key={item.id}  >
-          <Grid item md={4}>
+     {user && (
+        <Grid container spacing={2} key={user._id}  >
+          <Grid item md={4} xs={6}>
             <Stack alignItems={"center"}>
               <img
                 src={img}
@@ -17,7 +17,7 @@ const StaffDetail = () => {
                 height={"190px"}
                 style={{ borderRadius: "50%" }}
               />
-              <Typography variant="h11">{item.name}</Typography>
+              <Typography variant="h11">{user.name}</Typography>
               <Stack direction={"row"} spacing={6}>
                 <Typography variant="h4" color={"#B4B4B4"}>
                  Status
@@ -34,19 +34,19 @@ const StaffDetail = () => {
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Date
                 </Typography>
-                <Typography variant="h4">{item.date}</Typography>
+                <Typography variant="h4">{user.createdAt}</Typography>
               </Stack>
               <Stack>
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Email
                 </Typography>
-                <Typography variant="h4">{item.email}</Typography>
+                <Typography variant="h4">{user.email}</Typography>
               </Stack>
               <Stack>
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Tier
                 </Typography>
-                <Typography variant="h4">{item.tier}</Typography>
+                <Typography variant="h4">{user.tier}</Typography>
               </Stack>
             </Stack>
           </Grid>
@@ -56,24 +56,24 @@ const StaffDetail = () => {
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Location
                 </Typography>
-                <Typography variant="h4">{item.location}</Typography>
+                <Typography variant="h4">{user.location}</Typography>
               </Stack>
               <Stack>
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Ph No
                 </Typography>
-                <Typography variant="h4">{item.phoneNumber}</Typography>
+                <Typography variant="h4">{user.mobile}</Typography>
               </Stack>
               <Stack>
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Role
                 </Typography>
-                <Typography variant="h4">{item.role}</Typography>
+                <Typography variant="h4">{user.role}</Typography>
               </Stack>
             </Stack>
           </Grid>
         </Grid>
-      ))}
+      )}
     </Box>
   );
 };

@@ -1,13 +1,21 @@
 import { Box, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { GtIcon } from "../../assets/icons/GtIcon";
 import StaffDetail from "../../components/staff/StaffDetail";
 import Report from "../../components/staff/Report";
 import { useParams } from "react-router-dom";
+import { useUserStore } from "../../store/userStore";
 
 const StaffView = () => {
+  const { user, fetchUserById } = useUserStore();
   const { id } = useParams();
-  console.log("fff",id)
+  console.log("fff", id);
+  useEffect(() => {
+    if (id) {
+      fetchUserById(id);
+    }
+  }, [id, fetchUserById]);
+  console.log(user)
   return (
     <>
       <Box display="flex" alignItems="center" paddingTop={2}>
@@ -21,7 +29,7 @@ const StaffView = () => {
       </Box>
       <Grid container spacing={2} paddingTop={2}>
         <Grid item xs={12} md={6}>
-          <StaffDetail />
+          <StaffDetail user={user} />
         </Grid>
 
         <Grid item xs={12} md={6}>

@@ -31,15 +31,24 @@ import { StaffIcon } from "../assets/icons/StaffIcon";
 import { TierIcon } from "../assets/icons/TierIcon";
 import { PolicyIcon } from "../assets/icons/PolicyIcon";
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
-import { Link } from "react-router-dom";
-import { Avatar, Badge, Collapse, Dialog, Stack, useMediaQuery, useTheme } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Avatar,
+  Badge,
+  Collapse,
+  Dialog,
+  Stack,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import StyledSearchbar from "../ui/StyledSearchbar";
 import styled from "styled-components";
 import { SyncIcon } from "../assets/icons/SyncIcon";
 import { useAdminStore } from "../store/adminStore";
+import { useAuthStore } from "../store/useAuthStore";
 const drawerWidth = 300;
 const subNavigation = [
-  { name: "Dashboard", to: "/", icon: <DashboardIcon /> },
+  { name: "Dashboard", to: "/dashboard", icon: <DashboardIcon /> },
   { name: "Approvals", to: "/approvals", icon: <VectorIcon /> },
   { name: "Events", to: "/events", icon: <EventIcon /> },
   {
@@ -57,11 +66,16 @@ const subNavigation = [
   { name: "Policy", to: "/policy", icon: <PolicyIcon /> },
 ];
 const SimpleDialog = ({ open, onClose }) => {
-  const { admin, getAdmin,isChange } = useAdminStore();
+  const { admin, getAdmin, isChange } = useAdminStore();
+  const { logoutAuth } = useAuthStore();
+  const navigate = useNavigate();
   useEffect(() => {
     getAdmin();
   }, [isChange]);
-  console.log("user",admin)
+  const handleLogout = () => {
+    logoutAuth(navigate);
+  };
+  console.log("user", admin);
   return (
     <Dialog
       open={open}
@@ -88,10 +102,10 @@ const SimpleDialog = ({ open, onClose }) => {
           />
           <Box>
             <Typography variant="h3" color="#292D32" paddingBottom={1}>
-            {admin?.name}
+              {admin?.name}
             </Typography>
             <Typography variant="h4" color="rgba(41, 45, 50, 0.44)">
-             {admin?.designation}
+              {admin?.designation}
             </Typography>
           </Box>
         </Stack>
@@ -126,6 +140,8 @@ const SimpleDialog = ({ open, onClose }) => {
           alignItems="center"
           justifyContent="center"
           spacing={2}
+          onClick={handleLogout}
+          sx={{ cursor: "pointer" }}
         >
           <LogoutIcon />
           <Typography variant="h4" color="#F22E22">
@@ -138,7 +154,7 @@ const SimpleDialog = ({ open, onClose }) => {
 };
 
 const Layout = (props) => {
-  const{admin}=useAdminStore();
+  const { admin } = useAdminStore();
   const { window, children } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
@@ -332,20 +348,26 @@ const Layout = (props) => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h2" color="#000" noWrap component="div" display={isMobile &&"none"}>
+            <Typography
+              variant="h2"
+              color="#000"
+              noWrap
+              component="div"
+              display={isMobile && "none"}
+            >
               {getCurrentPageName()}
             </Typography>
             <Typography
-              variant="h5" 
+              variant="h5"
               color={"#BDBDBD"}
-              sx={{ display:isMobile?"none": "flex", alignItems: "center" }}
+              sx={{ display: isMobile ? "none" : "flex", alignItems: "center" }}
             >
               {"Last synced "}
-              <span 
+              <span
                 style={{
                   color: "#27AE60",
                   marginLeft: "5px",
-                  marginRight: "5px"
+                  marginRight: "5px",
                 }}
               >
                 4 minutes ago
@@ -355,7 +377,10 @@ const Layout = (props) => {
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Box display={isMobile && "none"}> <StyledSearchbar /></Box> 
+            <Box display={isMobile && "none"}>
+              {" "}
+              <StyledSearchbar />
+            </Box>
             <NotificationIcon />
             <Box
               borderRadius="24px"
@@ -376,10 +401,10 @@ const Layout = (props) => {
               />
               <Box>
                 <Typography variant="h5" color={"#292D32"}>
-                 {admin?.name}
+                  {admin?.name}
                 </Typography>
                 <Typography variant="h6" color={"rgba(41, 45, 50, 0.44)"}>
-                {admin?.designation}
+                  {admin?.designation}
                 </Typography>
               </Box>
               <ExpandMoreIcon />
@@ -432,7 +457,9 @@ const Layout = (props) => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 1,backgroundColor:"#F3F3F3",paddingTop:4,
+          p: 1,
+          backgroundColor: "#F3F3F3",
+          paddingTop: 4,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >

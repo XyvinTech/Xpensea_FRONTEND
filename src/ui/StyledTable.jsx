@@ -80,10 +80,11 @@ const StyledTable = ({
   const [selectedIds, setSelectedIds] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [rowId, setRowId] = useState(null);
+  const [isChange, setIsChange] = useState(false);
 
   const handleSelectAllClick = (event) => {
     const isChecked = event.target.checked;
-    const newSelectedIds = isChecked ? data.map((row) => row.id) : [];
+    const newSelectedIds = isChecked ? data.map((row) => row._id) : [];
     setSelectedIds(newSelectedIds);
     onSelectionChange(newSelectedIds);
   };
@@ -112,8 +113,10 @@ const StyledTable = ({
     handleMenuClose();
   };
 
-  const handleDelete = () => {
-    onDelete(rowId);
+  const handleDelete = (id) => {
+    onDelete(id);
+    setSelectedIds([]);
+    setIsChange((prev) => !prev); // Toggle isChange state
     handleMenuClose();
   };
 
@@ -121,16 +124,22 @@ const StyledTable = ({
     onEdit(rowId);
     handleMenuClose();
   };
+
   const handleShare = () => {
     onShare(rowId);
     handleMenuClose();
   };
+
   const handleRowClick = (id) => {
     onView(id);
   };
 
   const isSelected = (id) => selectedIds.includes(id);
+
   const getStatusVariant = (status) => {
+    if (typeof status === "boolean") {
+      return status ? "green" : "rejected";
+    }
     switch (status) {
       case "pending":
         return "pending";
@@ -144,6 +153,7 @@ const StyledTable = ({
         return "default";
     }
   };
+
   const getEventIcon = (event) => {
     switch (event) {
       case "program":
@@ -216,7 +226,6 @@ const StyledTable = ({
                         justifyContent="center"
                       >
                         {getEventIcon(row.event)}
-                        {/* {getIcon(row.event)} */}
                         {" "}
                         {column.field === "status" ? (
                           <StyledSpan
@@ -232,14 +241,19 @@ const StyledTable = ({
                       (column.field === "status" ? (
                         <StyledSpan
                           variant={getStatusVariant(row[column.field])}
-                          text={row[column.field]}
+                          text={
+                            typeof row[column.field] === "boolean"
+                              ? row[column.field]
+                                ? "activated"
+                                : "deactivated"
+                              : row[column.field]
+                          }
                         />
                       ) : (
                         row[column.field]
                       ))}
                   </StyledTableCell>
                 ))}
-
                 <StyledTableCell padding="normal">
                   <IconButton
                     aria-controls="simple-menu"
@@ -257,27 +271,26 @@ const StyledTable = ({
                   >
                     {showShare
                       ? [
-                        <MenuItem key="edit" onClick={handleEdit}>
-                        <StyledSpan
-                          variant={"edit"}
-                          text={
-                            <>
-                              <EditIcon /> Edit
-                            </>
-                          }
-                        />
-                      </MenuItem>,
+                          <MenuItem key="edit" onClick={handleEdit}>
+                            <StyledSpan
+                              variant={"edit"}
+                              text={
+                                <>
+                                  <EditIcon /> Edit
+                                </>
+                              }
+                            />
+                          </MenuItem>,
                           <MenuItem key="share" onClick={handleShare}>
                             <StyledSpan
                               variant={"share"}
                               text={
                                 <>
-                                  <ShareIcon /> share
+                                  <ShareIcon /> Share
                                 </>
                               }
                             />
                           </MenuItem>,
-                         
                         ]
                       : showEdit
                       ? [
@@ -291,12 +304,12 @@ const StyledTable = ({
                               }
                             />
                           </MenuItem>,
-                          <MenuItem key="delete" onClick={handleDelete}>
+                          <MenuItem key="view" onClick={handleView}>
                             <StyledSpan
-                              variant={"red"}
+                              variant={"darkRed"}
                               text={
                                 <>
-                                  <DeleteIcon /> Delete
+                                  <ViewIcon /> View
                                 </>
                               }
                             />
@@ -308,12 +321,15 @@ const StyledTable = ({
                               variant={"darkRed"}
                               text={
                                 <>
-                                  <ViewIcon /> view
+                                  <ViewIcon /> View
                                 </>
                               }
                             />
                           </MenuItem>,
-                          <MenuItem key="delete" onClick={handleDelete}>
+                          <MenuItem
+                            key="delete"
+                            onClick={() => handleDelete(row._id)}
+                          >
                             <StyledSpan
                               variant={"red"}
                               text={
@@ -348,7 +364,12 @@ const StyledTable = ({
                     selectedIds.length > 1 ? "s" : ""
                   } selected`}
                 </Typography>
-                <StyledButton variant="action" color="red" name="Delete" />
+                <StyledButton
+                  variant="action"
+                  color="red"
+                  name="Delete"
+                  onClick={() => handleDelete(selectedIds)}
+                />
               </Stack>
             )}
             <Stack

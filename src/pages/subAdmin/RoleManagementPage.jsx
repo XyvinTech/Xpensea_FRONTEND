@@ -1,30 +1,38 @@
-import React, { useState } from "react";
-import { userColumns, userData } from "../../assets/json/AllData";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { FilterIcon } from "../../assets/icons/FilterIcon";
 import StyledTable from "../../ui/StyledTable";
 import StyledFilter from "../../components/StyledFilter";
-import CreateEvent from "../../components/events/CreateEvent";
 import StyledSearchbar from "../../ui/StyledSearchbar";
-import AddNewRole from "../../components/subAdmin/AddNewRole";
 import RoleManagement from "../../components/subAdmin/RoleManagement";
+import { useListStore } from "../../store/listStore";
+import { useRoleStore } from "../../store/roleStore";
 const RoleManagementPage = () => {
-  const navigate = useNavigate();
+  const { lists, fetchLists } = useListStore();
+  const { isUpdate, updateChange,fetchRoleById,deleteRoles } = useRoleStore();
   const [selectedRows, setSelectedRows] = useState([]);
+  const [isChange, setIsChange] = useState(false);
+  
   const [filterOpen, setFilterOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
   };
-  const handleView = (id) => {
-    console.log("View item:", id);
-    navigate(`/approvals/view`);
-  };
 
-  const handleDelete = (id) => {
-    console.log("Delete item :", id);
+  const handleEdit =async (id) => {
+    await fetchRoleById(id)
+    
+    updateChange(isUpdate);
+    setEventOpen(true);
+   
+  };
+  const handleDelete = async () => {
+    if (selectedRows.length > 0) {
+      await Promise.all(selectedRows.map((id) => deleteRoles(id))); 
+      setIsChange(!isChange); 
+      setSelectedRows([]); 
+    }
   };
   const handleSort = (field) => {
     console.log(`Sorting by ${field}`);
@@ -40,10 +48,26 @@ const RoleManagementPage = () => {
   const handleOpenEvent = () => {
     setEventOpen(true);
   };
-
   const handleCloseEvent = () => {
     setEventOpen(false);
   };
+  const handleChange = () => {
+    setIsChange(!isChange);
+  };
+  const userColumns = [
+    { title: "Role Name", field: "roleName", sortable: false },
+    { title: "Created on", field: "createdAt",sortable: false  },
+    { title: "Access type", field: "userType",sortable: true  },
+    { title: "Role Description", field: "userType",sortable: true  },
+    { title: "Status", field: "status",sortable: true  },
+  ];
+  useEffect(() => {
+    let filter = {};
+    filter.type = "roles";
+    fetchLists(filter);
+  }, [isChange,fetchLists]);
+  console.log(lists);
+  console.log(isUpdate);
   return (
     <>
       <Stack
@@ -89,16 +113,16 @@ const RoleManagementPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          data={userData}
+          data={lists}
           onSelectionChange={handleSelectionChange}
-          // onView={handleView}
+          onEdit={handleEdit}
           showEdit
           onSort={handleSort}
           onDelete={handleDelete}
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <RoleManagement open={eventOpen} onClose={handleCloseEvent} />
+      <RoleManagement open={eventOpen} onClose={handleCloseEvent}  onChange={handleChange} />
     </>
   );
 };

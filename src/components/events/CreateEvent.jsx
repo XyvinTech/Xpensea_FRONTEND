@@ -1,29 +1,53 @@
 import { Box, Dialog, Grid, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import StyledSelectField from "../../ui/StyledSelectField";
 import StyledButton from "../../ui/StyledButton";
 import { MoreVert } from "@mui/icons-material";
 import StyledTextArea from "../../ui/StyledTextArea";
 import StyledTextField from "../../ui/StyledTextField";
 import { Controller, useForm } from "react-hook-form";
+import StyledInputTime from "../../ui/StyledInputTime";
+import { useDropDownStore } from "../../store/useDropDownStore";
+import CalendarInput from "../../ui/CalenderInput";
+import { useEventStore } from "../../store/eventStore";
 
-const options = [
-  { value: "option1", label: "Option 1" },
-  { value: "option2", label: "Option 2" },
-  { value: "option3", label: "Option 3" },
-];
-
-const CreateEvent = ({ open, onClose }) => {
+const CreateEvent = ({ open, onClose , onChange}) => {
+  const {  staffs, fetchTiers, fetchStaffs } = useDropDownStore();
+  const { addEvents } = useEventStore();
   const { control, handleSubmit, reset } = useForm();
+
+  useEffect(() => {
+    fetchTiers();
+    fetchStaffs();
+  }, [fetchTiers, fetchStaffs]);
+
   const handleClear = () => {
     onClose();
   };
-  const onSubmit = (data) => {
-    console.log("Form data:", data);
+
+  const onSubmit = async(data) => {
+    const formData = {
+      eventName: data.eventName,
+      days: data.days,
+      startDate: data.startDate,
+      endDate: data.endDate,
+      description: data.description,
+      staffs: Array.isArray(data.staff) ? data.staff.map(staff => staff.value) : [data.staff.value],
+      location: data.location.value,
+      startTime: data.startTime,
+      endTime: data.endTime,
+    };
+    console.log("Form data:", formData);
+    await addEvents(formData)
+    onChange();
     onClose();
     reset();
   };
-
+  const location = [
+    { value: "option1", label: "Option 1" },
+    { value: "option2", label: "Option 2" },
+    { value: "option3", label: "Option 3" },
+  ];
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <Box padding={3}>
@@ -55,34 +79,6 @@ const CreateEvent = ({ open, onClose }) => {
                 )}
               />
               <Controller
-                name="tier"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledSelectField
-                    {...field}
-                    placeholder={"Choose Tier"}
-                    options={options}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-            </Stack>
-            <Stack direction="row" spacing={2} paddingBottom={2}>
-              <Controller
-                name="role"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledSelectField
-                    {...field}
-                    placeholder={"Choose Role"}
-                    options={options}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-              <Controller
                 name="location"
                 control={control}
                 defaultValue=""
@@ -90,62 +86,125 @@ const CreateEvent = ({ open, onClose }) => {
                   <StyledSelectField
                     {...field}
                     placeholder={"Choose Location"}
-                    options={options}
+                    options={location}
                     sx={{ flex: 1 }}
                   />
                 )}
               />
             </Stack>
             <Stack direction="row" spacing={2} paddingBottom={2}>
-            <Controller
+              {/* <Controller
+                name="role"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledSelectField
+                    {...field}
+                    placeholder={"Choose Role"}
+                    options={roles.map((role) => ({
+                      value: role?._id,
+                      label: role?.roleName
+                    }))}
+                    sx={{ flex: 1 }}
+                  />
+                )}
+              /> */}
+              {/* <Controller
+                name="tier"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledSelectField
+                    {...field}
+                    placeholder={"Choose Tier"}
+                    options={tiers.map((tier) => ({
+                      value: tier?._id,
+                      label: tier?.title,
+                    }))}
+                    sx={{ flex: 1 }}
+                  />
+                )}
+              /> */}
+            </Stack>
+            <Stack direction="row" spacing={2} paddingBottom={2}>
+              <Controller
                 name="staff"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
                   <StyledSelectField
                     {...field}
+                    isMulti={true}
                     placeholder={"Choose Staff"}
-                    options={options}
+                    options={staffs.map((staff) => ({
+                      value: staff?._id,
+                      label: staff?.name,
+                    }))}
                     sx={{ flex: 1 }}
                   />
                 )}
               />
-               <Controller
+              <Controller
                 name="days"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
-                  <StyledSelectField
+                  <StyledTextField
                     {...field}
-                    placeholder={"Number of Days"}
-                    options={options}
+                    label="Number of Days"
                     sx={{ flex: 1 }}
                   />
                 )}
               />
             </Stack>
             <Stack direction="row" spacing={2} paddingBottom={2}>
-              <StyledSelectField
-                placeholder={"Start Date"}
-                options={options}
-                sx={{ flex: 1 }}
+              <Controller
+                name="startDate"
+                control={control}
+                render={({ field }) => (
+                  <CalendarInput
+                    {...field}
+                    placeholder={"Start Date"}
+                    dateValue={field.value}
+                    onDateChange={field.onChange}
+                  />
+                )}
               />
-              <StyledSelectField
-                placeholder={"End Date"}
-                options={options}
-                sx={{ flex: 1 }}
+              <Controller
+                name="endDate"
+                control={control}
+                render={({ field }) => (
+                  <CalendarInput
+                    {...field}
+                    placeholder={"End Date"}
+                    dateValue={field.value}
+                    onDateChange={field.onChange}
+                  />
+                )}
               />
             </Stack>
             <Stack direction="row" spacing={2} paddingBottom={2}>
-              <StyledSelectField
-                placeholder={"Choose Start Time"}
-                options={options}
-                sx={{ flex: 1 }}
+              <Controller
+                name="startTime"
+                control={control}
+                render={({ field }) => (
+                  <StyledInputTime
+                    {...field}
+                    placeholder={"Choose Start Time"}
+                    sx={{ flex: 1 }}
+                  />
+                )}
               />
-              <StyledSelectField
-                placeholder={"Choose End Time"}
-                options={options}
-                sx={{ flex: 1 }}
+              <Controller
+                name="endTime"
+                control={control}
+                render={({ field }) => (
+                  <StyledInputTime
+                    {...field}
+                    placeholder={"Choose End Time"}
+                    sx={{ flex: 1 }}
+                  />
+                )}
               />
             </Stack>
             <Controller

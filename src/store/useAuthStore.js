@@ -8,10 +8,11 @@ export const useAuthStore = create((set) => ({
         localStorage.setItem('token', token);
         set({ isAuth: true })
     },
-    logoutAuth:()=>{
+    logoutAuth: (navigate) => {
         localStorage.removeItem('token');
-        set({ isAuth: false});
-    }
+        set({ isAuth: false });
+        navigate('/');
+      }
 
 
 }))

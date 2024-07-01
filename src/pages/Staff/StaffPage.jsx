@@ -7,20 +7,27 @@ import { FilterIcon } from "../../assets/icons/FilterIcon";
 import UpoloadBulk from "../../components/staff/UploadBulk";
 import StaffDetailsAdd from "../../components/staff/StaffDetailsAdd";
 import { useListStore } from "../../store/listStore";
+import { useUserStore } from "../../store/userStore";
 const StaffPage = () => {
 
   const navigate = useNavigate();
   const { lists, fetchLists } = useListStore();
+  const { isUpdate, updateChange,fetchUserById,deleteUsers } = useUserStore();
   const [selectedRows, setSelectedRows] = useState([]);
+  const [isChange, setIsChange] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
+
   const [bulkOpen, setBulkOpen] = useState(false);
   const [staffOpen, setStaffOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
   };
-  const handleEdit = (id) => {
-    console.log("Edit item:", id);
+  const handleEdit =async (id) => {
+    await fetchUserById(id)
+    console.log("View item:", isUpdate);
+    updateChange(isUpdate);
+    setStaffOpen(true);
    
   };
   const handleView = (id) => {
@@ -28,13 +35,19 @@ const StaffPage = () => {
     navigate(`/staffs/${id}`);
    
   };
-  const handleDelete = (id) => {
-    console.log("Delete item :", id);
+  const handleDelete = async () => {
+    if (selectedRows.length > 0) {
+      await Promise.all(selectedRows?.map((id) => deleteUsers(id))); 
+      setIsChange(!isChange); 
+      setSelectedRows([]); 
+    }
   };
   const handleSort = (field) => {
     console.log(`Sorting by ${field}`);
   };
-
+  const handleChange = () => {
+    setIsChange(!isChange);
+  };
   const handleOpenFilter = () => {
     setFilterOpen(true);
   };
@@ -64,13 +77,13 @@ const StaffPage = () => {
     { title: "Status", field: "status",sortable: true  },
     { title: "e-mail", field: "email",sortable: true  },
     { title: "Locations", field: "location",sortable: false  },
-    { title: "contact number", field: "contact number",sortable: false },
+    { title: "contact number", field: "mobile",sortable: false },
   ];
   useEffect(() => {
     let filter = {};
     filter.type ='users' ;
     fetchLists(filter);
-  }, []);
+  }, [isChange,fetchLists]);
   console.log(lists)
   return (
     <>
@@ -200,7 +213,7 @@ const StaffPage = () => {
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
       <UpoloadBulk open={bulkOpen} onClose={handleCloseBulk} />
-      <StaffDetailsAdd open={staffOpen} onClose={handleCloseStaff} />
+      <StaffDetailsAdd open={staffOpen} onClose={handleCloseStaff} onChange={handleChange}   />
     </>
   );
 };

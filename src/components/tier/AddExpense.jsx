@@ -1,21 +1,41 @@
+import React, { useState, useEffect } from "react";
 import { Box, Dialog, Grid, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
 import StyledButton from "../../ui/StyledButton";
 import StyledInput from "../../ui/StyledInput";
 import { CrossIcon } from "../../assets/icons/CrossIcon";
 import StyledSwitch from "../../ui/StyledSwitch";
-import StyledTextField from "../../ui/StyledTextField";
 import { Controller, useForm } from "react-hook-form";
 import CalendarInput from "../../ui/CalenderInput";
 import { useTierStore } from "../../store/tierStore";
 
-const AddExpense = ({ open, onClose ,onChange}) => {
-  const { control, handleSubmit, reset, getValues, setValue } = useForm();
-  const { addTiers } = useTierStore();
+const AddExpense = ({ open, onClose, onChange }) => {
+  const { addTiers, updateChange, tier, updateTiers, isUpdate } =
+    useTierStore();
+  const { control, handleSubmit, reset, getValues, setValue } = useForm({
+    defaultValues: {
+      activationDate: isUpdate ? tier?.activationDate : "",
+      tierTitle: isUpdate ? tier?.title : "",
+      categories: isUpdate ? tier?.categories : [],
+    },
+  });
+
   const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    if (isUpdate && tier) {
+      setCategories(tier?.categories || []);
+      reset({
+        activationDate: tier?.activationDate,
+        tierTitle: tier?.title,
+        categories: tier?.categories,
+      });
+    }
+  }, [isUpdate, tier, reset]);
 
   const handleClear = () => {
     onClose();
+    setCategories([]);
+    reset();
   };
 
   const onAddExpense = () => {
@@ -30,19 +50,37 @@ const AddExpense = ({ open, onClose ,onChange}) => {
     setValue("maxAmount", "");
   };
 
-  const onSubmit =async (data) => {
+  const onSubmit = async (data) => {
+    let totalMaxAmount = 0;
+    categories?.forEach((item) => {
+      if (item.status) {
+        totalMaxAmount += parseFloat(item.maxAmount);
+      }
+    });
+
     const formData = {
       activationDate: data.activationDate,
-      title: data.tierTitle, 
+      title: data.tierTitle,
       categories,
+      totalAmount: totalMaxAmount,
     };
-    console.log("Form data:", formData);
-    await addTiers(formData);
-        
+
+    if (isUpdate) {
+      await updateTiers(tier._id, formData);
+    } else {
+      await addTiers(formData);
+    }
     onClose();
-    onChange(); 
+    onChange();
+    updateChange(isUpdate);
     reset();
     setCategories([]);
+  };
+
+  const handleSwitchChange = (index) => (e) => {
+    const updatedCategories = [...categories];
+    updatedCategories[index].status = e.target.checked;
+    setCategories(updatedCategories);
   };
 
   return (
@@ -67,7 +105,6 @@ const AddExpense = ({ open, onClose ,onChange}) => {
               <Controller
                 name="tierTitle"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                   <StyledInput
                     {...field}
@@ -79,10 +116,10 @@ const AddExpense = ({ open, onClose ,onChange}) => {
               <Controller
                 name="activationDate"
                 control={control}
-                defaultValue=""
                 render={({ field }) => (
                   <CalendarInput
                     {...field}
+                    placeholder={"Activation Date"}
                     dateValue={field.value}
                     onDateChange={field.onChange}
                   />
@@ -97,10 +134,8 @@ const AddExpense = ({ open, onClose ,onChange}) => {
                       {item?.title}
                     </Typography>
                     <StyledSwitch
-                      checked={item.status} // Set checked based on item's status
-                      onChange={(e) => {
-                        // Handle switch toggle logic here if needed
-                      }}
+                      checked={item.status}
+                      onChange={handleSwitchChange(index)}
                       variant="primary"
                     />
                   </Stack>
@@ -153,7 +188,7 @@ const AddExpense = ({ open, onClose ,onChange}) => {
                       e.preventDefault();
                       onAddExpense();
                     }}
-                    type="button" // Ensure button type is set to "button"
+                    type="button"
                   />
                   <StyledButton
                     variant="primary"

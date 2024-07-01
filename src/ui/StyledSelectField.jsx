@@ -41,6 +41,7 @@ const StyledSelectField = ({ placeholder, options, onChange, value, isMulti }) =
       position: "absolute",
       backgroundColor: "#ffffff",
       color: "#B5B8C5",
+      zIndex: 1000, // Ensure the menu overlays other elements
     }),
     singleValue: (provided) => ({
       ...provided,

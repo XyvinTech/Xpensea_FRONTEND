@@ -1,4 +1,4 @@
-import {  createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import App from "../App";
 import Layout from "../Layout/Layout";
@@ -17,127 +17,151 @@ import MainPage from "../pages/Approval/MainPage";
 import ApprovalPage from "../pages/Approval/ApprovelPage";
 import StaffView from "../pages/Staff/StaffView";
 
-
 import { PrivateRoute } from "./PrivateRouter";
-
-
-
 
 const router = createBrowserRouter([
   {
     path: "/test",
-    element: <Text/>,
+    element: <Text />,
   },
   {
-    path: "/login",
+    path: "/",
     element: <LoginPage />,
   },
   {
     path: "/signup",
     element: <SignupPage />,
-  },  {
-    path: "/app",
-    element: <PrivateRoute><App /></PrivateRoute> ,
   },
   {
-    path: "/",
+    path: "/app",
     element: (
-      <Layout>
-        <Dashboard />
-      </Layout>
+      <PrivateRoute>
+        <App />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        {" "}
+        <Layout>
+          <Dashboard />
+        </Layout>
+      </PrivateRoute>
     ),
   },
   {
     path: "/approvals",
     element: (
-      <Layout>
-        <MainPage />
-      </Layout>
+      <PrivateRoute>
+        <Layout>
+          <MainPage />
+        </Layout>
+      </PrivateRoute>
     ),
   },
   {
-    path:"/approvals/view",
+    path: "/approvals/view",
     element: (
-      <Layout>
-        <ApprovalPage />
-      </Layout>
+      <PrivateRoute>
+        <Layout>
+          <ApprovalPage />
+        </Layout>
+      </PrivateRoute>
     ),
   },
-
 
   {
     path: "/events",
     element: (
-      <Layout>
-        <EventsPage />
-      </Layout>
+      <PrivateRoute>
+        <Layout>
+          <EventsPage />
+        </Layout>{" "}
+      </PrivateRoute>
     ),
   },
   {
     path: "/subadmin/admin-management",
     element: (
-      <Layout>
-        <AdminManagementPage />
-      </Layout>
+      <PrivateRoute>
+        <Layout>
+          <AdminManagementPage />
+        </Layout>{" "}
+      </PrivateRoute>
     ),
   },
   {
     path: "/subadmin/role-management",
     element: (
-      <Layout>
-        <RoleManagementPage />
-      </Layout>
+      <PrivateRoute>
+        <Layout>
+          <RoleManagementPage />
+        </Layout>{" "}
+      </PrivateRoute>
     ),
   },
   {
     path: "/subadmin/admin-activity",
     element: (
-      <Layout>
-        <AdminActivityPage />
-      </Layout>
+      <PrivateRoute>
+        <Layout>
+          <AdminActivityPage />
+        </Layout>{" "}
+      </PrivateRoute>
     ),
   },
   {
     path: "/finance",
     element: (
-      <Layout>
-        <FinancePage />
-      </Layout>
+      <PrivateRoute>
+        <Layout>
+          <FinancePage />
+        </Layout>{" "}
+      </PrivateRoute>
     ),
   },
   {
     path: "/staffs",
     element: (
-      <Layout>
-        <StaffPage />
-      </Layout>
+      <PrivateRoute>
+        <Layout>
+          <StaffPage />
+        </Layout>{" "}
+      </PrivateRoute>
     ),
   },
   {
     path: "/tier",
     element: (
-      <Layout>
-        <TierPage />
-      </Layout>
+      <PrivateRoute>
+        <Layout>
+          <TierPage />
+        </Layout>{" "}
+      </PrivateRoute>
     ),
   },
   {
     path: "/policy",
     element: (
-      <Layout>
-        <PolicyPage />
-      </Layout>
+      <PrivateRoute>
+        <Layout>
+          <PolicyPage />
+        </Layout>{" "}
+      </PrivateRoute>
     ),
   },
   {
     path: "/staffs/:id",
     element: (
-      <Layout>
-        <StaffView />
-      </Layout>
+      <PrivateRoute>
+        <Layout>
+          <StaffView />
+        </Layout>{" "}
+      </PrivateRoute>
     ),
   },
-
 ]);
 
 export default router;
