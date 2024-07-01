@@ -9,7 +9,7 @@ import { useListStore } from "../../store/listStore";
 import { useAdminStore } from "../../store/adminStore";
 const AdminManagementPage = () => {
   const { isUpdate, updateChange,fetchAdminById ,deleteAdmins} = useAdminStore();
-  const { lists, fetchLists } = useListStore();
+  const { lists, fetchLists,rowPerSize,pageNo, } = useListStore();
   const [isChange, setIsChange] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -62,11 +62,13 @@ const AdminManagementPage = () => {
     { title: "status", field: "status", sortable: false },
     { title: "designation", field: "designation", sortable: false },
   ];
+  
   useEffect(() => {
-    let filter = {};
+    const limit=rowPerSize;
+    let filter = {limit,pageNo};
     filter.type = "admins";
     fetchLists(filter);
-  }, [isChange,fetchLists]);
+  }, [isChange,fetchLists,rowPerSize,pageNo]);
   console.log(lists);
   return (
     <>
@@ -122,7 +124,7 @@ const AdminManagementPage = () => {
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <AddNewRole open={eventOpen} onClose={handleCloseEvent}isUpdate={isUpdate} onChange={handleChange}/>
+      <AddNewRole open={eventOpen} onClose={handleCloseEvent}onChange={handleChange}/>
     </>
   );
 };

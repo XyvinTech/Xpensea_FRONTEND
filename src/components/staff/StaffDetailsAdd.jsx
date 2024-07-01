@@ -42,9 +42,18 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
     }
   }, [isUpdate, user, reset]);
 
-  const handleClear = () => {
+  const handleClear = (event) => {
+    event.preventDefault();
     updateChange(isUpdate);
-    reset();
+    reset({
+      name:  "",
+      email: "",
+      mobile:  "",
+      employeeId:  "",
+      tier: "",
+      userType: "",
+      location: "",
+    });
    
     onClose();
   };
@@ -68,7 +77,15 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
     }
     updateChange(isUpdate);
     onChange();
-    reset();
+    reset({
+      name:  "",
+      email: "",
+      mobile:  "",
+      employeeId:  "",
+      tier: "",
+      userType: "",
+      location: "",
+    });
     onClose();
    
   };

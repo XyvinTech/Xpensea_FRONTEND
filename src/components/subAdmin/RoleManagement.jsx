@@ -73,7 +73,8 @@ const RoleManagement = ({ open, onClose, onChange }) => {
     }
   }, [isUpdate, role, reset]);
 
-  const handleClear = () => {
+  const handleClear = (event) => {
+    event.preventDefault();
     updateChange(isUpdate);
     console.log("Updating role with ID:", isUpdate);
     setPermissions(initialPermissions);
@@ -311,7 +312,7 @@ const RoleManagement = ({ open, onClose, onChange }) => {
           <StyledButton
             variant="secondary"
             name="Cancel"
-            onClick={()=>handleClear}
+            onClick={handleClear}
           />
           <StyledButton variant="primary" name="Save" type="submit" />
         </Box>

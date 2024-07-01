@@ -201,7 +201,7 @@ const StaffPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          data={lists}
+         
           onSelectionChange={handleSelectionChange}
           onEdit={handleEdit}
           onSort={handleSort}

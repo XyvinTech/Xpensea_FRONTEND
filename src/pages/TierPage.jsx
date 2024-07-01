@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { userData } from "../assets/json/AllData";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FilterIcon } from "../assets/icons/FilterIcon";
@@ -9,7 +8,6 @@ import AddExpense from "../components/tier/AddExpense";
 import { useListStore } from "../store/listStore";
 import { useTierStore } from "../store/tierStore";
 const TierPage = () => {
-  const navigate = useNavigate();
   const { lists, fetchLists } = useListStore();
   const { isUpdate, updateChange,fetchTierById,deleteTiers } = useTierStore();
   const [selectedRows, setSelectedRows] = useState([]);
@@ -175,7 +173,7 @@ const TierPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          data={lists}
+          // data={lists}
           onSelectionChange={handleSelectionChange}
    
           onDelete={handleDelete}

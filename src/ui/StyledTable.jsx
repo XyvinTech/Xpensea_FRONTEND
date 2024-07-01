@@ -29,6 +29,7 @@ import { Icon1 } from "../assets/icons/Icon1";
 import { Icon2 } from "../assets/icons/Icon2";
 import { EditIcon } from "../assets/icons/EditIcon";
 import { ShareIcon } from "../assets/icons/ShareIcon";
+import { useListStore } from "../store/listStore";
 
 const StyledTableCell = styled(TableCell)`
   &.${tableCellClasses.head} {
@@ -66,7 +67,6 @@ const StyledTableRow = styled(TableRow)`
 
 const StyledTable = ({
   columns,
-  data,
   onSelectionChange,
   onView,
   onDelete,
@@ -81,10 +81,10 @@ const StyledTable = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const [rowId, setRowId] = useState(null);
   const [isChange, setIsChange] = useState(false);
-
+  const { lists,totalCount,rowPerSize,rowChange,pageNo,pageInc,pageDec } = useListStore();
   const handleSelectAllClick = (event) => {
     const isChecked = event.target.checked;
-    const newSelectedIds = isChecked ? data.map((row) => row._id) : [];
+    const newSelectedIds = isChecked ? lists.map((row) => row._id) : [];
     setSelectedIds(newSelectedIds);
     onSelectionChange(newSelectedIds);
   };
@@ -174,7 +174,7 @@ const StyledTable = ({
               <StyledTableCell padding="checkbox">
                 <StyledCheckbox
                   checked={
-                    data.length > 0 && selectedIds.length === data.length
+                    lists.length > 0 && selectedIds.length === lists.length
                   }
                   onChange={handleSelectAllClick}
                 />
@@ -200,7 +200,7 @@ const StyledTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => (
+            {lists.map((row) => (
               <StyledTableRow
                 role="checkbox"
                 key={row._id}
@@ -380,8 +380,8 @@ const StyledTable = ({
               <Box display="flex" alignItems="center">
                 <TablePagination
                   component="div"
-                  labelDisplayedRows={({ from, to, count }) =>
-                    `${from}-${to} of ${count}`
+                  labelDisplayedRows={({ from, to }) =>
+                    `${pageNo}-${Math.ceil(totalCount/rowPerSize)} of ${totalCount}`
                   }
                   ActionsComponent={({ onPageChange }) => (
                     <Stack

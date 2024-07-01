@@ -9,15 +9,10 @@ import { Controller, useForm } from "react-hook-form";
 import { useDropDownStore } from "../../store/useDropDownStore";
 import { useAdminStore } from "../../store/adminStore";
 
-const options = [
-  { value: "option1", label: "Option 1" },
-  { value: "option2", label: "Option 2" },
-  { value: "option3", label: "Option 3" },
-];
 
 const AddNewRole = ({ open, onClose, onChange }) => {
   const { roles, fetchRoles } = useDropDownStore();
-  const { addAdmins, updateAdmins, admins, isUpdate } = useAdminStore();
+  const { addAdmins, updateAdmins, admins, isUpdate,updateChange } = useAdminStore();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       name: isUpdate ? admins?.name : "",
@@ -49,7 +44,9 @@ const AddNewRole = ({ open, onClose, onChange }) => {
     setIsChecked(event.target.checked);
   };
 
-  const handleClear = () => {
+  const handleClear = (event) => {
+     event.preventDefault();
+    updateChange(isUpdate);
     reset({
       name: "",
       email: "",
@@ -87,6 +84,7 @@ const AddNewRole = ({ open, onClose, onChange }) => {
 
     if (isUpdate) {
       await updateAdmins(admins._id, formData);
+      updateChange(isUpdate);
     } else {
       await addAdmins(formData);
     }

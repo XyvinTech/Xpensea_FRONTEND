@@ -9,7 +9,7 @@ const useAdminStore = create((set) => ({
     updateChange:(isChange)=>{
       set({isChange:!isChange})
     },
-    admins: "",
+    admins: null,
     data:[],
     isUpdate: false,
     updateChange: (isUpdate) => {
@@ -32,7 +32,7 @@ const useAdminStore = create((set) => ({
       updateAdmins: async (adminId, newData) => {
         const updatedAdmin = await updateAdmin(adminId, newData);
         set((state) => ({
-          admins: state.admins.map((item) =>
+          data: state.data.map((item) =>
             item.id === adminId ? { ...item, ...updatedAdmin } : item
           ),
           admins: updatedAdmin, 

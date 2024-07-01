@@ -33,9 +33,14 @@ const AddExpense = ({ open, onClose, onChange }) => {
   }, [isUpdate, tier, reset]);
 
   const handleClear = () => {
-    onClose();
+    updateChange(isUpdate);
     setCategories([]);
-    reset();
+    reset({
+      activationDate: "",
+      tierTitle: "",
+      categories: [],
+    });
+    onClose();
   };
 
   const onAddExpense = () => {
@@ -73,7 +78,11 @@ const AddExpense = ({ open, onClose, onChange }) => {
     onClose();
     onChange();
     updateChange(isUpdate);
-    reset();
+    reset({
+      activationDate: "",
+      tierTitle: "",
+      categories: [],
+    });
     setCategories([]);
   };
 
@@ -96,7 +105,12 @@ const AddExpense = ({ open, onClose, onChange }) => {
             >
               <Box flexGrow={1} />
               <h2 style={{ flexGrow: 1 }}>Tier</h2>
-              <Box position="absolute" right={0} onClick={handleClear}>
+              <Box
+                position="absolute"
+                right={0}
+                sx={{ cursor: "pointer" }}
+                onClick={handleClear}
+              >
                 <CrossIcon />
               </Box>
             </Box>

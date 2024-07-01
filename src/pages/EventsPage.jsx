@@ -168,7 +168,7 @@ const EventsPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          data={lists}
+        
           onSelectionChange={handleSelectionChange}
           onView={handleView}
           onSort={handleSort}
