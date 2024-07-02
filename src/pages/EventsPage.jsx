@@ -10,7 +10,7 @@ import { useEventStore } from "../store/eventStore";
 const EventsPage = () => {
   const navigate = useNavigate();
   const { lists, fetchLists } = useListStore();
-  const {deleteEvents} = useEventStore();
+  const { deleteEvents } = useEventStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
@@ -22,15 +22,19 @@ const EventsPage = () => {
   };
   const handleView = (id) => {
     console.log("View item:", id);
-   
   };
 
   const handleDelete = async () => {
     if (selectedRows.length > 0) {
       await Promise.all(selectedRows.map((id) => deleteEvents(id)));
-      setIsChange(!isChange); 
-      setSelectedRows([]); 
+      setIsChange(!isChange);
+      setSelectedRows([]);
     }
+  };
+  const handleRowDelete = async (id) => {
+    await deleteEvents(id);
+    setIsChange(!isChange);
+    // setSelectedRows((prevSelectedRows) => prevSelectedRows.filter(rowId => rowId !== id));
   };
   const handleSort = (field) => {
     console.log(`Sorting by ${field}`);
@@ -55,21 +59,21 @@ const EventsPage = () => {
   };
   const userColumns = [
     { title: "Event Title", field: "eventName", sortable: false },
-    { title: "start Date", field: "startDate",sortable: true  },
-    { title: "End Date", field: "endDate",sortable: true  },
-    { title: "No of Staffs", field: "staffCount",sortable: true  },
-    { title: "Locations", field: "location",sortable: true  },
-    { title: "Status", field: "status",sortable: true  },
+    { title: "start Date", field: "startDate", sortable: true },
+    { title: "End Date", field: "endDate", sortable: true },
+    { title: "No of Staffs", field: "staffCount", sortable: true },
+    { title: "Locations", field: "location", sortable: true },
+    { title: "Status", field: "status", sortable: true },
   ];
   useEffect(() => {
-    let filter = {type : 'events'};
-   
+    let filter = { type: "events" };
+
     if (status !== null) {
       filter.status = status;
     }
     fetchLists(filter);
-  }, [isChange,fetchLists,status]);
-  console.log(lists)
+  }, [isChange, fetchLists, status]);
+  console.log(lists);
   return (
     <>
       <Stack
@@ -97,13 +101,13 @@ const EventsPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status ==='inprogress' ? "#79001D" : "#fff",
+              backgroundColor: status === "inprogress" ? "#79001D" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
-              color: status === 'inprogress' ? "#fff" : "#4D515A",
+              color: status === "inprogress" ? "#fff" : "#4D515A",
             }}
-            onClick={() => setStatus('inprogress')} 
+            onClick={() => setStatus("inprogress")}
           >
             Inprogress
           </Button>
@@ -111,13 +115,13 @@ const EventsPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status ==='scheduled' ? "#79001D" : "#fff",
+              backgroundColor: status === "scheduled" ? "#79001D" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               borderRadius: "8px",
               padding: "10px",
-              color: status === 'scheduled' ? "#fff" : "#4D515A",
+              color: status === "scheduled" ? "#fff" : "#4D515A",
             }}
-            onClick={() => setStatus('scheduled')} 
+            onClick={() => setStatus("scheduled")}
           >
             Scheduled
           </Button>
@@ -126,12 +130,12 @@ const EventsPage = () => {
               cursor: "pointer",
               textTransform: "none",
               borderRadius: "8px",
-              backgroundColor: status ==='done' ? "#79001D" : "#fff",
+              backgroundColor: status === "done" ? "#79001D" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
-              color: status === 'done' ? "#fff" : "#4D515A",
+              color: status === "done" ? "#fff" : "#4D515A",
             }}
-            onClick={() => setStatus('done')} 
+            onClick={() => setStatus("done")}
           >
             Done
           </Button>
@@ -172,7 +176,7 @@ const EventsPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-        
+          onDeleteRow={handleRowDelete}
           onSelectionChange={handleSelectionChange}
           onView={handleView}
           onSort={handleSort}
@@ -180,7 +184,11 @@ const EventsPage = () => {
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <CreateEvent open={eventOpen} onClose={handleCloseEvent} onChange={handleChange} />
+      <CreateEvent
+        open={eventOpen}
+        onClose={handleCloseEvent}
+        onChange={handleChange}
+      />
     </>
   );
 };

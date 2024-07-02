@@ -57,7 +57,7 @@ const RoleManagementPage = () => {
   const userColumns = [
     { title: "Role Name", field: "roleName", sortable: false },
     { title: "Created on", field: "createdAt",sortable: false  },
-    { title: "Access type", field: "userType",sortable: true  },
+    { title: "Access type", field: "accessType",sortable: true  },
     { title: "Role Description", field: "userType",sortable: true  },
     { title: "Status", field: "status",sortable: true  },
   ];

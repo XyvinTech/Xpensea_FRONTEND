@@ -26,6 +26,12 @@ const AdminManagementPage = () => {
     setEventOpen(true);
 
   };
+  const handleView = async(id) => {
+    // await fetchAdminById(id)
+    setEventOpen(true);
+    // updateChange(isUpdate);
+
+  };
   const handleDelete = async () => {
     if (selectedRows.length > 0) {
       await Promise.all(selectedRows.map((id) => deleteAdmins(id))); 
@@ -120,6 +126,7 @@ const AdminManagementPage = () => {
           onEdit={handleEdit}
           showEdit
           onSort={handleSort}
+          onView={handleView}
           onDelete={handleDelete}
         />
       </Box>
