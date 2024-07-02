@@ -70,6 +70,7 @@ const StyledTable = ({
   onSelectionChange,
   onView,
   onDelete,
+  onDeleteRow,
   onEdit,
   onSort,
   onShare,
@@ -113,13 +114,16 @@ const StyledTable = ({
     handleMenuClose();
   };
 
-  const handleDelete = (id) => {
-    onDelete(id);
+  const handleDelete = () => {
+    onDelete();
     setSelectedIds([]);
     setIsChange((prev) => !prev); // Toggle isChange state
     handleMenuClose();
   };
-
+  const handleRowDelete = (id) => {
+    onDeleteRow(id);
+    handleMenuClose();
+  };
   const handleEdit = () => {
     onEdit(rowId);
     handleMenuClose();
@@ -249,9 +253,23 @@ const StyledTable = ({
                               : row[column.field]
                           }
                         />
-                      ) : (
-                        row[column.field]
-                      ))}
+                      ) :(
+                        column.field === "accessType" ? (
+                          <>
+                            {Array.isArray(row.permissions) && row.permissions.length > 0 && (
+                              <Box>
+                                Permissions
+                                {/* : {row.permissions.join(", ")} */}
+                              </Box>
+                            )}
+                            {Array.isArray(row.location) && row.location.length > 0 && (
+                              <Box>
+                                Locations
+                                {/* : {row.location.join(", ")} */}
+                              </Box>
+                            )}
+                          </>
+                        ):row[column.field]))}
                   </StyledTableCell>
                 ))}
                 <StyledTableCell padding="normal">
@@ -328,7 +346,7 @@ const StyledTable = ({
                           </MenuItem>,
                           <MenuItem
                             key="delete"
-                            onClick={() => handleDelete(row._id)}
+                            onClick={() =>handleRowDelete(row._id)}
                           >
                             <StyledSpan
                               variant={"red"}
@@ -380,6 +398,7 @@ const StyledTable = ({
               <Box display="flex" alignItems="center">
                 <TablePagination
                   component="div"
+                  rowsPerPage={rowPerSize}
                   labelDisplayedRows={({ from, to }) =>
                     `${pageNo}-${Math.ceil(totalCount/rowPerSize)} of ${totalCount}`
                   }

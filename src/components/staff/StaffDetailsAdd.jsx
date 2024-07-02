@@ -67,7 +67,7 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
       tier: data.tier.value,
       userType: data.userType.value,
       location: data.location.value,
-      status: isChecked,
+      // status: isChecked,
     };
 
     if (isUpdate) {
