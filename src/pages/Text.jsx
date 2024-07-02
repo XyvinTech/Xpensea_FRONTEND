@@ -25,7 +25,13 @@ import ForgotPassword from "../components/login/ForgotPassword";
 import DateRangePicker from "../ui/DateRangePicker";
 
 
+
+
 const Text = () => {
+
+
+
+
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
 
@@ -98,7 +104,7 @@ const Text = () => {
     <PasswordSuccess/>
     <ChangePassword/>
     <ForgotPassword/>
-<DateRangePicker/>
+
 
 
     </>
