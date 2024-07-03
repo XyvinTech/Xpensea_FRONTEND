@@ -12,7 +12,10 @@ import StyledSlider from "./ui/StyledSlider";
 import StyledTable from "./ui/StyledTable";
 import { userColumns, userData } from "./assets/json/TableData";
 import StyledSearchbar from "./ui/StyledSearchbar";
-
+import { TimePicker } from "antd";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import DateRangePicker from "./ui/DateRangePicker";
 
 export default function App() {
   const [isChecked, setIsChecked] = useState(false);
@@ -42,9 +45,13 @@ export default function App() {
     console.log("Selected items:", newSelectedIds);
   };
 
+  dayjs.extend(customParseFormat);
+  const onChange = (time, timeString) => {
+    console.log(time, timeString);
+  };
+
   return (
     <div>
-
       <StyledButton variant="primary" name="Sign in" />
       <StyledButton variant="secondary" name="Cancel" />
       <StyledButton
@@ -95,8 +102,18 @@ export default function App() {
       <StyledSelectField placeholder={"Designation"} options={options} />
       <br></br>
       <StyledSlider value={sliderValue} onChange={handleSliderChange} />
-      <StyledTable columns={userColumns} data={userData} onSelectionChange={handleSelectionChange} />
-      <StyledSearchbar/>
+      <StyledTable
+        columns={userColumns}
+        data={userData}
+        onSelectionChange={handleSelectionChange}
+      />
+      <StyledSearchbar />
+      <DateRangePicker />
+
+      <TimePicker
+        onChange={onChange}
+        defaultOpenValue={dayjs("00:00:00", "HH:mm:ss")}
+      />
     </div>
   );
 }
