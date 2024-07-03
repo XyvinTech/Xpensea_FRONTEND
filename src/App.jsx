@@ -12,8 +12,12 @@ import StyledSlider from "./ui/StyledSlider";
 import StyledTable from "./ui/StyledTable";
 import { userColumns, userData } from "./assets/json/TableData";
 import StyledSearchbar from "./ui/StyledSearchbar";
-
-
+import StyledTimeInput from "./ui/StyledTimeInput";
+import {  TimePicker } from "@mui/x-date-pickers";
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from "dayjs";
 export default function App() {
   const [isChecked, setIsChecked] = useState(false);
   const [sliderValue, setSliderValue] = useState([50, 80]);
@@ -44,7 +48,6 @@ export default function App() {
 
   return (
     <div>
-
       <StyledButton variant="primary" name="Sign in" />
       <StyledButton variant="secondary" name="Cancel" />
       <StyledButton
@@ -95,8 +98,13 @@ export default function App() {
       <StyledSelectField placeholder={"Designation"} options={options} />
       <br></br>
       <StyledSlider value={sliderValue} onChange={handleSliderChange} />
-      <StyledTable columns={userColumns} data={userData} onSelectionChange={handleSelectionChange} />
-      <StyledSearchbar/>
+      <StyledTable
+        columns={userColumns}
+        data={userData}
+        onSelectionChange={handleSelectionChange}
+      />
+      <StyledSearchbar /> <StyledTimeInput />
+      
     </div>
   );
 }

@@ -6,10 +6,10 @@ import { MoreVert } from "@mui/icons-material";
 import StyledTextArea from "../../ui/StyledTextArea";
 import StyledTextField from "../../ui/StyledTextField";
 import { Controller, useForm } from "react-hook-form";
-import StyledInputTime from "../../ui/StyledInputTime";
 import { useDropDownStore } from "../../store/useDropDownStore";
 import CalendarInput from "../../ui/CalenderInput";
 import { useEventStore } from "../../store/eventStore";
+import StyledTimeInput from "../../ui/StyledTimeInput";
 
 const CreateEvent = ({ open, onClose, onChange }) => {
   const { staffs, fetchTiers, fetchStaffs } = useDropDownStore();
@@ -252,7 +252,7 @@ const CreateEvent = ({ open, onClose, onChange }) => {
                   rules={{ required: "Start Time is required" }}
                   render={({ field }) => (
                     <>
-                      <StyledInputTime
+                      <StyledTimeInput
                         {...field}
                         placeholder={"Choose Start Time"}
                         sx={{ flex: 1 }}
@@ -273,10 +273,10 @@ const CreateEvent = ({ open, onClose, onChange }) => {
                   rules={{ required: "End Time is required" }}
                   render={({ field }) => (
                     <>
-                      <StyledInputTime
+                      <StyledTimeInput
                         {...field}
                         placeholder={"Choose End Time"}
-                        sx={{ flex: 1 }}
+                        // sx={{ flex: 1 }}
                       />{" "}
                       {errors.endTime && (
                         <span style={{ color: "red" }}>

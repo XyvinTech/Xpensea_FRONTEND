@@ -1,10 +1,8 @@
-import React from 'react';
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import React from "react";
 import styled from 'styled-components';
-import dayjs from 'dayjs'; // Ensure dayjs is imported
-
-const StyledDatePicker = styled(DatePicker)`
+const StyledTimePicker = styled(TimePicker)`
   & .MuiInputBase-root {
     color: #000000; 
     background-color: #ffffff; 
@@ -17,7 +15,7 @@ const StyledDatePicker = styled(DatePicker)`
   }
   & .MuiOutlinedInput-root {
     & fieldset {
-      border-color: rgba(0, 0, 0, 0.2);
+      border-color: rgba(0, 0, 0, 0.2)
     }
     &:hover fieldset {
       border-color: rgba(0, 0, 0, 0.2); 
@@ -29,23 +27,25 @@ const StyledDatePicker = styled(DatePicker)`
   
   & .MuiInputBase-input::placeholder {
     color: #79747E; 
-  } width:100%
+  }
+    width:100%
 `;
-
-const CalenderInput = ({ placeholder, dateValue, onDateChange }) => {
-  // Ensure dateValue is initialized and valid
-  const initialDate = dateValue ? dayjs(dateValue) : null;
-
+const StyledTimeInput = ({ value, onChange, placeholder, sx }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <StyledDatePicker
-        value={initialDate} // Pass initialized date
-        onChange={onDateChange}
-        label={placeholder}
-        inputVariant="outlined"
-      />
+    
+        {/* <TimePicker
+          label="Uncontrolled picker"
+          defaultValue={dayjs('2022-04-17T15:30')}
+        /> */}
+        <StyledTimePicker
+          label={placeholder}
+          value={value}
+          sx={{width:'100%'}}
+          onChange={onChange}
+        />
     </LocalizationProvider>
   );
 };
 
-export default CalenderInput;
+export default StyledTimeInput;
