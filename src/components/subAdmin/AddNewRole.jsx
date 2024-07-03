@@ -1,4 +1,4 @@
-import { Box, Dialog, Stack } from "@mui/material";
+import { Box, Dialog, Grid, Stack } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import StyledTextField from "../../ui/StyledTextField";
 import StyledButton from "../../ui/StyledButton";
@@ -9,11 +9,16 @@ import { Controller, useForm } from "react-hook-form";
 import { useDropDownStore } from "../../store/useDropDownStore";
 import { useAdminStore } from "../../store/adminStore";
 
-
 const AddNewRole = ({ open, onClose, onChange }) => {
   const { roles, fetchRoles } = useDropDownStore();
-  const { addAdmins, updateAdmins, admins, isUpdate,updateChange } = useAdminStore();
-  const { control, handleSubmit, reset } = useForm({
+  const { addAdmins, updateAdmins, admins, isUpdate, updateChange } =
+    useAdminStore();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       name: isUpdate ? admins?.name : "",
       email: isUpdate ? admins?.email : "",
@@ -45,7 +50,7 @@ const AddNewRole = ({ open, onClose, onChange }) => {
   };
 
   const handleClear = (event) => {
-     event.preventDefault();
+    event.preventDefault();
     updateChange(isUpdate);
     reset({
       name: "",
@@ -109,95 +114,143 @@ const AddNewRole = ({ open, onClose, onChange }) => {
           </Box>
           <Divider />
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack direction="row" spacing={2} paddingBottom={2}>
-              <Controller
-                name="name"
-                control={control}
-                render={({ field }) => (
-                  <StyledTextField {...field} label={"Name"} sx={{ flex: 1 }} />
-                )}
-              />
-            </Stack>
+            <Grid container spacing={2} padding={1}>
+              <Grid item md="12">
+                <Controller
+                  name="name"
+                  control={control}
+                  rules={{ required: "Name is required" }}
+                  render={({ field }) => (
+                    <>
+                      {" "}
+                      <StyledTextField
+                        {...field}
+                        label={"Name"}
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.name && (
+                        <span style={{ color: "red" }}>
+                          {errors.name.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
 
-            <Stack direction="row" spacing={2} paddingBottom={2}>
-              <Controller
-                name="role"
-                control={control}
-                render={({ field }) => (
-                  <StyledSelectField
-                    {...field}
-                    placeholder={"Choose a Role"}
-                    options={roleOptions}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-            </Stack>
+              <Grid item md="12">
+                <Controller
+                  name="role"
+                  control={control}
+                  rules={{ required: "Role is required" }}
+                  render={({ field }) => (
+                    <>
+                      {" "}
+                      <StyledSelectField
+                        {...field}
+                        placeholder={"Choose a Role"}
+                        options={roleOptions}
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.role && (
+                        <span style={{ color: "red" }}>
+                          {errors.role.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
 
-            <Stack direction="row" spacing={2} paddingBottom={2}>
-              <Controller
-                name="designation"
-                control={control}
-                render={({ field }) => (
-                  <StyledSelectField
-                    {...field}
-                    placeholder={"Designation"}
-                    options={designation}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-            </Stack>
+              <Grid item md="12">
+                <Controller
+                  name="designation"
+                  control={control}
+                  rules={{ required: "Designation is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledSelectField
+                        {...field}
+                        placeholder={"Designation"}
+                        options={designation}
+                        sx={{ flex: 1 }}
+                      />
+                      {errors.designation && (
+                        <span style={{ color: "red" }}>
+                          {errors.designation.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
 
-            <Stack direction="row" spacing={2} paddingBottom={2}>
-              <Controller
-                name="email"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledTextField
-                    {...field}
-                    label={"Email"}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-            </Stack>
+              <Grid item md="12">
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{ required: "Email is required" }}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <>
+                      <StyledTextField
+                        {...field}
+                        label={"Email"}
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.email && (
+                        <span style={{ color: "red" }}>
+                          {errors.email.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item md="12">
+                <Controller
+                  name="mobile"
+                  control={control}
+                  rules={{ required: "Phone Number is required" }}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <>
+                      <StyledTextField
+                        {...field}
+                        label={"Phone Number"}
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.mobile && (
+                        <span style={{ color: "red" }}>
+                          {errors.mobile.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
 
-            <Stack direction="row" spacing={2} paddingBottom={2}>
-              <Controller
-                name="mobile"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledTextField
-                    {...field}
-                    label={"Phone Number"}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-            </Stack>
-
-            <Stack
-              direction="row"
-              spacing={2}
-              justifyContent="flex-end"
-              paddingBottom={2}
-            >
-              <StyledButton
-                variant="secondary"
-                padding="15px 50px 15px 50px"
-                name="Cancel"
-                onClick={handleClear}
-              />
-              <StyledButton
-                variant="primary"
-                padding="15px 50px 15px 50px"
-                name="Save"
-                type="submit"
-              />
-            </Stack>
+              <Stack
+                direction="row"
+                spacing={2}
+                paddingTop={2}
+                justifyContent="flex-end"
+                paddingBottom={2}
+              >
+                <StyledButton
+                  variant="secondary"
+                  padding="15px 50px 15px 50px"
+                  name="Cancel"
+                  onClick={handleClear}
+                />
+                <StyledButton
+                  variant="primary"
+                  padding="15px 50px 15px 50px"
+                  name="Save"
+                  type="submit"
+                />
+              </Stack>
+            </Grid>
           </form>
         </Stack>
       </Box>

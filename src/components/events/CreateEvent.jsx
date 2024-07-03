@@ -11,10 +11,15 @@ import { useDropDownStore } from "../../store/useDropDownStore";
 import CalendarInput from "../../ui/CalenderInput";
 import { useEventStore } from "../../store/eventStore";
 
-const CreateEvent = ({ open, onClose , onChange}) => {
-  const {  staffs, fetchTiers, fetchStaffs } = useDropDownStore();
+const CreateEvent = ({ open, onClose, onChange }) => {
+  const { staffs, fetchTiers, fetchStaffs } = useDropDownStore();
   const { addEvents } = useEventStore();
-  const { control, handleSubmit, reset } = useForm();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     fetchTiers();
@@ -25,20 +30,22 @@ const CreateEvent = ({ open, onClose , onChange}) => {
     onClose();
   };
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     const formData = {
       eventName: data.eventName,
       days: data.days,
       startDate: data.startDate,
       endDate: data.endDate,
       description: data.description,
-      staffs: Array.isArray(data.staff) ? data.staff.map(staff => staff.value) : [data.staff.value],
+      staffs: Array.isArray(data.staff)
+        ? data.staff.map((staff) => staff.value)
+        : [data.staff.value],
       location: data.location.value,
       startTime: data.startTime,
       endTime: data.endTime,
     };
     console.log("Form data:", formData);
-    await addEvents(formData)
+    await addEvents(formData);
     onChange();
     onClose();
     reset();
@@ -65,34 +72,53 @@ const CreateEvent = ({ open, onClose , onChange}) => {
             </Box>
           </Box>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Stack direction="row" spacing={2} paddingBottom={2}>
-              <Controller
-                name="eventName"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledTextField
-                    {...field}
-                    label="Event Title"
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-              <Controller
-                name="location"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledSelectField
-                    {...field}
-                    placeholder={"Choose Location"}
-                    options={location}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-            </Stack>
-            <Stack direction="row" spacing={2} paddingBottom={2}>
+            <Grid container spacing={2} padding={2}>
+              <Grid item md="6">
+                <Controller
+                  name="eventName"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: "Event Name is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledTextField
+                        {...field}
+                        label="Event Title"
+                        sx={{ width: "100%" }}
+                      />
+                      {errors.eventName && (
+                        <span style={{ color: "red" }}>
+                          {errors.eventName.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item md="6">
+                <Controller
+                  name="location"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: "Location is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledSelectField
+                        {...field}
+                        placeholder={"Choose Location"}
+                        options={location}
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.location && (
+                        <span style={{ color: "red" }}>
+                          {errors.location.message}
+                        </span>
+                      )}{" "}
+                    </>
+                  )}
+                />
+              </Grid>
+              {/* <Stack direction="row" spacing={2} paddingBottom={2}> */}
               {/* <Controller
                 name="role"
                 control={control}
@@ -125,101 +151,164 @@ const CreateEvent = ({ open, onClose , onChange}) => {
                   />
                 )}
               /> */}
-            </Stack>
-            <Stack direction="row" spacing={2} paddingBottom={2}>
-              <Controller
-                name="staff"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledSelectField
-                    {...field}
-                    isMulti={true}
-                    placeholder={"Choose Staff"}
-                    options={staffs.map((staff) => ({
-                      value: staff?._id,
-                      label: staff?.name,
-                    }))}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-              <Controller
-                name="days"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledTextField
-                    {...field}
-                    label="Number of Days"
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-            </Stack>
-            <Stack direction="row" spacing={2} paddingBottom={2}>
-              <Controller
-                name="startDate"
-                control={control}
-                render={({ field }) => (
-                  <CalendarInput
-                    {...field}
-                    placeholder={"Start Date"}
-                    dateValue={field.value}
-                    onDateChange={field.onChange}
-                  />
-                )}
-              />
-              <Controller
-                name="endDate"
-                control={control}
-                render={({ field }) => (
-                  <CalendarInput
-                    {...field}
-                    placeholder={"End Date"}
-                    dateValue={field.value}
-                    onDateChange={field.onChange}
-                  />
-                )}
-              />
-            </Stack>
-            <Stack direction="row" spacing={2} paddingBottom={2}>
-              <Controller
-                name="startTime"
-                control={control}
-                render={({ field }) => (
-                  <StyledInputTime
-                    {...field}
-                    placeholder={"Choose Start Time"}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-              <Controller
-                name="endTime"
-                control={control}
-                render={({ field }) => (
-                  <StyledInputTime
-                    {...field}
-                    placeholder={"Choose End Time"}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              />
-            </Stack>
-            <Controller
-              name="description"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <StyledTextArea
-                  {...field}
-                  placeholder="Description"
-                  sx={{ flex: 1 }}
+              {/* </Stack> */}
+              <Grid item md="6">
+                <Controller
+                  name="staff"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: "Staff is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledSelectField
+                        {...field}
+                        isMulti={true}
+                        placeholder={"Choose Staff"}
+                        options={staffs.map((staff) => ({
+                          value: staff?._id,
+                          label: staff?.name,
+                        }))}
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.staff && (
+                        <span style={{ color: "red" }}>
+                          {errors.staff.message}
+                        </span>
+                      )}{" "}
+                    </>
+                  )}
+                />{" "}
+              </Grid>
+              <Grid item md="6">
+                <Controller
+                  name="days"
+                  control={control}
+                  rules={{ required: "Days is required" }}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <>
+                      <StyledTextField
+                        {...field}
+                        label="Number of Days"
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.days && (
+                        <span style={{ color: "red" }}>
+                          {errors.days.message}
+                        </span>
+                      )}
+                    </>
+                  )}
                 />
-              )}
-            />
-            <Grid container spacing={1}>
+              </Grid>
+              <Grid item md="6">
+                <Controller
+                  name="startDate"
+                  control={control}
+                  rules={{ required: "Start Date is required" }}
+                  render={({ field }) => (
+                    <>
+                      <CalendarInput
+                        {...field}
+                        placeholder={"Start Date"}
+                        dateValue={field.value}
+                        onDateChange={field.onChange}
+                      />{" "}
+                      {errors.startDate && (
+                        <span style={{ color: "red" }}>
+                          {errors.startDate.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item md="6">
+                <Controller
+                  name="endDate"
+                  control={control}
+                  rules={{ required: "End Date is required" }}
+                  render={({ field }) => (
+                    <>
+                      <CalendarInput
+                        {...field}
+                        placeholder={"End Date"}
+                        dateValue={field.value}
+                        onDateChange={field.onChange}
+                      />{" "}
+                      {errors.endDate && (
+                        <span style={{ color: "red" }}>
+                          {errors.endDate.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item md="6">
+                <Controller
+                  name="startTime"
+                  control={control}
+                  rules={{ required: "Start Time is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledInputTime
+                        {...field}
+                        placeholder={"Choose Start Time"}
+                        sx={{ flex: 1 }}
+                      />
+                      {errors.startTime && (
+                        <span style={{ color: "red" }}>
+                          {errors.startTime.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item md="6">
+                <Controller
+                  name="endTime"
+                  control={control}
+                  rules={{ required: "End Time is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledInputTime
+                        {...field}
+                        placeholder={"Choose End Time"}
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.endTime && (
+                        <span style={{ color: "red" }}>
+                          {errors.endTime.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item md="12">
+                <Controller
+                  name="description"
+                  control={control}
+                  defaultValue=""
+                  rules={{ required: "Description is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledTextArea
+                        {...field}
+                        placeholder="Description"
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.description && (
+                        <span style={{ color: "red" }}>
+                          {errors.description.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
               <Grid item md={6} sm={6}></Grid>
               <Grid item md={6} sm={6}>
                 <Stack direction="row" spacing={2} justifyContent="flex-end">
