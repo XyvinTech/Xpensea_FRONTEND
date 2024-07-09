@@ -9,10 +9,10 @@ import { Controller, useForm } from "react-hook-form";
 import { useDropDownStore } from "../../store/useDropDownStore";
 import { useAdminStore } from "../../store/adminStore";
 
-const AddNewRole = ({ open, onClose, onChange }) => {
+const AddNewRole = ({ open, onClose, onChange, isView }) => {
   const { roles, fetchRoles } = useDropDownStore();
-  const { addAdmins, updateAdmins, admins, isUpdate, updateChange } =
-    useAdminStore();
+  const { addAdmins, updateAdmins, admins, isUpdate, updateChange } = useAdminStore();
+
   const {
     control,
     handleSubmit,
@@ -51,6 +51,7 @@ const AddNewRole = ({ open, onClose, onChange }) => {
 
   const handleClear = (event) => {
     event.preventDefault();
+    console.log("Clicked clear");
     updateChange(isUpdate);
     reset({
       name: "",
@@ -59,10 +60,12 @@ const AddNewRole = ({ open, onClose, onChange }) => {
       designation: "",
       role: "",
     });
+    setIsChecked(false); 
+    console.log("Form reset with empty values");
     onClose();
   };
 
-  const designation = [{ value: "Administrator", label: "Administartor" }];
+  const designation = [{ value: "Administrator", label: "Administrator" }];
 
   useEffect(() => {
     fetchRoles();
@@ -96,19 +99,28 @@ const AddNewRole = ({ open, onClose, onChange }) => {
     console.log("Form data:", formData);
     onClose();
     onChange();
-    reset();
+    reset({
+      name: "",
+      email: "",
+      mobile: "",
+      designation: "",
+      role: "",
+    });
+    setIsChecked(false); // explicitly reset the switch
   };
+
+  console.log("Form data:", admins);
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
       <Box padding={3}>
         <Stack spacing={2}>
           <Box display="flex" justifyContent="space-between">
-            <h2 style={{ flexGrow: 1 }}>Add New role</h2>
-
+            <h2 style={{ flexGrow: 1 }}>{isView ? "View Role" : "Add New Role"}</h2>
             <StyledSwitch
               variant={"primary"}
               checked={isChecked}
+              disabled={isView}
               onChange={handleSwitchChange}
             />
           </Box>
@@ -122,22 +134,14 @@ const AddNewRole = ({ open, onClose, onChange }) => {
                   rules={{ required: "Name is required" }}
                   render={({ field }) => (
                     <>
-                      {" "}
-                      <StyledTextField
-                        {...field}
-                        label={"Name"}
-                        sx={{ flex: 1 }}
-                      />{" "}
+                      <StyledTextField {...field} label={"Name"} sx={{ flex: 1 }} disabled={isView} />
                       {errors.name && (
-                        <span style={{ color: "red" }}>
-                          {errors.name.message}
-                        </span>
+                        <span style={{ color: "red" }}>{errors.name.message}</span>
                       )}
                     </>
                   )}
                 />
               </Grid>
-
               <Grid item md="12">
                 <Controller
                   name="role"
@@ -145,23 +149,20 @@ const AddNewRole = ({ open, onClose, onChange }) => {
                   rules={{ required: "Role is required" }}
                   render={({ field }) => (
                     <>
-                      {" "}
                       <StyledSelectField
                         {...field}
                         placeholder={"Choose a Role"}
                         options={roleOptions}
+                        isDisabled={isView}
                         sx={{ flex: 1 }}
-                      />{" "}
+                      />
                       {errors.role && (
-                        <span style={{ color: "red" }}>
-                          {errors.role.message}
-                        </span>
+                        <span style={{ color: "red" }}>{errors.role.message}</span>
                       )}
                     </>
                   )}
                 />
               </Grid>
-
               <Grid item md="12">
                 <Controller
                   name="designation"
@@ -173,18 +174,16 @@ const AddNewRole = ({ open, onClose, onChange }) => {
                         {...field}
                         placeholder={"Designation"}
                         options={designation}
+                        isDisabled={isView}
                         sx={{ flex: 1 }}
                       />
                       {errors.designation && (
-                        <span style={{ color: "red" }}>
-                          {errors.designation.message}
-                        </span>
+                        <span style={{ color: "red" }}>{errors.designation.message}</span>
                       )}
                     </>
                   )}
                 />
               </Grid>
-
               <Grid item md="12">
                 <Controller
                   name="email"
@@ -193,15 +192,9 @@ const AddNewRole = ({ open, onClose, onChange }) => {
                   defaultValue=""
                   render={({ field }) => (
                     <>
-                      <StyledTextField
-                        {...field}
-                        label={"Email"}
-                        sx={{ flex: 1 }}
-                      />{" "}
+                      <StyledTextField {...field} label={"Email"} sx={{ flex: 1 }} disabled={isView} />
                       {errors.email && (
-                        <span style={{ color: "red" }}>
-                          {errors.email.message}
-                        </span>
+                        <span style={{ color: "red" }}>{errors.email.message}</span>
                       )}
                     </>
                   )}
@@ -215,41 +208,41 @@ const AddNewRole = ({ open, onClose, onChange }) => {
                   defaultValue=""
                   render={({ field }) => (
                     <>
-                      <StyledTextField
-                        {...field}
-                        label={"Phone Number"}
-                        sx={{ flex: 1 }}
-                      />{" "}
+                      <StyledTextField {...field} label={"Phone Number"} disabled={isView} sx={{ flex: 1 }} />
                       {errors.mobile && (
-                        <span style={{ color: "red" }}>
-                          {errors.mobile.message}
-                        </span>
+                        <span style={{ color: "red" }}>{errors.mobile.message}</span>
                       )}
                     </>
                   )}
                 />
               </Grid>
-
-              <Stack
-                direction="row"
-                spacing={2}
-                paddingTop={2}
-                justifyContent="flex-end"
-                paddingBottom={2}
-              >
-                <StyledButton
-                  variant="secondary"
-                  padding="15px 50px 15px 50px"
-                  name="Cancel"
-                  onClick={handleClear}
-                />
-                <StyledButton
-                  variant="primary"
-                  padding="15px 50px 15px 50px"
-                  name="Save"
-                  type="submit"
-                />
-              </Stack>
+              <Grid item md={6} sm={6}></Grid>
+              <Grid item md={6} sm={6}>
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  paddingTop={2}
+                  justifyContent="flex-end"
+                  paddingBottom={2}
+                >
+                  {!isView && (
+                    <>
+                      <StyledButton
+                        variant="secondary"
+                        padding="15px 50px 15px 50px"
+                        name="Cancel"
+                        onClick={handleClear}
+                      />
+                      <StyledButton
+                        variant="primary"
+                        padding="15px 50px 15px 50px"
+                        name="Save"
+                        type="submit"
+                      />
+                    </>
+                  )}
+                </Stack>
+              </Grid>
             </Grid>
           </form>
         </Stack>

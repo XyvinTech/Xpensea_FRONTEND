@@ -14,6 +14,7 @@ const AdminManagementPage = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
+  const [isView, setIsView] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
@@ -24,13 +25,13 @@ const AdminManagementPage = () => {
     console.log("View item:", isUpdate);
     updateChange(isUpdate);
     setEventOpen(true);
+    setIsView(false);
 
   };
   const handleView = async(id) => {
-    // await fetchAdminById(id)
+    await fetchAdminById(id)
     setEventOpen(true);
-    // updateChange(isUpdate);
-
+    setIsView(true);
   };
   const handleDelete = async () => {
     if (selectedRows.length > 0) {
@@ -52,6 +53,7 @@ const AdminManagementPage = () => {
   };
   const handleOpenEvent = () => {
     setEventOpen(true);
+    setIsView(false);
   };
 
   const handleCloseEvent = () => {
@@ -131,7 +133,7 @@ const AdminManagementPage = () => {
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <AddNewRole open={eventOpen} onClose={handleCloseEvent}onChange={handleChange}/>
+      <AddNewRole open={eventOpen} onClose={handleCloseEvent}onChange={handleChange}isView={isView} />
     </>
   );
 };

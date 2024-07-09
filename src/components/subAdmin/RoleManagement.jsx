@@ -21,7 +21,7 @@ import StyledSelectField from "../../ui/StyledSelectField";
 import { Controller, useForm } from "react-hook-form";
 import { useRoleStore } from "../../store/roleStore";
 
-const RoleManagement = ({ open, onClose, onChange }) => {
+const RoleManagement = ({ open, onClose, onChange, isView }) => {
   const initialPermissions = {
     adminManagement_view: false,
     adminManagement_modify: false,
@@ -54,7 +54,7 @@ const RoleManagement = ({ open, onClose, onChange }) => {
   const [permissions, setPermissions] = useState(initialPermissions);
 
   useEffect(() => {
-    if (isUpdate) {
+    if (role) {
       reset({
         roleName: role?.roleName,
         location: role?.locationAccess?.map((loc) => ({
@@ -76,9 +76,11 @@ const RoleManagement = ({ open, onClose, onChange }) => {
   const handleClear = (event) => {
     event.preventDefault();
     updateChange(isUpdate);
-    console.log("Updating role with ID:", isUpdate);
     setPermissions(initialPermissions);
-    reset();
+    reset({
+      roleName: "",
+      location: [],
+    });
     onClose();
   };
 
@@ -87,10 +89,12 @@ const RoleManagement = ({ open, onClose, onChange }) => {
   };
 
   const handleSpanClick = (permission) => {
-    setPermissions((prevPermissions) => ({
-      ...prevPermissions,
-      [permission]: !prevPermissions[permission],
-    }));
+    if (!isView) {
+      setPermissions((prevPermissions) => ({
+        ...prevPermissions,
+        [permission]: !prevPermissions[permission],
+      }));
+    }
   };
 
   const tableCellStyle = {
@@ -106,7 +110,7 @@ const RoleManagement = ({ open, onClose, onChange }) => {
     borderRadius: "50%",
     backgroundColor: filled ? "#79001D" : "transparent",
     border: "4px solid rgba(121, 0, 29, 0.5)",
-    cursor: "pointer",
+    cursor: isView ? "default" : "pointer",
   });
 
   const options = [
@@ -195,7 +199,10 @@ const RoleManagement = ({ open, onClose, onChange }) => {
 
     onClose();
     onChange();
-    reset();
+    reset({
+      roleName: "",
+      location: [],
+    });
   };
 
   return (
@@ -219,7 +226,11 @@ const RoleManagement = ({ open, onClose, onChange }) => {
             paddingBottom={0}
           >
             <Typography variant="h11">Role Management</Typography>
-            <StyledSwitch checked={isChecked} onChange={handleSwitchChange} />
+            <StyledSwitch
+              checked={isChecked}
+              disabled={isView}
+              onChange={handleSwitchChange}
+            />
           </Box>
           <Divider />
 
@@ -227,12 +238,12 @@ const RoleManagement = ({ open, onClose, onChange }) => {
             <Controller
               name="roleName"
               control={control}
-              defaultValue=""
               render={({ field }) => (
                 <StyledInput
                   {...field}
                   placeholder={"Enter Role Name"}
                   sx={{ flex: 1 }}
+                  disabled={isView}
                 />
               )}
             />
@@ -286,7 +297,14 @@ const RoleManagement = ({ open, onClose, onChange }) => {
                     <TableCell sx={tableCellStyle}>Modify</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>{permissions && renderPermissionRows()}</TableBody>
+                <TableBody
+                  sx={{
+                    pointerEvents: isView ? "none" : "auto",
+                    opacity: isView ? 0.5 : 1,
+                  }}
+                >
+                  {permissions && renderPermissionRows()}
+                </TableBody>
               </Table>
             </TableContainer>
           ) : (
@@ -302,20 +320,28 @@ const RoleManagement = ({ open, onClose, onChange }) => {
                     placeholder={"Choose Location"}
                     options={options}
                     sx={{ flex: 1 }}
+                    isDisabled={isView}
                   />
                 )}
               />
             </Box>
           )}
-        </DialogContent>
-        <Box display="flex" justifyContent="space-between" padding={3} gap={4}>
-          <StyledButton
-            variant="secondary"
-            name="Cancel"
-            onClick={handleClear}
-          />
-          <StyledButton variant="primary" name="Save" type="submit" />
-        </Box>
+        </DialogContent>{" "}
+        {!isView && (
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            padding={3}
+            gap={4}
+          >
+            <StyledButton
+              variant="secondary"
+              name="Cancel"
+              onClick={handleClear}
+            />
+            <StyledButton variant="primary" name="Save" type="submit" />
+          </Box>
+        )}
       </form>
     </Dialog>
   );

@@ -9,33 +9,38 @@ import { useListStore } from "../store/listStore";
 import { useTierStore } from "../store/tierStore";
 const TierPage = () => {
   const { lists, fetchLists } = useListStore();
-  const { isUpdate, updateChange,fetchTierById,deleteTiers } = useTierStore();
+  const { isUpdate, updateChange, fetchTierById, deleteTiers } = useTierStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
-  // const [action, setAction] = useState('');
+  const [isView, setIsView] = useState(false);
   const [expenseOpen, setExpenseOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
   };
 
-  const handleEdit = async(id) => {
-    await fetchTierById(id)
+  const handleEdit = async (id) => {
+    await fetchTierById(id);
     console.log("View item:", isUpdate);
     updateChange(isUpdate);
     // setAction('edit')
     setExpenseOpen(true);
-
+    setIsView(false);
+  };
+  const handleView = async (id) => {
+    await fetchTierById(id);
+    setExpenseOpen(true);
+    setIsView(true);
   };
   const handleDelete = async () => {
     if (selectedRows.length > 0) {
-      await Promise.all(selectedRows.map((id) => deleteTiers(id))); 
+      await Promise.all(selectedRows.map((id) => deleteTiers(id)));
       setIsChange(!isChange);
-      setSelectedRows([]); 
+      setSelectedRows([]);
     }
   };
-  
+
   const handleSort = (field) => {
     console.log(`Sorting by ${field}`);
   };
@@ -49,6 +54,7 @@ const TierPage = () => {
   };
   const handleOpenExpense = () => {
     setExpenseOpen(true);
+    setIsView(false);
   };
 
   const handleCloseExpense = () => {
@@ -68,7 +74,7 @@ const TierPage = () => {
     let filter = {};
     filter.type = "tiers";
     fetchLists(filter);
-  }, [isChange,fetchLists]);
+  }, [isChange, fetchLists]);
   console.log(lists);
 
   return (
@@ -175,7 +181,7 @@ const TierPage = () => {
           columns={userColumns}
           // data={lists}
           onSelectionChange={handleSelectionChange}
-   
+          onView={handleView}
           onDelete={handleDelete}
           onSort={handleSort}
           showEdit
@@ -187,9 +193,7 @@ const TierPage = () => {
         open={expenseOpen}
         onClose={handleCloseExpense}
         onChange={handleChange}
-        // isUpdate={isUpdate}
-        // action={action}
-        // setAction={setAction}
+        isView={isView}
       />
     </>
   );

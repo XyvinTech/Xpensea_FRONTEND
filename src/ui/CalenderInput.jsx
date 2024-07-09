@@ -32,7 +32,7 @@ const StyledDatePicker = styled(DatePicker)`
   } width:100%
 `;
 
-const CalenderInput = ({ placeholder, dateValue, onDateChange }) => {
+const CalenderInput = ({ placeholder, dateValue, onDateChange,disabled }) => {
   // Ensure dateValue is initialized and valid
   const initialDate = dateValue ? dayjs(dateValue) : null;
 
@@ -42,7 +42,7 @@ const CalenderInput = ({ placeholder, dateValue, onDateChange }) => {
         value={initialDate} // Pass initialized date
         onChange={onDateChange}
         label={placeholder}
-        inputVariant="outlined"
+        inputVariant="outlined"disabled={disabled}
       />
     </LocalizationProvider>
   );

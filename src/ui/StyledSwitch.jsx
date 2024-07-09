@@ -7,10 +7,16 @@ const SwitchContainer = styled.label`
   width: 45px;
   height: 15px;
   border-radius: 23px;
-  background: ${(props) => (props.checked ? (props.variant === 'primary' ? '#14AE5C' : '#E00D00') : '#b3b3b3')};
+  background: ${(props) =>
+    props.checked
+      ? props.variant === 'primary'
+        ? '#14AE5C'
+        : '#E00D00'
+      : '#b3b3b3'};
   padding: 10px;
   transition: 300ms all;
-  cursor: pointer;
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `;
 
 const SwitchHandle = styled.div`
@@ -35,14 +41,19 @@ const Input = styled.input`
   display: none;
 `;
 
-const StyledSwitch = ({ checked, onChange, variant }) => {
+const StyledSwitch = ({ checked, onChange, variant, disabled }) => {
+  const handleChange = (e) => {
+    if (!disabled) {
+      onChange(e);
+    }
+  };
+
   return (
-    <SwitchContainer variant={variant} checked={checked}>
-      <Input type="checkbox" checked={checked} onChange={onChange} />
+    <SwitchContainer variant={variant} checked={checked} disabled={disabled}>
+      <Input type="checkbox" checked={checked} onChange={handleChange} disabled={disabled} />
       <SwitchHandle checked={checked} variant={variant} />
     </SwitchContainer>
   );
 };
-
 
 export default StyledSwitch;

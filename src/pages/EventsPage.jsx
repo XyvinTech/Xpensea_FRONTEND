@@ -8,9 +8,9 @@ import CreateEvent from "../components/events/CreateEvent";
 import { useListStore } from "../store/listStore";
 import { useEventStore } from "../store/eventStore";
 const EventsPage = () => {
-  const navigate = useNavigate();
   const { lists, fetchLists } = useListStore();
-  const { deleteEvents } = useEventStore();
+  const { deleteEvents,fetchEventById } = useEventStore();
+  const [isView, setIsView] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
@@ -20,8 +20,10 @@ const EventsPage = () => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
   };
-  const handleView = (id) => {
-    console.log("View item:", id);
+  const handleView =async  (id) => {
+    await fetchEventById(id);
+    setIsView(true);
+    setEventOpen(true);
   };
 
   const handleDelete = async () => {
@@ -49,6 +51,7 @@ const EventsPage = () => {
   };
   const handleOpenEvent = () => {
     setEventOpen(true);
+    setIsView(false);
   };
 
   const handleCloseEvent = () => {
@@ -188,6 +191,7 @@ const EventsPage = () => {
         open={eventOpen}
         onClose={handleCloseEvent}
         onChange={handleChange}
+        isView={isView}
       />
     </>
   );

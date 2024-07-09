@@ -12,7 +12,7 @@ const RoleManagementPage = () => {
   const { isUpdate, updateChange,fetchRoleById,deleteRoles } = useRoleStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [isChange, setIsChange] = useState(false);
-  
+  const [isView, setIsView] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
@@ -25,7 +25,13 @@ const RoleManagementPage = () => {
     
     updateChange(isUpdate);
     setEventOpen(true);
+    setIsView(false);
    
+  };
+  const handleView = async (id) => {
+    await fetchRoleById(id);
+    setEventOpen(true);
+    setIsView(true);
   };
   const handleDelete = async () => {
     if (selectedRows.length > 0) {
@@ -47,6 +53,7 @@ const RoleManagementPage = () => {
   };
   const handleOpenEvent = () => {
     setEventOpen(true);
+    setIsView(false);
   };
   const handleCloseEvent = () => {
     setEventOpen(false);
@@ -117,12 +124,13 @@ const RoleManagementPage = () => {
           onSelectionChange={handleSelectionChange}
           onEdit={handleEdit}
           showEdit
+          onView={handleView}
           onSort={handleSort}
           onDelete={handleDelete}
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <RoleManagement open={eventOpen} onClose={handleCloseEvent}  onChange={handleChange} />
+      <RoleManagement open={eventOpen} onClose={handleCloseEvent}     isView={isView}  onChange={handleChange} />
     </>
   );
 };

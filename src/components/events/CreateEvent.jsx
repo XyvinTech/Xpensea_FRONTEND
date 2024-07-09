@@ -13,7 +13,7 @@ import StyledTimeInput from "../../ui/StyledTimeInput";
 
 const CreateEvent = ({ open, onClose, onChange }) => {
   const { staffs, fetchTiers, fetchStaffs } = useDropDownStore();
-  const { addEvents } = useEventStore();
+  const { addEvents,event } = useEventStore();
   const {
     control,
     handleSubmit,
@@ -55,6 +55,16 @@ const CreateEvent = ({ open, onClose, onChange }) => {
     { value: "option2", label: "Option 2" },
     { value: "option3", label: "Option 3" },
   ];
+  useEffect(() => {
+    reset({
+      eventName: event?.eventName,
+      // email: admins?.email,
+      // mobile: admins?.mobile,
+      // designation: { value: admins?.designation, label: admins?.designation },
+      // role: { value: admins?.role, label: admins?.role },
+    });
+    // setIsChecked(admins?.status || false);
+  }, [ event, reset]);
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <Box padding={3}>

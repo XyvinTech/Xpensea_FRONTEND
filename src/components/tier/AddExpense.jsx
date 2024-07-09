@@ -9,7 +9,7 @@ import CalendarInput from "../../ui/CalenderInput";
 import { useTierStore } from "../../store/tierStore";
 import StyledSelectField from "../../ui/StyledSelectField";
 
-const AddExpense = ({ open, onClose, onChange }) => {
+const AddExpense = ({ open, onClose, onChange, isView }) => {
   const { addTiers, updateChange, tier, updateTiers, isUpdate } =
     useTierStore();
   const {
@@ -30,14 +30,14 @@ const AddExpense = ({ open, onClose, onChange }) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    if (isUpdate && tier) {
+    // if (isUpdate && tier) {
       setCategories(tier?.categories || []);
       reset({
         activationDate: tier?.activationDate,
         tierTitle: tier?.title,
         categories: tier?.categories,
       });
-    }
+    // }
   }, [isUpdate, tier, reset]);
 
   const handleClear = (event) => {
@@ -122,14 +122,14 @@ const AddExpense = ({ open, onClose, onChange }) => {
           >
             <Box flexGrow={1} />
             <h2 style={{ flexGrow: 1 }}>Tier</h2>
-            <Box
+            {!isView && ( <Box
               position="absolute"
               right={0}
               sx={{ cursor: "pointer" }}
               onClick={handleClear}
             >
               <CrossIcon />
-            </Box>
+            </Box> )}
           </Box>
           <Grid container spacing={2} padding={2}>
             <Grid item md="6">
@@ -142,7 +142,7 @@ const AddExpense = ({ open, onClose, onChange }) => {
                     <StyledInput
                       {...field}
                       placeholder={"Tier Title"}
-                      sx={{ flex: 1 }}
+                      sx={{ flex: 1 }}disabled={isView}
                     />
                     {errors.tierTitle && (
                       <span style={{ color: "red" }}>
@@ -163,7 +163,7 @@ const AddExpense = ({ open, onClose, onChange }) => {
                     <CalendarInput
                       {...field}
                       placeholder={"Activation Date"}
-                      dateValue={field.value}
+                      dateValue={field.value}disabled={isView}
                       onDateChange={field.onChange}
                     />
                     {errors.activationDate && (
@@ -176,28 +176,28 @@ const AddExpense = ({ open, onClose, onChange }) => {
               />
             </Grid>
             {categories.map((item, index) => (
-              <Grid container key={index} spacing={1}>
-                <Grid item xs={12} md={6} padding={2}>
-                  <Stack direction={"row"} justifyContent={"space-between"}>
-                    <Typography variant="subtitle1" fontWeight={"500"}>
+              <Grid container key={index} spacing={4} padding={2}>
+                <Grid item xs={12} md={6} >
+                  <Stack direction={"row"} spacing={2} justifyContent={"space-between"}>
+                    <Typography variant="subtitle1" fontWeight={"500"} >
                       {item?.title}
                     </Typography>
                     <StyledSwitch
                       checked={item.status}
                       onChange={handleSwitchChange(index)}
-                      variant="primary"
+                      variant="primary"disabled={isView}
                     />
                   </Stack>
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} spacing={2}>
                   <StyledInput
                     value={item?.maxAmount}
                     placeholder={"Max Amount"}
-                    sx={{ flex: 1 }}
+                    disabled={isView}
                   />
                 </Grid>
               </Grid>
-            ))}
+            ))} {!isView && ( <>
             <Grid item md="6">
               <Controller
                 name="title"
@@ -208,7 +208,7 @@ const AddExpense = ({ open, onClose, onChange }) => {
                     {...field}
                     placeholder={"Choose Title"}
                     options={Title}
-                    sx={{ flex: 1 }}
+                    sx={{ flex: 1 }}isDisabled={isView}
                   />
                 )}
               />{" "}
@@ -222,14 +222,14 @@ const AddExpense = ({ open, onClose, onChange }) => {
                   <StyledInput
                     {...field}
                     placeholder={"Max Amount"}
-                    sx={{ flex: 1 }}
+                    sx={{ flex: 1 }}disabled={isView}
                   />
                 )}
               />
-            </Grid>
+            </Grid></> )}
             <Grid item md={6} sm={6}></Grid>
             <Grid item md={6} sm={6}>
-              <Stack direction="row" spacing={2} justifyContent="flex-end">
+            {!isView && (  <Stack direction="row" spacing={2} justifyContent="flex-end">
                 <StyledButton
                   variant="white"
                   padding="15px 50px"
@@ -246,7 +246,7 @@ const AddExpense = ({ open, onClose, onChange }) => {
                   padding="15px 50px"
                   name="Save"
                 />
-              </Stack>
+              </Stack>  )}
             </Grid>
           </Grid>
         </Box>

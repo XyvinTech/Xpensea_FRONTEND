@@ -7,7 +7,7 @@ const SelectContainer = styled.div`
   width: 100%;
 `;
 
-const StyledSelectField = ({ placeholder, options, onChange, value, isMulti }) => {
+const StyledSelectField = ({ placeholder,isDisabled, options, onChange, value, isMulti }) => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -41,11 +41,11 @@ const StyledSelectField = ({ placeholder, options, onChange, value, isMulti }) =
       position: "absolute",
       backgroundColor: "#ffffff",
       color: "#B5B8C5",
-      zIndex: 1000, // Ensure the menu overlays other elements
+      zIndex: 1000, 
     }),
     singleValue: (provided) => ({
       ...provided,
-      color: "#000000",
+      color: isDisabled ? "#a0a0a0" : "#000000",
     }),
     placeholder: (provided) => ({
       ...provided,
@@ -61,6 +61,7 @@ const StyledSelectField = ({ placeholder, options, onChange, value, isMulti }) =
         onChange={onChange}
         value={value}
         isMulti={isMulti}
+        isDisabled={isDisabled}
         styles={customStyles}
       />
     </SelectContainer>
