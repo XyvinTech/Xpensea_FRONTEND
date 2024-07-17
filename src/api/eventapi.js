@@ -4,7 +4,6 @@ import axiosInstance from "./axiosintercepter";
 
 export const addEvent = handleAsync(async (data) => {
   const response = await axiosInstance.post("/admin/event", data);
-  console.log(response);
   return response.data;
 });
 export const getEvent = handleAsync(async (id) => {

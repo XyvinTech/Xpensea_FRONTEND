@@ -82,11 +82,7 @@ const ExpenseDetail = ({ open, onClose }) => {
           </Typography>
         </Stack>{" "}
         <Divider />
-        <Stack
-          direction="row"
-          padding={2}
-          spacing={2}
-        >
+        <Stack direction="row" padding={2} spacing={2}>
           <img src={location} width={"100px"} height={"67px"} />
 
           <Typography variant="h4" color={"#838485"}>
@@ -94,13 +90,19 @@ const ExpenseDetail = ({ open, onClose }) => {
           </Typography>
         </Stack>
       </DialogContent>
-      <Box p={3}>
+
+      <Stack direction="row" padding={2} spacing={2}>
         <StyledButton
-          variant="primary"
+          variant="green"
           name="Mark as Authentic"
-          onClick={handleSubmit}
+          onClick={handleMarkAsAuthentic}
         />
-      </Box>
+        <StyledButton
+          variant="danger"
+          name="Mark as Faulty"
+          onClick={handleMarkAsFaulty}
+        />
+      </Stack>
     </Dialog>
   );
 };

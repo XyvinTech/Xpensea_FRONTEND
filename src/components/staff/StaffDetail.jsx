@@ -2,14 +2,22 @@ import { Box, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 import img from "../../assets/images/staff.png";
 import StyledSwitch from "../../ui/StyledSwitch";
-import data from "../../assets/json/StaffDetail";
+
 const StaffDetail = ({ user }) => {
+  console.log(" ({ user })", user);
+ 
   return (
-    <Box bgcolor={"#fff"} height={"338px"}display={"flex"} alignItems={"center"} justifyContent={"center"}  >
-     {user && (
-        <Grid container spacing={2} key={user._id}  >
+    <Box
+      bgcolor={"#fff"}
+      height={"338px"}
+      display={"flex"}
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
+      {user && (
+        <Grid container spacing={2} key={user?._id}>
           <Grid item md={4} xs={6}>
-            <Stack alignItems={"center"}>
+            <Stack alignItems={"center"} spacing={3}>
               <img
                 src={img}
                 alt="img"
@@ -17,14 +25,12 @@ const StaffDetail = ({ user }) => {
                 height={"190px"}
                 style={{ borderRadius: "50%" }}
               />
-              <Typography variant="h11">{user.name}</Typography>
+              <Typography variant="h11">{user?.name}</Typography>
               <Stack direction={"row"} spacing={6}>
                 <Typography variant="h4" color={"#B4B4B4"}>
-                 Status
+                  Status
                 </Typography>
-                <Typography>
-                  <StyledSwitch />
-                </Typography>
+                <StyledSwitch />
               </Stack>
             </Stack>
           </Grid>
@@ -34,19 +40,21 @@ const StaffDetail = ({ user }) => {
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Date
                 </Typography>
-                <Typography variant="h4">{user.createdAt}</Typography>
+                <Typography variant="h4">
+                  {new Date(user?.createdAt).toLocaleDateString()}
+                </Typography>
               </Stack>
               <Stack>
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Email
                 </Typography>
-                <Typography variant="h4">{user.email}</Typography>
+                <Typography variant="h4">{user?.email}</Typography>
               </Stack>
               <Stack>
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Tier
                 </Typography>
-                <Typography variant="h4">{user.tier}</Typography>
+                <Typography variant="h4">{user?.tier?.title}</Typography>
               </Stack>
             </Stack>
           </Grid>
@@ -56,19 +64,19 @@ const StaffDetail = ({ user }) => {
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Location
                 </Typography>
-                <Typography variant="h4">{user.location}</Typography>
+                <Typography variant="h4">{user?.location}</Typography>
               </Stack>
               <Stack>
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Ph No
                 </Typography>
-                <Typography variant="h4">{user.mobile}</Typography>
+                <Typography variant="h4">{user?.mobile}</Typography>
               </Stack>
               <Stack>
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Role
                 </Typography>
-                <Typography variant="h4">{user.role}</Typography>
+                <Typography variant="h4">{user?.role}</Typography>
               </Stack>
             </Stack>
           </Grid>

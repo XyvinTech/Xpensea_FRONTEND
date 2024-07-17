@@ -31,7 +31,7 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     try {
       const user = await getLogin(data);
-      console.log(user.data);
+      // console.log(user.data);
       localStorage.setItem("token", user.data);
       navigate("/dashboard")
     } catch (error) {

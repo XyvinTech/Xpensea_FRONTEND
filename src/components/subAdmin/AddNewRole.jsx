@@ -9,9 +9,10 @@ import { Controller, useForm } from "react-hook-form";
 import { useDropDownStore } from "../../store/useDropDownStore";
 import { useAdminStore } from "../../store/adminStore";
 
-const AddNewRole = ({ open, onClose, onChange, isView }) => {
+const AddNewRole = ({ open, onClose, onChange }) => {
   const { roles, fetchRoles } = useDropDownStore();
-  const { addAdmins, updateAdmins, admins, isUpdate, updateChange } = useAdminStore();
+  const { addAdmins, updateAdmins, admins, isUpdate, updateChange } =
+    useAdminStore();
 
   const {
     control,
@@ -51,7 +52,6 @@ const AddNewRole = ({ open, onClose, onChange, isView }) => {
 
   const handleClear = (event) => {
     event.preventDefault();
-    console.log("Clicked clear");
     updateChange(isUpdate);
     reset({
       name: "",
@@ -60,8 +60,7 @@ const AddNewRole = ({ open, onClose, onChange, isView }) => {
       designation: "",
       role: "",
     });
-    setIsChecked(false); 
-    console.log("Form reset with empty values");
+    setIsChecked(false);
     onClose();
   };
 
@@ -96,7 +95,6 @@ const AddNewRole = ({ open, onClose, onChange, isView }) => {
     } else {
       await addAdmins(formData);
     }
-    console.log("Form data:", formData);
     onClose();
     onChange();
     reset({
@@ -106,21 +104,19 @@ const AddNewRole = ({ open, onClose, onChange, isView }) => {
       designation: "",
       role: "",
     });
-    setIsChecked(false); // explicitly reset the switch
+    setIsChecked(false); 
   };
 
-  console.log("Form data:", admins);
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
       <Box padding={3}>
         <Stack spacing={2}>
           <Box display="flex" justifyContent="space-between">
-            <h2 style={{ flexGrow: 1 }}>{isView ? "View Role" : "Add New Role"}</h2>
+            <h2 style={{ flexGrow: 1 }}>Add New Role</h2>
             <StyledSwitch
               variant={"primary"}
               checked={isChecked}
-              disabled={isView}
               onChange={handleSwitchChange}
             />
           </Box>
@@ -134,9 +130,15 @@ const AddNewRole = ({ open, onClose, onChange, isView }) => {
                   rules={{ required: "Name is required" }}
                   render={({ field }) => (
                     <>
-                      <StyledTextField {...field} label={"Name"} sx={{ flex: 1 }} disabled={isView} />
+                      <StyledTextField
+                        {...field}
+                        label={"Name"}
+                        sx={{ flex: 1 }}
+                      />
                       {errors.name && (
-                        <span style={{ color: "red" }}>{errors.name.message}</span>
+                        <span style={{ color: "red" }}>
+                          {errors.name.message}
+                        </span>
                       )}
                     </>
                   )}
@@ -153,11 +155,12 @@ const AddNewRole = ({ open, onClose, onChange, isView }) => {
                         {...field}
                         placeholder={"Choose a Role"}
                         options={roleOptions}
-                        isDisabled={isView}
                         sx={{ flex: 1 }}
                       />
                       {errors.role && (
-                        <span style={{ color: "red" }}>{errors.role.message}</span>
+                        <span style={{ color: "red" }}>
+                          {errors.role.message}
+                        </span>
                       )}
                     </>
                   )}
@@ -174,11 +177,12 @@ const AddNewRole = ({ open, onClose, onChange, isView }) => {
                         {...field}
                         placeholder={"Designation"}
                         options={designation}
-                        isDisabled={isView}
                         sx={{ flex: 1 }}
                       />
                       {errors.designation && (
-                        <span style={{ color: "red" }}>{errors.designation.message}</span>
+                        <span style={{ color: "red" }}>
+                          {errors.designation.message}
+                        </span>
                       )}
                     </>
                   )}
@@ -192,9 +196,15 @@ const AddNewRole = ({ open, onClose, onChange, isView }) => {
                   defaultValue=""
                   render={({ field }) => (
                     <>
-                      <StyledTextField {...field} label={"Email"} sx={{ flex: 1 }} disabled={isView} />
+                      <StyledTextField
+                        {...field}
+                        label={"Email"}
+                        sx={{ flex: 1 }}
+                      />
                       {errors.email && (
-                        <span style={{ color: "red" }}>{errors.email.message}</span>
+                        <span style={{ color: "red" }}>
+                          {errors.email.message}
+                        </span>
                       )}
                     </>
                   )}
@@ -208,9 +218,15 @@ const AddNewRole = ({ open, onClose, onChange, isView }) => {
                   defaultValue=""
                   render={({ field }) => (
                     <>
-                      <StyledTextField {...field} label={"Phone Number"} disabled={isView} sx={{ flex: 1 }} />
+                      <StyledTextField
+                        {...field}
+                        label={"Phone Number"}
+                        sx={{ flex: 1 }}
+                      />
                       {errors.mobile && (
-                        <span style={{ color: "red" }}>{errors.mobile.message}</span>
+                        <span style={{ color: "red" }}>
+                          {errors.mobile.message}
+                        </span>
                       )}
                     </>
                   )}
@@ -225,22 +241,20 @@ const AddNewRole = ({ open, onClose, onChange, isView }) => {
                   justifyContent="flex-end"
                   paddingBottom={2}
                 >
-                  {!isView && (
-                    <>
-                      <StyledButton
-                        variant="secondary"
-                        padding="15px 50px 15px 50px"
-                        name="Cancel"
-                        onClick={handleClear}
-                      />
-                      <StyledButton
-                        variant="primary"
-                        padding="15px 50px 15px 50px"
-                        name="Save"
-                        type="submit"
-                      />
-                    </>
-                  )}
+                  <>
+                    <StyledButton
+                      variant="secondary"
+                      padding="15px 50px 15px 50px"
+                      name="Cancel"
+                      onClick={handleClear}
+                    />
+                    <StyledButton
+                      variant="primary"
+                      padding="15px 50px 15px 50px"
+                      name="Save"
+                      type="submit"
+                    />
+                  </>
                 </Stack>
               </Grid>
             </Grid>

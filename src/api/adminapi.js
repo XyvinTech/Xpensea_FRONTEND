@@ -6,7 +6,7 @@ export const getLogin = async (datas) => {
   try {
     const response = await axios.post(`${baseURL}admin/login`, datas);
 
-    console.log("data", response.data);
+    // console.log("data", response.data);
     return response.data;
   } catch (error) {
     console.error("Error caught:", error);
@@ -16,7 +16,6 @@ export const getLogin = async (datas) => {
 export const getAdmin = async () => {
   try {
     const response = await axiosInstance.get("/admin");
-    console.log("response",response.data)
     return response.data;
   } catch (error) {
     console.error("Error caught:", error);
@@ -24,7 +23,6 @@ export const getAdmin = async () => {
 };
 export const addAdmin = handleAsync(async (data) => {
   const response = await axiosInstance.post("/admin", data);
-  console.log(response);
   return response.data;
 });
 export const getSingleAdmin = handleAsync(async (id) => {

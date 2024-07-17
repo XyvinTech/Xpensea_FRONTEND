@@ -104,7 +104,7 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    console.log(file);
+    // console.log(file);
   };
 
   useEffect(() => {

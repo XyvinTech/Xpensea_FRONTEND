@@ -75,7 +75,6 @@ const SimpleDialog = ({ open, onClose }) => {
   const handleLogout = () => {
     logoutAuth(navigate);
   };
-  console.log("user", admin);
   return (
     <Dialog
       open={open}

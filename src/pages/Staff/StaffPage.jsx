@@ -86,7 +86,6 @@ const StaffPage = () => {
     }
     fetchLists(filter);
   }, [isChange,fetchLists,status]);
-  console.log(status)
   return (
     <>
       <Stack

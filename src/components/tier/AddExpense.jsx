@@ -82,7 +82,6 @@ const AddExpense = ({ open, onClose, onChange, isView }) => {
     if (isUpdate) {
       await updateTiers(tier._id, formData);
       updateChange(isUpdate);
-      console.log("Updating role with ID:", isUpdate);
     } else {
       await addTiers(formData);
     }

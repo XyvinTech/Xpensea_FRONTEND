@@ -9,13 +9,14 @@ import { useUserStore } from "../../store/userStore";
 const StaffView = () => {
   const { user, fetchUserById } = useUserStore();
   const { id } = useParams();
-  console.log("fff", id);
+
   useEffect(() => {
     if (id) {
       fetchUserById(id);
     }
   }, [id, fetchUserById]);
-  console.log(user)
+
+
   return (
     <>
       <Box display="flex" alignItems="center" paddingTop={2}>
@@ -29,7 +30,9 @@ const StaffView = () => {
       </Box>
       <Grid container spacing={2} paddingTop={2}>
         <Grid item xs={12} md={6}>
-          <StaffDetail user={user} />
+         
+        {user && <StaffDetail user={user} />}
+         
         </Grid>
 
         <Grid item xs={12} md={6}>

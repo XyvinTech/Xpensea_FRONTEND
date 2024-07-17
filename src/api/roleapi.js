@@ -3,7 +3,6 @@ import axiosInstance from "./axiosintercepter";
 
 export const addRole = handleAsync(async (data) => {
   const response = await axiosInstance.post("/admin/role", data);
-  console.log(response);
   return response.data;
 });
 export const getRole = handleAsync(async (id) => {

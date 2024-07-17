@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { FilterIcon } from "../assets/icons/FilterIcon";
 import StyledTable from "../ui/StyledTable";
 import StyledFilter from "../components/StyledFilter";
 import CreateEvent from "../components/events/CreateEvent";
 import { useListStore } from "../store/listStore";
-import { useEventStore } from "../store/eventStore";
 const EventsPage = () => {
   const { lists, fetchLists } = useListStore();
-  const { deleteEvents,fetchEventById } = useEventStore();
-  const [isView, setIsView] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
@@ -19,11 +15,6 @@ const EventsPage = () => {
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
-  };
-  const handleView =async  (id) => {
-    await fetchEventById(id);
-    setIsView(true);
-    setEventOpen(true);
   };
 
   const handleDelete = async () => {
@@ -51,7 +42,6 @@ const EventsPage = () => {
   };
   const handleOpenEvent = () => {
     setEventOpen(true);
-    setIsView(false);
   };
 
   const handleCloseEvent = () => {
@@ -76,7 +66,7 @@ const EventsPage = () => {
     }
     fetchLists(filter);
   }, [isChange, fetchLists, status]);
-  console.log(lists);
+  // console.log(lists);
   return (
     <>
       <Stack
@@ -181,7 +171,6 @@ const EventsPage = () => {
           columns={userColumns}
           onDeleteRow={handleRowDelete}
           onSelectionChange={handleSelectionChange}
-          onView={handleView}
           onSort={handleSort}
           onDelete={handleDelete}
         />
@@ -191,7 +180,6 @@ const EventsPage = () => {
         open={eventOpen}
         onClose={handleCloseEvent}
         onChange={handleChange}
-        isView={isView}
       />
     </>
   );

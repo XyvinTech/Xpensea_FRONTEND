@@ -75,7 +75,7 @@ const TierPage = () => {
     filter.type = "tiers";
     fetchLists(filter);
   }, [isChange, fetchLists]);
-  console.log(lists);
+  // console.log(lists);
 
   return (
     <>

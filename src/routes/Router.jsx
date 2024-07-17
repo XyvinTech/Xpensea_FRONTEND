@@ -62,7 +62,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/approvals/view",
+    path: "/approvals/view/:id",
     element: (
       <PrivateRoute>
         <Layout>

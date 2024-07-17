@@ -21,7 +21,7 @@ import StyledSelectField from "../../ui/StyledSelectField";
 import { Controller, useForm } from "react-hook-form";
 import { useRoleStore } from "../../store/roleStore";
 
-const RoleManagement = ({ open, onClose, onChange, isView }) => {
+const RoleManagement = ({ open, onClose, onChange }) => {
   const initialPermissions = {
     adminManagement_view: false,
     adminManagement_modify: false,
@@ -89,12 +89,10 @@ const RoleManagement = ({ open, onClose, onChange, isView }) => {
   };
 
   const handleSpanClick = (permission) => {
-    if (!isView) {
-      setPermissions((prevPermissions) => ({
-        ...prevPermissions,
-        [permission]: !prevPermissions[permission],
-      }));
-    }
+    setPermissions((prevPermissions) => ({
+      ...prevPermissions,
+      [permission]: !prevPermissions[permission],
+    }));
   };
 
   const tableCellStyle = {
@@ -110,7 +108,7 @@ const RoleManagement = ({ open, onClose, onChange, isView }) => {
     borderRadius: "50%",
     backgroundColor: filled ? "#79001D" : "transparent",
     border: "4px solid rgba(121, 0, 29, 0.5)",
-    cursor: isView ? "default" : "pointer",
+    cursor: "pointer",
   });
 
   const options = [
@@ -182,10 +180,8 @@ const RoleManagement = ({ open, onClose, onChange, isView }) => {
       // status: isChecked,
     };
 
-    console.log("Form data:", formData);
 
     if (isUpdate) {
-      console.log("Updating role with ID:", role?._id);
       if (role?._id) {
         await updateRoles(role._id, formData);
         updateChange(isUpdate);
@@ -193,7 +189,6 @@ const RoleManagement = ({ open, onClose, onChange, isView }) => {
         console.error("Role ID is undefined");
       }
     } else {
-      console.log("Adding new role");
       await addRoles(formData);
     }
 
@@ -226,11 +221,7 @@ const RoleManagement = ({ open, onClose, onChange, isView }) => {
             paddingBottom={0}
           >
             <Typography variant="h11">Role Management</Typography>
-            <StyledSwitch
-              checked={isChecked}
-              disabled={isView}
-              onChange={handleSwitchChange}
-            />
+            <StyledSwitch checked={isChecked} onChange={handleSwitchChange} />
           </Box>
           <Divider />
 
@@ -243,7 +234,6 @@ const RoleManagement = ({ open, onClose, onChange, isView }) => {
                   {...field}
                   placeholder={"Enter Role Name"}
                   sx={{ flex: 1 }}
-                  disabled={isView}
                 />
               )}
             />
@@ -299,8 +289,8 @@ const RoleManagement = ({ open, onClose, onChange, isView }) => {
                 </TableHead>
                 <TableBody
                   sx={{
-                    pointerEvents: isView ? "none" : "auto",
-                    opacity: isView ? 0.5 : 1,
+                    pointerEvents: "auto",
+                    opacity: 1,
                   }}
                 >
                   {permissions && renderPermissionRows()}
@@ -320,28 +310,20 @@ const RoleManagement = ({ open, onClose, onChange, isView }) => {
                     placeholder={"Choose Location"}
                     options={options}
                     sx={{ flex: 1 }}
-                    isDisabled={isView}
                   />
                 )}
               />
             </Box>
           )}
         </DialogContent>{" "}
-        {!isView && (
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            padding={3}
-            gap={4}
-          >
-            <StyledButton
-              variant="secondary"
-              name="Cancel"
-              onClick={handleClear}
-            />
-            <StyledButton variant="primary" name="Save" type="submit" />
-          </Box>
-        )}
+        <Box display="flex" justifyContent="space-between" padding={3} gap={4}>
+          <StyledButton
+            variant="secondary"
+            name="Cancel"
+            onClick={handleClear}
+          />
+          <StyledButton variant="primary" name="Save" type="submit" />
+        </Box>
       </form>
     </Dialog>
   );

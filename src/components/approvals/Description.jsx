@@ -1,7 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import React from "react";
 
-const Description = () => {
+const Description = ({data}) => {
   return (
     <Stack spacing={1} bgcolor={"#fff"} borderRadius={"12px"}>
       <Typography
@@ -12,14 +12,10 @@ const Description = () => {
         fontWeight={600}
       >
         Description
-      </Typography>
+      </Typography>{data && (
       <Typography padding={3} color={"#353434"} variant="h3">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur
-      </Typography>
+         {data}
+      </Typography>)}
     </Stack>
   );
 };

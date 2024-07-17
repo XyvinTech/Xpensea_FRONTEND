@@ -44,7 +44,7 @@ const CreateEvent = ({ open, onClose, onChange }) => {
       startTime: data.startTime,
       endTime: data.endTime,
     };
-    console.log("Form data:", formData);
+    // console.log("Form data:", formData);
     await addEvents(formData);
     onChange();
     onClose();

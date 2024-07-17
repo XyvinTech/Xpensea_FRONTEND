@@ -3,7 +3,6 @@ import axiosInstance from "./axiosintercepter";
 
 export const addUser = handleAsync(async (data) => {
   const response = await axiosInstance.post("/admin/user", data);
-  console.log(response);
   return response.data;
 });
 export const getUser = handleAsync(async (id) => {
