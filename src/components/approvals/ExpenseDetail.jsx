@@ -95,13 +95,9 @@ const ExpenseDetail = ({ open, onClose }) => {
         <StyledButton
           variant="green"
           name="Mark as Authentic"
-          onClick={handleMarkAsAuthentic}
+          onClick={handleSubmit}
         />
-        <StyledButton
-          variant="danger"
-          name="Mark as Faulty"
-          onClick={handleMarkAsFaulty}
-        />
+        <StyledButton variant="danger" name="Mark as Faulty" />
       </Stack>
     </Dialog>
   );
