@@ -22,8 +22,10 @@ const StaffDetails = ({ data }) => {
         >
           <Stack spacing={2}>
             <Typography variant="h11">{data?.user}</Typography>
-            <Typography variant="h3">Employee ID : {data?.employeeId}</Typography>
-            <Typography variant="h3" sx={{width:'50%'}}>
+            <Typography variant="h3">
+              Employee ID : {data?.employeeId}
+            </Typography>
+            <Typography variant="h3">
               {" "}
               Tier
               <Box component="span" sx={{ ml: 10 }}>
@@ -41,10 +43,10 @@ const StaffDetails = ({ data }) => {
           </Stack>
           <Stack spacing={2} justifyContent="center">
             <Typography variant="h3" color={"#79001D"}>
-            {data?.reportId}
+              {data?.reportId}
             </Typography>
             <Typography variant="h4" color={"#B4B4B4"}>
-            {data?.reportDate}
+              {data?.reportDate}
             </Typography>
           </Stack>
         </Stack>

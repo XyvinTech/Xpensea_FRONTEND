@@ -1,19 +1,51 @@
+import React, { useEffect, useState } from "react";
 import { Grid, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
 import { ProgramIcon } from "../../assets/icons/ProgramIcon";
-import expense from "../../assets/json/ApprovalExpenseData";
 import ExpenseDetail from "./ExpenseDetail";
 
-const Expenses = ({ data }) => {
+const Expenses = ({
+  data,
+  authenticExpenses,
+  setAuthenticExpenses,
+  rejectedExpenses,
+  setRejectedExpenses,
+}) => {
   const [detailOpen, setDetailOpen] = useState(false);
+  const [selectedExpense, setSelectedExpense] = useState(null);
 
-  const handleOpenDetail = () => {
+  const handleOpenDetail = (item) => {
+    setSelectedExpense(item);
     setDetailOpen(true);
   };
 
   const handleCloseDetail = () => {
     setDetailOpen(false);
   };
+
+  const handleMarkAuthentic = (item) => {
+    if (!authenticExpenses.some((id) => id === item?._id)) {
+      setAuthenticExpenses([...authenticExpenses, item?._id]);
+    }
+    setRejectedExpenses(rejectedExpenses.filter((id) => id !== item?._id));
+    setDetailOpen(false);
+  };
+
+  const handleMarkFaulty = (item) => {
+    if (!rejectedExpenses.some((id) => id === item?._id)) {
+      setRejectedExpenses([...rejectedExpenses, item?._id]);
+    }
+    setAuthenticExpenses(authenticExpenses.filter((id) => id !== item?._id));
+    setDetailOpen(false);
+  };
+
+  useEffect(() => {
+    console.log("Authenticated Expenses:", authenticExpenses);
+  }, [authenticExpenses]);
+
+  useEffect(() => {
+    console.log("Rejected Expenses:", rejectedExpenses);
+  }, [rejectedExpenses]);
+
   return (
     <Stack spacing={1} bgcolor={"#fff"} borderRadius={"12px"}>
       <Typography
@@ -24,7 +56,7 @@ const Expenses = ({ data }) => {
         fontWeight={600}
       >
         Expenses
-      </Typography>{" "}
+      </Typography>
       <Grid container>
         {data?.map((item) => (
           <Grid
@@ -33,7 +65,7 @@ const Expenses = ({ data }) => {
             md={3}
             padding={2}
             paddingBottom={4}
-            onClick={handleOpenDetail}
+            onClick={() => handleOpenDetail(item)}
             sx={{ cursor: "pointer" }}
           >
             <Stack spacing={2}>
@@ -55,17 +87,33 @@ const Expenses = ({ data }) => {
                     </Typography>
                   </Stack>
                 </Stack>
-                <Typography variant="h4" color={"green"}>
-                  <span
-                    style={{
-                      backgroundColor: "rgba(209, 250, 229, 0.5)",
-                      borderRadius: "50%",
-                      padding: "3px",
-                    }}
-                  >
-                    {" "}
-                    ✔
-                  </span>
+                <Typography variant="h4">
+                  {authenticExpenses?.some((id) => id === item._id) ||
+                  item?.status === "accepted" ? (
+                    <span
+                      style={{
+                        backgroundColor: "rgba(209, 250, 229, 0.5)",
+                        borderRadius: "50%",
+                        padding: "3px",
+                        color: "green",
+                      }}
+                    >
+                      {" "}
+                      ✔
+                    </span>
+                  ) : (
+                    <span
+                      style={{
+                        backgroundColor: "rgba(255, 228, 230, 0.5)",
+                        borderRadius: "50%",
+                        padding: "3px",
+                        color: "red",
+                      }}
+                    >
+                      {" "}
+                      x
+                    </span>
+                  )}
                 </Typography>
               </Stack>
               <Stack
@@ -90,7 +138,13 @@ const Expenses = ({ data }) => {
           </Grid>
         ))}
       </Grid>
-      <ExpenseDetail open={detailOpen} onClose={handleCloseDetail} />
+      <ExpenseDetail
+        open={detailOpen}
+        onClose={handleCloseDetail}
+        expense={selectedExpense}
+        onMarkAuthentic={() => handleMarkAuthentic(selectedExpense)}
+        onMarkFaulty={() => handleMarkFaulty(selectedExpense)}
+      />
     </Stack>
   );
 };

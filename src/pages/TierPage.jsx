@@ -13,7 +13,6 @@ const TierPage = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
-  const [isView, setIsView] = useState(false);
   const [expenseOpen, setExpenseOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
@@ -26,13 +25,8 @@ const TierPage = () => {
     updateChange(isUpdate);
     // setAction('edit')
     setExpenseOpen(true);
-    setIsView(false);
   };
-  const handleView = async (id) => {
-    await fetchTierById(id);
-    setExpenseOpen(true);
-    setIsView(true);
-  };
+
   const handleDelete = async () => {
     if (selectedRows.length > 0) {
       await Promise.all(selectedRows.map((id) => deleteTiers(id)));
@@ -54,7 +48,6 @@ const TierPage = () => {
   };
   const handleOpenExpense = () => {
     setExpenseOpen(true);
-    setIsView(false);
   };
 
   const handleCloseExpense = () => {
@@ -181,7 +174,6 @@ const TierPage = () => {
           columns={userColumns}
           // data={lists}
           onSelectionChange={handleSelectionChange}
-          onView={handleView}
           onDelete={handleDelete}
           onSort={handleSort}
           showEdit
@@ -193,7 +185,6 @@ const TierPage = () => {
         open={expenseOpen}
         onClose={handleCloseExpense}
         onChange={handleChange}
-        isView={isView}
       />
     </>
   );

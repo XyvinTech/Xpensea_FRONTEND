@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Typography,
@@ -11,13 +11,10 @@ import StyledButton from "../../ui/StyledButton";
 import { CrossIcon } from "../../assets/icons/CrossIcon";
 import location from "../../assets/images/location.png";
 import receipt from "../../assets/images/receipt.png";
-const ExpenseDetail = ({ open, onClose }) => {
-  const handleSubmit = () => {
-    console.log("clicked");
-  };
-  const handleClear = () => {
-    onClose();
-  };
+
+const ExpenseDetail = ({ open, onClose, expense, onMarkAuthentic, onMarkFaulty }) => {
+  if (!expense) return null; 
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="481px">
       <DialogContent sx={{ height: "auto", width: "480px", padding: 0 }}>
@@ -31,7 +28,7 @@ const ExpenseDetail = ({ open, onClose }) => {
           paddingBottom={0}
         >
           <Typography variant="h11">Expense</Typography>
-          <Typography onClick={handleClear} style={{ cursor: "pointer" }}>
+          <Typography onClick={onClose} style={{ cursor: "pointer" }}>
             <CrossIcon />
           </Typography>
         </Box>
@@ -45,27 +42,27 @@ const ExpenseDetail = ({ open, onClose }) => {
           <Stack direction="row" spacing={1}>
             <Stack direction="column" spacing={1}>
               <Typography variant="h4" color={"#333333"}>
-                Flower Expense
+                {expense.title}
               </Typography>
               <Typography variant="h3" fontWeight={"600"} color={" #79001D"}>
-                Rs 401
+                {expense.amount}
               </Typography>
             </Stack>
           </Stack>
           <Typography variant="h5" color={"#B4B4B4"} fontWeight={400}>
-            Nov 19 2023
+            {expense.createdAt}
           </Typography>
         </Stack>
         <Divider />
         <Stack direction="column" padding={2} spacing={5}>
           <Stack direction={"row"} padding={2} bgcolor={"#F3F3F3"} spacing={2}>
-            <img src={receipt} width={"68px"} height={"68px"} />
+            <img src={receipt} width={"68px"} height={"68px"} alt="Receipt" />
             <Stack direction="column" justifyContent={"center"}>
               <Typography variant="h4" fontWeight={600}>
-                ImgQR25245-11/02/2024
+                {expense.receiptNumber}
               </Typography>
               <Typography variant="h5" fontWeight={400} color={"#B4B4B4"}>
-                22kb
+                {expense.receiptSize}
               </Typography>
             </Stack>
           </Stack>
@@ -73,20 +70,15 @@ const ExpenseDetail = ({ open, onClose }) => {
         <Divider />
         <Stack padding={2}>
           <Typography variant="h4" fontWeight={400} color={"#353434"}>
-            Lorem ipsum dolor sit amet, consectetur adipis elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in reprehenderit in
-            voluptate velit esse cillum dolore eu Duis aute irure dolor in
-            reprehen
+            {expense.description}
           </Typography>
         </Stack>{" "}
         <Divider />
         <Stack direction="row" padding={2} spacing={2}>
-          <img src={location} width={"100px"} height={"67px"} />
+          <img src={location} width={"100px"} height={"67px"} alt="Location" />
 
           <Typography variant="h4" color={"#838485"}>
-            Flower Market 404 ,Aluva Ernakulam
+            {expense.location}
           </Typography>
         </Stack>
       </DialogContent>
@@ -95,9 +87,13 @@ const ExpenseDetail = ({ open, onClose }) => {
         <StyledButton
           variant="green"
           name="Mark as Authentic"
-          onClick={handleSubmit}
+          onClick={onMarkAuthentic}
         />
-        <StyledButton variant="danger" name="Mark as Faulty" />
+        <StyledButton
+          variant="danger"
+          name="Mark as Faulty"
+          onClick={onMarkFaulty}
+        />
       </Stack>
     </Dialog>
   );

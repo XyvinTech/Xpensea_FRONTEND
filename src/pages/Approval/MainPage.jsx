@@ -5,10 +5,12 @@ import { useNavigate } from "react-router-dom";
 import StyledFilter from "../../components/StyledFilter";
 import { FilterIcon } from "../../assets/icons/FilterIcon";
 import { useListStore } from "../../store/listStore";
+import { useApprovalStore } from "../../store/approvalstore";
 const MainPage = () => {
   const navigate = useNavigate();
   const { lists, fetchLists } = useListStore();
   const [isChange, setIsChange] = useState(false);
+  const { deleteApprovals } = useApprovalStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
@@ -20,8 +22,12 @@ const MainPage = () => {
     navigate(`/approvals/view/${id}`);
   };
 
-  const handleDelete = (id) => {
-    console.log("Delete item :", id);
+  const handleDelete = async () => {
+    if (selectedRows.length > 0) {
+      await Promise.all(selectedRows?.map((id) => deleteApprovals(id)));
+      setIsChange(!isChange);
+      setSelectedRows([]);
+    }
   };
   const handleSort = (field) => {
     console.log(`Sorting by ${field}`);

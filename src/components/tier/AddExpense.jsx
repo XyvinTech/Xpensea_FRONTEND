@@ -9,7 +9,7 @@ import CalendarInput from "../../ui/CalenderInput";
 import { useTierStore } from "../../store/tierStore";
 import StyledSelectField from "../../ui/StyledSelectField";
 
-const AddExpense = ({ open, onClose, onChange, isView }) => {
+const AddExpense = ({ open, onClose, onChange }) => {
   const { addTiers, updateChange, tier, updateTiers, isUpdate } =
     useTierStore();
   const {
@@ -31,12 +31,12 @@ const AddExpense = ({ open, onClose, onChange, isView }) => {
 
   useEffect(() => {
     // if (isUpdate && tier) {
-      setCategories(tier?.categories || []);
-      reset({
-        activationDate: tier?.activationDate,
-        tierTitle: tier?.title,
-        categories: tier?.categories,
-      });
+    setCategories(tier?.categories || []);
+    reset({
+      activationDate: tier?.activationDate,
+      tierTitle: tier?.title,
+      categories: tier?.categories,
+    });
     // }
   }, [isUpdate, tier, reset]);
 
@@ -77,6 +77,7 @@ const AddExpense = ({ open, onClose, onChange, isView }) => {
       title: data.tierTitle,
       categories,
       totalAmount: totalMaxAmount,
+      level: data.level,
     };
 
     if (isUpdate) {
@@ -121,17 +122,17 @@ const AddExpense = ({ open, onClose, onChange, isView }) => {
           >
             <Box flexGrow={1} />
             <h2 style={{ flexGrow: 1 }}>Tier</h2>
-            {!isView && ( <Box
+            <Box
               position="absolute"
               right={0}
               sx={{ cursor: "pointer" }}
               onClick={handleClear}
             >
               <CrossIcon />
-            </Box> )}
+            </Box>
           </Box>
           <Grid container spacing={2} padding={2}>
-            <Grid item md="6">
+            <Grid item md="12">
               <Controller
                 name="tierTitle"
                 control={control}
@@ -141,7 +142,7 @@ const AddExpense = ({ open, onClose, onChange, isView }) => {
                     <StyledInput
                       {...field}
                       placeholder={"Tier Title"}
-                      sx={{ flex: 1 }}disabled={isView}
+                      sx={{ flex: 1 }}
                     />
                     {errors.tierTitle && (
                       <span style={{ color: "red" }}>
@@ -151,7 +152,27 @@ const AddExpense = ({ open, onClose, onChange, isView }) => {
                   </>
                 )}
               />{" "}
-            </Grid>{" "}
+            </Grid>{" "} <Grid item md="6">
+              <Controller
+                name="level"
+                control={control}
+                rules={{ required: "Level is required" }}
+                render={({ field }) => (
+                  <>
+                    <StyledInput
+                      {...field}
+                      placeholder={"Level"}
+                      sx={{ flex: 1 }}
+                    />
+                    {errors.level && (
+                      <span style={{ color: "red" }}>
+                        {errors.level.message}
+                      </span>
+                    )}{" "}
+                  </>
+                )}
+              />{" "}
+            </Grid>
             <Grid item md="6">
               <Controller
                 name="activationDate"
@@ -162,7 +183,7 @@ const AddExpense = ({ open, onClose, onChange, isView }) => {
                     <CalendarInput
                       {...field}
                       placeholder={"Activation Date"}
-                      dateValue={field.value}disabled={isView}
+                      dateValue={field.value}
                       onDateChange={field.onChange}
                     />
                     {errors.activationDate && (
@@ -176,15 +197,19 @@ const AddExpense = ({ open, onClose, onChange, isView }) => {
             </Grid>
             {categories.map((item, index) => (
               <Grid container key={index} spacing={4} padding={2}>
-                <Grid item xs={12} md={6} >
-                  <Stack direction={"row"} spacing={2} justifyContent={"space-between"}>
-                    <Typography variant="subtitle1" fontWeight={"500"} >
+                <Grid item xs={12} md={6}>
+                  <Stack
+                    direction={"row"}
+                    spacing={2}
+                    justifyContent={"space-between"}
+                  >
+                    <Typography variant="subtitle1" fontWeight={"500"}>
                       {item?.title}
                     </Typography>
                     <StyledSwitch
                       checked={item.status}
                       onChange={handleSwitchChange(index)}
-                      variant="primary"disabled={isView}
+                      variant="primary"
                     />
                   </Stack>
                 </Grid>
@@ -192,43 +217,44 @@ const AddExpense = ({ open, onClose, onChange, isView }) => {
                   <StyledInput
                     value={item?.maxAmount}
                     placeholder={"Max Amount"}
-                    disabled={isView}
                   />
                 </Grid>
               </Grid>
-            ))} {!isView && ( <>
-            <Grid item md="6">
-              <Controller
-                name="title"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledSelectField
-                    {...field}
-                    placeholder={"Choose Title"}
-                    options={Title}
-                    sx={{ flex: 1 }}isDisabled={isView}
-                  />
-                )}
-              />{" "}
-            </Grid>{" "}
-            <Grid item md="6">
-              <Controller
-                name="maxAmount"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledInput
-                    {...field}
-                    placeholder={"Max Amount"}
-                    sx={{ flex: 1 }}disabled={isView}
-                  />
-                )}
-              />
-            </Grid></> )}
+            ))}{" "}
+            <>
+              <Grid item md="6">
+                <Controller
+                  name="title"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <StyledSelectField
+                      {...field}
+                      placeholder={"Choose Title"}
+                      options={Title}
+                      sx={{ flex: 1 }}
+                    />
+                  )}
+                />{" "}
+              </Grid>{" "}
+              <Grid item md="6">
+                <Controller
+                  name="maxAmount"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <StyledInput
+                      {...field}
+                      placeholder={"Max Amount"}
+                      sx={{ flex: 1 }}
+                    />
+                  )}
+                />
+              </Grid>
+            </>
             <Grid item md={6} sm={6}></Grid>
             <Grid item md={6} sm={6}>
-            {!isView && (  <Stack direction="row" spacing={2} justifyContent="flex-end">
+              <Stack direction="row" spacing={2} justifyContent="flex-end">
                 <StyledButton
                   variant="white"
                   padding="15px 50px"
@@ -245,7 +271,7 @@ const AddExpense = ({ open, onClose, onChange, isView }) => {
                   padding="15px 50px"
                   name="Save"
                 />
-              </Stack>  )}
+              </Stack>
             </Grid>
           </Grid>
         </Box>

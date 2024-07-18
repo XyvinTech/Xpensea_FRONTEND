@@ -21,7 +21,6 @@ import {
 import StyledButton from "./StyledButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import StyledSpan from "./StyledSpan";
-import { ViewIcon } from "../assets/icons/ViewIcon";
 import { DeleteIcon } from "../assets/icons/DeleteIcon";
 import { SortIcon } from "../assets/icons/SortIcon";
 import { EventIcon } from "../assets/icons/EventIcon";
@@ -109,10 +108,7 @@ const StyledTable = ({
     setRowId(null);
   };
 
-  const handleView = () => {
-    onView(rowId);
-    handleMenuClose();
-  };
+
 
   const handleDelete = () => {
     onDelete();
@@ -322,28 +318,10 @@ const StyledTable = ({
                               }
                             />
                           </MenuItem>,
-                          <MenuItem key="view" onClick={handleView}>
-                            <StyledSpan
-                              variant={"darkRed"}
-                              text={
-                                <>
-                                  <ViewIcon /> View
-                                </>
-                              }
-                            />
-                          </MenuItem>,
+                        
                         ]
                       : [
-                          <MenuItem key="view" onClick={handleView}>
-                            <StyledSpan
-                              variant={"darkRed"}
-                              text={
-                                <>
-                                  <ViewIcon /> View
-                                </>
-                              }
-                            />
-                          </MenuItem>,
+                         
                           <MenuItem
                             key="delete"
                             onClick={() =>handleRowDelete(row._id)}

@@ -76,15 +76,16 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
       tier: data.tier.value,
       userType: data.userType.value,
       location: data.location.value,
-      // status: isChecked,
+      status: isChecked,
     };
 
     if (isUpdate) {
       await updateUsers(user._id, formData);
+      updateChange(isUpdate);
     } else {
       await addUsers(formData);
     }
-    updateChange(isUpdate);
+
     onChange();
     reset({
       name: "",
@@ -150,6 +151,27 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
             <Grid container spacing={2} padding={1}>
               <Grid item md="6">
                 <Controller
+                  name="employeeId"
+                  control={control}
+                  rules={{ required: "Employee Id is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledTextField
+                        {...field}
+                        label="Employee ID"
+                        sx={{ flex: 1 }}
+                      />
+                      {errors.employeeId && (
+                        <span style={{ color: "red" }}>
+                          {errors.employeeId.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item md="6">
+                <Controller
                   name="name"
                   control={control}
                   rules={{ required: "Name is required" }}
@@ -164,6 +186,48 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
                       {errors.name && (
                         <span style={{ color: "red" }}>
                           {errors.name.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>{" "}
+              <Grid item md="6">
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{ required: "Email is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledTextField
+                        {...field}
+                        label="E-mail ID"
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.email && (
+                        <span style={{ color: "red" }}>
+                          {errors.email.message}
+                        </span>
+                      )}{" "}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item md="6">
+                <Controller
+                  name="mobile"
+                  control={control}
+                  rules={{ required: "Mobile Number is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledTextField
+                        {...field}
+                        label="Phone No"
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.mobile && (
+                        <span style={{ color: "red" }}>
+                          {errors.mobile.message}
                         </span>
                       )}
                     </>
@@ -236,85 +300,22 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
                   )}
                 />
               </Grid>
-
-              <Grid item md="6">
-                <Controller
-                  name="email"
-                  control={control}
-                  rules={{ required: "Email is required" }}
-                  render={({ field }) => (
-                    <>
-                      <StyledTextField
-                        {...field}
-                        label="E-mail ID"
-                        sx={{ flex: 1 }}
-                      />{" "}
-                      {errors.email && (
-                        <span style={{ color: "red" }}>
-                          {errors.email.message}
-                        </span>
-                      )}{" "}
-                    </>
-                  )}
-                />
-              </Grid>
-              <Grid item md="6">
-                <Controller
-                  name="employeeId"
-                  control={control}
-                  rules={{ required: "Employee Id is required" }}
-                  render={({ field }) => (
-                    <>
-                      <StyledTextField
-                        {...field}
-                        label="Employee ID"
-                        sx={{ flex: 1 }}
-                      />
-                      {errors.employeeId && (
-                        <span style={{ color: "red" }}>
-                          {errors.employeeId.message}
-                        </span>
-                      )}
-                    </>
-                  )}
-                />
-              </Grid>
-
-              <Grid item md="6">
-                <Controller
-                  name="mobile"
-                  control={control}
-                  rules={{ required: "Mobile Number is required" }}
-                  render={({ field }) => (
-                    <>
-                    <StyledTextField
-                      {...field}
-                      label="Phone No"
-                      sx={{ flex: 1 }}
-                    /> {errors.mobile && (
-                      <span style={{ color: "red" }}>
-                        {errors.mobile.message}
-                      </span>
-                    )}</>
-                  )}
-                />
-              </Grid>
               <Grid item md="6">
                 <Controller
                   name="image"
                   control={control}
                   render={({ field }) => (
                     <>
-                    <StyledInputFile
-                      {...field}
-                      placeholder="Upload Image"
-                      endIcon={<UploadImageIcon />}
-                      onChange={handleFileChange}
-                    /></>
+                      <StyledInputFile
+                        {...field}
+                        placeholder="Upload Image"
+                        endIcon={<UploadImageIcon />}
+                        onChange={handleFileChange}
+                      />
+                    </>
                   )}
                 />
               </Grid>
-
               <Grid item md={6} sm={6}></Grid>
               <Grid item md={6} sm={6}>
                 <Stack direction="row" spacing={2} justifyContent="flex-end">

@@ -82,7 +82,7 @@ const StaffPage = () => {
   useEffect(() => {
     let filter = { type: "users" };
     if (status !== null) {
-      filter.isVerified = status;
+      filter.status = status;
     }
     fetchLists(filter);
   }, [isChange,fetchLists,status]);
