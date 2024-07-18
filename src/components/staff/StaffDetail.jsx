@@ -1,11 +1,15 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import img from "../../assets/images/staff.png";
 import StyledSwitch from "../../ui/StyledSwitch";
 
 const StaffDetail = ({ user }) => {
   console.log(" ({ user })", user);
- 
+  const [isChecked, setIsChecked] = useState(user?.status || false);
+  useEffect(() => {
+    setIsChecked(user?.status || false);
+  }, [user?.status]);
+
   return (
     <Box
       bgcolor={"#fff"}
@@ -30,7 +34,7 @@ const StaffDetail = ({ user }) => {
                 <Typography variant="h4" color={"#B4B4B4"}>
                   Status
                 </Typography>
-                <StyledSwitch />
+                <StyledSwitch checked={isChecked} />
               </Stack>
             </Stack>
           </Grid>

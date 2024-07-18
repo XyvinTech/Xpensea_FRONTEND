@@ -14,7 +14,7 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
   const { tiers, fetchTiers } = useDropDownStore();
   const { addUsers, updateUsers, user, updateChange, isUpdate } =
     useUserStore();
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(true);
   const {
     control,
     handleSubmit,

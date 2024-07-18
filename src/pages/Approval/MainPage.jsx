@@ -8,7 +8,7 @@ import { useListStore } from "../../store/listStore";
 import { useApprovalStore } from "../../store/approvalstore";
 const MainPage = () => {
   const navigate = useNavigate();
-  const { lists, fetchLists } = useListStore();
+  const { lists, fetchLists, pageNo } = useListStore();
   const [isChange, setIsChange] = useState(false);
   const { deleteApprovals } = useApprovalStore();
   const [selectedRows, setSelectedRows] = useState([]);
@@ -51,8 +51,9 @@ const MainPage = () => {
   useEffect(() => {
     let filter = {};
     filter.type = "approvals";
+    filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists]);
+  }, [isChange, fetchLists, pageNo]);
   // console.log(lists);
   return (
     <>

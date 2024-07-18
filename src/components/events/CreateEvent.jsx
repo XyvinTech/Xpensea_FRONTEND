@@ -110,11 +110,13 @@ const CreateEvent = ({ open, onClose, onChange }) => {
                   name="location"
                   control={control}
                   defaultValue=""
+                  
                   rules={{ required: "Location is required" }}
                   render={({ field }) => (
                     <>
                       <StyledSelectField
                         {...field}
+                        isMulti
                         placeholder={"Choose Location"}
                         options={location}
                         sx={{ flex: 1 }}

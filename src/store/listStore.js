@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { fetchList } from "../api/listapi";
+import { fetchList, getReport } from "../api/listapi";
 
 const useListStore = create((set, get) => ({
   lists: [],
@@ -27,10 +27,16 @@ const useListStore = create((set, get) => ({
     // Clear the lists array before fetching new data
     set({ lists: [] });
     // Fetch new data
+
     const allData = await fetchList(filter);
     // Update the lists state with the fetched data
     set({ lists: allData?.data || [] });
     set({ totalCount: allData?.totalCount || 0 });
+  },
+  fetchReportById: async (userId,filter) => {
+    set({ lists: [] });
+    const report = await getReport(userId,filter);
+    set({ lists: report.data });
   },
 }));
 

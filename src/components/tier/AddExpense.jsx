@@ -23,6 +23,7 @@ const AddExpense = ({ open, onClose, onChange }) => {
     defaultValues: {
       activationDate: isUpdate ? tier?.activationDate : "",
       tierTitle: isUpdate ? tier?.title : "",
+      level: isUpdate ? tier?.level : "",
       categories: isUpdate ? tier?.categories : [],
     },
   });
@@ -35,6 +36,7 @@ const AddExpense = ({ open, onClose, onChange }) => {
     reset({
       activationDate: tier?.activationDate,
       tierTitle: tier?.title,
+      level: tier?.level,
       categories: tier?.categories,
     });
     // }
@@ -152,7 +154,8 @@ const AddExpense = ({ open, onClose, onChange }) => {
                   </>
                 )}
               />{" "}
-            </Grid>{" "} <Grid item md="6">
+            </Grid>{" "}
+            <Grid item md="6">
               <Controller
                 name="level"
                 control={control}
@@ -226,7 +229,6 @@ const AddExpense = ({ open, onClose, onChange }) => {
                 <Controller
                   name="title"
                   control={control}
-                  defaultValue=""
                   render={({ field }) => (
                     <StyledSelectField
                       {...field}
