@@ -322,7 +322,7 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
                   <StyledButton
                     variant="secondary"
                     sx={{ padding: "15px 50px" }}
-                    onClick={handleClear}
+                    onClick={(event) => handleClear(event)}
                     name="Back"
                   />
                   <StyledButton

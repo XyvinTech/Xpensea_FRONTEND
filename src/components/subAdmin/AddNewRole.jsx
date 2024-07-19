@@ -246,7 +246,7 @@ const AddNewRole = ({ open, onClose, onChange }) => {
                       variant="secondary"
                       padding="15px 50px 15px 50px"
                       name="Cancel"
-                      onClick={handleClear}
+                      onClick={(event) => handleClear(event)}
                     />
                     <StyledButton
                       variant="primary"

@@ -51,7 +51,8 @@ const CreateEvent = ({ open, onClose, onChange }) => {
         }))
       : [];
 
-  const handleClear = () => {
+  const handleClear = (event) => {
+    event.preventDefault();
     onClose();
   };
 
@@ -375,7 +376,7 @@ const CreateEvent = ({ open, onClose, onChange }) => {
                     variant="secondary"
                     padding="15px 50px 15px 50px"
                     name="Back"
-                    onClick={handleClear}
+                    onClick={(event) => handleClear(event)}
                   />
                   <StyledButton
                     variant="primary"

@@ -136,7 +136,7 @@ const AddExpense = ({ open, onClose, onChange }) => {
               position="absolute"
               right={0}
               sx={{ cursor: "pointer" }}
-              onClick={handleClear}
+              onClick={(event) => handleClear(event)}
             >
               <CrossIcon />
             </Box>

@@ -320,7 +320,7 @@ const RoleManagement = ({ open, onClose, onChange }) => {
           <StyledButton
             variant="secondary"
             name="Cancel"
-            onClick={handleClear}
+            onClick={(event) => handleClear(event)}
           />
           <StyledButton variant="primary" name="Save" type="submit" />
         </Box>
