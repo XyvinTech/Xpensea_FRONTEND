@@ -110,7 +110,7 @@ const ApprovalPage = () => {
         </Grid>
         <Grid item xs={12} md={6}></Grid>
         <Grid item xs={12} md={6}>
-          <Details />
+          <Details data={approval} />
         </Grid>
         <Grid item xs={12} md={6}>
           <Description data={approval?.description} />

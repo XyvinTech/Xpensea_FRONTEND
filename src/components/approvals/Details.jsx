@@ -2,7 +2,7 @@ import { Stack, Typography } from "@mui/material";
 import React from "react";
 import { ApproveIcon } from "../../assets/icons/ApproveIcon";
 
-const Details = () => {
+const Details = ({ data }) => {
   return (
     <Stack spacing={1} bgcolor={"#fff"} borderRadius={"12px"} paddingBottom={4}>
       <Typography
@@ -14,19 +14,15 @@ const Details = () => {
       >
         Details
       </Typography>
-      <Stack
-        padding={2}
-        direction={"row"}
-        justifyContent={"space-between"}
-      >
+      <Stack padding={2} direction={"row"} justifyContent={"space-between"}>
         <Stack direction="row" spacing={1}>
           <ApproveIcon />
           <Stack direction="column" spacing={1}>
             <Typography variant="h8" color={"#333333"}>
-              Onam purchases
+              {data?.title}
             </Typography>
             <Typography variant="h11" color="#79001D" fontWeight={"600"}>
-              Rs 1,401
+              Rs {data?.totalAmount}
               <Typography variant="h4" color={"#4F4F4F"}>
                 Shop Expenses
               </Typography>

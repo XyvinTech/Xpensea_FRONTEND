@@ -10,6 +10,7 @@ const MainPage = () => {
   const navigate = useNavigate();
   const { lists, fetchLists, pageNo } = useListStore();
   const [isChange, setIsChange] = useState(false);
+  const [status, setStatus] = useState(null);
   const { deleteApprovals } = useApprovalStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -49,11 +50,13 @@ const MainPage = () => {
     { title: "Status", field: "status", sortable: true },
   ];
   useEffect(() => {
-    let filter = {};
-    filter.type = "approvals";
+    let filter = { type: "approvals" };
+    if (status !== null) {
+      filter.status = status;
+    }
     filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo]);
+  }, [isChange, fetchLists, pageNo, status]);
   // console.log(lists);
   return (
     <>
@@ -67,13 +70,13 @@ const MainPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: "#79001D",
+              backgroundColor: status === null ? "#79001D" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
-              color: "#fff",
+              color: status === null ? "#fff" : "#4D515A",
             }}
-            // onClick={() => setSelectedTab('functional')}
+            onClick={() => setStatus(null)}
           >
             All
           </Button>
@@ -82,13 +85,13 @@ const MainPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: "#fff",
+              backgroundColor: status === "pending" ? "#79001D" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
-              color: "#4D515A",
+              color: status === "pending" ? "#fff" : "#4D515A",
             }}
-            // onClick={() => setSelectedTab('locational')}
+            onClick={() => setStatus("pending")}
           >
             Pending
           </Button>
@@ -96,27 +99,27 @@ const MainPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: "#fff",
+              backgroundColor: status === "accepted" ? "#79001D" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               borderRadius: "8px",
               padding: "10px",
-              color: "#4D515A",
+              color: status ==="accepted" ? "#fff" : "#4D515A",
             }}
-            // onClick={() => setSelectedTab('locational')}
+            onClick={() => setStatus("accepted")}
           >
-            Approved
+            Accepted
           </Button>
           <Button
             style={{
               cursor: "pointer",
               textTransform: "none",
               borderRadius: "8px",
-              backgroundColor: "#fff",
+              backgroundColor: status ==="rejected"? "#79001D" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
-              color: "#4D515A",
+              color: status ==="rejected"? "#fff" : "#4D515A",
             }}
-            // onClick={() => setSelectedTab('locational')}
+            onClick={() => setStatus("rejected")}
           >
             Rejected
           </Button>
