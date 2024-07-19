@@ -103,20 +103,7 @@ const FinancePage = () => {
           >
             Approved
           </Button>
-          <Button
-            style={{
-              cursor: "pointer",
-              textTransform: "none",
-              borderRadius: "8px",
-              backgroundColor: status === "rejected" ? "#79001D" : "#fff",
-              border: "1px solid rgba(226, 232, 240, 1)",
-              padding: "10px",
-              color: status === "rejected" ? "#fff" : "#4D515A",
-            }}
-            onClick={() => setStatus("rejected")}
-          >
-            Rejected
-          </Button>
+          
         </Box>
         <Box
           display="flex"
