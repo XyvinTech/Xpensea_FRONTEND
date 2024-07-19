@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { fetchList } from "../api/listapi";
+import { fetchList, fetchUser } from "../api/listapi";
 
 const useDropDownStore = create((set) => ({
   tiers: [],
@@ -11,9 +11,8 @@ const useDropDownStore = create((set) => ({
     set({ tiers: response?.data || [] });
   },
 
-  fetchStaffs: async () => {
-    const filter = { type: "users" };
-    const response = await fetchList(filter);
+  fetchStaffs: async (filter) => {
+    const response = await fetchUser(filter);
     set({ staffs: response?.data || [] });
   },
   fetchRoles: async () => {
@@ -21,6 +20,7 @@ const useDropDownStore = create((set) => ({
     const response = await fetchList(filter);
     set({ roles: response?.data || [] });
   },
+ 
 }));
 
 export { useDropDownStore };

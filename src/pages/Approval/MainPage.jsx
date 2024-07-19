@@ -99,15 +99,15 @@ const MainPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === "accepted" ? "#79001D" : "#fff",
+              backgroundColor: status === "approved" ? "#79001D" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               borderRadius: "8px",
               padding: "10px",
-              color: status ==="accepted" ? "#fff" : "#4D515A",
+              color: status ==="approved" ? "#fff" : "#4D515A",
             }}
-            onClick={() => setStatus("accepted")}
+            onClick={() => setStatus("approved")}
           >
-            Accepted
+            Approved
           </Button>
           <Button
             style={{

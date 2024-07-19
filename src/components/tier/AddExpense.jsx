@@ -8,6 +8,7 @@ import { Controller, useForm } from "react-hook-form";
 import CalendarInput from "../../ui/CalenderInput";
 import { useTierStore } from "../../store/tierStore";
 import StyledSelectField from "../../ui/StyledSelectField";
+import { DeleteIcon } from "../../assets/icons/DeleteIcon";
 
 const AddExpense = ({ open, onClose, onChange }) => {
   const { addTiers, updateChange, tier, updateTiers, isUpdate } =
@@ -112,6 +113,13 @@ const AddExpense = ({ open, onClose, onChange }) => {
     { value: "Maintenance", label: "Maintenance" },
     { value: "Food", label: "Food" },
   ];
+  const handleDelete = (index) => () => {
+    const updatedCategories = categories.filter((category, i) => {
+        return i !== index;
+    });
+    setCategories(updatedCategories);
+};
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -199,7 +207,14 @@ const AddExpense = ({ open, onClose, onChange }) => {
               />
             </Grid>
             {categories.map((item, index) => (
-              <Grid container key={index} spacing={4} padding={2}>
+              <Grid
+                container
+                key={index}
+                spacing={4}
+                padding={2}
+                alignItems="center"
+                justifyContent={"center"}
+              >
                 <Grid item xs={12} md={6}>
                   <Stack
                     direction={"row"}
@@ -216,11 +231,16 @@ const AddExpense = ({ open, onClose, onChange }) => {
                     />
                   </Stack>
                 </Grid>
-                <Grid item xs={12} md={6} spacing={2}>
+                <Grid item xs={12} md={5} spacing={2}>
                   <StyledInput
                     value={item?.maxAmount}
                     placeholder={"Max Amount"}
                   />
+                </Grid>
+                <Grid item xs={12} md={1} spacing={2} textAlign={"end"}>
+                <Box sx={{ cursor: "pointer" }} onClick={handleDelete(index)}>
+                    <DeleteIcon />
+                  </Box>
                 </Grid>
               </Grid>
             ))}{" "}

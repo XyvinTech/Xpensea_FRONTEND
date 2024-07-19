@@ -10,6 +10,7 @@ export const getUser = handleAsync(async (id) => {
 
   return response.data;
 });
+
 export const updateUser = handleAsync(async (userId,data) => {
   const response = await axiosInstance.put(`/admin/user/${userId}`,data);
   return response.data;

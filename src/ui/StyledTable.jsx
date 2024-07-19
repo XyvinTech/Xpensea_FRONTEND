@@ -149,7 +149,7 @@ const StyledTable = ({
         return "blue";
       case "rejected":
         return "rejected";
-        case "accepted":
+        case "approved":
           return "green";
       default:
         return "default";

@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StyledTable from "../ui/StyledTable";
-import { userColumns, userData } from "../assets/json/AllData";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import StyledFilter from "../components/StyledFilter";
 import { FilterIcon } from "../assets/icons/FilterIcon";
+import { useListStore } from "../store/listStore";
 const FinancePage = () => {
   const navigate = useNavigate();
+  const { fetchLists, pageNo } = useListStore();
+  const [isChange, setIsChange] = useState(false);
+  const [status, setStatus] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
@@ -32,6 +35,23 @@ const FinancePage = () => {
   const handleCloseFilter = () => {
     setFilterOpen(false);
   };
+  const userColumns = [
+    { title: "Order", field: "title", sortable: false },
+    { title: "Staff Name", field: "user", sortable: true },
+    { title: "Date", field: "reportDate", sortable: true },
+    { title: "NO Of Expense", field: "expenseCount", sortable: true },
+    { title: "Total", field: "totalAmount", sortable: true },
+    { title: "Location", field: "location", sortable: true },
+    { title: "Status", field: "status", sortable: true },
+  ];
+  useEffect(() => {
+    let filter = { type: "finances" };
+    if (status !== null) {
+      filter.status = status;
+    }
+    filter.pageNo = pageNo;
+    fetchLists(filter);
+  }, [isChange, fetchLists, pageNo, status]);
   return (
     <>
       <Stack
@@ -39,65 +59,65 @@ const FinancePage = () => {
         justifyContent={"space-between"}
         paddingBottom={2}
       >
-          <Box display="flex" width={"50%"} gap={1}>
-            <Button
-              style={{
-                cursor: 'pointer',
-                textTransform: "none",
-                backgroundColor:  '#79001D',
-                borderRadius:"8px",
-                border: "1px solid rgba(226, 232, 240, 1)",
-                padding: "10px",
-                color: '#fff'
-              }}
-              // onClick={() => setSelectedTab('functional')}
-            >
-              All
-            </Button>
-           
-            <Button
-              style={{
-                cursor: 'pointer',
-                textTransform: "none",
-                backgroundColor:  "#fff",
-                borderRadius:"8px",
-                border: "1px solid rgba(226, 232, 240, 1)",
-                padding: "10px",
-                color: "#4D515A"
-              }}
-              // onClick={() => setSelectedTab('locational')}
-            >
-              Pending
-            </Button>
-            <Button
-              style={{
-                cursor: 'pointer',
-                textTransform: "none",
-                backgroundColor:  "#fff",
-                border: "1px solid rgba(226, 232, 240, 1)",
-                borderRadius:"8px",
-                padding: "10px",
-                color: "#4D515A"
-              }}
-              // onClick={() => setSelectedTab('locational')}
-            >
-              Approved
-            </Button>
-            <Button
-              style={{
-                cursor: 'pointer',
-                textTransform: "none",
-                borderRadius:"8px",
-                backgroundColor:  "#fff",
-                border: "1px solid rgba(226, 232, 240, 1)",
-                padding: "10px",
-                color: "#4D515A"
-              }}
-              // onClick={() => setSelectedTab('locational')}
-            >
-              Rejected
-            </Button>
-          </Box>
+        <Box display="flex" width={"50%"} gap={1}>
+          <Button
+            style={{
+              cursor: "pointer",
+              textTransform: "none",
+              backgroundColor: status === null ? "#79001D" : "#fff",
+              borderRadius: "8px",
+              border: "1px solid rgba(226, 232, 240, 1)",
+              padding: "10px",
+              color: status === null ? "#fff" : "#4D515A",
+            }}
+            onClick={() => setStatus(null)}
+          >
+            All
+          </Button>
+
+          <Button
+            style={{
+              cursor: "pointer",
+              textTransform: "none",
+              backgroundColor: status === "pending" ? "#79001D" : "#fff",
+              borderRadius: "8px",
+              border: "1px solid rgba(226, 232, 240, 1)",
+              padding: "10px",
+              color: status === "pending" ? "#fff" : "#4D515A",
+            }}
+            onClick={() => setStatus("pending")}
+          >
+            Pending
+          </Button>
+          <Button
+            style={{
+              cursor: "pointer",
+              textTransform: "none",
+              backgroundColor: status === "approved" ? "#79001D" : "#fff",
+              border: "1px solid rgba(226, 232, 240, 1)",
+              borderRadius: "8px",
+              padding: "10px",
+              color: status === "approved" ? "#fff" : "#4D515A",
+            }}
+            onClick={() => setStatus("approved")}
+          >
+            Approved
+          </Button>
+          <Button
+            style={{
+              cursor: "pointer",
+              textTransform: "none",
+              borderRadius: "8px",
+              backgroundColor: status === "rejected" ? "#79001D" : "#fff",
+              border: "1px solid rgba(226, 232, 240, 1)",
+              padding: "10px",
+              color: status === "rejected" ? "#fff" : "#4D515A",
+            }}
+            onClick={() => setStatus("rejected")}
+          >
+            Rejected
+          </Button>
+        </Box>
         <Box
           display="flex"
           justifyContent="center"
@@ -118,7 +138,6 @@ const FinancePage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          data={userData}
           onSelectionChange={handleSelectionChange}
           onView={handleView}
           onSort={handleSort}

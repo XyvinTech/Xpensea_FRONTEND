@@ -1,5 +1,5 @@
 import { Box, Dialog, Grid, Stack } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import StyledSelectField from "../../ui/StyledSelectField";
 import StyledButton from "../../ui/StyledButton";
 import { MoreVert } from "@mui/icons-material";
@@ -12,8 +12,11 @@ import { useEventStore } from "../../store/eventStore";
 import StyledTimeInput from "../../ui/StyledTimeInput";
 
 const CreateEvent = ({ open, onClose, onChange }) => {
-  const { staffs, fetchTiers, fetchStaffs } = useDropDownStore();
-  const { addEvents,event } = useEventStore();
+  const { staffs, fetchTiers, fetchStaffs, tiers } = useDropDownStore();
+  const { addEvents, event } = useEventStore();
+  const [location, setLocation] = useState([]);
+  const [role, setRole] = useState([]);
+  const [tier, setTier] = useState([]);
   const {
     control,
     handleSubmit,
@@ -23,8 +26,30 @@ const CreateEvent = ({ open, onClose, onChange }) => {
 
   useEffect(() => {
     fetchTiers();
-    fetchStaffs();
-  }, [fetchTiers, fetchStaffs]);
+  }, [fetchTiers]);
+  useEffect(() => {
+    let filter = {};
+    if (role) {
+      filter.role = role;
+    }
+    if (tier) {
+      filter.tier = tier;
+    }
+    fetchStaffs(filter);
+  }, [fetchStaffs, role, tier]);
+
+  const roleOptions = [
+    { value: "submitter", label: "Submitter" },
+    { value: "approver", label: "Approver" },
+  ];
+
+  const tierOptions =
+    tiers && Array.isArray(tiers)
+      ? tiers.map((list) => ({
+          value: list?._id,
+          label: list?.title,
+        }))
+      : [];
 
   const handleClear = () => {
     onClose();
@@ -44,13 +69,13 @@ const CreateEvent = ({ open, onClose, onChange }) => {
       startTime: data.startTime,
       endTime: data.endTime,
     };
-    // console.log("Form data:", formData);
+    console.log("Form data:", formData);
     await addEvents(formData);
     onChange();
     onClose();
     reset();
   };
-  const location = [
+  const loc = [
     { value: "option1", label: "Option 1" },
     { value: "option2", label: "Option 2" },
     { value: "option3", label: "Option 3" },
@@ -64,7 +89,9 @@ const CreateEvent = ({ open, onClose, onChange }) => {
       // role: { value: admins?.role, label: admins?.role },
     });
     // setIsChecked(admins?.status || false);
-  }, [ event, reset]);
+  }, [event, reset]);
+  console.log("Form data location:", tier);
+  console.log("Form data location:", role);
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <Box padding={3}>
@@ -110,15 +137,13 @@ const CreateEvent = ({ open, onClose, onChange }) => {
                   name="location"
                   control={control}
                   defaultValue=""
-                  
                   rules={{ required: "Location is required" }}
                   render={({ field }) => (
                     <>
                       <StyledSelectField
                         {...field}
-                        isMulti
                         placeholder={"Choose Location"}
-                        options={location}
+                        options={loc}
                         sx={{ flex: 1 }}
                       />{" "}
                       {errors.location && (
@@ -130,40 +155,62 @@ const CreateEvent = ({ open, onClose, onChange }) => {
                   )}
                 />
               </Grid>
-              {/* <Stack direction="row" spacing={2} paddingBottom={2}> */}
-              {/* <Controller
-                name="role"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledSelectField
-                    {...field}
-                    placeholder={"Choose Role"}
-                    options={roles.map((role) => ({
-                      value: role?._id,
-                      label: role?.roleName
-                    }))}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              /> */}
-              {/* <Controller
-                name="tier"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <StyledSelectField
-                    {...field}
-                    placeholder={"Choose Tier"}
-                    options={tiers.map((tier) => ({
-                      value: tier?._id,
-                      label: tier?.title,
-                    }))}
-                    sx={{ flex: 1 }}
-                  />
-                )}
-              /> */}
-              {/* </Stack> */}
+              <Grid item md="6">
+                <Controller
+                  name="tier"
+                  control={control}
+                  rules={{ required: "Tier is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledSelectField
+                        {...field}
+                        placeholder="Tier"
+                        isMulti
+                        options={tierOptions}
+                        onChange={(value) => {
+                          const tierValues = value.map((v) => v.value);
+                          setTier(tierValues);
+                          field.onChange(value);
+                        }}
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.tier && (
+                        <span style={{ color: "red" }}>
+                          {errors.tier.message}
+                        </span>
+                      )}{" "}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item md="6">
+                <Controller
+                  name="role"
+                  control={control}
+                  rules={{ required: "Role is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledSelectField
+                        {...field}
+                        placeholder="Role"
+                        isMulti
+                        options={roleOptions}
+                        onChange={(value) => {
+                          const roleValues = value.map((v) => v.value);
+                          setRole(roleValues);
+                          field.onChange(value);
+                        }}
+                        sx={{ flex: 1 }}
+                      />
+                      {errors.role && (
+                        <span style={{ color: "red" }}>
+                          {errors.role.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
               <Grid item md="6">
                 <Controller
                   name="staff"
