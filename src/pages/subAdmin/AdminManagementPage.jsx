@@ -7,14 +7,16 @@ import StyledSearchbar from "../../ui/StyledSearchbar";
 import AddNewRole from "../../components/subAdmin/AddNewRole";
 import { useListStore } from "../../store/listStore";
 import { useAdminStore } from "../../store/adminStore";
+
 const AdminManagementPage = () => {
-  const { isUpdate, updateChange, fetchAdminById, deleteAdmins } =
-    useAdminStore();
+  const { fetchAdminById, deleteAdmins } = useAdminStore();
   const { lists, fetchLists, rowPerSize, pageNo } = useListStore();
   const [isChange, setIsChange] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false); 
+
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
@@ -22,13 +24,15 @@ const AdminManagementPage = () => {
 
   const handleEdit = async (id) => {
     await fetchAdminById(id);
-    console.log("View item:", isUpdate);
-    updateChange(isUpdate);
+    console.log("Edit item:", id);
+    setIsUpdate(true); 
     setEventOpen(true);
   };
+
   const handleView = (id) => {
     console.log("View item:", id);
   };
+
   const handleDelete = async () => {
     if (selectedRows.length > 0) {
       await Promise.all(selectedRows.map((id) => deleteAdmins(id)));
@@ -36,6 +40,7 @@ const AdminManagementPage = () => {
       setSelectedRows([]);
     }
   };
+
   const handleSort = (field) => {
     console.log(`Sorting by ${field}`);
   };
@@ -47,16 +52,20 @@ const AdminManagementPage = () => {
   const handleCloseFilter = () => {
     setFilterOpen(false);
   };
+
   const handleOpenEvent = () => {
+    setIsUpdate(false); 
     setEventOpen(true);
   };
 
   const handleCloseEvent = () => {
-    setEventOpen(false);
+    setEventOpen(false);setIsUpdate(false); 
   };
+
   const handleChange = () => {
     setIsChange(!isChange);
   };
+
   const userColumns = [
     { title: "name", field: "name", sortable: false },
     { title: "role", field: "role", sortable: true },
@@ -72,7 +81,7 @@ const AdminManagementPage = () => {
     filter.type = "admins";
     fetchLists(filter);
   }, [isChange, fetchLists, rowPerSize, pageNo]);
-  // console.log(lists);
+
   return (
     <>
       <Stack
@@ -132,6 +141,7 @@ const AdminManagementPage = () => {
         open={eventOpen}
         onClose={handleCloseEvent}
         onChange={handleChange}
+        isUpdate={isUpdate} // Pass isUpdate as a prop
       />
     </>
   );

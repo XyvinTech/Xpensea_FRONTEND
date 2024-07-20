@@ -9,10 +9,9 @@ import { Controller, useForm } from "react-hook-form";
 import { useDropDownStore } from "../../store/useDropDownStore";
 import { useAdminStore } from "../../store/adminStore";
 
-const AddNewRole = ({ open, onClose, onChange }) => {
+const AddNewRole = ({ open, onClose, onChange, isUpdate = false }) => {
   const { roles, fetchRoles } = useDropDownStore();
-  const { addAdmins, updateAdmins, admins, isUpdate, updateChange } =
-    useAdminStore();
+  const { addAdmins, updateAdmins, admins } = useAdminStore();
 
   const {
     control,
@@ -21,28 +20,37 @@ const AddNewRole = ({ open, onClose, onChange }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: isUpdate ? admins?.name : "",
-      email: isUpdate ? admins?.email : "",
-      mobile: isUpdate ? admins?.mobile : "",
-      designation: isUpdate
-        ? { value: admins?.designation, label: admins?.designation }
-        : "",
-      role: isUpdate ? { value: admins?.role, label: admins?.role } : "",
+      name: "",
+      email: "",
+      mobile: "",
+      designation: "",
+      role: "",
     },
   });
 
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
-    if (isUpdate) {
+    if (isUpdate && admins) {
       reset({
-        name: admins?.name,
-        email: admins?.email,
-        mobile: admins?.mobile,
-        designation: { value: admins?.designation, label: admins?.designation },
-        role: { value: admins?.role, label: admins?.role },
+        name: admins.name || "",
+        email: admins.email || "",
+        mobile: admins.mobile || "",
+        designation: admins.designation
+          ? { value: admins.designation, label: admins.designation }
+          : "",
+        role: admins.role ? { value: admins.role, label: admins.role } : "",
       });
-      setIsChecked(admins?.status || false);
+      setIsChecked(admins.status || false);
+    } else {
+      reset({
+        name: "",
+        email: "",
+        mobile: "",
+        designation: "",
+        role: "",
+      });
+      setIsChecked(false);
     }
   }, [isUpdate, admins, reset]);
 
@@ -52,7 +60,6 @@ const AddNewRole = ({ open, onClose, onChange }) => {
 
   const handleClear = (event) => {
     event.preventDefault();
-    updateChange(isUpdate);
     reset({
       name: "",
       email: "",
@@ -88,10 +95,17 @@ const AddNewRole = ({ open, onClose, onChange }) => {
       designation: data.designation.value,
       status: isChecked,
     };
+    const upData = {
+      name: data.name,
+      email: data.email,
+      mobile: data.mobile,
+      role: data.role.value,
+      designation: data.designation.value,
+      status: isChecked,
+    };
 
     if (isUpdate) {
-      await updateAdmins(admins._id, formData);
-      updateChange(isUpdate);
+      await updateAdmins(admins._id, upData);
     } else {
       await addAdmins(formData);
     }
@@ -104,16 +118,17 @@ const AddNewRole = ({ open, onClose, onChange }) => {
       designation: "",
       role: "",
     });
-    setIsChecked(false); 
+    setIsChecked(false);
   };
-
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth>
       <Box padding={3}>
         <Stack spacing={2}>
           <Box display="flex" justifyContent="space-between">
-            <h2 style={{ flexGrow: 1 }}>Add New Role</h2>
+            <h2 style={{ flexGrow: 1 }}>
+              {isUpdate ? "Edit Admin" : "Add New Admin"}
+            </h2>
             <StyledSwitch
               variant={"primary"}
               checked={isChecked}
@@ -193,7 +208,6 @@ const AddNewRole = ({ open, onClose, onChange }) => {
                   name="email"
                   control={control}
                   rules={{ required: "Email is required" }}
-                  defaultValue=""
                   render={({ field }) => (
                     <>
                       <StyledTextField
@@ -215,7 +229,6 @@ const AddNewRole = ({ open, onClose, onChange }) => {
                   name="mobile"
                   control={control}
                   rules={{ required: "Phone Number is required" }}
-                  defaultValue=""
                   render={({ field }) => (
                     <>
                       <StyledTextField
@@ -241,20 +254,18 @@ const AddNewRole = ({ open, onClose, onChange }) => {
                   justifyContent="flex-end"
                   paddingBottom={2}
                 >
-                  <>
-                    <StyledButton
-                      variant="secondary"
-                      padding="15px 50px 15px 50px"
-                      name="Cancel"
-                      onClick={(event) => handleClear(event)}
-                    />
-                    <StyledButton
-                      variant="primary"
-                      padding="15px 50px 15px 50px"
-                      name="Save"
-                      type="submit"
-                    />
-                  </>
+                  <StyledButton
+                    variant="secondary"
+                    padding="15px 50px"
+                    name="Cancel"
+                    onClick={handleClear}
+                  />
+                  <StyledButton
+                    variant="primary"
+                    padding="15px 50px"
+                    name="Save"
+                    type="submit"
+                  />
                 </Stack>
               </Grid>
             </Grid>
