@@ -10,9 +10,8 @@ import { useTierStore } from "../../store/tierStore";
 import StyledSelectField from "../../ui/StyledSelectField";
 import { DeleteIcon } from "../../assets/icons/DeleteIcon";
 
-const AddExpense = ({ open, onClose, onChange }) => {
-  const { addTiers, updateChange, tier, updateTiers, isUpdate } =
-    useTierStore();
+const AddExpense = ({ open, onClose, onChange, isUpdate = false }) => {
+  const { addTiers, tier, updateTiers } = useTierStore();
   const {
     control,
     handleSubmit,
@@ -22,30 +21,36 @@ const AddExpense = ({ open, onClose, onChange }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      activationDate: isUpdate ? tier?.activationDate : "",
-      tierTitle: isUpdate ? tier?.title : "",
-      level: isUpdate ? tier?.level : "",
-      categories: isUpdate ? tier?.categories : [],
+      activationDate: "",
+      tierTitle: "",
+      level: "",
+      categories: [],
     },
   });
 
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    // if (isUpdate && tier) {
-    setCategories(tier?.categories || []);
-    reset({
-      activationDate: tier?.activationDate,
-      tierTitle: tier?.title,
-      level: tier?.level,
-      categories: tier?.categories,
-    });
-    // }
+    if (isUpdate && tier) {
+      setCategories(tier?.categories || []);
+      reset({
+        activationDate: tier?.activationDate,
+        tierTitle: tier?.title,
+        level: tier?.level,
+        categories: tier?.categories,
+      });
+    } else {
+      reset({
+        activationDate: "",
+        tierTitle: "",
+        level: "",
+        
+      }); setCategories([]);
+    }
   }, [isUpdate, tier, reset]);
 
   const handleClear = (event) => {
     event.preventDefault();
-    updateChange(isUpdate);
     setCategories([]);
     reset({
       activationDate: "",
@@ -85,7 +90,6 @@ const AddExpense = ({ open, onClose, onChange }) => {
 
     if (isUpdate) {
       await updateTiers(tier._id, formData);
-      updateChange(isUpdate);
     } else {
       await addTiers(formData);
     }
@@ -119,7 +123,7 @@ const AddExpense = ({ open, onClose, onChange }) => {
     });
     setCategories(updatedCategories);
   };
-
+console.log('updatedCategor',isUpdate)
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <form onSubmit={handleSubmit(onSubmit)}>

@@ -141,7 +141,7 @@ const AdminManagementPage = () => {
         open={eventOpen}
         onClose={handleCloseEvent}
         onChange={handleChange}
-        isUpdate={isUpdate} // Pass isUpdate as a prop
+        isUpdate={isUpdate} 
       />
     </>
   );

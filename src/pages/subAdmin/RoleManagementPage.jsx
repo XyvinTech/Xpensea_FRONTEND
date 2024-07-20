@@ -9,9 +9,10 @@ import { useListStore } from "../../store/listStore";
 import { useRoleStore } from "../../store/roleStore";
 const RoleManagementPage = () => {
   const { fetchLists, pageNo } = useListStore();
-  const { isUpdate, updateChange, fetchRoleById, deleteRoles } = useRoleStore();
+  const { fetchRoleById, deleteRoles } = useRoleStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [isChange, setIsChange] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
@@ -21,9 +22,8 @@ const RoleManagementPage = () => {
 
   const handleEdit = async (id) => {
     await fetchRoleById(id);
-
-    updateChange(isUpdate);
     setEventOpen(true);
+    setIsUpdate(true);
   };
 
   const handleDelete = async () => {
@@ -46,9 +46,11 @@ const RoleManagementPage = () => {
   };
   const handleOpenEvent = () => {
     setEventOpen(true);
+    setIsUpdate(false);
   };
   const handleCloseEvent = () => {
     setEventOpen(false);
+    setIsUpdate(false);
   };
   const handleChange = () => {
     setIsChange(!isChange);
@@ -123,6 +125,7 @@ const RoleManagementPage = () => {
         open={eventOpen}
         onClose={handleCloseEvent}
         onChange={handleChange}
+        isUpdate={isUpdate}
       />
     </>
   );

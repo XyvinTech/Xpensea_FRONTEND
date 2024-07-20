@@ -9,10 +9,11 @@ import { useListStore } from "../store/listStore";
 import { useTierStore } from "../store/tierStore";
 const TierPage = () => {
   const { fetchLists, pageNo } = useListStore();
-  const { isUpdate, updateChange, fetchTierById, deleteTiers } = useTierStore();
+  const { fetchTierById, deleteTiers } = useTierStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [status, setStatus] = useState(null);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [isChange, setIsChange] = useState(false);
   const [expenseOpen, setExpenseOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
@@ -23,7 +24,7 @@ const TierPage = () => {
   const handleEdit = async (id) => {
     await fetchTierById(id);
     console.log("View item:", isUpdate);
-    updateChange(isUpdate);
+    setIsUpdate(true);
     // setAction('edit')
     setExpenseOpen(true);
   };
@@ -49,10 +50,12 @@ const TierPage = () => {
   };
   const handleOpenExpense = () => {
     setExpenseOpen(true);
+    setIsUpdate(false);
   };
 
   const handleCloseExpense = () => {
     setExpenseOpen(false);
+    setIsUpdate(false);
   };
   const userColumns = [
     { title: "Tier Title", field: "title", sortable: false },
@@ -176,6 +179,7 @@ const TierPage = () => {
         open={expenseOpen}
         onClose={handleCloseExpense}
         onChange={handleChange}
+        isUpdate={isUpdate}
       />
     </>
   );

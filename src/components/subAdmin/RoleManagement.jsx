@@ -21,7 +21,7 @@ import StyledSelectField from "../../ui/StyledSelectField";
 import { Controller, useForm } from "react-hook-form";
 import { useRoleStore } from "../../store/roleStore";
 
-const RoleManagement = ({ open, onClose, onChange }) => {
+const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
   const initialPermissions = {
     adminManagement_view: false,
     adminManagement_modify: false,
@@ -36,17 +36,11 @@ const RoleManagement = ({ open, onClose, onChange }) => {
   };
 
   const [isChecked, setIsChecked] = useState(false);
-  const { addRoles, updateRoles, role, updateChange, isUpdate } =
-    useRoleStore();
+  const { addRoles, updateRoles, role } = useRoleStore();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      roleName: isUpdate ? role?.roleName : "",
-      location: isUpdate
-        ? role?.locationAccess?.map((loc) => ({
-            value: loc,
-            label: loc.charAt(0).toUpperCase() + loc.slice(1),
-          }))
-        : [],
+      roleName: "",
+      location: [],
     },
   });
 
@@ -54,7 +48,7 @@ const RoleManagement = ({ open, onClose, onChange }) => {
   const [permissions, setPermissions] = useState(initialPermissions);
 
   useEffect(() => {
-    if (role) {
+    if (isUpdate && role) {
       reset({
         roleName: role?.roleName,
         location: role?.locationAccess?.map((loc) => ({
@@ -69,13 +63,16 @@ const RoleManagement = ({ open, onClose, onChange }) => {
         ) || initialPermissions
       );
     } else {
+      reset({
+        roleName: "",
+        location: [],
+      });
       setPermissions(initialPermissions);
     }
   }, [isUpdate, role, reset]);
 
   const handleClear = (event) => {
     event.preventDefault();
-    updateChange(isUpdate);
     setPermissions(initialPermissions);
     reset({
       roleName: "",
@@ -183,7 +180,6 @@ const RoleManagement = ({ open, onClose, onChange }) => {
     if (isUpdate) {
       if (role?._id) {
         await updateRoles(role._id, formData);
-        updateChange(isUpdate);
       } else {
         console.error("Role ID is undefined");
       }
@@ -197,6 +193,7 @@ const RoleManagement = ({ open, onClose, onChange }) => {
       roleName: "",
       location: [],
     });
+    setPermissions(initialPermissions);
   };
 
   return (
