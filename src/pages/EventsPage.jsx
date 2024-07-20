@@ -6,7 +6,7 @@ import StyledFilter from "../components/StyledFilter";
 import CreateEvent from "../components/events/CreateEvent";
 import { useListStore } from "../store/listStore";
 const EventsPage = () => {
-  const { lists, fetchLists } = useListStore();
+  const { fetchLists, pageNo } = useListStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
@@ -64,8 +64,9 @@ const EventsPage = () => {
     if (status !== null) {
       filter.status = status;
     }
+    filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists, status]);
+  }, [isChange, fetchLists, status, pageNo]);
   // console.log(lists);
   return (
     <>

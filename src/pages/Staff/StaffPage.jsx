@@ -10,7 +10,7 @@ import { useListStore } from "../../store/listStore";
 import { useUserStore } from "../../store/userStore";
 const StaffPage = () => {
   const navigate = useNavigate();
-  const { lists, fetchLists } = useListStore();
+  const { fetchLists, pageNo } = useListStore();
   const { isUpdate, updateChange, fetchUserById, deleteUsers } = useUserStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [isChange, setIsChange] = useState(false);
@@ -81,14 +81,14 @@ const StaffPage = () => {
     if (status !== null) {
       filter.status = status;
     }
+    filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists, status]);
+  }, [isChange, fetchLists, pageNo, status]);
   return (
     <>
       <Stack
         direction={"row"}
         justifyContent={"space-between"}
-        
         paddingBottom={2}
       >
         <Box display="flex" width={"50%"} gap={1}>

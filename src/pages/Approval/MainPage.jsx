@@ -8,7 +8,7 @@ import { useListStore } from "../../store/listStore";
 import { useApprovalStore } from "../../store/approvalstore";
 const MainPage = () => {
   const navigate = useNavigate();
-  const { lists, fetchLists, pageNo } = useListStore();
+  const { fetchLists, pageNo } = useListStore();
   const [isChange, setIsChange] = useState(false);
   const [status, setStatus] = useState(null);
   const { deleteApprovals } = useApprovalStore();

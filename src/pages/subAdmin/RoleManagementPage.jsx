@@ -8,7 +8,7 @@ import RoleManagement from "../../components/subAdmin/RoleManagement";
 import { useListStore } from "../../store/listStore";
 import { useRoleStore } from "../../store/roleStore";
 const RoleManagementPage = () => {
-  const { lists, fetchLists } = useListStore();
+  const { fetchLists, pageNo } = useListStore();
   const { isUpdate, updateChange, fetchRoleById, deleteRoles } = useRoleStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [isChange, setIsChange] = useState(false);
@@ -25,9 +25,7 @@ const RoleManagementPage = () => {
     updateChange(isUpdate);
     setEventOpen(true);
   };
-  const handleView = (id) => {
-    console.log(`VIEW ${id}`);
-  };
+
   const handleDelete = async () => {
     if (selectedRows.length > 0) {
       await Promise.all(selectedRows.map((id) => deleteRoles(id)));
@@ -66,7 +64,8 @@ const RoleManagementPage = () => {
     let filter = {};
     filter.type = "roles";
     fetchLists(filter);
-  }, [isChange, fetchLists]);
+    filter.pageNo = pageNo;
+  }, [isChange, fetchLists, pageNo]);
   return (
     <>
       <Stack
@@ -112,11 +111,9 @@ const RoleManagementPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          data={lists}
           onSelectionChange={handleSelectionChange}
           onEdit={handleEdit}
           showEdit
-          onView={handleView}
           onSort={handleSort}
           onDelete={handleDelete}
         />

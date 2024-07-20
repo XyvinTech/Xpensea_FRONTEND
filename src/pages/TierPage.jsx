@@ -8,7 +8,7 @@ import AddExpense from "../components/tier/AddExpense";
 import { useListStore } from "../store/listStore";
 import { useTierStore } from "../store/tierStore";
 const TierPage = () => {
-  const { lists, fetchLists } = useListStore();
+  const { fetchLists, pageNo } = useListStore();
   const { isUpdate, updateChange, fetchTierById, deleteTiers } = useTierStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -66,8 +66,9 @@ const TierPage = () => {
   useEffect(() => {
     let filter = {};
     filter.type = "tiers";
+    filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists]);
+  }, [isChange, fetchLists, pageNo]);
   // console.log(lists);
 
   return (
