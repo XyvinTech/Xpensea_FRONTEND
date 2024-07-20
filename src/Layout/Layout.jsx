@@ -465,7 +465,7 @@ const Layout = (props) => {
           flexGrow: 1,
           p: 3,
           backgroundColor: "#F3F3F3",
-          paddingTop: 4,
+          paddingTop: 6,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}
       >
