@@ -253,6 +253,7 @@ const Layout = (props) => {
                         component={Link}
                         to={subItem.to}
                         sx={{
+                          borderRadius: "10px",
                           marginLeft: "40px",
                           marginRight: "40px",
                           color:
@@ -292,6 +293,7 @@ const Layout = (props) => {
                 component={Link}
                 to={item.to}
                 sx={{
+                  borderRadius: "10px",
                   marginLeft: "20px",
                   marginRight: "10px",
                   color: location.pathname === item.to ? "#fff" : "#919099",
