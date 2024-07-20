@@ -399,21 +399,25 @@ const Layout = (props) => {
               gap={1}
               display={"flex"}
               alignItems={"center"}
+              justifyContent={"space-between"}
               onClick={handleDialogOpen}
               sx={{ cursor: "pointer", flexShrink: 0, marginLeft: "10px" }}
             >
-              <Avatar
-                alt="Remy Sharp"
-                src={profile}
-                sx={{ width: 40, height: 40 }}
-              />
-              <Box>
-                <Typography variant="h5" color={"#292D32"}>
-                  {admin?.name}
-                </Typography>
-                <Typography variant="h6" color={"rgba(41, 45, 50, 0.44)"}>
-                  {admin?.designation}
-                </Typography>
+              {" "}
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Avatar
+                  alt="Remy Sharp"
+                  src={profile}
+                  sx={{ width: 40, height: 40 }}
+                />
+                <Box sx={{ marginLeft: "10px" }}>
+                  <Typography variant="h5" color={"#292D32"}>
+                    {admin?.name}
+                  </Typography>
+                  <Typography variant="h6" color={"rgba(41, 45, 50, 0.44)"}>
+                    {admin?.designation}
+                  </Typography>
+                </Box>
               </Box>
               <ExpandMoreIcon />
             </Box>
