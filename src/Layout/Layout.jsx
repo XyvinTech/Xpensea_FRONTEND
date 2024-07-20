@@ -463,7 +463,7 @@ const Layout = (props) => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 1,
+          p: 3,
           backgroundColor: "#F3F3F3",
           paddingTop: 4,
           width: { sm: `calc(100% - ${drawerWidth}px)` },

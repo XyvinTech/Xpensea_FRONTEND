@@ -46,8 +46,8 @@ const ApprovalPage = () => {
   //   console.log("Rejection Description:", description);
   //   setRejectOpen(false);
   // };
-  const handleReject = async () => {
-    await updateApprovals(id, "reject", { expenses: rejectedExpenses });
+  const handleReject = async (reason) => {
+    await updateApprovals(id, "reject", { expenses: rejectedExpenses, reason });
     setIsChange(!isChange);
     setRejectOpen(false);
   };

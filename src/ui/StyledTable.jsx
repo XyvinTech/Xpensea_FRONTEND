@@ -151,6 +151,8 @@ const StyledTable = ({
         return "rejected";
         case "approved":
           return "green";
+          case "reimbursed":
+            return "green";
       default:
         return "default";
     }

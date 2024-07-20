@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import StyledTextArea from '../../ui/StyledTextArea';
+import React, { useState } from "react";
+import StyledTextArea from "../../ui/StyledTextArea";
 import { CrossIcon } from "../../assets/icons/CrossIcon";
-import StyledButton from '../../ui/StyledButton';
-import { Box, Dialog, DialogContent, Typography } from '@mui/material';
+import StyledButton from "../../ui/StyledButton";
+import { Box, Dialog, DialogContent, Typography } from "@mui/material";
 
 const RejectedForm = ({ open, onClose, onReject }) => {
-  const [description, setDescription] = useState(""); // State to store the description
+  const [reason, setReason] = useState("");
 
   const handleSubmit = () => {
-    onReject(description); // Pass the description to the parent component
+    onReject(reason);
   };
 
   const handleClear = () => {
@@ -31,17 +31,13 @@ const RejectedForm = ({ open, onClose, onReject }) => {
           </Typography>
         </Box>
         <StyledTextArea
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)} // Update the description state on change
+          placeholder="Reason"
+          value={reason}
+          onChange={(e) => setReason(e.target.value)}
         />
       </DialogContent>
       <Box p={3}>
-        <StyledButton
-          variant="danger"
-          name="Reject"
-          onClick={handleSubmit}
-        />
+        <StyledButton variant="danger" name="Reject" onClick={handleSubmit} />
       </Box>
     </Dialog>
   );
