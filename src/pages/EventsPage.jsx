@@ -5,6 +5,7 @@ import StyledTable from "../ui/StyledTable";
 import StyledFilter from "../components/StyledFilter";
 import CreateEvent from "../components/events/CreateEvent";
 import { useListStore } from "../store/listStore";
+import { useEventStore } from "../store/eventStore";
 const EventsPage = () => {
   const { fetchLists, pageNo } = useListStore();
   const [selectedRows, setSelectedRows] = useState([]);
@@ -12,6 +13,7 @@ const EventsPage = () => {
   const [isChange, setIsChange] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
   const [status, setStatus] = useState(null);
+  const { deleteEvents } = useEventStore();
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
