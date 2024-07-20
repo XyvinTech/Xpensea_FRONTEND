@@ -79,15 +79,15 @@ const FinancePage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === "pending" ? "#79001D" : "#fff",
+              backgroundColor: status === "reimbursed" ? "#79001D" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
-              color: status === "pending" ? "#fff" : "#4D515A",
+              color: status === "reimbursed" ? "#fff" : "#4D515A",
             }}
-            onClick={() => setStatus("pending")}
+            onClick={() => setStatus("reimbursed")}
           >
-            Pending
+           Reimbursed
           </Button>
           <Button
             style={{

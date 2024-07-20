@@ -177,9 +177,8 @@ const RoleManagement = ({ open, onClose, onChange }) => {
         ? data.location.map((location) => location.value)
         : [data.location.value],
       permissions: selectedPermissions,
-      // status: isChecked,
+      status: isChecked,
     };
-
 
     if (isUpdate) {
       if (role?._id) {

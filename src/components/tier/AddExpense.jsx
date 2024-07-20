@@ -115,10 +115,10 @@ const AddExpense = ({ open, onClose, onChange }) => {
   ];
   const handleDelete = (index) => () => {
     const updatedCategories = categories.filter((category, i) => {
-        return i !== index;
+      return i !== index;
     });
     setCategories(updatedCategories);
-};
+  };
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
@@ -238,7 +238,7 @@ const AddExpense = ({ open, onClose, onChange }) => {
                   />
                 </Grid>
                 <Grid item xs={12} md={1} spacing={2} textAlign={"end"}>
-                <Box sx={{ cursor: "pointer" }} onClick={handleDelete(index)}>
+                  <Box sx={{ cursor: "pointer" }} onClick={handleDelete(index)}>
                     <DeleteIcon />
                   </Box>
                 </Grid>
