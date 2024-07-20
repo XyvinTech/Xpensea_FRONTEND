@@ -31,10 +31,9 @@ import { StaffIcon } from "../assets/icons/StaffIcon";
 import { TierIcon } from "../assets/icons/TierIcon";
 import { PolicyIcon } from "../assets/icons/PolicyIcon";
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Avatar,
-  Badge,
   Collapse,
   Dialog,
   Stack,
@@ -42,7 +41,6 @@ import {
   useTheme,
 } from "@mui/material";
 import StyledSearchbar from "../ui/StyledSearchbar";
-import styled from "styled-components";
 import { SyncIcon } from "../assets/icons/SyncIcon";
 import { useAdminStore } from "../store/adminStore";
 import { useAuthStore } from "../store/useAuthStore";
@@ -158,6 +156,7 @@ const Layout = (props) => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const theme = useTheme();
+  const location = useLocation();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const handleDrawerClose = () => {
     setIsClosing(true);
@@ -254,9 +253,16 @@ const Layout = (props) => {
                         component={Link}
                         to={subItem.to}
                         sx={{
-                          color: "#4D515A",
                           marginLeft: "40px",
                           marginRight: "40px",
+                          color:
+                            location.pathname === subItem.to
+                              ? "#79001D"
+                              : "#4D515A",
+                          backgroundColor:
+                            location.pathname === subItem.to
+                              ? "#FFF7F3"
+                              : "transparent",
                           "&:hover": {
                             color: "#79001D",
                             backgroundColor: "#FFF7F3",
@@ -282,13 +288,15 @@ const Layout = (props) => {
               key={item.name}
               disablePadding
             >
-              <StyledListItemButton
+              <ListItemButton
                 component={Link}
                 to={item.to}
                 sx={{
-                  color: "#919099",
                   marginLeft: "20px",
                   marginRight: "10px",
+                  color: location.pathname === item.to ? "#fff" : "#919099",
+                  backgroundColor:
+                    location.pathname === item.to ? "#79001D" : "transparent",
                   "&:hover": { color: "#fff", backgroundColor: "#79001D" },
                 }}
               >
@@ -299,8 +307,7 @@ const Layout = (props) => {
                   primary={item.name}
                   primaryTypographyProps={{ variant: "h3" }}
                 />{" "}
-                <StyledBadge badgeContent={"20"}></StyledBadge>
-              </StyledListItemButton>
+              </ListItemButton>
             </ListItem>
           )
         )}
@@ -475,30 +482,3 @@ Layout.propTypes = {
 };
 
 export default Layout;
-const StyledBadge = styled(Badge)`
-  & .MuiBadge-badge {
-    right: -3px;
-    top: 3px;
-    border: 2px solid #79001d;
-    padding: 0;
-    border-radius: 50%;
-    min-width: 20px;
-    height: 20px;
-    line-height: 20px;
-    display: flex;
-    background-color: #79001d;
-    color: #fff;
-    align-items: center;
-    justify-content: center;
-  }
-`;
-const StyledListItemButton = styled(ListItemButton)`
-  width: 100%;
-  &:hover {
-    .MuiBadge-badge {
-      background-color: #fff;
-      border: 2px solid #fff;
-      color: #79001d;
-    }
-  }
-`;
