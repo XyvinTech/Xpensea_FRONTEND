@@ -34,7 +34,7 @@ const StaffDetail = ({ user }) => {
                 <Typography variant="h4" color={"#B4B4B4"}>
                   Status
                 </Typography>
-                <StyledSwitch checked={isChecked} />
+                <StyledSwitch checked={isChecked}variant={"primary"} />
               </Stack>
             </Stack>
           </Grid>

@@ -22,13 +22,18 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { XpenseaIcon } from "../assets/icons/XpenseaIcon";
 import profile from "../assets/images/profile.png";
 import { ExpandMoreIcon } from "../assets/icons/ExpandMoreIcon";
-import { DashboardIcon } from "../assets/icons/DashboardIcon";
-import { VectorIcon } from "../assets/icons/VectorIcon";
-import { EventIcon } from "../assets/icons/EventIcon";
-import { AdminIcon } from "../assets/icons/AdminIcon";
+import GridViewIcon from '@mui/icons-material/GridView';
+// import { VectorIcon } from "../assets/icons/VectorIcon"
+import PendingActionsIcon from '@mui/icons-material/PendingActions';;
+// import { EventIcon } from "../assets/icons/EventIcon";
+import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+// import { AdminIcon } from "../assets/icons/AdminIcon";
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import { FinanceIcon } from "../assets/icons/FinanceIcon";
-import { StaffIcon } from "../assets/icons/StaffIcon";
-import { TierIcon } from "../assets/icons/TierIcon";
+// import { StaffIcon } from "../assets/icons/StaffIcon";
+import GroupsIcon from '@mui/icons-material/Groups';
+// import { TierIcon } from "../assets/icons/TierIcon";
+import AlignVerticalBottomIcon from '@mui/icons-material/AlignVerticalBottom';
 import { PolicyIcon } from "../assets/icons/PolicyIcon";
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -46,12 +51,12 @@ import { useAdminStore } from "../store/adminStore";
 import { useAuthStore } from "../store/useAuthStore";
 const drawerWidth = 300;
 const subNavigation = [
-  { name: "Dashboard", to: "/dashboard", icon: <DashboardIcon /> },
-  { name: "Approvals", to: "/approvals", icon: <VectorIcon /> },
-  { name: "Events", to: "/events", icon: <EventIcon /> },
+  { name: "Dashboard", to: "/dashboard", icon: <GridViewIcon /> },
+  { name: "Approvals", to: "/approvals", icon: <PendingActionsIcon /> },
+  { name: "Events", to: "/events", icon: <EventAvailableIcon /> },
   {
     name: "Sub-admin",
-    icon: <AdminIcon />,
+    icon: <SupervisorAccountIcon />,
     subItems: [
       { name: "Admin Management", to: "/subadmin/admin-management" },
       { name: "Role Management", to: "/subadmin/role-management" },
@@ -59,8 +64,8 @@ const subNavigation = [
     ],
   },
   { name: "Finance", to: "/finance", icon: <FinanceIcon /> },
-  { name: "Staffs", to: "/staffs", icon: <StaffIcon /> },
-  { name: "Tier", to: "/tier", icon: <TierIcon /> },
+  { name: "Staffs", to: "/staffs", icon: <GroupsIcon /> },
+  { name: "Tier", to: "/tier", icon: <AlignVerticalBottomIcon /> },
   { name: "Policy", to: "/policy", icon: <PolicyIcon /> },
 ];
 const SimpleDialog = ({ open, onClose }) => {
@@ -220,16 +225,17 @@ const Layout = (props) => {
                 <ListItemButton
                   onClick={handleClick}
                   sx={{
+                    borderRadius: "10px",
                     color: "#919099",
                     marginLeft: "20px",
                     marginRight: "10px",
                     "&:hover": {
                       color: "#fff",
                       backgroundColor: "#79001D",
-                    },
+                    }, "&:hover .MuiListItemIcon-root": { color: "#fff" },
                   }}
                 >
-                  <ListItemIcon sx={{ minWidth: 24, marginRight: 1 }}>
+                  <ListItemIcon sx={{ minWidth: 24, marginRight: 1 ,color: location.pathname === item.to ? "#fff" : "#919099",}}>
                     {item.icon}
                   </ListItemIcon>
                   <ListItemText
@@ -300,9 +306,10 @@ const Layout = (props) => {
                   backgroundColor:
                     location.pathname === item.to ? "#79001D" : "transparent",
                   "&:hover": { color: "#fff", backgroundColor: "#79001D" },
+                  "&:hover .MuiListItemIcon-root": { color: "#fff" },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: 24, marginRight: 1 }}>
+                <ListItemIcon sx={{ minWidth: 24, marginRight: 1,color: location.pathname === item.to ? "#fff" : "#919099", }}>
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText

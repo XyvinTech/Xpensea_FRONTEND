@@ -217,7 +217,7 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
             paddingBottom={0}
           >
             <Typography variant="h11">Role Management</Typography>
-            <StyledSwitch checked={isChecked} onChange={handleSwitchChange} />
+            <StyledSwitch checked={isChecked} onChange={handleSwitchChange}variant={"primary"} />
           </Box>
           <Divider />
 

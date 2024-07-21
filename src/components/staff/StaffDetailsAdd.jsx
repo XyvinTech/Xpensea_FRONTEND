@@ -147,7 +147,7 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
             <Box flexGrow={1} />
             <h2 style={{ flexGrow: 1 }}>Staff</h2>
             <Box position="absolute" right={0}>
-              <StyledSwitch checked={isChecked} onChange={handleSwitchChange} />
+              <StyledSwitch checked={isChecked} onChange={handleSwitchChange} variant={"primary"}/>
             </Box>
           </Box>
           <form onSubmit={handleSubmit(onSubmit)}>
