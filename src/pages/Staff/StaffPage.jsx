@@ -11,9 +11,10 @@ import { useUserStore } from "../../store/userStore";
 const StaffPage = () => {
   const navigate = useNavigate();
   const { fetchLists, pageNo } = useListStore();
-  const { isUpdate, updateChange, fetchUserById, deleteUsers } = useUserStore();
+  const { fetchUserById, deleteUsers } = useUserStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [isChange, setIsChange] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [status, setStatus] = useState(null);
   const [bulkOpen, setBulkOpen] = useState(false);
@@ -25,7 +26,7 @@ const StaffPage = () => {
   const handleEdit = async (id) => {
     await fetchUserById(id);
     console.log("View item:", isUpdate);
-    updateChange(isUpdate);
+    setIsUpdate(true);
     setStaffOpen(true);
   };
   const handleView = (id) => {
@@ -61,10 +62,12 @@ const StaffPage = () => {
   };
   const handleOpenStaff = () => {
     setStaffOpen(true);
+    setIsUpdate(false);
   };
 
   const handleCloseStaff = () => {
     setStaffOpen(false);
+    setIsUpdate(false);
   };
   const userColumns = [
     { title: "Name", field: "name", sortable: false },
@@ -84,6 +87,7 @@ const StaffPage = () => {
     filter.pageNo = pageNo;
     fetchLists(filter);
   }, [isChange, fetchLists, pageNo, status]);
+  console.log("View item:", isUpdate);
   return (
     <>
       <Stack
@@ -200,6 +204,7 @@ const StaffPage = () => {
         open={staffOpen}
         onClose={handleCloseStaff}
         onChange={handleChange}
+        isUpdate={isUpdate}
       />
     </>
   );

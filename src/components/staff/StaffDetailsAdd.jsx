@@ -10,10 +10,9 @@ import { Controller, useForm } from "react-hook-form";
 import { useDropDownStore } from "../../store/useDropDownStore";
 import { useUserStore } from "../../store/userStore";
 
-const StaffDetailsAdd = ({ open, onClose, onChange }) => {
+const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
   const { tiers, fetchTiers } = useDropDownStore();
-  const { addUsers, updateUsers, user, updateChange, isUpdate } =
-    useUserStore();
+  const { addUsers, updateUsers, user } = useUserStore();
   const [isChecked, setIsChecked] = useState(true);
   const {
     control,
@@ -22,22 +21,17 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: isUpdate ? user?.name : "",
-      email: isUpdate ? user?.email : "",
-      mobile: isUpdate ? user?.mobile : "",
-      employeeId: isUpdate ? user?.employeeId : "",
-      tier: isUpdate ? { value: user?.tier?._id, label: user?.tierName } : "",
-      userType: isUpdate
-        ? { value: user?.userType, label: user?.userType }
-        : "",
-      location: isUpdate
-        ? { value: user?.location, label: user?.location }
-        : "",
+      name: "",
+      email: "",
+      mobile: "",
+      employeeId: "",
+      tier: "",
+      location: "",
     },
   });
 
   useEffect(() => {
-    if (isUpdate) {
+    if (isUpdate && user) {
       reset({
         name: user?.name,
         email: user?.email,
@@ -48,12 +42,22 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
         location: { value: user?.location, label: user?.location },
       });
       setIsChecked(user?.status || false);
+    } else {
+      reset({
+        name: "",
+        email: "",
+        mobile: "",
+        employeeId: "",
+        tier: "",
+        userType: "",
+        location: "",
+      });
+      setIsChecked(true);
     }
   }, [isUpdate, user, reset]);
 
   const handleClear = (event) => {
     event.preventDefault();
-    updateChange(isUpdate);
     reset({
       name: "",
       email: "",
@@ -81,7 +85,6 @@ const StaffDetailsAdd = ({ open, onClose, onChange }) => {
 
     if (isUpdate) {
       await updateUsers(user._id, formData);
-      updateChange(isUpdate);
     } else {
       await addUsers(formData);
     }
