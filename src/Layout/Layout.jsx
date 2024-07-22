@@ -22,18 +22,18 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import { XpenseaIcon } from "../assets/icons/XpenseaIcon";
 import profile from "../assets/images/profile.png";
 import { ExpandMoreIcon } from "../assets/icons/ExpandMoreIcon";
-import GridViewIcon from '@mui/icons-material/GridView';
+import GridViewIcon from "@mui/icons-material/GridView";
 // import { VectorIcon } from "../assets/icons/VectorIcon"
-import PendingActionsIcon from '@mui/icons-material/PendingActions';;
+import PendingActionsIcon from "@mui/icons-material/PendingActions";
 // import { EventIcon } from "../assets/icons/EventIcon";
-import EventAvailableIcon from '@mui/icons-material/EventAvailable';
+import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 // import { AdminIcon } from "../assets/icons/AdminIcon";
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import { FinanceIcon } from "../assets/icons/FinanceIcon";
 // import { StaffIcon } from "../assets/icons/StaffIcon";
-import GroupsIcon from '@mui/icons-material/Groups';
+import GroupsIcon from "@mui/icons-material/Groups";
 // import { TierIcon } from "../assets/icons/TierIcon";
-import AlignVerticalBottomIcon from '@mui/icons-material/AlignVerticalBottom';
+import AlignVerticalBottomIcon from "@mui/icons-material/AlignVerticalBottom";
 import { PolicyIcon } from "../assets/icons/PolicyIcon";
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -232,10 +232,17 @@ const Layout = (props) => {
                     "&:hover": {
                       color: "#fff",
                       backgroundColor: "#79001D",
-                    }, "&:hover .MuiListItemIcon-root": { color: "#fff" },
+                    },
+                    "&:hover .MuiListItemIcon-root": { color: "#fff" },
                   }}
                 >
-                  <ListItemIcon sx={{ minWidth: 24, marginRight: 1 ,color: location.pathname === item.to ? "#fff" : "#919099",}}>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 24,
+                      marginRight: 1,
+                      color: location.pathname === item.to ? "#fff" : "#919099",
+                    }}
+                  >
                     {item.icon}
                   </ListItemIcon>
                   <ListItemText
@@ -309,7 +316,13 @@ const Layout = (props) => {
                   "&:hover .MuiListItemIcon-root": { color: "#fff" },
                 }}
               >
-                <ListItemIcon sx={{ minWidth: 24, marginRight: 1,color: location.pathname === item.to ? "#fff" : "#919099", }}>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 24,
+                    marginRight: 1,
+                    color: location.pathname === item.to ? "#fff" : "#919099",
+                  }}
+                >
                   {item.icon}
                 </ListItemIcon>
                 <ListItemText

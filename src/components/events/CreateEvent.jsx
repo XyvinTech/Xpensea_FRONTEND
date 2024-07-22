@@ -11,10 +11,9 @@ import CalendarInput from "../../ui/CalenderInput";
 import { useEventStore } from "../../store/eventStore";
 import StyledTimeInput from "../../ui/StyledTimeInput";
 
-const CreateEvent = ({ open, onClose, onChange }) => {
+const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
   const { staffs, fetchTiers, fetchStaffs, tiers } = useDropDownStore();
-  const { addEvents, event } = useEventStore();
-  const [location, setLocation] = useState([]);
+  const { addEvents, event, updateEvents } = useEventStore();
   const [role, setRole] = useState([]);
   const [tier, setTier] = useState([]);
   const {
@@ -57,21 +56,33 @@ const CreateEvent = ({ open, onClose, onChange }) => {
   };
 
   const onSubmit = async (data) => {
-    const formData = {
+    const updateData = {
       eventName: data.eventName,
       days: data.days,
       startDate: data.startDate,
       endDate: data.endDate,
-      description: data.description,
-      staffs: Array.isArray(data.staff)
-        ? data.staff.map((staff) => staff.value)
-        : [data.staff.value],
-      location: data.location.value,
-      startTime: data.startTime,
-      endTime: data.endTime,
     };
+    const formData = {
+      eventName: data?.eventName,
+      days: data?.days,
+      startDate: data?.startDate,
+      endDate: data?.endDate,
+      description: data.description,
+      staffs: Array.isArray(data?.staff)
+        ? data?.staff?.map((staff) => staff?.value)
+        : [data?.staff?.value],
+      location: data?.location?.value,
+      startTime: data?.startTime,
+      endTime: data?.endTime,
+    };
+
     console.log("Form data:", formData);
-    await addEvents(formData);
+    if (isUpdate) {
+      await updateEvents(event._id, updateData);
+    } else {
+      await addEvents(formData);
+    }
+
     onChange();
     onClose();
     reset();
@@ -82,15 +93,23 @@ const CreateEvent = ({ open, onClose, onChange }) => {
     { value: "option3", label: "Option 3" },
   ];
   useEffect(() => {
-    reset({
-      eventName: event?.eventName,
-      // email: admins?.email,
-      // mobile: admins?.mobile,
-      // designation: { value: admins?.designation, label: admins?.designation },
-      // role: { value: admins?.role, label: admins?.role },
-    });
+    if (isUpdate && event) {
+      reset({
+        eventName: event?.eventName,
+        days: event?.days,
+        startDate: event?.startDate,
+        endDate: event?.endDate,
+      });
+    } else {
+      reset({
+        eventName: "",
+        days: "",
+        startDate: "",
+        endDate: "",
+      });
+    }
     // setIsChecked(admins?.status || false);
-  }, [event, reset]);
+  }, [isUpdate, event, reset]);
   console.log("Form data location:", tier);
   console.log("Form data location:", role);
   return (
@@ -132,113 +151,117 @@ const CreateEvent = ({ open, onClose, onChange }) => {
                     </>
                   )}
                 />
-              </Grid>
-              <Grid item md="6">
-                <Controller
-                  name="location"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: "Location is required" }}
-                  render={({ field }) => (
-                    <>
-                      <StyledSelectField
-                        {...field}
-                        placeholder={"Choose Location"}
-                        options={loc}
-                        sx={{ flex: 1 }}
-                      />{" "}
-                      {errors.location && (
-                        <span style={{ color: "red" }}>
-                          {errors.location.message}
-                        </span>
-                      )}{" "}
-                    </>
-                  )}
-                />
-              </Grid>
-              <Grid item md="6">
-                <Controller
-                  name="tier"
-                  control={control}
-                  rules={{ required: "Tier is required" }}
-                  render={({ field }) => (
-                    <>
-                      <StyledSelectField
-                        {...field}
-                        placeholder="Tier"
-                        isMulti
-                        options={tierOptions}
-                        onChange={(value) => {
-                          const tierValues = value.map((v) => v.value);
-                          setTier(tierValues);
-                          field.onChange(value);
-                        }}
-                        sx={{ flex: 1 }}
-                      />{" "}
-                      {errors.tier && (
-                        <span style={{ color: "red" }}>
-                          {errors.tier.message}
-                        </span>
-                      )}{" "}
-                    </>
-                  )}
-                />
-              </Grid>
-              <Grid item md="6">
-                <Controller
-                  name="role"
-                  control={control}
-                  rules={{ required: "Role is required" }}
-                  render={({ field }) => (
-                    <>
-                      <StyledSelectField
-                        {...field}
-                        placeholder="Role"
-                        isMulti
-                        options={roleOptions}
-                        onChange={(value) => {
-                          const roleValues = value.map((v) => v.value);
-                          setRole(roleValues);
-                          field.onChange(value);
-                        }}
-                        sx={{ flex: 1 }}
-                      />
-                      {errors.role && (
-                        <span style={{ color: "red" }}>
-                          {errors.role.message}
-                        </span>
+              </Grid>{" "}
+              {!isUpdate && (
+                <>
+                  <Grid item md="6">
+                    <Controller
+                      name="location"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: "Location is required" }}
+                      render={({ field }) => (
+                        <>
+                          <StyledSelectField
+                            {...field}
+                            placeholder={"Choose Location"}
+                            options={loc}
+                            sx={{ flex: 1 }}
+                          />{" "}
+                          {errors.location && (
+                            <span style={{ color: "red" }}>
+                              {errors.location.message}
+                            </span>
+                          )}{" "}
+                        </>
                       )}
-                    </>
-                  )}
-                />
-              </Grid>
-              <Grid item md="6">
-                <Controller
-                  name="staff"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: "Staff is required" }}
-                  render={({ field }) => (
-                    <>
-                      <StyledSelectField
-                        {...field}
-                        isMulti={true}
-                        placeholder={"Choose Staff"}
-                        options={staffs.map((staff) => ({
-                          value: staff?._id,
-                          label: staff?.name,
-                        }))}
-                        sx={{ flex: 1 }}
-                      />{" "}
-                      {errors.staff && (
-                        <span style={{ color: "red" }}>
-                          {errors.staff.message}
-                        </span>
-                      )}{" "}
-                    </>
-                  )}
-                />{" "}
-              </Grid>
+                    />
+                  </Grid>
+                  <Grid item md="6">
+                    <Controller
+                      name="tier"
+                      control={control}
+                      rules={{ required: "Tier is required" }}
+                      render={({ field }) => (
+                        <>
+                          <StyledSelectField
+                            {...field}
+                            placeholder="Tier"
+                            isMulti
+                            options={tierOptions}
+                            onChange={(value) => {
+                              const tierValues = value.map((v) => v.value);
+                              setTier(tierValues);
+                              field.onChange(value);
+                            }}
+                            sx={{ flex: 1 }}
+                          />{" "}
+                          {errors.tier && (
+                            <span style={{ color: "red" }}>
+                              {errors.tier.message}
+                            </span>
+                          )}{" "}
+                        </>
+                      )}
+                    />
+                  </Grid>
+                  <Grid item md="6">
+                    <Controller
+                      name="role"
+                      control={control}
+                      rules={{ required: "Role is required" }}
+                      render={({ field }) => (
+                        <>
+                          <StyledSelectField
+                            {...field}
+                            placeholder="Role"
+                            isMulti
+                            options={roleOptions}
+                            onChange={(value) => {
+                              const roleValues = value.map((v) => v.value);
+                              setRole(roleValues);
+                              field.onChange(value);
+                            }}
+                            sx={{ flex: 1 }}
+                          />
+                          {errors.role && (
+                            <span style={{ color: "red" }}>
+                              {errors.role.message}
+                            </span>
+                          )}
+                        </>
+                      )}
+                    />
+                  </Grid>
+                  <Grid item md="6">
+                    <Controller
+                      name="staff"
+                      control={control}
+                      defaultValue=""
+                      rules={{ required: "Staff is required" }}
+                      render={({ field }) => (
+                        <>
+                          <StyledSelectField
+                            {...field}
+                            isMulti={true}
+                            placeholder={"Choose Staff"}
+                            options={staffs.map((staff) => ({
+                              value: staff?._id,
+                              label: staff?.name,
+                            }))}
+                            sx={{ flex: 1 }}
+                          />{" "}
+                          {errors.staff && (
+                            <span style={{ color: "red" }}>
+                              {errors.staff.message}
+                            </span>
+                          )}{" "}
+                        </>
+                      )}
+                    />{" "}
+                  </Grid>{" "}
+                </>
+              )}
               <Grid item md="6">
                 <Controller
                   name="days"
@@ -304,71 +327,77 @@ const CreateEvent = ({ open, onClose, onChange }) => {
                     </>
                   )}
                 />
-              </Grid>
-              <Grid item md="6">
-                <Controller
-                  name="startTime"
-                  control={control}
-                  rules={{ required: "Start Time is required" }}
-                  render={({ field }) => (
-                    <>
-                      <StyledTimeInput
-                        {...field}
-                        placeholder={"Choose Start Time"}
-                        sx={{ flex: 1 }}
-                      />
-                      {errors.startTime && (
-                        <span style={{ color: "red" }}>
-                          {errors.startTime.message}
-                        </span>
+              </Grid>{" "}
+              {!isUpdate && (
+                <>
+                  <Grid item md="6">
+                    <Controller
+                      name="startTime"
+                      control={control}
+                      rules={{ required: "Start Time is required" }}
+                      render={({ field }) => (
+                        <>
+                          <StyledTimeInput
+                            {...field}
+                            placeholder={"Choose Start Time"}
+                            sx={{ flex: 1 }}
+                          />
+                          {errors.startTime && (
+                            <span style={{ color: "red" }}>
+                              {errors.startTime.message}
+                            </span>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                />
-              </Grid>
-              <Grid item md="6">
-                <Controller
-                  name="endTime"
-                  control={control}
-                  rules={{ required: "End Time is required" }}
-                  render={({ field }) => (
-                    <>
-                      <StyledTimeInput
-                        {...field}
-                        placeholder={"Choose End Time"}
-                        // sx={{ flex: 1 }}
-                      />{" "}
-                      {errors.endTime && (
-                        <span style={{ color: "red" }}>
-                          {errors.endTime.message}
-                        </span>
+                    />
+                  </Grid>
+                  <Grid item md="6">
+                    <Controller
+                      name="endTime"
+                      control={control}
+                      rules={{ required: "End Time is required" }}
+                      render={({ field }) => (
+                        <>
+                          <StyledTimeInput
+                            {...field}
+                            placeholder={"Choose End Time"}
+                            // sx={{ flex: 1 }}
+                          />{" "}
+                          {errors.endTime && (
+                            <span style={{ color: "red" }}>
+                              {errors.endTime.message}
+                            </span>
+                          )}
+                        </>
                       )}
-                    </>
-                  )}
-                />
-              </Grid>
-              <Grid item md="12">
-                <Controller
-                  name="description"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: "Description is required" }}
-                  render={({ field }) => (
-                    <>
-                      <StyledTextArea
-                        {...field}
-                        placeholder="Description"
-                        sx={{ flex: 1 }}
-                      />{" "}
-                      {errors.description && (
-                        <span style={{ color: "red" }}>
-                          {errors.description.message}
-                        </span>
-                      )}
-                    </>
-                  )}
-                />
-              </Grid>
+                    />
+                  </Grid>
+                </>
+              )}{" "}
+              {!isUpdate && (
+                <Grid item md="12">
+                  <Controller
+                    name="description"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: "Description is required" }}
+                    render={({ field }) => (
+                      <>
+                        <StyledTextArea
+                          {...field}
+                          placeholder="Description"
+                          sx={{ flex: 1 }}
+                        />{" "}
+                        {errors.description && (
+                          <span style={{ color: "red" }}>
+                            {errors.description.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  />
+                </Grid>
+              )}
               <Grid item md={6} sm={6}></Grid>
               <Grid item md={6} sm={6}>
                 <Stack direction="row" spacing={2} justifyContent="flex-end">

@@ -12,8 +12,9 @@ const EventsPage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [status, setStatus] = useState(null);
-  const { deleteEvents } = useEventStore();
+  const { deleteEvents, fetchEventById } = useEventStore();
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     console.log("Selected items:", newSelectedIds);
@@ -25,6 +26,12 @@ const EventsPage = () => {
       setIsChange(!isChange);
       setSelectedRows([]);
     }
+  };
+  const handleEdit = async (id) => {
+    await fetchEventById(id);
+    console.log("Edit item:", id);
+    setIsUpdate(true);
+    setEventOpen(true);
   };
   const handleRowDelete = async (id) => {
     await deleteEvents(id);
@@ -44,10 +51,12 @@ const EventsPage = () => {
   };
   const handleOpenEvent = () => {
     setEventOpen(true);
+    setIsUpdate(false);
   };
 
   const handleCloseEvent = () => {
     setEventOpen(false);
+    setIsUpdate(false);
   };
   const handleChange = () => {
     setIsChange(!isChange);
@@ -176,6 +185,8 @@ const EventsPage = () => {
           onSelectionChange={handleSelectionChange}
           onSort={handleSort}
           onDelete={handleDelete}
+          onEdit={handleEdit}
+          showEdit
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
@@ -183,6 +194,7 @@ const EventsPage = () => {
         open={eventOpen}
         onClose={handleCloseEvent}
         onChange={handleChange}
+        isUpdate={isUpdate}
       />
     </>
   );
