@@ -40,7 +40,9 @@ const LoginPage = () => {
   };
   const isAuth = localStorage.getItem("token");
   useEffect(() => {
-    return isAuth && navigate("/dashboard");
+    if (isAuth) {
+    navigate("/dashboard");
+  }
   }, [isAuth]);
   return (
     <div

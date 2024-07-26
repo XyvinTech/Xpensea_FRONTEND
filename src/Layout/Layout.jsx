@@ -76,7 +76,9 @@ const SimpleDialog = ({ open, onClose }) => {
     getAdmin();
   }, [isChange]);
   const handleLogout = () => {
-    logoutAuth(navigate);
+    localStorage.removeItem("token");
+
+    navigate("/");
   };
   return (
     <Dialog
