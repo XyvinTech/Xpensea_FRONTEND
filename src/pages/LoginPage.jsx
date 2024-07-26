@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
-import { Box, Divider, Paper, Typography, Stack } from '@mui/material';
-import { XpenseaIcon } from '../assets/icons/XpenseaIcon';
-import Loginbackground from '../assets/images/loginbackground.png';
-import StyledInput from '../ui/StyledInput';
-import StyledButton from '../ui/StyledButton';
-import { EmailIcon } from '../assets/icons/EmailIcon';
-import { LockIcon } from '../assets/icons/LockIcon';
-import { PasswordIcon } from '../assets/icons/PasswordIcon';
-import { Link, useNavigate } from 'react-router-dom';
-import { Controller, useForm } from 'react-hook-form';
-import { getLogin } from '../api/adminapi';
-import ForgotPassword from '../components/login/ForgotPassword';
-import ChangePassword from '../components/login/ChangePassword';
-import PasswordSuccess from '../components/login/PasswordSuccess';
+import React, { useEffect, useState } from "react";
+import { Box, Divider, Paper, Typography, Stack } from "@mui/material";
+import { XpenseaIcon } from "../assets/icons/XpenseaIcon";
+import Loginbackground from "../assets/images/loginbackground.png";
+import StyledInput from "../ui/StyledInput";
+import StyledButton from "../ui/StyledButton";
+import { EmailIcon } from "../assets/icons/EmailIcon";
+import { LockIcon } from "../assets/icons/LockIcon";
+import { PasswordIcon } from "../assets/icons/PasswordIcon";
+import { Link, useNavigate } from "react-router-dom";
+import { Controller, useForm } from "react-hook-form";
+import { getLogin } from "../api/adminapi";
+import ForgotPassword from "../components/login/ForgotPassword";
+import ChangePassword from "../components/login/ChangePassword";
+import PasswordSuccess from "../components/login/PasswordSuccess";
 
 const LoginPage = () => {
   const [currentPaper, setCurrentPaper] = useState(1);
@@ -33,55 +33,49 @@ const LoginPage = () => {
       const user = await getLogin(data);
       // console.log(user.data);
       localStorage.setItem("token", user.data);
-      navigate("/dashboard")
+      navigate("/dashboard");
     } catch (error) {
       console.error("error", error);
     }
-    // Handle different submissions based on currentPaper state
-    // if (currentPaper === 1) {
-    //   // Handle sign-in
-    // } else if (currentPaper === 2) {
-    //   // Handle forgot password
-    // } else if (currentPaper === 3) {
-    //   // Handle change password
-    //   setCurrentPaper(4);
-    // }
   };
-
+  const isAuth = localStorage.getItem("token");
+  useEffect(() => {
+    return isAuth && navigate("/dashboard");
+  }, [isAuth]);
   return (
     <div
       className="Login"
       style={{
         backgroundImage: `url(${Loginbackground})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '16px',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "16px",
       }}
     >
       {currentPaper === 1 && (
         <Paper
           sx={{
-            width: { xs: '100%', sm: '80%', md: '560px' },
-            height: { xs: 'auto', md: '631.43px' },
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            paddingTop: '30px',
-            borderRadius: '8.75px',
-            margin: 'auto',
+            width: { xs: "100%", sm: "80%", md: "560px" },
+            height: { xs: "auto", md: "631.43px" },
+            textAlign: "center",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            paddingTop: "30px",
+            borderRadius: "8.75px",
+            margin: "auto",
           }}
         >
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: '30px',
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginBottom: "30px",
             }}
           >
             <XpenseaIcon />
@@ -89,22 +83,22 @@ const LoginPage = () => {
               Xpensea
             </Typography>
           </Box>
-          <Divider sx={{ width: '100%', marginBottom: '3em' }} />
+          <Divider sx={{ width: "100%", marginBottom: "3em" }} />
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-              width: '85%',
-              marginTop: '10px',
-              marginBottom: '3em',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              width: "85%",
+              marginTop: "10px",
+              marginBottom: "3em",
             }}
           >
-            <Stack spacing={2} sx={{ width: '100%', textAlign: 'left' }}>
-              <Typography variant="h2" sx={{ marginBottom: '10px' }}>
+            <Stack spacing={2} sx={{ width: "100%", textAlign: "left" }}>
+              <Typography variant="h2" sx={{ marginBottom: "10px" }}>
                 Sign In
               </Typography>
               <Typography variant="body1">
@@ -121,7 +115,7 @@ const LoginPage = () => {
                     startIcon={<EmailIcon />}
                   />
                 )}
-                rules={{ required: 'Email is required' }}
+                rules={{ required: "Email is required" }}
               />
               {errors.email && (
                 <span className="text-red-500">{errors.email.message}</span>
@@ -134,13 +128,13 @@ const LoginPage = () => {
                 render={({ field }) => (
                   <StyledInput
                     {...field}
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     startIcon={<LockIcon />}
                     endIcon={<PasswordIcon onClick={handleClickShowPassword} />}
                   />
                 )}
-                rules={{ required: 'Password is required' }}
+                rules={{ required: "Password is required" }}
               />
               {errors.password && (
                 <span className="text-red-500">{errors.password.message}</span>
@@ -148,9 +142,9 @@ const LoginPage = () => {
               <StyledButton type="submit" variant="primary" name="Sign in" />
               <Link
                 style={{
-                  color: '#2D9CDB',
-                  textDecoration: 'none',
-                  cursor: 'pointer',
+                  color: "#2D9CDB",
+                  textDecoration: "none",
+                  cursor: "pointer",
                 }}
                 onClick={() => setCurrentPaper(2)}
               >

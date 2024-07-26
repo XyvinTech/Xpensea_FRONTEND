@@ -71,7 +71,10 @@ const AddNewRole = ({ open, onClose, onChange, isUpdate = false }) => {
     onClose();
   };
 
-  const designation = [{ value: "Administrator", label: "Administrator" }];
+  const designation = [{ value: "Administrator", label: "Administrator" },
+    { value: "Tester", label: "Tester" },
+    { value: "Financer", label: "Financer" }
+  ];
 
   useEffect(() => {
     fetchRoles();
