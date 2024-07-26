@@ -169,7 +169,7 @@ const StaffPage = () => {
             }}
             onClick={handleOpenBulk}
           >
-            Upoload Bulk
+            Upload Bulk
           </Button>
           <Button
             style={{
