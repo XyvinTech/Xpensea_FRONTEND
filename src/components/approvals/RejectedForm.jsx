@@ -11,7 +11,8 @@ const RejectedForm = ({ open, onClose, onReject }) => {
     onReject(reason);
   };
 
-  const handleClear = () => {
+  const handleClear = (event) => {
+    event.preventDefault();
     onClose();
   };
 
@@ -26,7 +27,7 @@ const RejectedForm = ({ open, onClose, onReject }) => {
           padding={3}
           paddingBottom={0}
         >
-          <Typography onClick={handleClear} style={{ cursor: "pointer" }}>
+          <Typography onClick={(event) => handleClear(event)} style={{ cursor: "pointer" }}>
             <CrossIcon />
           </Typography>
         </Box>

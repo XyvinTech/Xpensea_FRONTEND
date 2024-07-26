@@ -1,33 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Box, Grid, Stack, Typography } from "@mui/material";
-import StaffDetails from "../../components/approvals/StaffDetails";
-import StyledButton from "../../ui/StyledButton";
-import { GtIcon } from "../../assets/icons/GtIcon";
-import Details from "../../components/approvals/Details";
-import Description from "../../components/approvals/Description";
-import Expenses from "../../components/approvals/Expenses";
-import LiveLocation from "../../components/approvals/LiveLocation";
-import RejectedForm from "../../components/approvals/RejectedForm";
+import StaffDetails from "../components/approvals/StaffDetails";
+import StyledButton from "../ui/StyledButton";
+import { GtIcon } from "../assets/icons/GtIcon";
+import Details from "../components/approvals/Details";
+import Description from "../components/approvals/Description";
+import Expenses from "../components/approvals/Expenses";
+import LiveLocation from "../components/approvals/LiveLocation";
+import RejectedForm from "../components/approvals/RejectedForm";
 import { useParams } from "react-router-dom";
-import { useApprovalStore } from "../../store/approvalstore";
-import ApproveComponent from "../../components/ApproveComponent";
+import ApproveComponent from "../components/ApproveComponent";
+import { useApprovalStore } from "../store/approvalstore";
 
-const ApprovalPage = () => {
+const FinanceSinglePage = () => {
   const [rejectOpen, setRejectOpen] = useState(false);
   const [approveOpen, setApproveOpen] = useState(false);
   const [authenticExpenses, setAuthenticExpenses] = useState([]);
   const [rejectedExpenses, setRejectedExpenses] = useState([]);
   const [isChange, setIsChange] = useState(false);
-  const { approval, fetchApprovalById, updateApprovals } = useApprovalStore();
+  const { finance, fetchFinanceById, updateFinances } = useApprovalStore();
   const { id } = useParams();
-
-  const handleOpenReject = () => {
-    setRejectOpen(true);
-  };
-
-  const handleCloseReject = () => {
-    setRejectOpen(false);
-  };
 
   const handleOpenApprove = () => {
     setApproveOpen(true);
@@ -38,7 +30,7 @@ const ApprovalPage = () => {
   };
 
   const handleApprove = async () => {
-    await updateApprovals(id, "approve", { expenses: authenticExpenses });
+    await updateFinances(id, { descriptionFinance: "hhfwkjwd" });
     setIsChange(!isChange);
     handleCloseApprove();
   };
@@ -46,16 +38,12 @@ const ApprovalPage = () => {
   //   console.log("Rejection Description:", description);
   //   setRejectOpen(false);
   // };
-  const handleReject = async (reason) => {
-    await updateApprovals(id, "reject", { expenses: rejectedExpenses, reason });
-    setIsChange(!isChange);
-    setRejectOpen(false);
-  };
+
   useEffect(() => {
     if (id) {
-      fetchApprovalById(id);
+      fetchFinanceById(id);
     }
-  }, [id, fetchApprovalById, isChange]);
+  }, [id, fetchFinanceById, isChange]);
   return (
     <>
       <Grid container spacing={2}>
@@ -69,7 +57,7 @@ const ApprovalPage = () => {
           <Stack direction={"row"} justifyContent={"space-between"} padding={2}>
             <Box display="flex" alignItems="center">
               <Typography variant="h11" marginRight={1}>
-                Approvals
+                Finance
               </Typography>
               <GtIcon />
               <Typography variant="h11" marginLeft={1}>
@@ -82,40 +70,31 @@ const ApprovalPage = () => {
               width="30%"
               gap={2}
             >
-              {approval?.status === "approved" ? (
-                <StyledButton variant="green" name="Approved" />
-              ) : approval?.status === "rejected" ? (
-                <StyledButton variant="danger" name="Rejected" />
-              ) : (
-                <>
-                  <StyledButton
-                    variant="green"
-                    name="Approve"
-                    onClick={handleOpenApprove}
-                  />
-                  <StyledButton
-                    variant="danger"
-                    name="Reject"
-                    onClick={handleOpenReject}
-                  />
-                </>
-              )}
+              <>{finance?.status === "reimbursed" ? (
+                <StyledButton variant="green" name="Reimbursed" />
+              ): (
+                <StyledButton
+                  variant="green"
+                  name="Mark as reimburse "
+                  onClick={handleOpenApprove}
+                /> )}
+              </>
             </Box>
           </Stack>
         </Grid>
         <Grid item xs={12} md={6}>
-          <StaffDetails data={approval} />
+          <StaffDetails data={finance} />
         </Grid>
         <Grid item xs={12} md={6}></Grid>
         <Grid item xs={12} md={6}>
-          <Details data={approval} />
+          <Details data={finance} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <Description data={approval?.description} />
+          <Description data={finance?.description} />
         </Grid>
         <Grid item xs={12} md={12}>
           <Expenses
-            data={approval?.expenses}
+            data={finance?.expenses}
             authenticExpenses={authenticExpenses}
             setAuthenticExpenses={setAuthenticExpenses}
             rejectedExpenses={rejectedExpenses}
@@ -125,11 +104,6 @@ const ApprovalPage = () => {
         <Grid item xs={12} md={6}>
           <LiveLocation />
         </Grid>
-        <RejectedForm
-          open={rejectOpen}
-          onClose={handleCloseReject}
-          onReject={handleReject}
-        />
         <ApproveComponent
           open={approveOpen}
           onClose={handleCloseApprove}
@@ -140,4 +114,4 @@ const ApprovalPage = () => {
   );
 };
 
-export default ApprovalPage;
+export default FinanceSinglePage;

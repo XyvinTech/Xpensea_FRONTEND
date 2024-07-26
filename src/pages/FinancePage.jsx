@@ -18,7 +18,7 @@ const FinancePage = () => {
   };
   const handleView = (id) => {
     console.log("View item:", id);
-    navigate(`/approvals/view`);
+    navigate(`/finance/${id}`);
   };
 
   const handleDelete = (id) => {

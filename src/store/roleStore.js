@@ -10,31 +10,21 @@ const useRoleStore = create((set) => ({
     set({ isUpdate: !isUpdate });
   },
   addRoles: async (roleData) => {
-    try {
-      const newRole = await addRole(roleData);
-      set((state) => ({ roles: [...state.roles, newRole] }));
-      toast.success(`Role added successfully`);
-    } catch (error) {
-      toast.error(error);
-    }
+    const newRole = await addRole(roleData);
+    set((state) => ({ roles: [...state.roles, newRole] }));
   },
   fetchRoleById: async (roleId) => {
     const role = await getRole(roleId);
     set({ role: role.data });
   },
   updateRoles: async (roleId, newData) => {
-    try {
-      const updatedRole = await updateRole(roleId, newData);
-      set((state) => ({
-        roles: state.roles.map((role) =>
-          role._id === roleId ? { ...role, ...updatedRole } : role
-        ),
-        role: updatedRole,
-      }));
-      toast.success(`Role updated successfully`);
-    } catch (error) {
-      toast.error(error);
-    }
+    const updatedRole = await updateRole(roleId, newData);
+    set((state) => ({
+      roles: state.roles.map((role) =>
+        role._id === roleId ? { ...role, ...updatedRole } : role
+      ),
+      role: updatedRole,
+    }));
   },
   deleteRoles: async (roleId) => {
     await deleteRole(roleId);

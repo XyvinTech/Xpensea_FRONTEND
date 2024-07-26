@@ -18,6 +18,7 @@ import ApprovalPage from "../pages/Approval/ApprovelPage";
 import StaffView from "../pages/Staff/StaffView";
 
 import { PrivateRoute } from "./PrivateRouter";
+import FinanceSinglePage from "../pages/FinanaceSinglePage";
 
 const router = createBrowserRouter([
   {
@@ -118,6 +119,17 @@ const router = createBrowserRouter([
       <PrivateRoute>
         <Layout>
           <FinancePage />
+        </Layout>{" "}
+      </PrivateRoute>
+    ),
+  },
+
+  {
+    path: "/finance/:id",
+    element: (
+      <PrivateRoute>
+        <Layout>
+          <FinanceSinglePage />
         </Layout>{" "}
       </PrivateRoute>
     ),

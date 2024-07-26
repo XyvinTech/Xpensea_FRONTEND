@@ -88,8 +88,9 @@ const Expenses = ({
                   </Stack>
                 </Stack>
                 <Typography variant="h4">
-                  {authenticExpenses?.some((id) => id === item._id) ||
-                  item?.status === "accepted" ? (
+                 
+                  {item?.status === "approved" ||
+                  authenticExpenses?.some((id) => id === item._id) ? (
                     <span
                       style={{
                         backgroundColor: "rgba(209, 250, 229, 0.5)",

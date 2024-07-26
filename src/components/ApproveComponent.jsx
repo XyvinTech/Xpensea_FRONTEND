@@ -6,7 +6,8 @@ const ApproveComponent = ({ open, onClose, onApprove }) => {
     onApprove(); 
   };
 
-  const handleClear = () => {
+  const handleClear = (event) => {
+    event.preventDefault();
     onClose();
   };
 
@@ -28,7 +29,7 @@ const ApproveComponent = ({ open, onClose, onApprove }) => {
         <Divider />
       </DialogContent>
       <Stack direction="row" justifyContent="center" alignItems="center" spacing={2}>
-        <Box onClick={handleClear} p={2} sx={{ cursor: "pointer" }}>
+        <Box  onClick={(event) => handleClear(event)} p={2} sx={{ cursor: "pointer" }}>
           <Typography variant="button" fontSize={"23px"} textTransform={"none"} color={"#027AFF"} fontWeight={600}>No</Typography>
         </Box>
         <Divider orientation="vertical" flexItem />

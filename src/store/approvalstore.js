@@ -2,12 +2,14 @@ import { create } from "zustand";
 import {
   deleteApproval,
   getApproval,
+  getFinance,
   updateApproval,
+  updateFinance,
 } from "../api/approvalsapi";
-import { toast } from "react-toastify";
 const useApprovalStore = create((set) => ({
   approvals: [],
   approval: null,
+  finance: [],
   fetchApprovalById: async (approvalId) => {
     const approval = await getApproval(approvalId);
     set({ approval: approval.data });
@@ -16,16 +18,22 @@ const useApprovalStore = create((set) => ({
     await deleteApproval(approvalId);
   },
   updateApprovals: async (approvalId, action, data) => {
-    try {
-      const updatedApproval = await updateApproval(approvalId, action, data);
-      set((state) => ({
-        ...state,
-        approval: updatedApproval.data,
-      }));
-      toast.success(`Approval ${action}d successfully`);
-    } catch (error) {
-      toast.error(`Make all expenses mark as authentic`);
-    }
+    const updatedApproval = await updateApproval(approvalId, action, data);
+    set((state) => ({
+      ...state,
+      approval: updatedApproval.data,
+    }));
+  },
+  fetchFinanceById: async (id) => {
+    const financeid = await getFinance(id);
+    set({ finance: financeid.data });
+  },
+  updateFinances: async (id, data) => {
+    const updated = await updateFinance(id, data);
+    set((state) => ({
+      ...state,
+      finance: updated.data,
+    }));
   },
 }));
 
