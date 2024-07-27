@@ -112,9 +112,9 @@ const EventsPage = () => {
               padding: "10px",
               color: status === "inprogress" ? "#fff" : "#4D515A",
             }}
-            onClick={() => setStatus("inprogress")}
+            onClick={() => setStatus("progress")}
           >
-            Inprogress
+            progress
           </Button>
           <Button
             style={{
