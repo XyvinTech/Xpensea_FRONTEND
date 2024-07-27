@@ -106,11 +106,11 @@ const EventsPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === "inprogress" ? "#79001D" : "#fff",
+              backgroundColor: status === "progress" ? "#79001D" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
-              color: status === "inprogress" ? "#fff" : "#4D515A",
+              color: status === "progress" ? "#fff" : "#4D515A",
             }}
             onClick={() => setStatus("progress")}
           >
