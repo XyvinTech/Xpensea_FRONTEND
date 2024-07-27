@@ -16,18 +16,18 @@ const PolicyPage = () => {
   const [policyOpen, setPolicyOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
-    console.log("Selected items:", newSelectedIds);
+    // console.log("Selected items:", newSelectedIds);
   };
   const handleShare = (id) => {
-    console.log("View item:", id);
+    // console.log("View item:", id);
     setShareOpen(true);
   };
 
   const handleDelete = (id) => {
-    console.log("Delete item :", id);
+    // console.log("Delete item :", id);
   };
   const handleSort = (field) => {
-    console.log(`Sorting by ${field}`);
+    // console.log(`Sorting by ${field}`);
   };
 
   const handleOpenFilter = () => {

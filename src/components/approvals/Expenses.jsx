@@ -14,8 +14,10 @@ const Expenses = ({
   const [selectedExpense, setSelectedExpense] = useState(null);
 
   const handleOpenDetail = (item) => {
-    setSelectedExpense(item);
-    setDetailOpen(true);
+    if (item?.status !== "approved") {
+      setSelectedExpense(item);
+      setDetailOpen(true);
+    }
   };
 
   const handleCloseDetail = () => {
@@ -39,11 +41,11 @@ const Expenses = ({
   };
 
   useEffect(() => {
-    console.log("Authenticated Expenses:", authenticExpenses);
+    // console.log("Authenticated Expenses:", authenticExpenses);
   }, [authenticExpenses]);
 
   useEffect(() => {
-    console.log("Rejected Expenses:", rejectedExpenses);
+    // console.log("Rejected Expenses:", rejectedExpenses);
   }, [rejectedExpenses]);
 
   return (
@@ -88,7 +90,6 @@ const Expenses = ({
                   </Stack>
                 </Stack>
                 <Typography variant="h4">
-                 
                   {item?.status === "approved" ||
                   authenticExpenses?.some((id) => id === item._id) ? (
                     <span

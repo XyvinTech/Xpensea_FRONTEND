@@ -17,7 +17,7 @@ const EventsPage = () => {
   const { deleteEvents, fetchEventById } = useEventStore();
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
-    console.log("Selected items:", newSelectedIds);
+    // console.log("Selected items:", newSelectedIds);
   };
 
   const handleDelete = async () => {
@@ -29,7 +29,7 @@ const EventsPage = () => {
   };
   const handleEdit = async (id) => {
     await fetchEventById(id);
-    console.log("Edit item:", id);
+   
     setIsUpdate(true);
     setEventOpen(true);
   };
@@ -39,7 +39,7 @@ const EventsPage = () => {
     // setSelectedRows((prevSelectedRows) => prevSelectedRows.filter(rowId => rowId !== id));
   };
   const handleSort = (field) => {
-    console.log(`Sorting by ${field}`);
+    // console.log(`Sorting by ${field}`);
   };
 
   const handleOpenFilter = () => {

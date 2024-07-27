@@ -123,7 +123,7 @@ const AddExpense = ({ open, onClose, onChange, isUpdate = false }) => {
     });
     setCategories(updatedCategories);
   };
-console.log('updatedCategor',isUpdate)
+// console.log('updatedCategor',isUpdate)
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -256,7 +256,7 @@ console.log('updatedCategor',isUpdate)
                   render={({ field }) => (
                     <StyledSelectField
                       {...field}
-                      placeholder={"Choose Title"}
+                      placeholder={"Choose Category"}
                       options={Title}
                       sx={{ flex: 1 }}
                     />

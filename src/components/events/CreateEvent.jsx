@@ -10,6 +10,7 @@ import { useDropDownStore } from "../../store/useDropDownStore";
 import CalendarInput from "../../ui/CalenderInput";
 import { useEventStore } from "../../store/eventStore";
 import StyledTimeInput from "../../ui/StyledTimeInput";
+import dayjs from "dayjs";
 
 const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
   const { staffs, fetchTiers, fetchStaffs, tiers } = useDropDownStore();
@@ -59,8 +60,10 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
     const updateData = {
       eventName: data.eventName,
       days: data.days,
-      startDate: data.startDate,
+      // startDate: data.startDate,
       endDate: data.endDate,
+      startTime: data?.startTime,
+      endTime: data?.endTime,
     };
     const formData = {
       eventName: data?.eventName,
@@ -76,7 +79,7 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
       endTime: data?.endTime,
     };
 
-    console.log("Form data:", formData);
+    // console.log("Form data:", formData);
     if (isUpdate) {
       await updateEvents(event._id, updateData);
     } else {
@@ -97,21 +100,24 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
       reset({
         eventName: event?.eventName,
         days: event?.days,
-        startDate: event?.startDate,
+        // startDate: event?.startDate,
+        startTime: dayjs(event?.startTime),
         endDate: event?.endDate,
+        endTime: dayjs(event?.endTime),
       });
     } else {
       reset({
         eventName: "",
         days: "",
-        startDate: "",
+        // startDate: "",
         endDate: "",
+        startTime: dayjs(),
+        endTime: dayjs(),
       });
     }
     // setIsChecked(admins?.status || false);
   }, [isUpdate, event, reset]);
-  console.log("Form data location:", tier);
-  console.log("Form data location:", role);
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <Box padding={3}>
@@ -283,29 +289,31 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
                     </>
                   )}
                 />
-              </Grid>
-              <Grid item md="6">
-                <Controller
-                  name="startDate"
-                  control={control}
-                  rules={{ required: "Start Date is required" }}
-                  render={({ field }) => (
-                    <>
-                      <CalendarInput
-                        {...field}
-                        placeholder={"Start Date"}
-                        dateValue={field.value}
-                        onDateChange={field.onChange}
-                      />{" "}
-                      {errors.startDate && (
-                        <span style={{ color: "red" }}>
-                          {errors.startDate.message}
-                        </span>
-                      )}
-                    </>
-                  )}
-                />
-              </Grid>
+              </Grid>{" "}
+              {!isUpdate && (
+                <Grid item md="6">
+                  <Controller
+                    name="startDate"
+                    control={control}
+                    rules={{ required: "Start Date is required" }}
+                    render={({ field }) => (
+                      <>
+                        <CalendarInput
+                          {...field}
+                          placeholder={"Start Date"}
+                          dateValue={field.value}
+                          onDateChange={field.onChange}
+                        />{" "}
+                        {errors.startDate && (
+                          <span style={{ color: "red" }}>
+                            {errors.startDate.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  />
+                </Grid>
+              )}
               <Grid item md="6">
                 <Controller
                   name="endDate"
@@ -328,52 +336,53 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
                   )}
                 />
               </Grid>{" "}
-              {!isUpdate && (
-                <>
-                  <Grid item md="6">
-                    <Controller
-                      name="startTime"
-                      control={control}
-                      rules={{ required: "Start Time is required" }}
-                      render={({ field }) => (
-                        <>
-                          <StyledTimeInput
-                            {...field}
-                            placeholder={"Choose Start Time"}
-                            sx={{ flex: 1 }}
-                          />
-                          {errors.startTime && (
-                            <span style={{ color: "red" }}>
-                              {errors.startTime.message}
-                            </span>
-                          )}
-                        </>
-                      )}
-                    />
-                  </Grid>
-                  <Grid item md="6">
-                    <Controller
-                      name="endTime"
-                      control={control}
-                      rules={{ required: "End Time is required" }}
-                      render={({ field }) => (
-                        <>
-                          <StyledTimeInput
-                            {...field}
-                            placeholder={"Choose End Time"}
-                            // sx={{ flex: 1 }}
-                          />{" "}
-                          {errors.endTime && (
-                            <span style={{ color: "red" }}>
-                              {errors.endTime.message}
-                            </span>
-                          )}
-                        </>
-                      )}
-                    />
-                  </Grid>
-                </>
-              )}{" "}
+              <>
+                <Grid item md="6">
+                  <Controller
+                    name="startTime"
+                    control={control}
+                    rules={{ required: "Start Time is required" }}
+                    render={({ field }) => (
+                      <>
+                        <StyledTimeInput
+                          {...field}
+                          placeholder={"Choose Start Time"}
+                          value={field.value}
+                          onChange={field.onChange}
+                          sx={{ flex: 1 }}
+                        />
+                        {errors.startTime && (
+                          <span style={{ color: "red" }}>
+                            {errors.startTime.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  />
+                </Grid>
+                <Grid item md="6">
+                  <Controller
+                    name="endTime"
+                    control={control}
+                    rules={{ required: "End Time is required" }}
+                    render={({ field }) => (
+                      <>
+                        <StyledTimeInput
+                          {...field}
+                          placeholder={"Choose End Time"}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />{" "}
+                        {errors.endTime && (
+                          <span style={{ color: "red" }}>
+                            {errors.endTime.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  />
+                </Grid>
+              </>
               {!isUpdate && (
                 <Grid item md="12">
                   <Controller

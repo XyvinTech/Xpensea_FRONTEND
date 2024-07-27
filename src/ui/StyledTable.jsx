@@ -153,6 +153,8 @@ const StyledTable = ({
           return "green";
           case "reimbursed":
             return "green";
+            case "progress":
+        return "green";
       default:
         return "default";
     }

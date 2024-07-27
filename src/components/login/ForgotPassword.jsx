@@ -22,7 +22,7 @@ const ForgotPassword = ({ setCurrentPaper }) => {
   const onSubmit = async (data) => {
     try {
       const user = await getLogin(data);
-      console.log(user);
+      // console.log(user);
     } catch (error) {
       console.error("error", error);
     }

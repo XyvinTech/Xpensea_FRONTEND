@@ -12,7 +12,7 @@ const StyledCalender = () => {
   const [dates, setDates] = useState([]);
 
   const handleApply = () => {
-    console.log('Applied dates:', dates);
+    // console.log('Applied dates:', dates);
   };
 
   const handleCancel = () => {

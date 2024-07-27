@@ -23,7 +23,7 @@ const ChangePassword = ({ setCurrentPaper }) => {
   const onSubmit = async (data) => {
     try {
       const user = await getLogin(data);
-      console.log(user);
+      
       setCurrentPaper(4); // Move to password success page
     } catch (error) {
       console.error("error", error);

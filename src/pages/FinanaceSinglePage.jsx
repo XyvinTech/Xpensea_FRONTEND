@@ -11,6 +11,7 @@ import RejectedForm from "../components/approvals/RejectedForm";
 import { useParams } from "react-router-dom";
 import ApproveComponent from "../components/ApproveComponent";
 import { useApprovalStore } from "../store/approvalstore";
+import Reimbursement from "../components/finance/Reimbursement";
 
 const FinanceSinglePage = () => {
   const [rejectOpen, setRejectOpen] = useState(false);
@@ -29,8 +30,8 @@ const FinanceSinglePage = () => {
     setApproveOpen(false);
   };
 
-  const handleApprove = async () => {
-    await updateFinances(id, { descriptionFinance: "hhfwkjwd" });
+  const handleApprove = async (description) => {
+    await updateFinances(id, { descriptionFinance: description });
     setIsChange(!isChange);
     handleCloseApprove();
   };
@@ -70,14 +71,16 @@ const FinanceSinglePage = () => {
               width="30%"
               gap={2}
             >
-              <>{finance?.status === "reimbursed" ? (
-                <StyledButton variant="green" name="Reimbursed" />
-              ): (
-                <StyledButton
-                  variant="green"
-                  name="Mark as reimburse "
-                  onClick={handleOpenApprove}
-                /> )}
+              <>
+                {finance?.status === "reimbursed" ? (
+                  <StyledButton variant="green" name="Reimbursed" />
+                ) : (
+                  <StyledButton
+                    variant="green"
+                    name="Mark as reimburse "
+                    onClick={handleOpenApprove}
+                  />
+                )}
               </>
             </Box>
           </Stack>
@@ -104,7 +107,7 @@ const FinanceSinglePage = () => {
         <Grid item xs={12} md={6}>
           <LiveLocation />
         </Grid>
-        <ApproveComponent
+        <Reimbursement
           open={approveOpen}
           onClose={handleCloseApprove}
           onApprove={handleApprove}

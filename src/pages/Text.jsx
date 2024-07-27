@@ -28,17 +28,17 @@ const Text = () => {
 
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
-    console.log("Selected items:", newSelectedIds);
+    // console.log("Selected items:", newSelectedIds);
   };
   const handleView = (id) => {
-    console.log("View item:", id);
+    // console.log("View item:", id);
   };
 
   const handleDelete = (id) => {
-    console.log("Delete item :", id);
+    // console.log("Delete item :", id);
   };
   const handleSort = (field) => {
-    console.log(`Sorting by ${field}`);
+    // console.log(`Sorting by ${field}`);
   };
   const handleOpenFilter = () => {
     setFilterOpen(true);

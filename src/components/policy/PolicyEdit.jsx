@@ -30,7 +30,7 @@ const PolicyEdit = ({ open, onClose }) => {
       submitter: data.submitter.value,
       location: data.location.value,
     };
-    console.log("Form data:", formData);
+    // console.log("Form data:", formData);
     onClose();
     reset();
   };

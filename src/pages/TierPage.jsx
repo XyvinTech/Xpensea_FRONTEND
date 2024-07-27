@@ -18,12 +18,12 @@ const TierPage = () => {
   const [expenseOpen, setExpenseOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
-    console.log("Selected items:", newSelectedIds);
+    // console.log("Selected items:", newSelectedIds);
   };
 
   const handleEdit = async (id) => {
     await fetchTierById(id);
-    console.log("View item:", isUpdate);
+    // console.log("View item:", isUpdate);
     setIsUpdate(true);
     // setAction('edit')
     setExpenseOpen(true);
@@ -38,7 +38,7 @@ const TierPage = () => {
   };
 
   const handleSort = (field) => {
-    console.log(`Sorting by ${field}`);
+    // console.log(`Sorting by ${field}`);
   };
 
   const handleOpenFilter = () => {

@@ -5,41 +5,40 @@ import { CrossIcon } from "../../assets/icons/CrossIcon";
 import StyledTextField from "../../ui/StyledTextField";
 import StyledTextArea from "../../ui/StyledTextArea";
 
-const Reimbursement = ({ open, onClose }) => {
-  const handleSubmit = () => {};
-  const handleClear = () => {
+const Reimbursement = ({ open, onClose,onApprove }) => {
+  const [description, setDescription] = useState("");
+
+  const handleSubmit = () => {
+    onApprove(description);
+  };
+
+  const handleClear = (event) => {
+    event.preventDefault();
     onClose();
   };
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogContent sx={{ height: "auto", width: "380px", padding: 0 }}>
+    <Dialog open={open} onClose={onClose} maxWidth="481px">
+      <DialogContent sx={{ height: "auto", width: "480px", padding: 2 }}>
         <Box
           display="flex"
-          justifyContent="space-between"
+          justifyContent="end"
           alignItems="center"
           mb={2}
-          marginTop={"10px"}
           padding={3}
           paddingBottom={0}
         >
-          <Typography variant="h4">Reimbursement</Typography>
-          <Box onClick={handleClear} style={{ cursor: "pointer" }}>
+          <Typography onClick={(event) => handleClear(event)} style={{ cursor: "pointer" }}>
             <CrossIcon />
-          </Box>
+          </Typography>
         </Box>
-        <Divider />
-        <Stack spacing={2} padding={2}>
-            <StyledTextField label={"Total Amount"}/>
-            <StyledTextField label={"Reimbursed Amount"}/>
-            <StyledTextArea placeholder={"Description"}/>
-        </Stack>
+        <StyledTextArea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
       </DialogContent>
       <Box p={3}>
-        <StyledButton
-          variant="green"
-          name="Mark as Reimbursed"
-          onClick={handleSubmit}
-        />
+        <StyledButton variant="green" name="Reimburse" onClick={handleSubmit} />
       </Box>
     </Dialog>
   );

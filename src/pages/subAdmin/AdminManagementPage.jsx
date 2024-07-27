@@ -19,18 +19,18 @@ const AdminManagementPage = () => {
 
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
-    console.log("Selected items:", newSelectedIds);
+    // console.log("Selected items:", newSelectedIds);
   };
 
   const handleEdit = async (id) => {
     await fetchAdminById(id);
-    console.log("Edit item:", id);
+  
     setIsUpdate(true); 
     setEventOpen(true);
   };
 
   const handleView = (id) => {
-    console.log("View item:", id);
+    // console.log("View item:", id);
   };
 
   const handleDelete = async () => {
@@ -42,7 +42,7 @@ const AdminManagementPage = () => {
   };
 
   const handleSort = (field) => {
-    console.log(`Sorting by ${field}`);
+    // console.log(`Sorting by ${field}`);
   };
 
   const handleOpenFilter = () => {

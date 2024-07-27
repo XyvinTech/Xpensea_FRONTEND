@@ -21,16 +21,16 @@ const StaffPage = () => {
   const [staffOpen, setStaffOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
-    console.log("Selected items:", newSelectedIds);
+    // console.log("Selected items:", newSelectedIds);
   };
   const handleEdit = async (id) => {
     await fetchUserById(id);
-    console.log("View item:", isUpdate);
+    // console.log("View item:", isUpdate);
     setIsUpdate(true);
     setStaffOpen(true);
   };
   const handleView = (id) => {
-    console.log("View item:", id);
+    // console.log("View item:", id);
     navigate(`/staffs/${id}`);
   };
   const handleDelete = async () => {
@@ -41,7 +41,7 @@ const StaffPage = () => {
     }
   };
   const handleSort = (field) => {
-    console.log(`Sorting by ${field}`);
+    // console.log(`Sorting by ${field}`);
   };
   const handleChange = () => {
     setIsChange(!isChange);
@@ -87,7 +87,7 @@ const StaffPage = () => {
     filter.pageNo = pageNo;
     fetchLists(filter);
   }, [isChange, fetchLists, pageNo, status]);
-  console.log("View item:", isUpdate);
+ 
   return (
     <>
       <Stack

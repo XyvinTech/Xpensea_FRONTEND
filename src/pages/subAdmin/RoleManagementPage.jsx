@@ -17,7 +17,7 @@ const RoleManagementPage = () => {
   const [eventOpen, setEventOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
-    console.log("Selected items:", newSelectedIds);
+    // console.log("Selected items:", newSelectedIds);
   };
 
   const handleEdit = async (id) => {
@@ -34,7 +34,7 @@ const RoleManagementPage = () => {
     }
   };
   const handleSort = (field) => {
-    console.log(`Sorting by ${field}`);
+    // console.log(`Sorting by ${field}`);
   };
 
   const handleOpenFilter = () => {

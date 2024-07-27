@@ -4,7 +4,6 @@ import img from "../../assets/images/staff.png";
 import StyledSwitch from "../../ui/StyledSwitch";
 
 const StaffDetail = ({ user }) => {
-  console.log(" ({ user })", user);
   const [isChecked, setIsChecked] = useState(user?.status || false);
   useEffect(() => {
     setIsChecked(user?.status || false);

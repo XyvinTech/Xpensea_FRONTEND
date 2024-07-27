@@ -18,12 +18,12 @@ const StaffView = () => {
   const [status, setStatus] = useState(null);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
-    console.log("Selected items:", newSelectedIds);
+    // console.log("Selected items:", newSelectedIds);
   };
 
   const handleDelete = async () => {};
   const handleSort = (field) => {
-    console.log(`Sorting by ${field}`);
+    // console.log(`Sorting by ${field}`);
   };
   const handleOpenFilter = () => {
     setFilterOpen(true);
