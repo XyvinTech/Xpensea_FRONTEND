@@ -25,7 +25,12 @@ export const updateRole = async (roleId, data) => {
     toast.error(error.response.data.message);
   }
 };
-export const deleteRole = handleAsync(async (roleId) => {
-  const response = await axiosInstance.delete(`/admin/role/${roleId}`);
-  return response.data;
-});
+export const deleteRole = async (roleId) => {
+  try {
+    const response = await axiosInstance.delete(`/admin/role/${roleId}`);
+    toast.success(response.data.message);
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.message);
+  }
+};

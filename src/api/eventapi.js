@@ -25,7 +25,12 @@ export const updateEvent = async (eventId, data) => {
     toast.error(error.response.data.message);
   }
 };
-export const deleteEvent = handleAsync(async (eventId) => {
-  const response = await axiosInstance.delete(`/admin/event/${eventId}`);
-  return response.data;
-});
+export const deleteEvent = async (eventId) => {
+  try {
+    const response = await axiosInstance.delete(`/admin/event/${eventId}`);
+    toast.success(response.data.message);
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.message);
+  }
+};

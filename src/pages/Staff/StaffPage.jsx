@@ -17,6 +17,7 @@ const StaffPage = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [status, setStatus] = useState(null);
+  const [isDelete, setIsDelete] = useState(false);
   const [bulkOpen, setBulkOpen] = useState(false);
   const [staffOpen, setStaffOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
@@ -81,13 +82,16 @@ const StaffPage = () => {
   ];
   useEffect(() => {
     let filter = { type: "users" };
-    if (status !== null) {
+    if (!isDelete && status !== null) {
       filter.status = status;
     }
+
+    filter.isDeleted = isDelete;
+
     filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo, status]);
- 
+  }, [isChange, fetchLists, pageNo, status, isDelete]);
+
   return (
     <>
       <Stack
@@ -106,7 +110,11 @@ const StaffPage = () => {
               padding: "10px",
               color: status === null ? "#fff" : "#4D515A",
             }}
-            onClick={() => setStatus(null)}
+            onClick={() => {
+              setStatus(null);
+              setIsDelete('');
+            }}
+            
           >
             All
           </Button>
@@ -121,7 +129,11 @@ const StaffPage = () => {
               padding: "10px",
               color: status === true ? "#fff" : "#4D515A",
             }}
-            onClick={() => setStatus(true)}
+            onClick={() => {
+              setStatus(true);
+              setIsDelete('');
+            }}
+            
           >
             Activated{" "}
           </Button>
@@ -135,9 +147,31 @@ const StaffPage = () => {
               padding: "10px",
               color: status === false ? "#fff" : "#4D515A",
             }}
-            onClick={() => setStatus(false)}
+            onClick={() => {
+              setStatus(false);
+              setIsDelete('');
+            }}
+            
           >
             Deactivated
+          </Button>
+          <Button
+            style={{
+              cursor: "pointer",
+              textTransform: "none",
+              backgroundColor: isDelete === true ? "#79001D" : "#fff",
+              border: "1px solid rgba(226, 232, 240, 1)",
+              borderRadius: "8px",
+              padding: "10px",
+              color: isDelete === true ? "#fff" : "#4D515A",
+            }}
+            onClick={() => {
+              setStatus('');
+              setIsDelete(true);
+            }}
+            
+          >
+            Deleted
           </Button>
         </Box>
         <Stack direction={"row"} spacing={2}>

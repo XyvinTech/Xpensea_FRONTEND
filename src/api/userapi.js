@@ -26,7 +26,12 @@ export const updateUser = async (userId, data) => {
     toast.error(error.response.data.message);
   }
 };
-export const deleteUser = handleAsync(async (userId) => {
-  const response = await axiosInstance.delete(`/admin/user/${userId}`);
-  return response.data;
-});
+export const deleteUser = async (userId) => {
+  try {
+    const response = await axiosInstance.delete(`/admin/user/${userId}`);
+    toast.success(response.data.message);
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.message);
+  }
+};
