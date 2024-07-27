@@ -130,9 +130,10 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
           >
             <Box flexGrow={1} />
             <h2 style={{ flexGrow: 1 }}>Create an Event</h2>
-            <Box position="absolute" right={0}>
+            {/* <Box position="absolute" right={0}>
               <MoreVert />
-            </Box>
+            </Box> */}
+            
           </Box>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2} padding={2}>
