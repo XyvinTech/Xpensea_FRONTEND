@@ -50,24 +50,44 @@ import { SyncIcon } from "../assets/icons/SyncIcon";
 import { useAdminStore } from "../store/adminStore";
 import { useAuthStore } from "../store/useAuthStore";
 const drawerWidth = 300;
+
 const subNavigation = [
   { name: "Dashboard", to: "/dashboard", icon: <GridViewIcon /> },
-  { name: "Approvals", to: "/approvals", icon: <PendingActionsIcon /> },
-  { name: "Events", to: "/events", icon: <EventAvailableIcon /> },
+  { name: "Approvals", to: "/approvals", icon: <PendingActionsIcon />, permissions: ["approvalManagement_view", "approvalManagement_modify"] },
+  { name: "Events", to: "/events", icon: <EventAvailableIcon />, permissions: ["eventManagement_view", "eventManagement_modify"] },
   {
     name: "Sub-admin",
     icon: <SupervisorAccountIcon />,
     subItems: [
-      { name: "Admin Management", to: "/subadmin/admin-management" },
-      { name: "Role Management", to: "/subadmin/role-management" },
-      { name: "Admin Activity", to: "/subadmin/admin-activity" },
+      { name: "Admin Management", to: "/subadmin/admin-management", permissions: ["adminManagement_view", "adminManagement_modify"] },
+      { name: "Role Management", to: "/subadmin/role-management", permissions: ["roleManagement_view", "roleManagement_modify"] },
+      { name: "Admin Activity", to: "/subadmin/admin-activity", permissions: [] },
     ],
   },
-  { name: "Finance", to: "/finance", icon: <FinanceIcon /> },
-  { name: "Staffs", to: "/staffs", icon: <GroupsIcon /> },
-  { name: "Tier", to: "/tier", icon: <AlignVerticalBottomIcon /> },
-  { name: "Policy", to: "/policy", icon: <PolicyIcon /> },
+  { name: "Finance", to: "/finance", icon: <FinanceIcon />, permissions: ["financeManagement_view", "financeManagement_modify"] },
+  { name: "Staffs", to: "/staffs", icon: <GroupsIcon />, permissions: ["userManagement_view", "userManagement_modify"] },
+  { name: "Tier", to: "/tier", icon: <AlignVerticalBottomIcon />, permissions: ["tierManagement_view", "tierManagement_modify"] },
+  { name: "Policy", to: "/policy", icon: <PolicyIcon />, permissions: [] },
 ];
+
+const filterNavigation = (navItems, permissions) => {
+  return navItems.reduce((acc, item) => {
+    if (
+      !item.permissions ||
+      item.permissions.some(permission => permissions.includes(permission))
+    ) {
+      if (item.subItems) {
+        const filteredSubItems = filterNavigation(item.subItems, permissions);
+        if (filteredSubItems.length > 0) {
+          acc.push({ ...item, subItems: filteredSubItems });
+        }
+      } else {
+        acc.push(item);
+      }
+    }
+    return acc;
+  }, []);
+};
 const SimpleDialog = ({ open, onClose }) => {
   const { admin, getAdmin, isChange } = useAdminStore();
   const { logoutAuth } = useAuthStore();
@@ -191,6 +211,7 @@ const Layout = (props) => {
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
+  const navItems = filterNavigation(subNavigation, admin?.role?.permissions || []);
 
   const getCurrentPageName = () => {
     for (const item of subNavigation) {
@@ -220,7 +241,7 @@ const Layout = (props) => {
       </Toolbar>
       <Divider />
       <List>
-        {subNavigation.map((item) =>
+        {navItems?.map((item) =>
           item.name === "Sub-admin" ? (
             <div key={item.name}>
               <ListItem sx={{ paddingBottom: "8px" }} disablePadding>
