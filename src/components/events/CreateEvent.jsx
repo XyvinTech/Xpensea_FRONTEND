@@ -11,12 +11,16 @@ import CalendarInput from "../../ui/CalenderInput";
 import { useEventStore } from "../../store/eventStore";
 import StyledTimeInput from "../../ui/StyledTimeInput";
 import dayjs from "dayjs";
+import ApproveComponent from "../ApproveComponent";
+import StopComponent from "../StopComponent";
 
 const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
   const { staffs, fetchTiers, fetchStaffs, tiers } = useDropDownStore();
   const { addEvents, event, updateEvents } = useEventStore();
+  const [approveOpen, setApproveOpen] = useState(false);
   const [role, setRole] = useState([]);
   const [tier, setTier] = useState([]);
+  const [status, setStatus] = useState("");
   const {
     control,
     handleSubmit,
@@ -55,16 +59,26 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
     event.preventDefault();
     onClose();
   };
+  const handleOpenApprove = () => {
+    setApproveOpen(true);
+  };
 
+  const handleCloseApprove = () => {
+    setApproveOpen(false);
+  };
   const onSubmit = async (data) => {
     const updateData = {
       eventName: data.eventName,
       days: data.days,
       // startDate: data.startDate,
       endDate: data.endDate,
-      startTime: data?.startTime,
+      // startTime: data?.startTime,
       endTime: data?.endTime,
+      // status: status,
     };
+    if (status !== null) {
+      updateData.status = status;
+    }
     const formData = {
       eventName: data?.eventName,
       days: data?.days,
@@ -89,19 +103,25 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
     onChange();
     onClose();
     reset();
+    setStatus(null);
   };
   const loc = [
     { value: "option1", label: "Option 1" },
     { value: "option2", label: "Option 2" },
     { value: "option3", label: "Option 3" },
   ];
+  const handleApprove = async () => {
+    onChange();
+    setStatus("done");
+    handleCloseApprove();
+  };
   useEffect(() => {
     if (isUpdate && event) {
       reset({
         eventName: event?.eventName,
         days: event?.days,
         // startDate: event?.startDate,
-        startTime: dayjs(event?.startTime),
+        // startTime: dayjs(event?.startTime),
         endDate: event?.endDate,
         endTime: dayjs(event?.endTime),
       });
@@ -132,8 +152,17 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
             <h2 style={{ flexGrow: 1 }}>Create an Event</h2>
             {/* <Box position="absolute" right={0}>
               <MoreVert />
-            </Box> */}
-            
+            </Box> */}{" "}
+            <Box position="absolute" right={15}>
+              {isUpdate && (
+                <StyledButton
+                  variant="primary"
+                  onClick={handleOpenApprove}
+                  padding="15px 50px 15px 50px"
+                  name="Stop"
+                />
+              )}{" "}
+            </Box>
           </Box>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={2} padding={2}>
@@ -337,7 +366,7 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
                   )}
                 />
               </Grid>{" "}
-              <>
+              <> {!isUpdate && (
                 <Grid item md="6">
                   <Controller
                     name="startTime"
@@ -360,7 +389,7 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
                       </>
                     )}
                   />
-                </Grid>
+                </Grid> )}
                 <Grid item md="6">
                   <Controller
                     name="endTime"
@@ -409,8 +438,10 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
                 </Grid>
               )}
               <Grid item md={6} sm={6}></Grid>
+              {/* {isUpdate && <Grid item md={6} sm={6}></Grid>} */}
               <Grid item md={6} sm={6}>
                 <Stack direction="row" spacing={2} justifyContent="flex-end">
+                  {" "}
                   <StyledButton
                     variant="secondary"
                     padding="15px 50px 15px 50px"
@@ -425,6 +456,11 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
                   />
                 </Stack>
               </Grid>
+              <StopComponent
+                open={approveOpen}
+                onClose={handleCloseApprove}
+                onApprove={handleApprove}
+              />
             </Grid>{" "}
           </form>
         </Stack>

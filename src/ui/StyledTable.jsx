@@ -81,7 +81,8 @@ const StyledTable = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const [rowId, setRowId] = useState(null);
   const [isChange, setIsChange] = useState(false);
-  const { lists,totalCount,rowPerSize,rowChange,pageNo,pageInc,pageDec } = useListStore();
+  const { lists, totalCount, rowPerSize, rowChange, pageNo, pageInc, pageDec } =
+    useListStore();
   const handleSelectAllClick = (event) => {
     const isChecked = event.target.checked;
     const newSelectedIds = isChecked ? lists.map((row) => row._id) : [];
@@ -107,8 +108,6 @@ const StyledTable = ({
     setAnchorEl(null);
     setRowId(null);
   };
-
-
 
   const handleDelete = () => {
     onDelete();
@@ -144,17 +143,19 @@ const StyledTable = ({
       case "pending":
         return "pending";
       case "scheduled":
-        return "green";
+        return "pending";
       case "in-progress":
         return "blue";
       case "rejected":
         return "rejected";
-        case "approved":
-          return "green";
-          case "reimbursed":
-            return "green";
-            case "progress":
+      case "approved":
         return "green";
+      case "reimbursed":
+        return "green";
+      case "progress":
+        return "green";
+        case "done":
+          return "green";
       default:
         return "default";
     }
@@ -215,7 +216,9 @@ const StyledTable = ({
                 <StyledTableCell padding="checkbox">
                   <StyledCheckbox
                     checked={isSelected(row._id)}
-                    onChange={(event) => handleRowCheckboxChange(event, row._id)}
+                    onChange={(event) =>
+                      handleRowCheckboxChange(event, row._id)
+                    }
                   />
                 </StyledTableCell>
                 {columns.map((column, index) => (
@@ -231,8 +234,7 @@ const StyledTable = ({
                         alignItems="center"
                         justifyContent="center"
                       >
-                        {getEventIcon(row.event)}
-                        {" "}
+                        {getEventIcon(row.event)}{" "}
                         {column.field === "status" ? (
                           <StyledSpan
                             variant={getStatusVariant(row[column.field])}
@@ -255,23 +257,26 @@ const StyledTable = ({
                               : row[column.field]
                           }
                         />
-                      ) :(
-                        column.field === "accessType" ? (
-                          <>
-                            {Array.isArray(row.permissions) && row.permissions.length > 0 && (
+                      ) : column.field === "accessType" ? (
+                        <>
+                          {Array.isArray(row.permissions) &&
+                            row.permissions.length > 0 && (
                               <Box>
                                 Permissions
                                 {/* : {row.permissions.join(", ")} */}
                               </Box>
                             )}
-                            {Array.isArray(row.location) && row.location.length > 0 && (
+                          {Array.isArray(row.location) &&
+                            row.location.length > 0 && (
                               <Box>
                                 Locations
                                 {/* : {row.location.join(", ")} */}
                               </Box>
                             )}
-                          </>
-                        ):row[column.field]))}
+                        </>
+                      ) : (
+                        row[column.field]
+                      ))}
                   </StyledTableCell>
                 ))}
                 <StyledTableCell padding="normal">
@@ -324,13 +329,11 @@ const StyledTable = ({
                               }
                             />
                           </MenuItem>,
-                        
                         ]
                       : [
-                         
                           <MenuItem
                             key="delete"
-                            onClick={() =>handleRowDelete(row._id)}
+                            onClick={() => handleRowDelete(row._id)}
                           >
                             <StyledSpan
                               variant={"red"}
@@ -384,7 +387,9 @@ const StyledTable = ({
                   component="div"
                   rowsPerPage={rowPerSize}
                   labelDisplayedRows={({ from, to }) =>
-                    `${pageNo}-${Math.ceil(totalCount/rowPerSize)} of ${totalCount}`
+                    `${pageNo}-${Math.ceil(
+                      totalCount / rowPerSize
+                    )} of ${totalCount}`
                   }
                   ActionsComponent={({ onPageChange }) => (
                     <Stack
@@ -404,7 +409,6 @@ const StyledTable = ({
                         name="Next"
                         onClick={pageInc}
                         disabled={pageNo === Math.ceil(totalCount / rowPerSize)}
-
                       />
                     </Stack>
                   )}

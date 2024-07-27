@@ -35,7 +35,7 @@ const Details = ({ data }) => {
         <Stack spacing={2} justifyContent="center">
        
           <Typography variant="h3" color={"#79001D"}>
-          Approved By {data?.approver}
+          Approver : {data?.approver}
           </Typography>
           <Typography variant="h4" color={"#B4B4B4"}>
           {data?.updatedAt}

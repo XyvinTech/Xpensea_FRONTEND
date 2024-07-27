@@ -114,7 +114,7 @@ const EventsPage = () => {
             }}
             onClick={() => setStatus("progress")}
           >
-            progress
+            Progress
           </Button>
           <Button
             style={{
