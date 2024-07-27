@@ -4,7 +4,7 @@ import { ApproveIcon } from "../../assets/icons/ApproveIcon";
 
 const Details = ({ data }) => {
   return (
-    <Stack spacing={1} bgcolor={"#fff"} borderRadius={"12px"} paddingBottom={4}>
+    <Stack spacing={1} bgcolor={"#fff"} borderRadius={"12px"} paddingBottom={4}minHeight={'230px'}>
       <Typography
         bgcolor="#FFF7F3"
         padding={3}
