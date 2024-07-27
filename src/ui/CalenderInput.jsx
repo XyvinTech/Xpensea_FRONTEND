@@ -35,7 +35,7 @@ const StyledDatePicker = styled(DatePicker)`
 `;
 
 const CalenderInput = ({ placeholder, dateValue, onDateChange, disabled }) => {
-  \
+  
   const initialDate = dateValue ? dayjs(dateValue) : null;
 
   const handleDateChange = (date) => {
