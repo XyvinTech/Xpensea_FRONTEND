@@ -82,7 +82,8 @@ const ApprovalPage = () => {
               width="30%"
               gap={2}
             >
-              {approval?.status === "approved" ? (
+              {approval?.status === "approved" ||
+              approval?.status === "reimbursed" ? (
                 <StyledButton variant="green" name="Approved" />
               ) : approval?.status === "rejected" ? (
                 <StyledButton variant="danger" name="Rejected" />

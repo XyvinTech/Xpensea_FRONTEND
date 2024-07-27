@@ -112,7 +112,7 @@ const AddExpense = ({ open, onClose, onChange, isUpdate = false }) => {
   const Title = [
     { value: "Shopping", label: "Shopping" },
     { value: "Travel", label: "Travel" },
-    { value: "Shop expenses", label: "Shop expenses" },
+    { value: "Miscellaneous", label: "Miscellaneous" },
     { value: "Stay&Leisure", label: "Stay&Leisure" },
     { value: "Maintenance", label: "Maintenance" },
     { value: "Food", label: "Food" },
@@ -125,7 +125,7 @@ const AddExpense = ({ open, onClose, onChange, isUpdate = false }) => {
   };
 // console.log('updatedCategor',isUpdate)
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box padding={3}>
           <Box
@@ -249,7 +249,7 @@ const AddExpense = ({ open, onClose, onChange, isUpdate = false }) => {
               </Grid>
             ))}{" "}
             <>
-              <Grid item md="6">
+              <Grid item md="6" minHeight={'300px'}>
                 <Controller
                   name="title"
                   control={control}

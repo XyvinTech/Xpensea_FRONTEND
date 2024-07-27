@@ -68,7 +68,7 @@ const AdminManagementPage = () => {
 
   const userColumns = [
     { title: "name", field: "name", sortable: false },
-    { title: "role", field: "role", sortable: true },
+    { title: "role", field: "roleName", sortable: true },
     { title: "email", field: "email", sortable: true },
     { title: "contact no", field: "mobile", sortable: true },
     { title: "status", field: "status", sortable: false },

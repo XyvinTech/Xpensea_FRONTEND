@@ -27,14 +27,18 @@ const Details = ({ data }) => {
                 Shop Expenses
               </Typography>
             </Typography>
+            {/* <Typography variant="h4" color={"#4F4F4F"}>
+                Approved By {data?.approver}
+              </Typography> */}
           </Stack>
         </Stack>
         <Stack spacing={2} justifyContent="center">
+       
           <Typography variant="h3" color={"#79001D"}>
-            ApEx55213
+          Approved By {data?.approver}
           </Typography>
           <Typography variant="h4" color={"#B4B4B4"}>
-            Nov 19 2023
+          {data?.updatedAt}
           </Typography>
         </Stack>
       </Stack>

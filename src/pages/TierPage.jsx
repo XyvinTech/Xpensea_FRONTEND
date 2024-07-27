@@ -62,7 +62,7 @@ const TierPage = () => {
     { title: "Date", field: "activationDate", sortable: true },
     { title: "No of Employe", field: "noOfEmployees", sortable: true },
     { title: "Max Amount", field: "totalAmount", sortable: true },
-    { title: "No of allowance", field: "total", sortable: true },
+    { title: "No of allowance", field: "noAllowance", sortable: true },
   ];
   const handleChange = () => {
     setIsChange(!isChange);
