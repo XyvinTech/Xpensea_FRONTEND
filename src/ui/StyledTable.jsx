@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -17,6 +17,7 @@ import {
   Menu,
   MenuItem,
   IconButton,
+  Skeleton,
 } from "@mui/material";
 import StyledButton from "./StyledButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -128,7 +129,17 @@ const StyledTable = ({
     onShare(rowId);
     handleMenuClose();
   };
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // Simulate data fetching
+
+    const timer = setTimeout(() => {
+      setLoading(false); // Set loading to false once data is fetched
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
   const handleRowClick = (id) => {
     onView(id);
   };
@@ -207,7 +218,45 @@ const StyledTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {lists.map((row) => (
+          {loading ? (
+              // Display skeletons while loading
+
+              Array.from(new Array(5)).map((_, index) => (
+                <StyledTableRow key={index}>
+                  <StyledTableCell padding="checkbox">
+                    <Skeleton variant="rectangular" width={24} height={24} />
+                  </StyledTableCell>
+
+                  {columns.map((column) => (
+                    <StyledTableCell key={column.field}>
+                      <Skeleton variant="text" width="100%" height={20} />
+                    </StyledTableCell>
+                  ))}
+
+                  <StyledTableCell>
+                    <Box display="flex" alignItems="center">
+                      <Skeleton variant="circular" width={24} height={24} />
+
+                      <Skeleton
+                        variant="circular"
+                        width={24}
+                        height={24}
+                        sx={{ marginLeft: 1 }}
+                      />
+                    </Box>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))
+            ) : lists.length === 0 ? (
+              <StyledTableRow>
+                <StyledTableCell colSpan={columns.length + 2}>
+                  <Typography variant="h6" textAlign="center">
+                    No data
+                  </Typography>
+                </StyledTableCell>
+              </StyledTableRow>
+            ) : (
+            lists.map((row) => (
               <StyledTableRow
                 role="checkbox"
                 key={row._id}
@@ -348,7 +397,8 @@ const StyledTable = ({
                   </Menu>
                 </StyledTableCell>
               </StyledTableRow>
-            ))}
+          ))
+        )}
           </TableBody>
         </Table>
         <Divider />
