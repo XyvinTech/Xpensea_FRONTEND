@@ -65,28 +65,7 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
     onClose();
     reset();
   };
-  // useEffect(() => {
-  //   if (isUpdate && event) {
-  //     reset({
-  //       eventName: event?.eventName,
-  //       days: event?.days,
-  //       // startDate: event?.startDate,
-  //       // startTime: dayjs(event?.startTime),
-  //       endDate: event?.endDate,
-  //       endTime: dayjs(event?.endTime),
-  //     });
-  //   } else {
-  //     reset({
-  //       eventName: "",
-  //       days: "",
-  //       // startDate: "",
-  //       endDate: "",
-  //       startTime: dayjs(),
-  //       endTime: dayjs(),
-  //     });
-  //   }
-  //   // setIsChecked(admins?.status || false);
-  // }, [isUpdate, event, reset]);
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <Box padding={3}>
@@ -130,7 +109,6 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
                 )}
               />
             </Stack>
-
             <Stack direction="row" spacing={2} paddingBottom={2}>
               <Controller
                 name="userType"
@@ -160,7 +138,6 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
                 )}
               />
             </Stack>
-
             <Stack direction="row" paddingBottom={2}>
               <Controller
                 name="location"
@@ -176,7 +153,6 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
                 )}
               />
             </Stack>
-
             <Stack direction="row" spacing={2} paddingBottom={2}>
               {" "}
               <Controller
@@ -188,7 +164,6 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
                 )}
               />
             </Stack>
-
             <Stack direction="row" spacing={2} paddingBottom={2}>
               <Controller
                 name="accuracy"
@@ -273,21 +248,22 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
                   />
                 )}
               />{" "}
-            </Stack> <Stack direction="row" spacing={2} justifyContent="flex-end">
-                  {" "}
-                  <StyledButton
-                    variant="secondary"
-                    padding="15px 50px 15px 50px"
-                    name="Back"
-                    onClick={(event) => handleClear(event)}
-                  />
-                  <StyledButton
-                    variant="primary"
-                    type="submit"
-                    padding="15px 50px 15px 50px"
-                    name="Save"
-                  />
-                </Stack>
+            </Stack>{" "}
+            <Stack direction="row" spacing={2} justifyContent="flex-end">
+              {" "}
+              <StyledButton
+                variant="secondary"
+                padding="15px 50px 15px 50px"
+                name="Back"
+                onClick={(event) => handleClear(event)}
+              />
+              <StyledButton
+                variant="primary"
+                type="submit"
+                padding="15px 50px 15px 50px"
+                name="Save"
+              />
+            </Stack>
           </form>
         </Stack>
       </Box>
