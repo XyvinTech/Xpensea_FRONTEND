@@ -96,7 +96,7 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
 
   const tableCellStyle = {
     color: "#4D515A",
-    fontSize: "18px",
+    fontSize: "14px",
     textAlign: "center",
   };
 
@@ -106,7 +106,7 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
     height: "20px",
     borderRadius: "50%",
     backgroundColor: filled ? "#002B9B" : "transparent",
-    border: "4px solid rgba(121, 0, 29, 0.5)",
+    border: "4px solid #d5dff2",
     cursor: "pointer",
   });
 
@@ -279,12 +279,12 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
               <Table>
                 <TableHead
                   sx={{
-                    backgroundColor: "#FFF7F3",
+                    backgroundColor: "#d5dff2",
                     borderBottom: "2px solid #002B9B",
                   }}
                 >
                   <TableRow sx={{ textTransform: "uppercase" }}>
-                    <TableCell sx={tableCellStyle}>Permission</TableCell>
+                    <TableCell  sx={tableCellStyle}>Permission</TableCell>
                     <TableCell sx={tableCellStyle}>View</TableCell>
                     <TableCell sx={tableCellStyle}>Modify</TableCell>
                   </TableRow>
@@ -318,7 +318,7 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
             </Box>
           )}
         </DialogContent>{" "}
-        <Box display="flex" justifyContent="space-between" padding={3} gap={4}>
+        <Box display="flex" padding={3} gap={2}>
           <StyledButton
             variant="secondary"
             name="Cancel"
