@@ -12,8 +12,14 @@ import { CrossIcon } from "../../assets/icons/CrossIcon";
 import location from "../../assets/images/location.png";
 import receipt from "../../assets/images/receipt.png";
 
-const ExpenseDetail = ({ open, onClose, expense, onMarkAuthentic, onMarkFaulty }) => {
-  if (!expense) return null; 
+const ExpenseDetail = ({
+  open,
+  onClose,
+  expense,
+  onMarkAuthentic,
+  onMarkFaulty,
+}) => {
+  if (!expense) return null;
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="481px">
@@ -27,7 +33,7 @@ const ExpenseDetail = ({ open, onClose, expense, onMarkAuthentic, onMarkFaulty }
           padding={3}
           paddingBottom={0}
         >
-          <Typography variant="h11">Expense</Typography>
+          <Typography variant="h11"> {expense.category} Expense</Typography>
           <Typography onClick={onClose} style={{ cursor: "pointer" }}>
             <CrossIcon />
           </Typography>

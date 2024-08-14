@@ -1,8 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Box, Divider, Grid, Stack, Typography } from "@mui/material";
 import { ProgramIcon } from "../../assets/icons/ProgramIcon";
+import { TripIcon } from "../../assets/icons/TripIcon";
+import { StayIcon } from "../../assets/icons/StayIcon";
+import { MiscellaneousIcon } from "../../assets/icons/MiscellaneousIcon";
+import { MaintenanceIcon } from "../../assets/icons/MaintenanceIcon";
+import { FoodIcon } from "../../assets/icons/FoodIcon";
 import ExpenseDetail from "./ExpenseDetail";
-
+const iconMapping = {
+  Shopping: <ProgramIcon />,
+  Travel: <TripIcon />,
+  // Stay&Leisure: <StayIcon />,
+  Miscellaneous: <MiscellaneousIcon />,
+  Maintenance: <MaintenanceIcon />,
+  Food: <FoodIcon />,
+};
 const Expenses = ({
   data,
   authenticExpenses,
@@ -76,7 +88,7 @@ const Expenses = ({
                   paddingRight={2}
                 >
                   <Stack direction="row" spacing={1}>
-                    <ProgramIcon />
+                    {iconMapping[item?.category] || <StayIcon />}
                     <Stack direction="column" spacing={1}>
                       <Typography variant="h5" color={"#333333"}>
                         {item?.title}
