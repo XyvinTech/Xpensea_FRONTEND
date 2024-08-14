@@ -5,30 +5,30 @@ import { useNavigate } from "react-router-dom";
 import StyledFilter from "../../components/StyledFilter";
 import { FilterIcon } from "../../assets/icons/FilterIcon";
 import { useListStore } from "../../store/listStore";
-import { useApprovalStore } from "../../store/approvalstore";
-const MainPage = () => {
+import AdvancePayment from "./AdvancePayment";
+const Transaction = () => {
   const navigate = useNavigate();
-  const { fetchLists, pageNo } = useListStore();
   const [isChange, setIsChange] = useState(false);
   const [status, setStatus] = useState(null);
-  const { deleteApprovals } = useApprovalStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     // console.log("Selected items:", newSelectedIds);
   };
   const handleView = (id) => {
-    // console.log("View item:", id);
-    navigate(`/approvals/view/${id}`);
+    setOpen(true);
   };
-
+  const handleClose = () => {
+    setOpen(false);
+  };
   const handleDelete = async () => {
-    if (selectedRows.length > 0) {
-      await Promise.all(selectedRows?.map((id) => deleteApprovals(id)));
-      setIsChange(!isChange);
-      setSelectedRows([]);
-    }
+    // if (selectedRows.length > 0) {
+    //   await Promise.all(selectedRows?.map((id) => deleteApprovals(id)));
+    //   setIsChange(!isChange);
+    //   setSelectedRows([]);
+    // }
   };
   const handleSort = (field) => {
     // console.log(`Sorting by ${field}`);
@@ -42,22 +42,14 @@ const MainPage = () => {
     setFilterOpen(false);
   };
   const userColumns = [
-    { title: "Order", field: "title", sortable: false },
-    { title: "Date", field: "reportDate", sortable: true },
-    { title: "NO Of Expense", field: "expenseCount", sortable: true },
-    { title: "Total", field: "totalAmount", sortable: true },
-    { title: "Location", field: "location", sortable: true },
+    { title: "STAFF NAME", field: "title", sortable: false },
+    { title: "tRANSACTION ID", field: "reportDate", sortable: true },
+    { title: "AMOUNT", field: "expenseCount", sortable: true },
+    { title: "PAYMENT METHOD", field: "totalAmount", sortable: true },
+    { title: "REQUESTED BY", field: "location", sortable: true },
     { title: "Status", field: "status", sortable: true },
   ];
-  useEffect(() => {
-    let filter = { type: "approvals" };
-    if (status !== null) {
-      filter.status = status;
-    }
-    filter.pageNo = pageNo;
-    fetchLists(filter);
-  }, [isChange, fetchLists, pageNo, status]);
-  // console.log(lists);
+
   return (
     <>
       <Stack
@@ -103,25 +95,11 @@ const MainPage = () => {
               border: "1px solid rgba(226, 232, 240, 1)",
               borderRadius: "8px",
               padding: "10px",
-              color: status ==="approved" ? "#fff" : "#4D515A",
+              color: status === "approved" ? "#fff" : "#4D515A",
             }}
             onClick={() => setStatus("approved")}
           >
-            Approved
-          </Button>
-          <Button
-            style={{
-              cursor: "pointer",
-              textTransform: "none",
-              borderRadius: "8px",
-              backgroundColor: status ==="rejected"? "#002B9B" : "#fff",
-              border: "1px solid rgba(226, 232, 240, 1)",
-              padding: "10px",
-              color: status ==="rejected"? "#fff" : "#4D515A",
-            }}
-            onClick={() => setStatus("rejected")}
-          >
-            Rejected
+            Completed
           </Button>
         </Box>
         <Box
@@ -145,14 +123,16 @@ const MainPage = () => {
         <StyledTable
           columns={userColumns}
           onSelectionChange={handleSelectionChange}
-          onView={handleView}
+          onEdit={handleView}
           onSort={handleSort}
           onDelete={handleDelete}
+          showView
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
+      <AdvancePayment open={open} onClose={handleClose} />
     </>
   );
 };
 
-export default MainPage;
+export default Transaction;

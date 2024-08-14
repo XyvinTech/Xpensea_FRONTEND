@@ -1,10 +1,11 @@
 import { create } from "zustand";
-import { fetchList, fetchUser } from "../api/listapi";
+import { fetchApprover, fetchList, fetchUser } from "../api/listapi";
 
 const useDropDownStore = create((set) => ({
   tiers: [],
-  staffs:[],
-  roles:[],
+  staffs: [],
+  roles: [],
+  approvers: [],
   fetchTiers: async () => {
     const filter = { type: "tiers" };
     const response = await fetchList(filter);
@@ -20,7 +21,10 @@ const useDropDownStore = create((set) => ({
     const response = await fetchList(filter);
     set({ roles: response?.data || [] });
   },
- 
+  fetchApprovers: async () => {
+    const response = await fetchApprover();
+    set({ approvers: response?.data || [] });
+  },
 }));
 
 export { useDropDownStore };

@@ -18,7 +18,7 @@ const CheckboxIcon = styled.span`
   height: 21px;
   border-radius: 6px;
   border:${(props) => (props.checked ? "none" : "1px solid #E0E7FF")};
-  background-color: ${(props) => (props.checked ? props.variant === "primary" ? "#79001D" : "#5D5FEF" : "white")};
+  background-color: ${(props) => (props.checked ? props.variant === "primary" ? "#002B9B" : "#5D5FEF" : "white")};
   transition: background-color 0.3s, box-shadow 0.3s;
   &::before {
     display: ${(props) => (props.checked ? "block" : "none")};

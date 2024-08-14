@@ -11,9 +11,10 @@ import { useDropDownStore } from "../../store/useDropDownStore";
 import { useUserStore } from "../../store/userStore";
 
 const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
-  const { tiers, fetchTiers } = useDropDownStore();
+  const { tiers, fetchTiers, fetchApprovers, approvers } = useDropDownStore();
   const { addUsers, updateUsers, user } = useUserStore();
   const [isChecked, setIsChecked] = useState(true);
+  const [isChange, setIsChange] = useState(false);
   const {
     control,
     handleSubmit,
@@ -26,6 +27,8 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
       mobile: "",
       employeeId: "",
       tier: "",
+      designation: "",
+      approver: "",
       location: "",
     },
   });
@@ -36,8 +39,10 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
         name: user?.name,
         email: user?.email,
         mobile: user?.mobile,
+        designation: user?.designation,
         employeeId: user?.employeeId,
         tier: { value: user?.tier?._id, label: user?.tierName },
+        approver: { value: user?.approver?._id, label: user?.approver?.name },
         userType: { value: user?.userType, label: user?.userType },
         location: { value: user?.location, label: user?.location },
       });
@@ -49,6 +54,8 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
         mobile: "",
         employeeId: "",
         tier: "",
+        designation: "",
+        approver: "",
         userType: "",
         location: "",
       });
@@ -64,6 +71,8 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
       mobile: "",
       employeeId: "",
       tier: "",
+      designation: "",
+      approver: "",
       userType: "",
       location: "",
     });
@@ -76,8 +85,10 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
       name: data.name,
       email: data.email,
       mobile: data.mobile,
+      designation: data.designation,
       employeeId: data.employeeId,
       tier: data.tier.value,
+      approver: data.approver.value,
       userType: data.userType.value,
       location: data.location.value,
       status: isChecked,
@@ -87,6 +98,7 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
       await updateUsers(user._id, formData);
     } else {
       await addUsers(formData);
+
     }
 
     onChange();
@@ -96,10 +108,13 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
       mobile: "",
       employeeId: "",
       tier: "",
+      designation: "",
+      approver: "",
       userType: "",
       location: "",
     });
     onClose();
+    setIsChange(!isChange);
   };
 
   const handleSwitchChange = (event) => {
@@ -113,7 +128,8 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
 
   useEffect(() => {
     fetchTiers();
-  }, [fetchTiers]);
+    fetchApprovers();
+  }, [isChange]);
 
   const roleOptions = [
     { value: "submitter", label: "Submitter" },
@@ -133,6 +149,13 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
           label: list?.title,
         }))
       : [];
+  const approverOptions =
+    approvers && Array.isArray(approvers)
+      ? approvers.map((list) => ({
+          value: list?._id,
+          label: list?.name,
+        }))
+      : [];
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
@@ -147,7 +170,11 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
             <Box flexGrow={1} />
             <h2 style={{ flexGrow: 1 }}>Staff</h2>
             <Box position="absolute" right={0}>
-              <StyledSwitch checked={isChecked} onChange={handleSwitchChange} variant={"primary"}/>
+              <StyledSwitch
+                checked={isChecked}
+                onChange={handleSwitchChange}
+                variant={"primary"}
+              />
             </Box>
           </Box>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -275,6 +302,49 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
                       {errors.userType && (
                         <span style={{ color: "red" }}>
                           {errors.userType.message}
+                        </span>
+                      )}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item md="6">
+                <Controller
+                  name="approver"
+                  control={control}
+                  // rules={{ required: "Approver is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledSelectField
+                        {...field}
+                        placeholder="Approver"
+                        options={approverOptions}
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {/* {errors.approver && (
+                        <span style={{ color: "red" }}>
+                          {errors.approver.message}
+                        </span>
+                      )}{" "} */}
+                    </>
+                  )}
+                />
+              </Grid>
+              <Grid item md="6">
+                <Controller
+                  name="designation"
+                  control={control}
+                  rules={{ required: "Designation is required" }}
+                  render={({ field }) => (
+                    <>
+                      <StyledTextField
+                        {...field}
+                        label="Designation"
+                        sx={{ flex: 1 }}
+                      />{" "}
+                      {errors.designation && (
+                        <span style={{ color: "red" }}>
+                          {errors.designation.message}
                         </span>
                       )}
                     </>

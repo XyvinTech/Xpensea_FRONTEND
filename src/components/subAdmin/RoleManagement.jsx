@@ -105,7 +105,7 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
     width: "20px",
     height: "20px",
     borderRadius: "50%",
-    backgroundColor: filled ? "#79001D" : "transparent",
+    backgroundColor: filled ? "#002B9B" : "transparent",
     border: "4px solid rgba(121, 0, 29, 0.5)",
     cursor: "pointer",
   });
@@ -245,7 +245,7 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
                   cursor: "pointer",
                   textTransform: "none",
                   backgroundColor:
-                    selectedTab === "functional" ? "#79001D" : "#fff",
+                    selectedTab === "functional" ? "#002B9B" : "#fff",
                   border: "1px solid rgba(226, 232, 240, 1)",
                   padding: "10px",
                   color: selectedTab === "functional" ? "#fff" : "#4D515A",
@@ -259,7 +259,7 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
                   cursor: "pointer",
                   textTransform: "none",
                   backgroundColor:
-                    selectedTab === "locational" ? "#79001D" : "#fff",
+                    selectedTab === "locational" ? "#002B9B" : "#fff",
                   border: "1px solid rgba(226, 232, 240, 1)",
                   padding: "10px",
                   color: selectedTab === "locational" ? "#fff" : "#4D515A",
@@ -280,7 +280,7 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
                 <TableHead
                   sx={{
                     backgroundColor: "#FFF7F3",
-                    borderBottom: "2px solid #79001D",
+                    borderBottom: "2px solid #002B9B",
                   }}
                 >
                   <TableRow sx={{ textTransform: "uppercase" }}>

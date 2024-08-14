@@ -67,7 +67,7 @@ const EventsPage = () => {
     { title: "End Date", field: "endDate", sortable: true },
     { title: "No of Staffs", field: "staffCount", sortable: true },
     { title: "Locations", field: "location", sortable: true },
-    { title: "Status", field: "status", sortable: true },
+    { title: "Status", field: "status", sortable: true }
   ];
   useEffect(() => {
     let filter = { type: "events" };
@@ -91,7 +91,7 @@ const EventsPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === null ? "#79001D" : "#fff",
+              backgroundColor: status === null ? "#002B9B" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
@@ -106,7 +106,7 @@ const EventsPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === "progress" ? "#79001D" : "#fff",
+              backgroundColor: status === "progress" ? "#002B9B" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
@@ -120,7 +120,7 @@ const EventsPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === "scheduled" ? "#79001D" : "#fff",
+              backgroundColor: status === "scheduled" ? "#002B9B" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               borderRadius: "8px",
               padding: "10px",
@@ -135,7 +135,7 @@ const EventsPage = () => {
               cursor: "pointer",
               textTransform: "none",
               borderRadius: "8px",
-              backgroundColor: status === "done" ? "#79001D" : "#fff",
+              backgroundColor: status === "done" ? "#002B9B" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
               color: status === "done" ? "#fff" : "#4D515A",
@@ -166,7 +166,7 @@ const EventsPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: "#79001D",
+              backgroundColor: "#002B9B",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",

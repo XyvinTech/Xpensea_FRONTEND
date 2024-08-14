@@ -1,41 +1,92 @@
-import { Box, Dialog, Stack } from "@mui/material";
-import React, { useState } from "react";
+import { Box, Dialog, Stack, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import StyledTextField from "../../ui/StyledTextField";
 import StyledSelectField from "../../ui/StyledSelectField";
 import StyledTextArea from "../../ui/StyledTextArea";
 import StyledButton from "../../ui/StyledButton";
 import StyledInput from "../../ui/StyledInput";
+import descriptionData from "../../assets/json/ReportData";
 import { PolicyDateIcon } from "../../assets/icons/PolicyDateIcon";
-import { Grid } from "@mui/material"; // Make sure to import Grid from @mui/material
+import { Grid } from "@mui/material";
 import CalendarInput from "../../ui/CalenderInput";
 import { Controller, useForm } from "react-hook-form";
+import { useDropDownStore } from "../../store/useDropDownStore";
+import { usePolicyStore } from "../../store/policyStore";
 
-const options = [
-  { value: "option1", label: "Option 1" },
-  { value: "option2", label: "Option 2" },
-  { value: "option3", label: "Option 3" },
-];
-
-const PolicyEdit = ({ open, onClose }) => {
+const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
   const { control, handleSubmit, reset } = useForm();
-  const handleClear = () => {
+  const { addPolicies } = usePolicyStore();
+  const { tiers, fetchTiers } = useDropDownStore();
+  const handleClear = (event) => {
+    event.preventDefault();
     onClose();
-    reset();
   };
+  useEffect(() => {
+    fetchTiers();
+  }, []);
+  const roleOptions = [
+    { value: "submitter", label: "Submitter" },
+    { value: "approver", label: "Approver" },
+  ];
 
-  const onSubmit = (data) => {
+  const options = [
+    { value: "option1", label: "Option 1" },
+    { value: "option2", label: "Option 2" },
+    { value: "option3", label: "Option 3" },
+  ];
+  const tierOptions =
+    tiers && Array.isArray(tiers)
+      ? tiers.map((list) => ({
+          value: list?._id,
+          label: list?.title,
+        }))
+      : [];
+  const onSubmit = async (data) => {
     const formData = {
-      ...data,
+      policyTitle: data?.policyTitle,
       tier: data.tier.value,
-      submitter: data.submitter.value,
+      userType: data.userType.value,
       location: data.location.value,
+      activationDate: data?.activationDate,
+      policyDetails: data?.policyDetails,
+      accuracy: data?.accuracy,
+      authenticity: data?.authenticity,
+      compliance: data?.compliance,
+      relevance: data?.relevance,
+      completeness: data?.completeness,
     };
-    // console.log("Form data:", formData);
+    if (isUpdate) {
+      // await updateEvents(event._id, updateData);
+    } else {
+      await addPolicies(formData);
+    }
+
+    onChange();
     onClose();
     reset();
   };
-
- 
+  // useEffect(() => {
+  //   if (isUpdate && event) {
+  //     reset({
+  //       eventName: event?.eventName,
+  //       days: event?.days,
+  //       // startDate: event?.startDate,
+  //       // startTime: dayjs(event?.startTime),
+  //       endDate: event?.endDate,
+  //       endTime: dayjs(event?.endTime),
+  //     });
+  //   } else {
+  //     reset({
+  //       eventName: "",
+  //       days: "",
+  //       // startDate: "",
+  //       endDate: "",
+  //       startTime: dayjs(),
+  //       endTime: dayjs(),
+  //     });
+  //   }
+  //   // setIsChecked(admins?.status || false);
+  // }, [isUpdate, event, reset]);
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <Box padding={3}>
@@ -53,7 +104,7 @@ const PolicyEdit = ({ open, onClose }) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack direction="row" spacing={2} paddingBottom={2}>
               <Controller
-                name="policy title"
+                name="policyTitle"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
@@ -73,7 +124,7 @@ const PolicyEdit = ({ open, onClose }) => {
                   <StyledSelectField
                     {...field}
                     placeholder={"Tier"}
-                    options={options}
+                    options={tierOptions}
                     sx={{ flex: 1 }}
                   />
                 )}
@@ -82,14 +133,14 @@ const PolicyEdit = ({ open, onClose }) => {
 
             <Stack direction="row" spacing={2} paddingBottom={2}>
               <Controller
-                name="submitter"
+                name="userType"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
                   <StyledSelectField
                     {...field}
-                    placeholder={"Submitter"}
-                    options={options}
+                    placeholder={"User Type"}
+                    options={roleOptions}
                     sx={{ flex: 1 }}
                   />
                 )}
@@ -102,6 +153,7 @@ const PolicyEdit = ({ open, onClose }) => {
                 render={({ field }) => (
                   <CalendarInput
                     {...field}
+                    placeholder={"Activation Date"}
                     dateValue={field.value}
                     onDateChange={field.onChange}
                   />
@@ -109,7 +161,7 @@ const PolicyEdit = ({ open, onClose }) => {
               />
             </Stack>
 
-            <Stack direction="row" sx={{ width: "49.3%" }} paddingBottom={2}>
+            <Stack direction="row" paddingBottom={2}>
               <Controller
                 name="location"
                 control={control}
@@ -128,40 +180,114 @@ const PolicyEdit = ({ open, onClose }) => {
             <Stack direction="row" spacing={2} paddingBottom={2}>
               {" "}
               <Controller
-                name="description"
+                name="policyDetails"
                 control={control}
                 defaultValue=""
                 render={({ field }) => (
-                  <StyledTextArea {...field} placeholder={"Description"} />
+                  <StyledTextArea {...field} placeholder={"Policy Details"} />
                 )}
               />
             </Stack>
 
-            <Grid container spacing={1}>
-              <Grid item md={6} sm={6}></Grid>
-              <Grid item md={6} sm={6}>
-                <Stack
-                  direction="row"
-                  spacing={2}
-                  marginRight={"8px"}
-                  justifyContent="flex-end"
-                  paddingBottom={2}
-                >
+            <Stack direction="row" spacing={2} paddingBottom={2}>
+              <Controller
+                name="accuracy"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledTextField
+                    {...field}
+                    description={
+                      "Mention policy for checking ACCURACY on a scale of 10"
+                    }
+                    label={"Accuracy "}
+                    sx={{ flex: 1 }}
+                  />
+                )}
+              />{" "}
+            </Stack>
+            <Stack direction="row" spacing={2} paddingBottom={2}>
+              <Controller
+                name="authenticity"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledTextField
+                    {...field}
+                    description={
+                      "Mention policy for checking Authenticity on a scale of 10"
+                    }
+                    label={"Authenticity"}
+                    sx={{ flex: 1 }}
+                  />
+                )}
+              />{" "}
+            </Stack>
+            <Stack direction="row" spacing={2} paddingBottom={2}>
+              <Controller
+                name="compliance"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledTextField
+                    {...field}
+                    description={
+                      "Mention policy for checking Compliance on a scale of 10"
+                    }
+                    label={"Compliance"}
+                    sx={{ flex: 1 }}
+                  />
+                )}
+              />{" "}
+            </Stack>
+            <Stack direction="row" spacing={2} paddingBottom={2}>
+              <Controller
+                name="relevance"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledTextField
+                    {...field}
+                    description={
+                      "Mention policy for checking Relevance on a scale of 10"
+                    }
+                    label={"Relevance"}
+                    sx={{ flex: 1 }}
+                  />
+                )}
+              />{" "}
+            </Stack>
+            <Stack direction="row" spacing={2} paddingBottom={2}>
+              <Controller
+                name="completeness"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <StyledTextField
+                    {...field}
+                    description={
+                      "Mention policy for checking Completeness on a scale of 10"
+                    }
+                    label={"Completeness"}
+                    sx={{ flex: 1 }}
+                  />
+                )}
+              />{" "}
+            </Stack> <Stack direction="row" spacing={2} justifyContent="flex-end">
+                  {" "}
                   <StyledButton
                     variant="secondary"
-                    sx={{ padding: "15px 50px" }}
+                    padding="15px 50px 15px 50px"
                     name="Back"
-                    onClick={handleClear}
+                    onClick={(event) => handleClear(event)}
                   />
                   <StyledButton
                     variant="primary"
                     type="submit"
-                    sx={{ padding: "15px 50px" }}
+                    padding="15px 50px 15px 50px"
                     name="Save"
                   />
                 </Stack>
-              </Grid>
-            </Grid>
           </form>
         </Stack>
       </Box>

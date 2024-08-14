@@ -53,7 +53,6 @@ const FinanceSinglePage = () => {
           xs={12}
           md={12}
           bgcolor={"#F7F7F7"}
-          borderBottom={"1px solid rgba(0, 0, 0, 0.05)"}
         >
           <Stack direction={"row"} justifyContent={"space-between"} padding={2}>
             <Box display="flex" alignItems="center">
@@ -68,12 +67,11 @@ const FinanceSinglePage = () => {
             <Box
               display="flex"
               justifyContent="space-between"
-              width="30%"
               gap={2}
             >
               <>
                 {finance?.status === "reimbursed" ? (
-                  <StyledButton variant="green" name="Reimbursed" />
+                  <StyledButton variant="secondary" name="Reimbursed" />
                 ) : (
                   <StyledButton
                     variant="green"
@@ -85,16 +83,13 @@ const FinanceSinglePage = () => {
             </Box>
           </Stack>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item  md={6}>
           <StaffDetails data={finance} />
         </Grid>
-        <Grid item xs={12} md={6}></Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={6} md={6}>
           <Details data={finance} />
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Description data={finance?.description} />
-        </Grid>
+       
         <Grid item xs={12} md={12}>
           <Expenses
             data={finance?.expenses}
@@ -103,10 +98,12 @@ const FinanceSinglePage = () => {
             rejectedExpenses={rejectedExpenses}
             setRejectedExpenses={setRejectedExpenses}
           />
+        </Grid> <Grid item xs={12} md={6}>
+          <Description data={finance?.description} />
         </Grid>
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <LiveLocation />
-        </Grid>
+        </Grid> */}
         <Reimbursement
           open={approveOpen}
           onClose={handleCloseApprove}

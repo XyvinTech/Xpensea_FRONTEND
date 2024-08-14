@@ -19,6 +19,8 @@ import StaffView from "../pages/Staff/StaffView";
 
 import { PrivateRoute } from "./PrivateRouter";
 import FinanceSinglePage from "../pages/FinanaceSinglePage";
+import Transaction from "../pages/Transactions/Transaction";
+import PolicyView from "../pages/PolicyView";
 
 const router = createBrowserRouter([
   {
@@ -63,11 +65,31 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/transactions",
+    element: (
+      <PrivateRoute>
+        <Layout>
+          <Transaction />
+        </Layout>
+      </PrivateRoute>
+    ),
+  },
+  {
     path: "/approvals/view/:id",
     element: (
       <PrivateRoute>
         <Layout>
           <ApprovalPage />
+        </Layout>
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/policy/:id",
+    element: (
+      <PrivateRoute>
+        <Layout>
+          <PolicyView />
         </Layout>
       </PrivateRoute>
     ),

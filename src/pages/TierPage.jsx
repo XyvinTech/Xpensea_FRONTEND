@@ -90,7 +90,7 @@ const TierPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === null ? "#79001D" : "#fff",
+              backgroundColor: status === null ? "#002B9B" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
@@ -105,7 +105,7 @@ const TierPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === true ? "#79001D" : "#fff",
+              backgroundColor: status === true ? "#002B9B" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
@@ -119,7 +119,7 @@ const TierPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === false ? "#79001D" : "#fff",
+              backgroundColor: status === false ? "#002B9B" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               borderRadius: "8px",
               padding: "10px",
@@ -151,7 +151,7 @@ const TierPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: "#79001D",
+              backgroundColor: "#002B9B",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",

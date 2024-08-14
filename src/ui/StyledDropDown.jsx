@@ -85,7 +85,7 @@ const StyledShowMore = styled.button`
   padding: 8px 16px;
   background: none;
   border: none;
-  color:#79001D;
+  color:#002B9B;
   cursor: pointer;
   &:hover {
     text-decoration: none;

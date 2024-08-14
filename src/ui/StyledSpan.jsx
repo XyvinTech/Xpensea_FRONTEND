@@ -68,6 +68,18 @@ const TextSpan = styled.span`
       color: #7B61FF;
       width:100%;
     `}
+     ${(props) =>
+    props.variant === "reimbursed" &&
+    `
+      background-color: #EAF2FF;
+      color: #5B93FF;
+    `}
+  ${(props) =>
+    props.variant === "drafted" &&
+    `
+      background-color: rgba(240, 240, 240, 0.7);
+      color: #757575;
+    `}
 `;
 
 const StyledSpan = ({ text, variant }) => {

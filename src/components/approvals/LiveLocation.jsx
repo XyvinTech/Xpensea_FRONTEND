@@ -8,7 +8,7 @@ const LiveLocation = () => {
       <Typography
         bgcolor="#FFF7F3"
         padding={3}
-        color={"#79001D"}
+        color={"#002B9B"}
         variant="h3"
         fontWeight={600}
       >

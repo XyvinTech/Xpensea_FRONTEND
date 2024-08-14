@@ -33,7 +33,7 @@ const StaffDetail = ({ user }) => {
                 <Typography variant="h4" color={"#B4B4B4"}>
                   Status
                 </Typography>
-                <StyledSwitch checked={isChecked}variant={"primary"} />
+                <StyledSwitch checked={isChecked} variant={"primary"} />
               </Stack>
             </Stack>
           </Grid>
@@ -43,7 +43,7 @@ const StaffDetail = ({ user }) => {
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Date
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="h3">
                   {new Date(user?.createdAt).toLocaleDateString()}
                 </Typography>
               </Stack>
@@ -51,13 +51,19 @@ const StaffDetail = ({ user }) => {
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Email
                 </Typography>
-                <Typography variant="h4">{user?.email}</Typography>
+                <Typography variant="h3">{user?.email}</Typography>
               </Stack>
               <Stack>
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Tier
                 </Typography>
-                <Typography variant="h4">{user?.tier?.title}</Typography>
+                <Typography variant="h3">{user?.tier?.title}</Typography>
+              </Stack>
+              <Stack>
+                <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
+                  Designation
+                </Typography>
+                <Typography variant="h3">{user?.designation}</Typography>
               </Stack>
             </Stack>
           </Grid>
@@ -67,19 +73,28 @@ const StaffDetail = ({ user }) => {
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Location
                 </Typography>
-                <Typography variant="h4">{user?.location}</Typography>
+                <Typography variant="h3">{user?.location}</Typography>
               </Stack>
               <Stack>
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
                   Ph No
                 </Typography>
-                <Typography variant="h4">{user?.mobile}</Typography>
+                <Typography variant="h3">{user?.mobile}</Typography>
               </Stack>
               <Stack>
                 <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
-                  Role
+                  User Type
                 </Typography>
-                <Typography variant="h4">{user?.role}</Typography>
+                <Typography variant="h3">{user?.userType}</Typography>
+              </Stack>
+              <Stack>
+                <Typography variant="h4" color={"#B4B4B4"} fontWeight={400}>
+                  Approver
+                </Typography>
+                <Typography variant="h3">
+                  {" "}
+                  {user?.approver?.name || "Admin"}
+                </Typography>
               </Stack>
             </Stack>
           </Grid>

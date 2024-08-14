@@ -21,3 +21,8 @@ export const fetchUser = handleAsync(async (filter) => {
 
   return response.data;
 });
+export const fetchApprover = handleAsync(async () => {
+  const response = await axiosInstance.get(`/admin/approvers`);
+
+  return response.data;
+});

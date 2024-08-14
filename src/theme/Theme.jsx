@@ -19,7 +19,7 @@ const theme = createTheme({
       lineHeight: "30px",
     },
     h3: {
-      fontSize: "18px",
+      fontSize: "14px",
       fontWeight: 500,
     },
     h4: {

@@ -149,7 +149,7 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
             position="relative"
           >
             <Box flexGrow={1} />
-            <h2 style={{ flexGrow: 1 }}>Create an Event</h2>
+            <h2 style={{ flexGrow: 1 }}> {isUpdate ? "Extend Event" : "Create an Event"}</h2>
             {/* <Box position="absolute" right={0}>
               <MoreVert />
             </Box> */}{" "}

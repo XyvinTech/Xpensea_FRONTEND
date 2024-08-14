@@ -64,7 +64,6 @@ const ApprovalPage = () => {
           xs={12}
           md={12}
           bgcolor={"#F7F7F7"}
-          borderBottom={"1px solid rgba(0, 0, 0, 0.05)"}
         >
           <Stack direction={"row"} justifyContent={"space-between"} padding={2}>
             <Box display="flex" alignItems="center">
@@ -76,15 +75,11 @@ const ApprovalPage = () => {
                 Report
               </Typography>
             </Box>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              width="30%"
-              gap={2}
-            >
-              {approval?.status === "approved" ||
-              approval?.status === "reimbursed" ? (
+            <Box display="flex" justifyContent="space-between"  gap={2}>
+              {approval?.status === "approved" ? (
                 <StyledButton variant="green" name="Approved" />
+              ) : approval?.status === "reimbursed" ? (
+                <StyledButton variant="action" name="Reimbursed" />
               ) : approval?.status === "rejected" ? (
                 <StyledButton variant="danger" name="Rejected" />
               ) : (
@@ -104,15 +99,11 @@ const ApprovalPage = () => {
             </Box>
           </Stack>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={4}>
           <StaffDetails data={approval} />
         </Grid>
-        <Grid item xs={12} md={6}></Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={8}>
           <Details data={approval} />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Description data={approval?.description} />
         </Grid>
         <Grid item xs={12} md={12}>
           <Expenses
@@ -122,9 +113,9 @@ const ApprovalPage = () => {
             rejectedExpenses={rejectedExpenses}
             setRejectedExpenses={setRejectedExpenses}
           />
-        </Grid>
+        </Grid>{" "}
         <Grid item xs={12} md={6}>
-          <LiveLocation />
+          <Description data={approval?.description} />
         </Grid>
         <RejectedForm
           open={rejectOpen}

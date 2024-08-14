@@ -44,7 +44,7 @@ const ExpenseDetail = ({ open, onClose, expense, onMarkAuthentic, onMarkFaulty }
               <Typography variant="h4" color={"#333333"}>
                 {expense.title}
               </Typography>
-              <Typography variant="h3" fontWeight={"600"} color={" #79001D"}>
+              <Typography variant="h3" fontWeight={"600"} color={" #002B9B"}>
                 {expense.amount}
               </Typography>
             </Stack>

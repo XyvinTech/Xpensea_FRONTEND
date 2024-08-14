@@ -65,7 +65,7 @@ const StaffExpense = () => {
               </Stack>
               <Typography
                 variant="h4"
-                color={"#79001D"}
+                color={"#002B9B"}
                 marginTop={1}paddingRight={2}
                 fontWeight={600}
               >

@@ -29,12 +29,12 @@ import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 // import { AdminIcon } from "../assets/icons/AdminIcon";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import { FinanceIcon } from "../assets/icons/FinanceIcon";
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 // import { StaffIcon } from "../assets/icons/StaffIcon";
 import GroupsIcon from "@mui/icons-material/Groups";
-// import { TierIcon } from "../assets/icons/TierIcon";
+import PaymentIcon from "@mui/icons-material/Payment";
 import AlignVerticalBottomIcon from "@mui/icons-material/AlignVerticalBottom";
-import { PolicyIcon } from "../assets/icons/PolicyIcon";
+import PolicyIcon from "@mui/icons-material/Policy";
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -53,28 +53,76 @@ const drawerWidth = 300;
 
 const subNavigation = [
   { name: "Dashboard", to: "/dashboard", icon: <GridViewIcon /> },
-  { name: "Approvals", to: "/approvals", icon: <PendingActionsIcon />, permissions: ["approvalManagement_view", "approvalManagement_modify"] },
-  { name: "Events", to: "/events", icon: <EventAvailableIcon />, permissions: ["eventManagement_view", "eventManagement_modify"] },
+  {
+    name: "Approvals",
+    to: "/approvals",
+    icon: <PendingActionsIcon />,
+    permissions: ["approvalManagement_view", "approvalManagement_modify"],
+  },
+  {
+    name: "Events",
+    to: "/events",
+    icon: <EventAvailableIcon />,
+    permissions: ["eventManagement_view", "eventManagement_modify"],
+  },
   {
     name: "Sub-admin",
     icon: <SupervisorAccountIcon />,
     subItems: [
-      { name: "Admin Management", to: "/subadmin/admin-management", permissions: ["adminManagement_view", "adminManagement_modify"] },
-      { name: "Role Management", to: "/subadmin/role-management", permissions: ["roleManagement_view", "roleManagement_modify"] },
-      { name: "Admin Activity", to: "/subadmin/admin-activity", permissions: [] },
+      {
+        name: "Admin Management",
+        to: "/subadmin/admin-management",
+        permissions: ["adminManagement_view", "adminManagement_modify"],
+      },
+      {
+        name: "Role Management",
+        to: "/subadmin/role-management",
+        permissions: ["roleManagement_view", "roleManagement_modify"],
+      },
+      {
+        name: "Admin Activity",
+        to: "/subadmin/admin-activity",
+        permissions: [],
+      },
     ],
   },
-  { name: "Finance", to: "/finance", icon: <FinanceIcon />, permissions: ["financeManagement_view", "financeManagement_modify"] },
-  { name: "Staffs", to: "/staffs", icon: <GroupsIcon />, permissions: ["userManagement_view", "userManagement_modify"] },
-  { name: "Tier", to: "/tier", icon: <AlignVerticalBottomIcon />, permissions: ["tierManagement_view", "tierManagement_modify"] },
-  { name: "Policy", to: "/policy", icon: <PolicyIcon />, permissions: [] },
+  {
+    name: "Finance",
+    to: "/finance",
+    icon: <AccountBalanceIcon />,
+    permissions: ["financeManagement_view", "financeManagement_modify"],
+  },
+  {
+    name: "Transactions",
+    to: "/transactions",
+    icon: <PaymentIcon />,
+    permissions: ["financeManagement_view", "financeManagement_modify"],
+  },
+  {
+    name: "Staffs",
+    to: "/staffs",
+    icon: <GroupsIcon />,
+    permissions: ["userManagement_view", "userManagement_modify"],
+  },
+  {
+    name: "Tier",
+    to: "/tier",
+    icon: <AlignVerticalBottomIcon />,
+    permissions: ["tierManagement_view", "tierManagement_modify"],
+  },
+  {
+    name: "Policy",
+    to: "/policy",
+    icon: <PolicyIcon />,
+    permissions: ["policyManagement_view", "policyManagement_modify"],
+  },
 ];
 
 const filterNavigation = (navItems, permissions) => {
   return navItems.reduce((acc, item) => {
     if (
       !item.permissions ||
-      item.permissions.some(permission => permissions.includes(permission))
+      item.permissions.some((permission) => permissions.includes(permission))
     ) {
       if (item.subItems) {
         const filteredSubItems = filterNavigation(item.subItems, permissions);
@@ -211,7 +259,10 @@ const Layout = (props) => {
   const handleDialogClose = () => {
     setDialogOpen(false);
   };
-  const navItems = filterNavigation(subNavigation, admin?.role?.permissions || []);
+  const navItems = filterNavigation(
+    subNavigation,
+    admin?.role?.permissions || []
+  );
 
   const getCurrentPageName = () => {
     for (const item of subNavigation) {
@@ -254,7 +305,7 @@ const Layout = (props) => {
                     marginRight: "10px",
                     "&:hover": {
                       color: "#fff",
-                      backgroundColor: "#79001D",
+                      backgroundColor: "#002B9B",
                     },
                     "&:hover .MuiListItemIcon-root": { color: "#fff" },
                   }}
@@ -289,28 +340,28 @@ const Layout = (props) => {
                         component={Link}
                         to={subItem.to}
                         sx={{
-                          borderRadius: "10px",
+                          // borderRadius: "10px",
                           marginLeft: "40px",
                           marginRight: "40px",
                           color:
                             location.pathname === subItem.to
-                              ? "#79001D"
+                              ? "#002B9B"
                               : "#4D515A",
                           backgroundColor:
                             location.pathname === subItem.to
                               ? "#FFF7F3"
                               : "transparent",
                           "&:hover": {
-                            color: "#79001D",
-                            backgroundColor: "#FFF7F3",
-                            border: "1px solid #79001D ",
+                            color: "#002B9B",
+                            // backgroundColor: "#FFF7F3",
+                            // border: "1px solid #002B9B ",
                           },
                         }}
                       >
                         <ListItemText
                           primary={subItem.name}
                           primaryTypographyProps={{
-                            variant: "h4",
+                            variant: "h3",
                           }}
                         />
                       </ListItemButton>
@@ -334,8 +385,8 @@ const Layout = (props) => {
                   marginRight: "10px",
                   color: location.pathname === item.to ? "#fff" : "#919099",
                   backgroundColor:
-                    location.pathname === item.to ? "#79001D" : "transparent",
-                  "&:hover": { color: "#fff", backgroundColor: "#79001D" },
+                    location.pathname === item.to ? "#002B9B" : "transparent",
+                  "&:hover": { color: "#fff", backgroundColor: "#002B9B" },
                   "&:hover .MuiListItemIcon-root": { color: "#fff" },
                 }}
               >
@@ -512,8 +563,9 @@ const Layout = (props) => {
         component="main"
         sx={{
           flexGrow: 1,
+          minHeight: "100vh",
           p: 3,
-          backgroundColor: "#F3F3F3",
+          backgroundColor: "#F7F7F7",
           paddingTop: 6,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
         }}

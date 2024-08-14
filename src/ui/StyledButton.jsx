@@ -10,15 +10,15 @@ const buttonVariants = css`
       font-weight: 600;
       color: #ffffff;
       line-height: 18px;
-      background-color: #79001d;
+      background-color: #002B9B;
     `}
   ${(props) =>
     props.variant === "secondary" &&
     css`
-      border: 1px solid #a8a8a8;
+      border: 1px solid #002B9B;
       font-size: 18px;
       font-weight: 700;
-      color: #919099;
+      color: #002B9B;
       line-height: 18px;
       background-color: #ffffff;
     `}
@@ -54,9 +54,9 @@ const buttonVariants = css`
   ${(props) =>
     props.variant === "white" &&
     css`
-      border: 1px solid #79001d;
+      border: 1px solid #002B9B;
       font-size: 19px;
-      color: #79001d;
+      color: #002B9B;
       font-weight: 600;
       line-height: 24px;
       background-color: #ffffff;
@@ -66,7 +66,7 @@ const buttonVariants = css`
     css`
       border: 1px solid #bebebe;
       font-size: 16px;
-      color: ${props.color || "#79001d"};
+      color: ${props.color || "#002B9B"};
       font-weight: 500;
       line-height: 20px;
       background-color: #ffffff;
@@ -81,9 +81,8 @@ const disabledStyles = css`
     `}
 `;
 const ButtonContainer = styled.button`
-  padding: 15px 20px;
+  padding: 10px 20px;
   text-align: center;
-  width: 100%; // Ensure the button container is full width
   font-family: "Inter", "sans-serif";
   display: flex;
   justify-content: center;

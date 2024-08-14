@@ -64,7 +64,7 @@ const FinancePage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === null ? "#79001D" : "#fff",
+              backgroundColor: status === null ? "#002B9B" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
@@ -79,7 +79,7 @@ const FinancePage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === "reimbursed" ? "#79001D" : "#fff",
+              backgroundColor: status === "reimbursed" ? "#002B9B" : "#fff",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
@@ -93,7 +93,7 @@ const FinancePage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === "approved" ? "#79001D" : "#fff",
+              backgroundColor: status === "approved" ? "#002B9B" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               borderRadius: "8px",
               padding: "10px",

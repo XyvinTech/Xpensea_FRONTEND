@@ -28,6 +28,7 @@ import { EventIcon } from "../assets/icons/EventIcon";
 import { Icon1 } from "../assets/icons/Icon1";
 import { Icon2 } from "../assets/icons/Icon2";
 import { EditIcon } from "../assets/icons/EditIcon";
+import { ViewIcon } from "../assets/icons/ViewIcon";
 import { ShareIcon } from "../assets/icons/ShareIcon";
 import { useListStore } from "../store/listStore";
 
@@ -36,18 +37,18 @@ const StyledTableCell = styled(TableCell)`
     background-color: #fff;
     color: #454545;
     text-transform: uppercase;
-    font-size: 16px;
+    font-size: 14px;
     padding: 16px;
     font-family: inter;
     text-align: center;
     font-weight: 600;
   }
   &.${tableCellClasses.body} {
-    font-size: 16px;
+    font-size: 14px;
     font-family: inter;
     padding: 16px;
     color: #4d515a;
-    text-align: center;
+     text-align: center;
   }
 `;
 
@@ -74,6 +75,7 @@ const StyledTable = ({
   onEdit,
   onSort,
   onShare,
+  showView,
   showEdit,
   showShare,
   dashboard,
@@ -125,6 +127,11 @@ const StyledTable = ({
     handleMenuClose();
   };
 
+  const handleView = () => {
+    onEdit(rowId);
+    handleMenuClose();
+  };
+
   const handleShare = () => {
     onShare(rowId);
     handleMenuClose();
@@ -162,11 +169,13 @@ const StyledTable = ({
       case "approved":
         return "green";
       case "reimbursed":
-        return "green";
+        return "reimbursed";
+      case "drafted":
+        return "drafted";
       case "progress":
         return "green";
-        case "done":
-          return "green";
+      case "done":
+        return "green";
       default:
         return "default";
     }
@@ -174,9 +183,9 @@ const StyledTable = ({
 
   const getEventIcon = (event) => {
     switch (event) {
-      case "program":
+      case "Admin":
         return <Icon1 />;
-      case "trip":
+      case "User":
         return <Icon2 />;
       default:
         return null;
@@ -185,7 +194,7 @@ const StyledTable = ({
 
   return (
     <Box>
-      <TableContainer sx={{ border: "none" }}>
+      <TableContainer sx={{ border: "none", }}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -200,7 +209,7 @@ const StyledTable = ({
               {columns.map((column) => (
                 <StyledTableCell
                   key={column.field}
-                  padding={column.padding || "normal"}
+                  padding={ "normal"}
                 >
                   {column.sortable ? (
                     <TableSortLabel
@@ -218,7 +227,7 @@ const StyledTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-          {loading ? (
+            {loading ? (
               // Display skeletons while loading
 
               Array.from(new Array(5)).map((_, index) => (
@@ -256,149 +265,156 @@ const StyledTable = ({
                 </StyledTableCell>
               </StyledTableRow>
             ) : (
-            lists.map((row) => (
-              <StyledTableRow
-                role="checkbox"
-                key={row._id}
-                selected={isSelected(row._id)}
-              >
-                <StyledTableCell padding="checkbox">
-                  <StyledCheckbox
-                    checked={isSelected(row._id)}
-                    onChange={(event) =>
-                      handleRowCheckboxChange(event, row._id)
-                    }
-                  />
-                </StyledTableCell>
-                {columns.map((column, index) => (
-                  <StyledTableCell
-                    key={column.field}
-                    padding={column.padding || "normal"}
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => handleRowClick(row._id)}
-                  >
-                    {index === 0 && (
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        {getEventIcon(row.event)}{" "}
-                        {column.field === "status" ? (
+              lists.map((row) => (
+                <StyledTableRow
+                  role="checkbox"
+                  key={row._id}
+                  selected={isSelected(row._id)}
+                >
+                  <StyledTableCell padding="checkbox">
+                    <StyledCheckbox
+                      checked={isSelected(row._id)}
+                      onChange={(event) =>
+                        handleRowCheckboxChange(event, row._id)
+                      }
+                    />
+                  </StyledTableCell>
+                  {columns.map((column, index) => (
+                    <StyledTableCell
+                      key={column.field}
+                      padding={column.padding || "normal"}
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => handleRowClick(row._id)}
+                    >
+                      {index === 0 ? (
+                     <Box display="flex" alignItems="center" justifyContent="flex-start">
+                     {row.type ? getEventIcon(row.type) : null}
+                     <Box marginLeft={1} display="inline-flex" alignItems="center">
+                       {row[column.field]}
+                     </Box>
+                   </Box>
+                   
+                    
+                      ) : column.field !== "type" ? (
+                        column.field === "status" ? (
                           <StyledSpan
                             variant={getStatusVariant(row[column.field])}
-                            text={row[column.field]}
+                            text={
+                              typeof row[column.field] === "boolean"
+                                ? row[column.field]
+                                  ? "activated"
+                                  : "deactivated"
+                                : row[column.field]
+                            }
                           />
+                        ) : column.field === "accessType" ? (
+                          <>
+                            {Array.isArray(row.permissions) &&
+                              row.permissions.length > 0 && (
+                                <Box>
+                                  Permissions
+                                  {/* : {row.permissions.join(", ")} */}
+                                </Box>
+                              )}
+                            {Array.isArray(row.location) &&
+                              row.location.length > 0 && (
+                                <Box>
+                                  Locations
+                                  {/* : {row.location.join(", ")} */}
+                                </Box>
+                              )}
+                          </>
                         ) : (
                           row[column.field]
-                        )}
-                      </Box>
-                    )}
-                    {index !== 0 &&
-                      (column.field === "status" ? (
-                        <StyledSpan
-                          variant={getStatusVariant(row[column.field])}
-                          text={
-                            typeof row[column.field] === "boolean"
-                              ? row[column.field]
-                                ? "activated"
-                                : "deactivated"
-                              : row[column.field]
-                          }
-                        />
-                      ) : column.field === "accessType" ? (
-                        <>
-                          {Array.isArray(row.permissions) &&
-                            row.permissions.length > 0 && (
-                              <Box>
-                                Permissions
-                                {/* : {row.permissions.join(", ")} */}
-                              </Box>
-                            )}
-                          {Array.isArray(row.location) &&
-                            row.location.length > 0 && (
-                              <Box>
-                                Locations
-                                {/* : {row.location.join(", ")} */}
-                              </Box>
-                            )}
-                        </>
-                      ) : (
-                        row[column.field]
-                      ))}
+                        )
+                      ) : null}
+                    </StyledTableCell>
+                  ))}
+
+                  <StyledTableCell padding="normal">
+                    <IconButton
+                      aria-controls="simple-menu"
+                      aria-haspopup="true"
+                      onClick={(event) => handleMenuOpen(event, row._id)}
+                    >
+                      <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                      id="simple-menu"
+                      anchorEl={anchorEl}
+                      keepMounted
+                      open={Boolean(anchorEl) && rowId === row._id}
+                      onClose={handleMenuClose}
+                    >
+                      {showShare
+                        ? [
+                            <MenuItem key="edit" onClick={handleEdit}>
+                              <StyledSpan
+                                variant={"edit"}
+                                text={
+                                  <>
+                                    <EditIcon /> Edit
+                                  </>
+                                }
+                              />
+                            </MenuItem>,
+                            <MenuItem key="share" onClick={handleShare}>
+                              <StyledSpan
+                                variant={"share"}
+                                text={
+                                  <>
+                                    <ShareIcon /> Share
+                                  </>
+                                }
+                              />
+                            </MenuItem>,
+                          ]
+                        : showEdit
+                        ? [
+                            <MenuItem key="edit" onClick={handleEdit}>
+                              <StyledSpan
+                                variant={"edit"}
+                                text={
+                                  <>
+                                    <EditIcon /> Edit
+                                  </>
+                                }
+                              />
+                            </MenuItem>,
+                          ]
+                        : showView
+                        ? [
+                            <MenuItem key="view" onClick={handleView}>
+                              <StyledSpan
+                                variant={"view"}
+                                text={
+                                  <>
+                                    <ViewIcon /> View
+                                  </>
+                                }
+                              />
+                            </MenuItem>,
+                          ]
+                        : [
+                            <MenuItem
+                              key="delete"
+                              onClick={() => handleRowDelete(row._id)}
+                            >
+                              <StyledSpan
+                                variant={"red"}
+                                text={
+                                  <>
+                                    <DeleteIcon /> Delete
+                                  </>
+                                }
+                              />
+                            </MenuItem>,
+                          ]}
+                    </Menu>
                   </StyledTableCell>
-                ))}
-                <StyledTableCell padding="normal">
-                  <IconButton
-                    aria-controls="simple-menu"
-                    aria-haspopup="true"
-                    onClick={(event) => handleMenuOpen(event, row._id)}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                  <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl) && rowId === row._id}
-                    onClose={handleMenuClose}
-                  >
-                    {showShare
-                      ? [
-                          <MenuItem key="edit" onClick={handleEdit}>
-                            <StyledSpan
-                              variant={"edit"}
-                              text={
-                                <>
-                                  <EditIcon /> Edit
-                                </>
-                              }
-                            />
-                          </MenuItem>,
-                          <MenuItem key="share" onClick={handleShare}>
-                            <StyledSpan
-                              variant={"share"}
-                              text={
-                                <>
-                                  <ShareIcon /> Share
-                                </>
-                              }
-                            />
-                          </MenuItem>,
-                        ]
-                      : showEdit
-                      ? [
-                          <MenuItem key="edit" onClick={handleEdit}>
-                            <StyledSpan
-                              variant={"edit"}
-                              text={
-                                <>
-                                  <EditIcon /> Edit
-                                </>
-                              }
-                            />
-                          </MenuItem>,
-                        ]
-                      : [
-                          <MenuItem
-                            key="delete"
-                            onClick={() => handleRowDelete(row._id)}
-                          >
-                            <StyledSpan
-                              variant={"red"}
-                              text={
-                                <>
-                                  <DeleteIcon /> Delete
-                                </>
-                              }
-                            />
-                          </MenuItem>,
-                        ]}
-                  </Menu>
-                </StyledTableCell>
-              </StyledTableRow>
-          ))
-        )}
+                </StyledTableRow>
+              ))
+            )}
           </TableBody>
         </Table>
         <Divider />

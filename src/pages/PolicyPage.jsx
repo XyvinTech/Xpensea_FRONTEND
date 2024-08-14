@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { userColumns, userData } from "../assets/json/AllData";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -8,12 +8,15 @@ import StyledFilter from "../components/StyledFilter";
 import CreateEvent from "../components/events/CreateEvent";
 import ShareVia from "../components/policy/ShareVia";
 import PolicyEdit from "../components/policy/PolicyEdit";
+import { useListStore } from "../store/listStore";
 const PolicyPage = () => {
   const navigate = useNavigate();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
+  const [isChange, setIsChange] = useState(false);
   const [policyOpen, setPolicyOpen] = useState(false);
+  const { fetchLists, pageNo } = useListStore();
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     // console.log("Selected items:", newSelectedIds);
@@ -29,7 +32,13 @@ const PolicyPage = () => {
   const handleSort = (field) => {
     // console.log(`Sorting by ${field}`);
   };
-
+  const handleChange = () => {
+    setIsChange(!isChange);
+  };
+  const handleView = (id) => {
+    // console.log("View item:", id);
+    navigate(`/policy/${id}`);
+  };
   const handleOpenFilter = () => {
     setFilterOpen(true);
   };
@@ -46,6 +55,15 @@ const PolicyPage = () => {
   const handleCloseShare = () => {
     setShareOpen(false);
   };
+  useEffect(() => {
+    let filter = { type: "policy" };
+
+    // if (status !== null) {
+    //   filter.status = status;
+    // }
+    filter.pageNo = pageNo;
+    fetchLists(filter);
+  }, [isChange, fetchLists, pageNo]);
   return (
     <>
       <Stack
@@ -58,7 +76,7 @@ const PolicyPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: "#79001D",
+              backgroundColor: "#002B9B",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
@@ -133,7 +151,7 @@ const PolicyPage = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: "#79001D",
+              backgroundColor: "#002B9B",
               borderRadius: "8px",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
@@ -153,11 +171,16 @@ const PolicyPage = () => {
           onShare={handleShare}
           onSort={handleSort}
           onDelete={handleDelete}
+          onView={handleView}
           showShare
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <PolicyEdit open={policyOpen} onClose={handleClosePolicy} />
+      <PolicyEdit
+        open={policyOpen}
+        onClose={handleClosePolicy}
+        onChange={handleChange}
+      />
       <ShareVia open={shareOpen} onClose={handleCloseShare} />
     </>
   );

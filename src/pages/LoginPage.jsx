@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Divider, Paper, Typography, Stack } from "@mui/material";
 import { XpenseaIcon } from "../assets/icons/XpenseaIcon";
-import Loginbackground from "../assets/images/loginbackground.png";
 import StyledInput from "../ui/StyledInput";
 import StyledButton from "../ui/StyledButton";
 import { EmailIcon } from "../assets/icons/EmailIcon";
@@ -48,7 +47,7 @@ const LoginPage = () => {
     <div
       className="Login"
       style={{
-        backgroundImage: `url(${Loginbackground})`,
+        background: 'radial-gradient(circle, rgba(0, 43, 155, 1) 0%, rgba(25, 25, 112, 1) 100%)',
         backgroundSize: "cover",
         backgroundPosition: "center",
         height: "100vh",
