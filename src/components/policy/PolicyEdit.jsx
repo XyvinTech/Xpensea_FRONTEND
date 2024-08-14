@@ -15,7 +15,7 @@ import { usePolicyStore } from "../../store/policyStore";
 
 const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
   const { control, handleSubmit, reset } = useForm();
-  const { addPolicies } = usePolicyStore();
+  const { addPolicies, policy, updatePolicies } = usePolicyStore();
   const { tiers, fetchTiers } = useDropDownStore();
   const handleClear = (event) => {
     event.preventDefault();
@@ -56,7 +56,7 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
       completeness: data?.completeness,
     };
     if (isUpdate) {
-      // await updateEvents(event._id, updateData);
+      await updatePolicies(policy._id, formData);
     } else {
       await addPolicies(formData);
     }
@@ -65,7 +65,43 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
     onClose();
     reset();
   };
-
+  useEffect(() => {
+    if (isUpdate && policy) {
+      reset({
+        policyTitle: policy?.policyTitle,
+        tier: { value: policy?.tier?._id, label: policy?.tier?._id },
+        location: policy.location
+          ? { value: policy.location, label: policy.location }
+          : "",
+        userType: policy.userType
+          ? { value: policy.userType, label: policy.userType }
+          : "",
+        activationDate: policy?.activationDate,
+        policyDetails: policy?.policyDetails,
+        accuracy: policy?.accuracy,
+        authenticity: policy?.authenticity,
+        compliance: policy?.compliance,
+        relevance: policy?.relevance,
+        completeness: policy?.completeness,
+      });
+    } else {
+      reset({
+        policyTitle: "",
+        userType: "",
+        location: "",
+        tier: "",
+        activationDate: "",
+        policyDetails: "",
+        accuracy: "",
+        relevance: "",
+        compliance: "",
+        authenticity: "",
+        completeness: "",
+       
+      });
+    }
+    // setIsChecked(admins?.status || false);
+  }, [isUpdate, policy, reset]);
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <Box padding={3}>

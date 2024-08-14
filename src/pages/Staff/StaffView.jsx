@@ -78,7 +78,7 @@ const StaffView = () => {
           <Tab label="Reports" />
         </Tabs>
       </Box>
-      {selectedTab === 0 && <WalletTable />}
+      {selectedTab === 0 && <WalletTable  id={id}/>}
       {selectedTab === 1 && <ReportTable id={id} />}
     </>
   );

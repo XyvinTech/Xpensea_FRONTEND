@@ -17,8 +17,8 @@ const TextArea = styled.textarea`
     color: #79747E;
   }
 `;
-const StyledTextArea = ({ placeholder, onChange }) => {
-    return <TextArea placeholder={placeholder} onChange={onChange} />;
+const StyledTextArea = ({ placeholder, onChange,value }) => {
+    return <TextArea placeholder={placeholder} onChange={onChange} value={value}/>;
   };
   
   export default StyledTextArea;

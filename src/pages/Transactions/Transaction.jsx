@@ -13,6 +13,7 @@ const Transaction = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const { fetchLists, pageNo } = useListStore();
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     // console.log("Selected items:", newSelectedIds);
@@ -41,6 +42,15 @@ const Transaction = () => {
   const handleCloseFilter = () => {
     setFilterOpen(false);
   };
+  useEffect(() => {
+    let filter = { type: "transactions" };
+
+    // if (status !== null) {
+    //   filter.status = status;
+    // }
+    filter.pageNo = pageNo;
+    fetchLists(filter);
+  }, [isChange, fetchLists, pageNo]);
   const userColumns = [
     { title: "STAFF NAME", field: "title", sortable: false },
     { title: "tRANSACTION ID", field: "reportDate", sortable: true },

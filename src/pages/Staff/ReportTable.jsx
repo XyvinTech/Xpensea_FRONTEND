@@ -5,7 +5,7 @@ import StyledTable from "../../ui/StyledTable";
 import StyledFilter from "../../components/StyledFilter";
 import { useListStore } from "../../store/listStore";
 
-const ReportTable = ( {id}) => {
+const ReportTable = ({ id }) => {
   const [filterOpen, setFilterOpen] = useState(false);
   const { fetchReportById } = useListStore();
   const [selectedRows, setSelectedRows] = useState([]);

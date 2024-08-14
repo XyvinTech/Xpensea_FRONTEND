@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { userColumns, userData } from "../assets/json/AllData";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FilterIcon } from "../assets/icons/FilterIcon";
@@ -9,25 +8,41 @@ import CreateEvent from "../components/events/CreateEvent";
 import ShareVia from "../components/policy/ShareVia";
 import PolicyEdit from "../components/policy/PolicyEdit";
 import { useListStore } from "../store/listStore";
+import { usePolicyStore } from "../store/policyStore";
 const PolicyPage = () => {
   const navigate = useNavigate();
   const [selectedRows, setSelectedRows] = useState([]);
+  const {  fetchPolicyById } = usePolicyStore();
   const [filterOpen, setFilterOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [policyOpen, setPolicyOpen] = useState(false);
   const { fetchLists, pageNo } = useListStore();
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     // console.log("Selected items:", newSelectedIds);
   };
+
   const handleShare = (id) => {
     // console.log("View item:", id);
     setShareOpen(true);
   };
-
+  const userColumns = [
+    { title: "Policy Title", field: "policyTitle", sortable: false },
+    { title: "valid from", field: "activationDate", sortable: true },
+    { title: "Tier", field: "tier", sortable: true },
+    { title: "user type", field: "userType", sortable: true },
+    { title: "Location", field: "location", sortable: true },
+  ];
   const handleDelete = (id) => {
     // console.log("Delete item :", id);
+  };
+  const handleEdit = async (id) => {
+    await fetchPolicyById(id);
+
+    setIsUpdate(true);
+    setPolicyOpen(true);
   };
   const handleSort = (field) => {
     // console.log(`Sorting by ${field}`);
@@ -48,9 +63,11 @@ const PolicyPage = () => {
   };
   const handleOpenPolicy = () => {
     setPolicyOpen(true);
+    setIsUpdate(false);
   };
   const handleClosePolicy = () => {
     setPolicyOpen(false);
+    setIsUpdate(false);
   };
   const handleCloseShare = () => {
     setShareOpen(false);
@@ -166,12 +183,12 @@ const PolicyPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          data={userData}
           onSelectionChange={handleSelectionChange}
           onShare={handleShare}
           onSort={handleSort}
           onDelete={handleDelete}
           onView={handleView}
+          onEdit={handleEdit}
           showShare
         />
       </Box>
@@ -180,6 +197,7 @@ const PolicyPage = () => {
         open={policyOpen}
         onClose={handleClosePolicy}
         onChange={handleChange}
+        isUpdate={isUpdate}
       />
       <ShareVia open={shareOpen} onClose={handleCloseShare} />
     </>
