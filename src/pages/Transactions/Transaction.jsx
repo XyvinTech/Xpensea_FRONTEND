@@ -6,11 +6,14 @@ import StyledFilter from "../../components/StyledFilter";
 import { FilterIcon } from "../../assets/icons/FilterIcon";
 import { useListStore } from "../../store/listStore";
 import AdvancePayment from "./AdvancePayment";
+import { useTransactionStore } from "../../store/transactionStore";
 const Transaction = () => {
   const navigate = useNavigate();
   const [isChange, setIsChange] = useState(false);
   const [status, setStatus] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [isUpdate, setIsUpdate] = useState(false);
+  const { fetchTransactionById } = useTransactionStore();
   const [filterOpen, setFilterOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const { fetchLists, pageNo } = useListStore();
@@ -18,11 +21,18 @@ const Transaction = () => {
     setSelectedRows(newSelectedIds);
     // console.log("Selected items:", newSelectedIds);
   };
-  const handleView = (id) => {
+  const handleView = async (id) => {
+    await fetchTransactionById(id);
+
+    setIsUpdate(true);
     setOpen(true);
+  };
+  const handleChange = () => {
+    setIsChange(!isChange);
   };
   const handleClose = () => {
     setOpen(false);
+    setIsUpdate(false);
   };
   const handleDelete = async () => {
     // if (selectedRows.length > 0) {
@@ -52,9 +62,9 @@ const Transaction = () => {
     fetchLists(filter);
   }, [isChange, fetchLists, pageNo]);
   const userColumns = [
-    { title: "STAFF NAME", field: "title", sortable: false },
+    { title: "STAFF NAME", field: "receiver", sortable: false },
     { title: "tRANSACTION ID", field: "reportDate", sortable: true },
-    { title: "AMOUNT", field: "expenseCount", sortable: true },
+    { title: "AMOUNT", field: "amount", sortable: true },
     { title: "PAYMENT METHOD", field: "totalAmount", sortable: true },
     { title: "REQUESTED BY", field: "location", sortable: true },
     { title: "Status", field: "status", sortable: true },
@@ -140,7 +150,7 @@ const Transaction = () => {
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <AdvancePayment open={open} onClose={handleClose} />
+      <AdvancePayment open={open} onClose={handleClose}  onChange={handleChange}isUpdate={isUpdate} />
     </>
   );
 };

@@ -4,12 +4,14 @@ import StyledTable from "../../ui/StyledTable";
 import { useListStore } from "../../store/listStore";
 
 const WalletTable = ({ id }) => {
-  const { fetchWalletById } = useListStore();
-  // useEffect(() => {
-  //   if (id) {
-  //     fetchWalletById(id);
-  //   }
-  // }, [id, fetchWalletById]);
+  const { fetchLists,pageNo } = useListStore();
+  useEffect(() => {
+    let filter = { type: "transactions" };
+   
+    // filter.staffId = id;
+    filter.pageNo = pageNo;
+    fetchLists(filter);
+  }, [fetchLists, pageNo]);
   const userColumns = [
     { title: "Order", field: "title", sortable: false },
     { title: "Date", field: "reportDate", sortable: true },

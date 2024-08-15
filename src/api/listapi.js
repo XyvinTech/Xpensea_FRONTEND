@@ -14,10 +14,7 @@ export const getReport = handleAsync(async (id, filter) => {
   });
   return response.data;
 });
-export const getWallet = handleAsync(async (id) => {
-  const response = await axiosInstance.get(`/admin/wallet/${id}`);
-  return response.data;
-});
+
 export const fetchUser = handleAsync(async (filter) => {
   const response = await axiosInstance.get(`/admin/users/filtered`, {
     params: filter,

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { fetchList, getReport, getWallet } from "../api/listapi";
+import { fetchList, getReport } from "../api/listapi";
 
 const useListStore = create((set, get) => ({
   lists: [],
@@ -38,11 +38,7 @@ const useListStore = create((set, get) => ({
     const report = await getReport(userId, filter);
     set({ lists: report.data });
   },
-  fetchWalletById: async (userId) => {
-    set({ lists: [] });
-    const report = await getWallet(userId);
-    set({ lists: report.data });
-  },
+
 }));
 
 export { useListStore };

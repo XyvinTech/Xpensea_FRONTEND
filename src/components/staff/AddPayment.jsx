@@ -4,9 +4,12 @@ import StyledButton from "../../ui/StyledButton";
 import StyledTextField from "../../ui/StyledTextField";
 import { Controller, useForm } from "react-hook-form";
 import ConfirmPayment from "./ConfirmPayment";
+import { useAdminStore } from "../../store/adminStore";
 
-const AddPayment = ({ open, onClose, onChange }) => {
+const AddPayment = ({ open, onClose, onChange, id }) => {
   const [approveOpen, setApproveOpen] = useState(false);
+  const { admin } = useAdminStore();
+  const [formData, setFormData] = useState(null);
 
   const {
     control,
@@ -24,6 +27,16 @@ const AddPayment = ({ open, onClose, onChange }) => {
     handleCloseApprove();
   };
   const onSubmit = async (data) => {
+    const newFormData = {
+      amount: data?.amount,
+      description: data.description,
+      requestedBy: {
+        sender: admin._id,
+        receiver: id,
+      },
+    };
+    setFormData(newFormData);
+
     setApproveOpen(true);
   };
 
@@ -109,6 +122,7 @@ const AddPayment = ({ open, onClose, onChange }) => {
                 open={approveOpen}
                 onApprove={handleApprove}
                 onClose={handleCloseApprove}
+                formData={formData}
               />
             </Grid>{" "}
           </form>

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import StyledButton from "../../ui/StyledButton";
 import AddPayment from "./AddPayment";
 
-const WalletComponent = () => {
+const WalletComponent = ({id}) => {
   const [paymentOpen, setPaymentOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
   const handleOpenPayment = () => {
@@ -50,7 +50,7 @@ const WalletComponent = () => {
         <AddPayment
           open={paymentOpen}
           onClose={handleClosePayment}
-          onChange={handleChange}
+          onChange={handleChange}id={id}
         />
       </Grid>
     </Grid>

@@ -5,21 +5,33 @@ import StyledTextField from "../../ui/StyledTextField";
 import { Controller, useForm } from "react-hook-form";
 import StyledTextArea from "../../ui/StyledTextArea";
 import StyledSelectField from "../../ui/StyledSelectField";
+import { useTransactionStore } from "../../store/transactionStore";
 
-const AdvancePayment = ({ open, onClose, onChange }) => {
+const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+  const { transaction, updateTransactions } = useTransactionStore();
   const handleClear = (event) => {
     event.preventDefault();
     onClose();
   };
+  const options = [
+    { value: "Bank Transfer", label: "Bank Transfer" },
+    { value: "Cash", label: "Cash" },
+    { value: "Credit card", label: "Credit card" },
+    { value: "Other", label: "Other" },
+  ];
 
-  const onSubmit = async (data) => {};
-
+  const onSubmit = async (data) => {
+    const formData = {
+      paymentMethod: data?.paymentMethod?.value,
+    };
+    await updateTransactions(transaction._id, formData);
+  };
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <Box padding={3}>
@@ -27,21 +39,25 @@ const AdvancePayment = ({ open, onClose, onChange }) => {
           <h2 style={{ flexGrow: 1, textAlign: "center" }}>Advance Payment</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={4} padding={6}>
-              <Grid item md="6">
-                {" "}
-                <Stack direction={"row"} justifyContent={"space-between"}>
-                  <Typography variant="h3" color={"#79747E"}>
-                    Transaction ID :
-                  </Typography>
-                  <Typography variant="h3">myjfjf6563ytgi</Typography>{" "}
-                </Stack>
-              </Grid>
+              {transaction?.status !== "pending" && (
+                <Grid item md="6">
+                  {" "}
+                  <Stack direction={"row"} justifyContent={"space-between"}>
+                    <Typography variant="h3" color={"#79747E"}>
+                      Transaction ID :
+                    </Typography>
+                    <Typography variant="h3">{transaction?.id}</Typography>{" "}
+                  </Stack>
+                </Grid>
+              )}
               <Grid item md="6">
                 <Stack direction={"row"} justifyContent={"space-between"}>
                   <Typography variant="h3" color={"#79747E"}>
                     Requested by :
                   </Typography>
-                  <Typography variant="h3">Admin name</Typography>{" "}
+                  <Typography variant="h3">
+                    {transaction?.requestedBy?.sender}
+                  </Typography>{" "}
                 </Stack>
               </Grid>
               <Grid item md="6">
@@ -50,7 +66,10 @@ const AdvancePayment = ({ open, onClose, onChange }) => {
                   <Typography variant="h3" color={"#79747E"}>
                     Staff name :
                   </Typography>
-                  <Typography variant="h3">myjfjf6563ytgi</Typography>{" "}
+                  <Typography variant="h3">
+                    {" "}
+                    {transaction?.requestedBy?.receiver}
+                  </Typography>{" "}
                 </Stack>
               </Grid>
               <Grid item md="6">
@@ -58,26 +77,32 @@ const AdvancePayment = ({ open, onClose, onChange }) => {
                   <Typography variant="h3" color={"#79747E"}>
                     Requested on :
                   </Typography>
-                  <Typography variant="h3">Admin name</Typography>{" "}
+                  <Typography variant="h3">{transaction?.createdAt}</Typography>{" "}
                 </Stack>
-              </Grid>
-              <Grid item md="6">
-                {" "}
-                <Stack direction={"row"} justifyContent={"space-between"}>
-                  <Typography variant="h3" color={"#79747E"}>
-                    Amount :
-                  </Typography>
-                  <Typography variant="h3">myjfjf6563ytgi</Typography>{" "}
-                </Stack>
-              </Grid>
-              <Grid item md="6">
-                <Stack direction={"row"} justifyContent={"space-between"}>
-                  <Typography variant="h3" color={"#79747E"}>
-                    Paid by :
-                  </Typography>
-                  <Typography variant="h3">Admin name</Typography>{" "}
-                </Stack>
-              </Grid>
+              </Grid>{" "}
+              {transaction?.status !== "pending" && (
+                <>
+                  <Grid item md="6">
+                    {" "}
+                    <Stack direction={"row"} justifyContent={"space-between"}>
+                      <Typography variant="h3" color={"#79747E"}>
+                        Amount :
+                      </Typography>
+                      <Typography variant="h3">
+                        {transaction?.amount}
+                      </Typography>{" "}
+                    </Stack>
+                  </Grid>
+                  <Grid item md="6">
+                    <Stack direction={"row"} justifyContent={"space-between"}>
+                      <Typography variant="h3" color={"#79747E"}>
+                        Paid by :
+                      </Typography>
+                      <Typography variant="h3">Admin name</Typography>{" "}
+                    </Stack>
+                  </Grid>{" "}
+                </>
+              )}
               <Grid item md="6">
                 {" "}
                 <Stack direction={"row"} justifyContent={"space-between"}>
@@ -87,22 +112,26 @@ const AdvancePayment = ({ open, onClose, onChange }) => {
                   <Typography variant="h3">myjfjf6563ytgi</Typography>{" "}
                 </Stack>
               </Grid>
-              <Grid item md="6">
-                <Stack direction={"row"} justifyContent={"space-between"}>
-                  <Typography variant="h3" color={"#79747E"}>
-                    Paid on :
-                  </Typography>
-                  <Typography variant="h3">Admin name</Typography>{" "}
-                </Stack>
-              </Grid>
-              <Grid item md="6">
-                <Stack direction={"row"} justifyContent={"space-between"}>
-                  <Typography variant="h3" color={"#79747E"}>
-                    Payment method:
-                  </Typography>
-                  <Typography variant="h3">Admin name</Typography>{" "}
-                </Stack>
-              </Grid>
+              {transaction?.status !== "pending" && (
+                <>
+                  <Grid item md="6">
+                    <Stack direction={"row"} justifyContent={"space-between"}>
+                      <Typography variant="h3" color={"#79747E"}>
+                        Paid on :
+                      </Typography>
+                      <Typography variant="h3">Admin name</Typography>{" "}
+                    </Stack>
+                  </Grid>
+                  <Grid item md="6">
+                    <Stack direction={"row"} justifyContent={"space-between"}>
+                      <Typography variant="h3" color={"#79747E"}>
+                        Payment method:
+                      </Typography>
+                      <Typography variant="h3">Admin name</Typography>{" "}
+                    </Stack>
+                  </Grid>{" "}
+                </>
+              )}
               <Grid item md="12">
                 <Stack spacing={2}>
                   <Typography variant="h3" color={"#79747E"}>
@@ -117,51 +146,32 @@ const AdvancePayment = ({ open, onClose, onChange }) => {
                     esse cillum dolore eu fugiat nulla pariatur
                   </Typography>{" "}
                 </Stack>
-              </Grid>
-              <Grid item md="12">
-                <Controller
-                  name="amount"
-                  control={control}
-                  defaultValue=""
-                  rules={{ required: "Amount is required" }}
-                  render={({ field }) => (
-                    <>
-                      <StyledSelectField
-                        {...field}
-                        placeholder="Choose Payment method"
-                        sx={{ width: "100%" }}
-                      />
-                      {errors.amount && (
-                        <span style={{ color: "red" }}>
-                          {errors.amount.message}
-                        </span>
-                      )}
-                    </>
-                  )}
-                />
               </Grid>{" "}
-              <Grid item md="12">
-                <Controller
-                  name="description"
-                  control={control}
-                  rules={{ required: "Description" }}
-                  defaultValue=""
-                  render={({ field }) => (
-                    <>
-                      <StyledTextArea
-                        {...field}
-                        placeholder="Description"
-                        sx={{ flex: 1 }}
-                      />{" "}
-                      {errors.description && (
-                        <span style={{ color: "red" }}>
-                          {errors.description.message}
-                        </span>
-                      )}
-                    </>
-                  )}
-                />
-              </Grid>{" "}
+              {transaction?.status === "pending" && (
+                <Grid item md="12">
+                  <Controller
+                    name="paymentMethod"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: "Amount is required" }}
+                    render={({ field }) => (
+                      <>
+                        <StyledSelectField
+                          {...field}
+                          placeholder="Choose Payment method"
+                          options={options}
+                          sx={{ width: "100%" }}
+                        />
+                        {errors.paymentMethod && (
+                          <span style={{ color: "red" }}>
+                            {errors.paymentMethod.message}
+                          </span>
+                        )}
+                      </>
+                    )}
+                  />
+                </Grid>
+              )}
               <Grid item md={6} sm={6}></Grid>
               {/* {isUpdate && <Grid item md={6} sm={6}></Grid>} */}
               <Grid item md={6} sm={6}>

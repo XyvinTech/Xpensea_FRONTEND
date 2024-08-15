@@ -7,10 +7,13 @@ import {
   Divider,
   Stack,
 } from "@mui/material";
+import { useTransactionStore } from "../../store/transactionStore";
 
-const ConfirmPayment = ({ open, onClose, onApprove }) => {
-  const handleSubmit = () => {
-    onApprove();
+const ConfirmPayment = ({ open, onClose, formData }) => {
+  const { addTransactions } = useTransactionStore();
+  const handleSubmit = async () => {
+    await addTransactions(formData);
+    onClose(); 
   };
 
   const handleClear = (event) => {

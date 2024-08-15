@@ -43,7 +43,7 @@ const StaffView = () => {
           <Report />
         </Grid>
         <Grid item xs={12}>
-          <WalletComponent />
+          <WalletComponent id={id}/>
         </Grid>
       </Grid>
       <Box paddingTop={2}>
