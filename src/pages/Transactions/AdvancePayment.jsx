@@ -31,6 +31,9 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
       paymentMethod: data?.paymentMethod?.value,
     };
     await updateTransactions(transaction._id, formData);
+    onChange();
+    onClose();
+    reset();
   };
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
@@ -109,7 +112,7 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                   <Typography variant="h3" color={"#79747E"}>
                     Status :
                   </Typography>
-                  <Typography variant="h3">myjfjf6563ytgi</Typography>{" "}
+                  <Typography variant="h3">{transaction?.status}</Typography>{" "}
                 </Stack>
               </Grid>
               {transaction?.status !== "pending" && (
@@ -138,12 +141,7 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                     Descripition
                   </Typography>
                   <Typography variant="h3">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur
+                    {transaction?.description}
                   </Typography>{" "}
                 </Stack>
               </Grid>{" "}

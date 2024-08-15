@@ -12,7 +12,7 @@ export const addTransaction = async (data) => {
   }
 };
 export const getTransaction = handleAsync(async (id) => {
-  const response = await axiosInstance.get(`/admin/trasnsaction/${id}`);
+  const response = await axiosInstance.get(`/admin/transaction/${id}`);
 
   return response.data;
 });
