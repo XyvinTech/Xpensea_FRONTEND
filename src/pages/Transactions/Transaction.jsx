@@ -60,13 +60,13 @@ const Transaction = () => {
     }
     filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo,status]);
+  }, [isChange, fetchLists, pageNo, status]);
   const userColumns = [
     { title: "STAFF NAME", field: "receiver", sortable: false },
     { title: "tRANSACTION ID", field: "reportDate", sortable: true },
     { title: "AMOUNT", field: "amount", sortable: true },
     { title: "PAYMENT METHOD", field: "totalAmount", sortable: true },
-    { title: "REQUESTED BY", field: "location", sortable: true },
+    { title: "REQUESTED BY", field: "receiver", sortable: true },
     { title: "Status", field: "status", sortable: true },
   ];
 
@@ -150,7 +150,12 @@ const Transaction = () => {
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
-      <AdvancePayment open={open} onClose={handleClose}  onChange={handleChange}isUpdate={isUpdate} />
+      <AdvancePayment
+        open={open}
+        onClose={handleClose}
+        onChange={handleChange}
+        isUpdate={isUpdate}
+      />
     </>
   );
 };

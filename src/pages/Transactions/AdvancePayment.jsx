@@ -59,7 +59,7 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                     Requested by :
                   </Typography>
                   <Typography variant="h3">
-                    {transaction?.requestedBy?.sender}
+                    {transaction?.requestedBy?.sender.name}
                   </Typography>{" "}
                 </Stack>
               </Grid>
@@ -71,7 +71,7 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                   </Typography>
                   <Typography variant="h3">
                     {" "}
-                    {transaction?.requestedBy?.receiver}
+                    {transaction?.requestedBy?.receiver.name}
                   </Typography>{" "}
                 </Stack>
               </Grid>
@@ -102,7 +102,7 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                         Paid by :
                       </Typography>
                       <Typography variant="h3">
-                        {transaction?.paidBy}
+                        {transaction?.paidBy.name}
                       </Typography>{" "}
                     </Stack>
                   </Grid>{" "}
@@ -152,10 +152,10 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                 </Stack>
               </Grid>{" "}
               {transaction?.status === "pending" && (
-                <Grid item md="12">
+                <Grid item md="12" paddingBottom={4}>
                   <Controller
                     name="paymentMethod"
-                    control={control}
+                    control={control} 
                     defaultValue=""
                     rules={{ required: "Amount is required" }}
                     render={({ field }) => (
