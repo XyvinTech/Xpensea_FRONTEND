@@ -13,11 +13,11 @@ const WalletTable = ({ id }) => {
     fetchLists(filter);
   }, [fetchLists, pageNo]);
   const userColumns = [
-    { title: "Order", field: "title", sortable: false },
-    { title: "Date", field: "reportDate", sortable: true },
-    { title: "No of Expense", field: "expenseCount", sortable: true },
-    { title: "Total", field: "totalAmount", sortable: true },
-    { title: "Location", field: "location", sortable: false },
+    { title: "STAFF NAME", field: "receiver", sortable: false },
+    { title: "tRANSACTION ID", field: "reportDate", sortable: true },
+    { title: "AMOUNT", field: "amount", sortable: true },
+    { title: "PAYMENT METHOD", field: "totalAmount", sortable: true },
+    { title: "REQUESTED BY", field: "receiver", sortable: true },
     { title: "Status", field: "status", sortable: true },
   ];
   return (

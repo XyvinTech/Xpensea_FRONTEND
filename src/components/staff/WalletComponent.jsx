@@ -1,10 +1,12 @@
 import { Grid, Stack, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StyledButton from "../../ui/StyledButton";
 import AddPayment from "./AddPayment";
+import { useTransactionStore } from "../../store/transactionStore";
 
-const WalletComponent = ({id}) => {
+const WalletComponent = ({ id }) => {
   const [paymentOpen, setPaymentOpen] = useState(false);
+  const { fetchWallet, transaction } = useTransactionStore();
   const [isChange, setIsChange] = useState(false);
   const handleOpenPayment = () => {
     setPaymentOpen(true);
@@ -17,6 +19,9 @@ const WalletComponent = ({id}) => {
   const handleChange = () => {
     setIsChange(!isChange);
   };
+  useEffect(() => {
+    fetchWallet(id);
+  }, []);
   return (
     <Grid container bgcolor={"white"} padding={2} alignItems={"center"}>
       <Grid item xs={2}>
@@ -29,7 +34,7 @@ const WalletComponent = ({id}) => {
           <Typography variant="h4" color={"#B4B4B4"}>
             Balance Amount
           </Typography>
-          <Typography variant="h3">10,000</Typography>
+          <Typography variant="h3"> {transaction?.balanceAmount}</Typography>
         </Stack>
       </Grid>
       <Grid item xs={2}>
@@ -38,7 +43,7 @@ const WalletComponent = ({id}) => {
           <Typography variant="h4" color={"#B4B4B4"}>
             Total Amount
           </Typography>
-          <Typography variant="h3">25,000</Typography>
+          <Typography variant="h3"> {transaction?.totalAmount}</Typography>
         </Stack>
       </Grid>
       <Grid item xs={6} display={"flex"} justifyContent={"end"}>
@@ -50,7 +55,8 @@ const WalletComponent = ({id}) => {
         <AddPayment
           open={paymentOpen}
           onClose={handleClosePayment}
-          onChange={handleChange}id={id}
+          onChange={handleChange}
+          id={id}
         />
       </Grid>
     </Grid>

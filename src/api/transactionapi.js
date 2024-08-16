@@ -25,3 +25,8 @@ export const updateTransaction = async (id, data) => {
     toast.error(error.response.data.message);
   }
 };
+export const getWallet = handleAsync(async (id) => {
+  const response = await axiosInstance.get(`/admin/wallet/${id}`);
+
+  return response.data;
+});

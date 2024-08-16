@@ -2,6 +2,7 @@ import { create } from "zustand";
 import {
   addTransaction,
   getTransaction,
+  getWallet,
   updateTransaction,
 } from "../api/transactionapi";
 
@@ -24,6 +25,10 @@ const useTransactionStore = create((set) => ({
       ),
       e: updatedData,
     }));
+  },
+  fetchWallet: async (id) => {
+    const newData = await getWallet(id);
+    set({ transaction: newData.data });
   },
 }));
 
