@@ -45,7 +45,7 @@ const Dashboard = () => {
                 Recent activity
               </Typography>
             </Box>
-            <StyledTable columns={userColumns} dashboard />
+            <StyledTable columns={userColumns} dashboard showMenu/>
           </Box>
         </Grid>
         <Grid item xs={12} md={4}>

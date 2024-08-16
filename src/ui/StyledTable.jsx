@@ -74,7 +74,7 @@ const StyledTable = ({
   onDeleteRow,
   onEdit,
   onSort,
-  onShare,
+  onShare,showMenu,
   showView,
   showEdit,
   showShare,
@@ -330,20 +330,22 @@ const StyledTable = ({
                               )}
                           </>
                         ) : (
-                          row[column.field]
+                          row[column.field] ?? "-"
                         )
                       ) : null}
                     </StyledTableCell>
                   ))}
 
                   <StyledTableCell padding="normal">
-                    <IconButton
-                      aria-controls="simple-menu"
-                      aria-haspopup="true"
-                      onClick={(event) => handleMenuOpen(event, row._id)}
-                    >
-                      <MoreVertIcon />
-                    </IconButton>
+                    {!showMenu && (
+                      <IconButton
+                        aria-controls="simple-menu"
+                        aria-haspopup="true"
+                        onClick={(event) => handleMenuOpen(event, row._id)}
+                      >
+                        <MoreVertIcon />
+                      </IconButton>
+                    )}
                     <Menu
                       id="simple-menu"
                       anchorEl={anchorEl}
