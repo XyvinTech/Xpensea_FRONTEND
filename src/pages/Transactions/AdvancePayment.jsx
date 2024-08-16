@@ -102,7 +102,7 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                         Paid by :
                       </Typography>
                       <Typography variant="h3">
-                        {transaction?.paidBy.name}
+                        {transaction?.paidBy?.name}
                       </Typography>{" "}
                     </Stack>
                   </Grid>{" "}
