@@ -22,7 +22,12 @@ const TextSpan = styled.span`
       color: #059691;
       background-color: rgba(209, 250, 229, 0.5);
     `}
-
+ ${(props) =>
+    props.variant === "completed" &&
+    `
+      background-color: rgba(46, 125, 50, 0.1);
+      color: #2E7D32;
+    `}
   ${(props) =>
     props.variant === "red" &&
     `padding: 10px 30px;

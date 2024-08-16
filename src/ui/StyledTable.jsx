@@ -48,7 +48,7 @@ const StyledTableCell = styled(TableCell)`
     font-family: inter;
     padding: 16px;
     color: #4d515a;
-     text-align: center;
+    text-align: center;
   }
 `;
 
@@ -176,6 +176,8 @@ const StyledTable = ({
         return "green";
       case "done":
         return "green";
+      case "completed":
+        return "completed";
       default:
         return "default";
     }
@@ -194,7 +196,7 @@ const StyledTable = ({
 
   return (
     <Box>
-      <TableContainer sx={{ border: "none", }}>
+      <TableContainer sx={{ border: "none" }}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
@@ -207,10 +209,7 @@ const StyledTable = ({
                 />
               </StyledTableCell>
               {columns.map((column) => (
-                <StyledTableCell
-                  key={column.field}
-                  padding={ "normal"}
-                >
+                <StyledTableCell key={column.field} padding={"normal"}>
                   {column.sortable ? (
                     <TableSortLabel
                       IconComponent={SortIcon}
@@ -287,14 +286,20 @@ const StyledTable = ({
                       onClick={() => handleRowClick(row._id)}
                     >
                       {index === 0 ? (
-                     <Box display="flex" alignItems="center" justifyContent="flex-start">
-                     {row.type ? getEventIcon(row.type) : null}
-                     <Box marginLeft={1} display="inline-flex" alignItems="center">
-                       {row[column.field]}
-                     </Box>
-                   </Box>
-                   
-                    
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="flex-start"
+                        >
+                          {row.type ? getEventIcon(row.type) : null}
+                          <Box
+                            marginLeft={1}
+                            display="inline-flex"
+                            alignItems="center"
+                          >
+                            {row[column.field]}
+                          </Box>
+                        </Box>
                       ) : column.field !== "type" ? (
                         column.field === "status" ? (
                           <StyledSpan

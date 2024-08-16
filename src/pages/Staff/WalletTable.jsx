@@ -8,7 +8,7 @@ const WalletTable = ({ id }) => {
   useEffect(() => {
     let filter = { type: "transactions" };
    
-    // filter.staffId = id;
+    filter.staffId = id;
     filter.pageNo = pageNo;
     fetchLists(filter);
   }, [fetchLists, pageNo]);

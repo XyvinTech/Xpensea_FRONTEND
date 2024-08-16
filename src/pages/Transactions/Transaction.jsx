@@ -55,12 +55,12 @@ const Transaction = () => {
   useEffect(() => {
     let filter = { type: "transactions" };
 
-    // if (status !== null) {
-    //   filter.status = status;
-    // }
+    if (status !== null) {
+      filter.status = status;
+    }
     filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo]);
+  }, [isChange, fetchLists, pageNo,status]);
   const userColumns = [
     { title: "STAFF NAME", field: "receiver", sortable: false },
     { title: "tRANSACTION ID", field: "reportDate", sortable: true },
@@ -111,13 +111,13 @@ const Transaction = () => {
             style={{
               cursor: "pointer",
               textTransform: "none",
-              backgroundColor: status === "approved" ? "#002B9B" : "#fff",
+              backgroundColor: status === "completed" ? "#002B9B" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               borderRadius: "8px",
               padding: "10px",
-              color: status === "approved" ? "#fff" : "#4D515A",
+              color: status === "completed" ? "#fff" : "#4D515A",
             }}
-            onClick={() => setStatus("approved")}
+            onClick={() => setStatus("completed")}
           >
             Completed
           </Button>

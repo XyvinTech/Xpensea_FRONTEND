@@ -101,7 +101,9 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                       <Typography variant="h3" color={"#79747E"}>
                         Paid by :
                       </Typography>
-                      <Typography variant="h3">Admin name</Typography>{" "}
+                      <Typography variant="h3">
+                        {transaction?.paidBy}
+                      </Typography>{" "}
                     </Stack>
                   </Grid>{" "}
                 </>
@@ -122,7 +124,9 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                       <Typography variant="h3" color={"#79747E"}>
                         Paid on :
                       </Typography>
-                      <Typography variant="h3">Admin name</Typography>{" "}
+                      <Typography variant="h3">
+                        {transaction?.paidOn}
+                      </Typography>{" "}
                     </Stack>
                   </Grid>
                   <Grid item md="6">
@@ -130,7 +134,9 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                       <Typography variant="h3" color={"#79747E"}>
                         Payment method:
                       </Typography>
-                      <Typography variant="h3">Admin name</Typography>{" "}
+                      <Typography variant="h3">
+                        {transaction?.paymentMethod}
+                      </Typography>{" "}
                     </Stack>
                   </Grid>{" "}
                 </>
@@ -171,25 +177,27 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                 </Grid>
               )}
               <Grid item md={6} sm={6}></Grid>
-              {/* {isUpdate && <Grid item md={6} sm={6}></Grid>} */}
-              <Grid item md={6} sm={6}>
-                <Stack direction="row" spacing={2} justifyContent="flex-end">
-                  {" "}
-                  <StyledButton
-                    variant="secondary"
-                    padding="15px 50px 15px 50px"
-                    name="Back"
-                    onClick={(event) => handleClear(event)}
-                  />
-                  <StyledButton
-                    variant="primary"
-                    type="submit"
-                    padding="15px 50px 15px 50px"
-                    name="Make Payment"
-                  />
-                </Stack>
-              </Grid>
-            </Grid>{" "}
+              {/* {isUpdate && <Grid item md={6} sm={6}></Grid>} */}{" "}
+              {transaction?.status === "pending" && (
+                <Grid item md={6} sm={6}>
+                  <Stack direction="row" spacing={2} justifyContent="flex-end">
+                    {" "}
+                    <StyledButton
+                      variant="secondary"
+                      padding="15px 50px 15px 50px"
+                      name="Back"
+                      onClick={(event) => handleClear(event)}
+                    />
+                    <StyledButton
+                      variant="primary"
+                      type="submit"
+                      padding="15px 50px 15px 50px"
+                      name="Make Payment"
+                    />
+                  </Stack>
+                </Grid>
+              )}
+            </Grid>
           </form>
         </Stack>
       </Box>
