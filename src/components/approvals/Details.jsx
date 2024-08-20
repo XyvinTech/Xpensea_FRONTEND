@@ -22,13 +22,13 @@ const Details = ({ data }) => {
             </Typography>
             <Typography variant="h11" color="#002B9B" fontWeight={"600"}>
               Rs {data?.totalAmount}
-              <Typography variant="h4" color={"#4F4F4F"}>
+              <Typography variant="h3">
               {data?.createdAt}
               </Typography>
             </Typography>
-            {/* <Typography variant="h4" color={"#4F4F4F"}>
-                Approved By {data?.approver}
-              </Typography> */}
+            <Typography variant="h3" >
+                Created By {data?.user}
+              </Typography>
           </Stack>
         </Stack>
         <Stack spacing={2} justifyContent="center">
@@ -36,7 +36,7 @@ const Details = ({ data }) => {
           <Typography variant="h3" color={"#333333"}>
          {data?.reportId}
           </Typography>
-          <Typography variant="h4" color={"#B4B4B4"}>
+          <Typography variant="h3" color={"#B4B4B4"}>
         
           </Typography>
         </Stack>

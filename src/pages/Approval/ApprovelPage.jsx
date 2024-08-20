@@ -11,6 +11,7 @@ import RejectedForm from "../../components/approvals/RejectedForm";
 import { useParams } from "react-router-dom";
 import { useApprovalStore } from "../../store/approvalstore";
 import ApproveComponent from "../../components/ApproveComponent";
+import PaymentDetails from "../../components/approvals/PaymentDetails";
 
 const ApprovalPage = () => {
   const [rejectOpen, setRejectOpen] = useState(false);
@@ -106,14 +107,20 @@ const ApprovalPage = () => {
           <Details data={approval} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <Expenses
-            data={approval?.expenses}
-            authenticExpenses={authenticExpenses}
-            setAuthenticExpenses={setAuthenticExpenses}
-            rejectedExpenses={rejectedExpenses}
-            setRejectedExpenses={setRejectedExpenses}
-          />
-        </Grid>{" "}
+          <PaymentDetails data={approval} />
+        </Grid>
+        {approval?.expenses?.length > 0 && (
+  <Grid item xs={12} md={12}>
+    <Expenses
+      data={approval?.expenses}
+      authenticExpenses={authenticExpenses}
+      setAuthenticExpenses={setAuthenticExpenses}
+      rejectedExpenses={rejectedExpenses}
+      setRejectedExpenses={setRejectedExpenses}
+    />
+  </Grid>
+)}
+{" "}
         <Grid item xs={12} md={6}>
           <Description data={approval?.description} />
         </Grid>

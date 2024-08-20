@@ -48,12 +48,7 @@ const FinanceSinglePage = () => {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid
-          item
-          xs={12}
-          md={12}
-          bgcolor={"#F7F7F7"}
-        >
+        <Grid item xs={12} md={12} bgcolor={"#F7F7F7"}>
           <Stack direction={"row"} justifyContent={"space-between"} padding={2}>
             <Box display="flex" alignItems="center">
               <Typography variant="h11" marginRight={1}>
@@ -64,11 +59,7 @@ const FinanceSinglePage = () => {
                 Report
               </Typography>
             </Box>
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              gap={2}
-            >
+            <Box display="flex" justifyContent="space-between" gap={2}>
               <>
                 {finance?.status === "reimbursed" ? (
                   <StyledButton variant="secondary" name="Reimbursed" />
@@ -83,13 +74,12 @@ const FinanceSinglePage = () => {
             </Box>
           </Stack>
         </Grid>
-        <Grid item  md={6}>
+        <Grid item md={6}>
           <StaffDetails data={finance} />
         </Grid>
         <Grid item xs={6} md={6}>
           <Details data={finance} />
         </Grid>
-       
         <Grid item xs={12} md={12}>
           <Expenses
             data={finance?.expenses}
@@ -98,7 +88,8 @@ const FinanceSinglePage = () => {
             rejectedExpenses={rejectedExpenses}
             setRejectedExpenses={setRejectedExpenses}
           />
-        </Grid> <Grid item xs={12} md={6}>
+        </Grid>{" "}
+        <Grid item xs={12} md={6}>
           <Description data={finance?.description} />
         </Grid>
         {/* <Grid item xs={12} md={6}>
