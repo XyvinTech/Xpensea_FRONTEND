@@ -5,9 +5,11 @@ import PendingApprovals from "../components/dashboard/PendingApprovel";
 import StyledTable from "../ui/StyledTable";
 import StaffExpense from "../components/dashboard/StaffExpense";
 import { useListStore } from "../store/listStore";
+import { useAdminStore } from "../store/adminStore";
 
 const Dashboard = () => {
   const { fetchLists } = useListStore();
+  const { dashboard, getDashboardData } = useAdminStore();
 
   const userColumns = [
     { title: "Event Title", field: "eventName", sortable: false },
@@ -20,8 +22,11 @@ const Dashboard = () => {
   useEffect(() => {
     let filter = { type: "events" };
 
-    filter.creator = 'Admin';
+    filter.creator = "Admin";
     fetchLists(filter);
+  }, []);
+  useEffect(() => {
+    getDashboardData();
   }, []);
   return (
     <>
@@ -30,7 +35,7 @@ const Dashboard = () => {
           <StyledChart />
         </Grid>
         <Grid item xs={12} md={4}>
-          <PendingApprovals />
+          <PendingApprovals data={dashboard?.pendingData} />
         </Grid>
         <Grid item xs={12} md={8}>
           <Box
@@ -45,11 +50,11 @@ const Dashboard = () => {
                 Recent activity
               </Typography>
             </Box>
-            <StyledTable columns={userColumns} dashboard showMenu/>
+            <StyledTable columns={userColumns} dashboard showMenu />
           </Box>
         </Grid>
         <Grid item xs={12} md={4}>
-          <StaffExpense />
+          <StaffExpense data={dashboard?.expenses} />
         </Grid>
       </Grid>
     </>

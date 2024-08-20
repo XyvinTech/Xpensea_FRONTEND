@@ -4,7 +4,7 @@ import StyledCheckbox from "../../ui/StyledCheckbox";
 import ExpenseData from "../../assets/json/ExpenseData";
 import { FilterIcon } from "../../assets/icons/FilterIcon";
 import StyledFilter from "../StyledFilter";
-const StaffExpense = () => {
+const StaffExpense = ({ data }) => {
   const [filterOpen, setFilterOpen] = useState(false);
 
   const handleOpenFilter = () => {
@@ -15,13 +15,17 @@ const StaffExpense = () => {
     setFilterOpen(false);
   };
   return (
-    <Box sx={{ backgroundColor: "white",borderRadius:"8px" }}>
+    <Box
+      sx={{ backgroundColor: "white", borderRadius: "8px", minHeight: "560px" }}
+    >
       <Stack spacing={4} padding={0} paddingBottom={0}>
         <Stack
           direction="row"
           alignItems="center"
           justifyContent="space-between"
-          spacing={0}padding={2}paddingBottom={0}
+          spacing={0}
+          padding={2}
+          paddingBottom={0}
         >
           {" "}
           <Typography variant="h8" paddingTop={2} fontWeight="600">
@@ -44,32 +48,40 @@ const StaffExpense = () => {
           </Box>
         </Stack>
         <Divider />
-        {ExpenseData.map((item) => (
-          <Stack key={item.id} spacing={2} padding={0}>
+        {data?.map((item) => (
+          <Stack key={item?._id} spacing={2} padding={0}>
             <Stack
               direction="row"
               justifyContent="space-between"
               alignItems="flex-start"
             >
-              <Stack direction="row" spacing={1}paddingLeft={2} paddingRight={2}>
+              <Stack
+                direction="row"
+                spacing={1}
+                paddingLeft={2}
+                paddingRight={2}
+              >
                 <StyledCheckbox />
                 <Stack direction="column" spacing={1}>
-                  <Typography variant="h5">{item.name}</Typography>
-                  <Typography variant="h6">{item.type}</Typography>
+                  <Typography variant="h5">{item?.user}</Typography>
+                  <Typography variant="h6">
+                    {item?.category} expenses
+                  </Typography>
                 </Stack>
               </Stack>
-              <Stack >
+              <Stack>
                 {" "}
                 <Typography variant="h6">{item.location}</Typography>{" "}
-                <Typography variant="h6">{item.tier}</Typography>{" "}
+                <Typography variant="h6">Tier {item?.tier}</Typography>{" "}
               </Stack>
               <Typography
                 variant="h4"
                 color={"#002B9B"}
-                marginTop={1}paddingRight={2}
+                marginTop={1}
+                paddingRight={2}
                 fontWeight={600}
               >
-                {item.price}
+                Rs {item?.totalAmount}
               </Typography>{" "}
             </Stack>
 

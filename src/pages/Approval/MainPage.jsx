@@ -22,7 +22,10 @@ const MainPage = () => {
     // console.log("View item:", id);
     navigate(`/approvals/view/${id}`);
   };
-
+  const handleRowDelete = async (id) => {
+    await deleteApprovals(id);
+    setIsChange(!isChange);
+  };
   const handleDelete = async () => {
     if (selectedRows.length > 0) {
       await Promise.all(selectedRows?.map((id) => deleteApprovals(id)));
@@ -103,7 +106,7 @@ const MainPage = () => {
               border: "1px solid rgba(226, 232, 240, 1)",
               borderRadius: "8px",
               padding: "10px",
-              color: status ==="approved" ? "#fff" : "#4D515A",
+              color: status === "approved" ? "#fff" : "#4D515A",
             }}
             onClick={() => setStatus("approved")}
           >
@@ -114,10 +117,10 @@ const MainPage = () => {
               cursor: "pointer",
               textTransform: "none",
               borderRadius: "8px",
-              backgroundColor: status ==="rejected"? "#002B9B" : "#fff",
+              backgroundColor: status === "rejected" ? "#002B9B" : "#fff",
               border: "1px solid rgba(226, 232, 240, 1)",
               padding: "10px",
-              color: status ==="rejected"? "#fff" : "#4D515A",
+              color: status === "rejected" ? "#fff" : "#4D515A",
             }}
             onClick={() => setStatus("rejected")}
           >
@@ -148,6 +151,7 @@ const MainPage = () => {
           onView={handleView}
           onSort={handleSort}
           onDelete={handleDelete}
+          onDeleteRow={handleRowDelete}
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />
