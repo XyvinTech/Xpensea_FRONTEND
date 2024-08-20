@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 import ApproveComponent from "../components/ApproveComponent";
 import { useApprovalStore } from "../store/approvalstore";
 import Reimbursement from "../components/finance/Reimbursement";
+import PaymentDetails from "../components/approvals/PaymentDetails";
 
 const FinanceSinglePage = () => {
   const [rejectOpen, setRejectOpen] = useState(false);
@@ -93,7 +94,7 @@ const FinanceSinglePage = () => {
           <Description data={finance?.description} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <PaymentDetails data={approval} />
+          <PaymentDetails data={finance} />
         </Grid>
         <Reimbursement
           open={approveOpen}
