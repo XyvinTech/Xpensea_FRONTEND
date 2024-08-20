@@ -24,7 +24,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import StyledSpan from "./StyledSpan";
 import { DeleteIcon } from "../assets/icons/DeleteIcon";
 import { SortIcon } from "../assets/icons/SortIcon";
-import { EventIcon } from "../assets/icons/EventIcon";
+import { AdminEventIcon } from "../assets/icons/AdminEventIcon";
 import { Icon1 } from "../assets/icons/Icon1";
 import { Icon2 } from "../assets/icons/Icon2";
 import { EditIcon } from "../assets/icons/EditIcon";
@@ -74,7 +74,8 @@ const StyledTable = ({
   onDeleteRow,
   onEdit,
   onSort,
-  onShare,showMenu,
+  onShare,
+  showMenu,
   showView,
   showEdit,
   showShare,
@@ -185,12 +186,13 @@ const StyledTable = ({
 
   const getEventIcon = (event) => {
     switch (event) {
-      case "Admin":
-        return <Icon1 />;
+     
       case "User":
         return <Icon2 />;
+      case "Admin":
+        return <AdminEventIcon />;
       default:
-        return null;
+        return <Icon1 />;
     }
   };
 
@@ -291,7 +293,13 @@ const StyledTable = ({
                           alignItems="center"
                           justifyContent="flex-start"
                         >
-                          {row.type ? getEventIcon(row.type) : null}
+                          {" "}
+                          {/* {console.log("Event Creator:", row.eventCreator)} */}
+                          {row.type
+                            ? getEventIcon(row.type)
+                            : row.eventCreator
+                            ? getEventIcon(row.eventCreator)
+                            : null}
                           <Box
                             marginLeft={1}
                             display="inline-flex"

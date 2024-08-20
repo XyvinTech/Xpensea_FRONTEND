@@ -60,12 +60,7 @@ const ApprovalPage = () => {
   return (
     <>
       <Grid container spacing={2}>
-        <Grid
-          item
-          xs={12}
-          md={12}
-          bgcolor={"#F7F7F7"}
-        >
+        <Grid item xs={12} md={12} bgcolor={"#F7F7F7"}>
           <Stack direction={"row"} justifyContent={"space-between"} padding={2}>
             <Box display="flex" alignItems="center">
               <Typography variant="h11" marginRight={1}>
@@ -76,7 +71,7 @@ const ApprovalPage = () => {
                 Report
               </Typography>
             </Box>
-            <Box display="flex" justifyContent="space-between"  gap={2}>
+            <Box display="flex" justifyContent="space-between" gap={2}>
               {approval?.status === "approved" ? (
                 <StyledButton variant="green" name="Approved" />
               ) : approval?.status === "reimbursed" ? (
@@ -110,17 +105,16 @@ const ApprovalPage = () => {
           <PaymentDetails data={approval} />
         </Grid>
         {approval?.expenses?.length > 0 && (
-  <Grid item xs={12} md={12}>
-    <Expenses
-      data={approval?.expenses}
-      authenticExpenses={authenticExpenses}
-      setAuthenticExpenses={setAuthenticExpenses}
-      rejectedExpenses={rejectedExpenses}
-      setRejectedExpenses={setRejectedExpenses}
-    />
-  </Grid>
-)}
-{" "}
+          <Grid item xs={12} md={12}>
+            <Expenses
+              data={approval?.expenses}
+              authenticExpenses={authenticExpenses}
+              setAuthenticExpenses={setAuthenticExpenses}
+              rejectedExpenses={rejectedExpenses}
+              setRejectedExpenses={setRejectedExpenses}
+            />
+          </Grid>
+        )}{" "}
         <Grid item xs={12} md={6}>
           <Description data={approval?.description} />
         </Grid>

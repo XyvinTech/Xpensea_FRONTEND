@@ -27,7 +27,7 @@ const Details = ({ data }) => {
               </Typography>
             </Typography>
             <Typography variant="h3" >
-                Created By {data?.user}
+                Created By {data?.creator?.name}
               </Typography>
           </Stack>
         </Stack>

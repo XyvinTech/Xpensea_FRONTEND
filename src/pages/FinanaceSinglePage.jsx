@@ -92,9 +92,9 @@ const FinanceSinglePage = () => {
         <Grid item xs={12} md={6}>
           <Description data={finance?.description} />
         </Grid>
-        {/* <Grid item xs={12} md={6}>
-          <LiveLocation />
-        </Grid> */}
+        <Grid item xs={12} md={12}>
+          <PaymentDetails data={approval} />
+        </Grid>
         <Reimbursement
           open={approveOpen}
           onClose={handleCloseApprove}
