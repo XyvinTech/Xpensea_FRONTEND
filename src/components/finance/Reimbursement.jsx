@@ -1,15 +1,24 @@
 import React, { useState } from "react";
-import { Box, Typography, Dialog, DialogContent, Divider, Stack } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Dialog,
+  DialogContent,
+  Divider,
+  Stack,
+} from "@mui/material";
 import StyledButton from "../../ui/StyledButton";
 import { CrossIcon } from "../../assets/icons/CrossIcon";
 import StyledTextField from "../../ui/StyledTextField";
 import StyledTextArea from "../../ui/StyledTextArea";
+import StyledInput from "../../ui/StyledInput";
 
-const Reimbursement = ({ open, onClose,onApprove }) => {
+const Reimbursement = ({ open, onClose, onApprove }) => {
   const [description, setDescription] = useState("");
+  const [paymentAmount, setPaymentAmount] = useState("");
 
   const handleSubmit = () => {
-    onApprove(description);
+    onApprove({ paymentAmount, description });
   };
 
   const handleClear = (event) => {
@@ -27,10 +36,18 @@ const Reimbursement = ({ open, onClose,onApprove }) => {
           padding={3}
           paddingBottom={0}
         >
-          <Typography onClick={(event) => handleClear(event)} style={{ cursor: "pointer" }}>
+          <Typography
+            onClick={(event) => handleClear(event)}
+            style={{ cursor: "pointer" }}
+          >
             <CrossIcon />
           </Typography>
         </Box>
+        <StyledInput
+          placeholder="Payment Amount"
+          value={paymentAmount}
+          onChange={(e) => setPaymentAmount(e.target.value)}
+        />
         <StyledTextArea
           placeholder="Description"
           value={description}

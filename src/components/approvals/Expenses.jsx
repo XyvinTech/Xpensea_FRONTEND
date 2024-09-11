@@ -26,10 +26,8 @@ const Expenses = ({
   const [selectedExpense, setSelectedExpense] = useState(null);
 
   const handleOpenDetail = (item) => {
-    if (item?.status !== "approved") {
-      setSelectedExpense(item);
-      setDetailOpen(true);
-    }
+    setSelectedExpense(item);
+    setDetailOpen(true);
   };
 
   const handleCloseDetail = () => {

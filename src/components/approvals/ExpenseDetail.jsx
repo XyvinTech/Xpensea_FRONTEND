@@ -20,6 +20,7 @@ const ExpenseDetail = ({
   onMarkFaulty,
 }) => {
   if (!expense) return null;
+  console.log("displayed", expense);
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="481px">
@@ -62,7 +63,12 @@ const ExpenseDetail = ({
         <Divider />
         <Stack direction="column" padding={2} spacing={5}>
           <Stack direction={"row"} padding={2} bgcolor={"#F3F3F3"} spacing={2}>
-            <img src={receipt} width={"68px"} height={"68px"} alt="Receipt" />
+            <img
+              src={expense.image}
+              width={"68px"}
+              height={"68px"}
+              alt="Receipt"
+            />
             <Stack direction="column" justifyContent={"center"}>
               <Typography variant="h4" fontWeight={600}>
                 {expense.receiptNumber}
@@ -88,19 +94,20 @@ const ExpenseDetail = ({
           </Typography>
         </Stack>
       </DialogContent>
-
-      <Stack direction="row" padding={2} spacing={2}>
-        <StyledButton
-          variant="green"
-          name="Mark as Authentic"
-          onClick={onMarkAuthentic}
-        />
-        <StyledButton
-          variant="danger"
-          name="Mark as Faulty"
-          onClick={onMarkFaulty}
-        />
-      </Stack>
+      {expense.status === "mapped" && (
+        <Stack direction="row" padding={2} spacing={2}>
+          <StyledButton
+            variant="green"
+            name="Mark as Authentic"
+            onClick={onMarkAuthentic}
+          />
+          <StyledButton
+            variant="danger"
+            name="Mark as Faulty"
+            onClick={onMarkFaulty}
+          />
+        </Stack>
+      )}
     </Dialog>
   );
 };
