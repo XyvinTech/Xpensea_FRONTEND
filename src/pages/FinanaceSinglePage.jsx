@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Grid, LinearProgress, Stack, Typography } from "@mui/material";
 import StaffDetails from "../components/approvals/StaffDetails";
 import StyledButton from "../ui/StyledButton";
 import { GtIcon } from "../assets/icons/GtIcon";
@@ -20,7 +20,7 @@ const FinanceSinglePage = () => {
   const [authenticExpenses, setAuthenticExpenses] = useState([]);
   const [rejectedExpenses, setRejectedExpenses] = useState([]);
   const [isChange, setIsChange] = useState(false);
-  const { finance, fetchFinanceById, refresh } = useApprovalStore();
+  const { finance, fetchFinanceById, refresh,loading } = useApprovalStore();
   const { id } = useParams();
 
   const handleOpenApprove = () => {
@@ -38,14 +38,19 @@ const FinanceSinglePage = () => {
   }, [refresh]);
   return (
     <>
+       {loading ? (
+        <LinearProgress />
+      ) : (
       <Grid container spacing={2}>
         <Grid item xs={12} md={12} bgcolor={"#F7F7F7"}>
-          <Stack direction={"row"} justifyContent={"space-between"} padding={2}>
+          <Stack direction={"row"} justifyContent={"space-between"} >
             <Box display="flex" alignItems="center">
               <Typography variant="h11" marginRight={1}>
                 Finance
               </Typography>
-              <GtIcon />
+              <Typography variant="h11" marginRight={1}>
+                  &gt;
+                </Typography>
               <Typography variant="h11" marginLeft={1}>
                 Report
               </Typography>
@@ -80,18 +85,21 @@ const FinanceSinglePage = () => {
             setRejectedExpenses={setRejectedExpenses}
           />
         </Grid>{" "}
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={12}>
           <Description data={finance?.description} />
         </Grid>
+        {finance?.deduction?.length > 0 &&
         <Grid item xs={12} md={12}>
           <PaymentDetails data={finance?.deduction[0]} />
         </Grid>
+        }
         <Reimbursement
           open={approveOpen}
           onClose={handleCloseApprove}
           data={finance}
         />{" "}
       </Grid>
+      )}
     </>
   );
 };

@@ -11,10 +11,13 @@ const useApprovalStore = create((set) => ({
   approvals: [],
   approval: null,
   refresh: false,
+  loading : false,
   finance: [],
   fetchApprovalById: async (approvalId) => {
+    set({ loading: true });
     const approval = await getApproval(approvalId);
     set({ approval: approval.data });
+    set({ loading: false });
   },
   setRefresh: () => set((state) => ({ refresh: !state.refresh })),
   deleteApprovals: async (approvalId) => {
@@ -28,8 +31,10 @@ const useApprovalStore = create((set) => ({
     }));
   },
   fetchFinanceById: async (id) => {
+    set({ loading: true });
     const financeid = await getFinance(id);
     set({ finance: financeid.data });
+    set({ loading: false });
   },
   updateFinances: async (id, data) => {
     const updated = await updateFinance(id, data);
