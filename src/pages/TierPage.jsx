@@ -60,7 +60,7 @@ const TierPage = () => {
   const userColumns = [
     { title: "Tier Title", field: "title", sortable: false },
     { title: "Date", field: "activationDate", sortable: true },
-    { title: "No of Employe", field: "noOfEmployees", sortable: true },
+    { title: "No of Employee", field: "noOfEmployees", sortable: true },
     { title: "Max Amount", field: "totalAmount", sortable: true },
     { title: "No of allowance", field: "noAllowance", sortable: true },
   ];
