@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import {
   deleteApproval,
+  financeDeduct,
   getApproval,
   getFinance,
   updateApproval,
@@ -9,11 +10,13 @@ import {
 const useApprovalStore = create((set) => ({
   approvals: [],
   approval: null,
+  refresh: false,
   finance: [],
   fetchApprovalById: async (approvalId) => {
     const approval = await getApproval(approvalId);
     set({ approval: approval.data });
   },
+  setRefresh: () => set((state) => ({ refresh: !state.refresh })),
   deleteApprovals: async (approvalId) => {
     await deleteApproval(approvalId);
   },
@@ -34,6 +37,9 @@ const useApprovalStore = create((set) => ({
       ...state,
       finance: updated.data,
     }));
+  },
+  deductWallet: async (data) => {
+    await financeDeduct(data);
   },
 }));
 

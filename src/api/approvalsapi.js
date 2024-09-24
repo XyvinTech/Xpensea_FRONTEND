@@ -35,3 +35,12 @@ export const updateFinance = async (Id, data) => {
     toast.error(error.response.data.message);
   }
 };
+export const financeDeduct = async (data) => {
+  try {
+    const response = await axiosInstance.post(`/admin/deduct`, data);
+    toast.success(response.data.message);
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.message);
+  }
+};

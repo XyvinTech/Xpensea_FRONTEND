@@ -20,7 +20,7 @@ const FinanceSinglePage = () => {
   const [authenticExpenses, setAuthenticExpenses] = useState([]);
   const [rejectedExpenses, setRejectedExpenses] = useState([]);
   const [isChange, setIsChange] = useState(false);
-  const { finance, fetchFinanceById, updateFinances } = useApprovalStore();
+  const { finance, fetchFinanceById, refresh } = useApprovalStore();
   const { id } = useParams();
 
   const handleOpenApprove = () => {
@@ -31,21 +31,11 @@ const FinanceSinglePage = () => {
     setApproveOpen(false);
   };
 
-  const handleApprove = async (description) => {
-    await updateFinances(id, { descriptionFinance: description });
-    setIsChange(!isChange);
-    handleCloseApprove();
-  };
-  // const handleReject = (description) => {
-  //   console.log("Rejection Description:", description);
-  //   setRejectOpen(false);
-  // };
-
   useEffect(() => {
     if (id) {
       fetchFinanceById(id);
     }
-  }, [id, fetchFinanceById, isChange]);
+  }, [refresh]);
   return (
     <>
       <Grid container spacing={2}>
@@ -66,8 +56,8 @@ const FinanceSinglePage = () => {
                   <StyledButton variant="secondary" name="Reimbursed" />
                 ) : (
                   <StyledButton
-                    variant="green"
-                    name="Mark as reimburse "
+                    variant="primary"
+                    name="Make payment "
                     onClick={handleOpenApprove}
                   />
                 )}
@@ -94,12 +84,12 @@ const FinanceSinglePage = () => {
           <Description data={finance?.description} />
         </Grid>
         <Grid item xs={12} md={12}>
-          <PaymentDetails data={finance} />
+          <PaymentDetails data={finance?.deduction[0]} />
         </Grid>
         <Reimbursement
           open={approveOpen}
           onClose={handleCloseApprove}
-          onApprove={handleApprove}
+          data={finance}
         />{" "}
       </Grid>
     </>

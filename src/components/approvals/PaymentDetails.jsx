@@ -1,6 +1,5 @@
 import { Divider, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
-import { ApproveIcon } from "../../assets/icons/ApproveIcon";
 
 const PaymentDetails = ({ data }) => {
   return (
@@ -18,25 +17,26 @@ const PaymentDetails = ({ data }) => {
         <Grid item md={4}>
           <Stack spacing={2}>
             {" "}
-            <Typography variant="h3">Amount paid : 10,000</Typography>{" "}
+            <Typography variant="h3">
+              Amount paid : {data?.amount}
+            </Typography>{" "}
             <Typography variant="h3">Pending : Nil</Typography>
           </Stack>
         </Grid>
-        <Grid item md={4}>
+        <Grid item md={4} xs={6}>
           <Stack spacing={2}>
             {" "}
-            <Typography variant="h3">
-              Paid on : Aug 01 2024 10:00AM
-            </Typography>{" "}
-            <Typography variant="h3">Paid by : Financer name</Typography>
+            <Typography variant="h3">Paid on :{data?.deductOn}</Typography>{" "}
+            <Typography variant="h3">Paid by : {data?.deductBy}</Typography>
           </Stack>
         </Grid>
-        <Grid item md={4}>
+        <Grid item md={4} xs={6}>
           <Stack spacing={2}>
-            {" "}
-            <Typography variant="h3">
-              Payment method : Deducted from wallet
-            </Typography>{" "}
+            {data?.mode && (
+              <Typography variant="h3">
+                Payment method : Deduct From {data?.mode}
+              </Typography>
+            )}
           </Stack>
         </Grid>
       </Grid>

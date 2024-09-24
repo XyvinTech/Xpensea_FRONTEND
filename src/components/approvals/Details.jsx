@@ -18,7 +18,7 @@ const Details = ({ data }) => {
         <Stack direction="row" spacing={1}>
           <ApproveIcon />
           <Stack direction="column" spacing={1}>
-            <Typography variant="h8" color={"#333333"}>
+            <Typography variant="h4" color={"#333333"}>
               {data?.title}
             </Typography>
             <Typography variant="h11" color="#002B9B" fontWeight={"600"}>

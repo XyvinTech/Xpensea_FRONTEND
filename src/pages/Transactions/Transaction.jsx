@@ -66,7 +66,7 @@ const Transaction = () => {
     { title: "tRANSACTION ID", field: "reportDate", sortable: true },
     { title: "AMOUNT", field: "amount", sortable: true },
     { title: "PAYMENT METHOD", field: "paymentMethod", sortable: true },
-    { title: "REQUESTED BY", field: "receiver", sortable: true },
+    { title: "REQUESTED BY", field: "sender", sortable: true },
     { title: "Status", field: "status", sortable: true },
   ];
 

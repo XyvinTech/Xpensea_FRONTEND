@@ -49,7 +49,7 @@ import StyledSearchbar from "../ui/StyledSearchbar";
 import { SyncIcon } from "../assets/icons/SyncIcon";
 import { useAdminStore } from "../store/adminStore";
 import { useAuthStore } from "../store/useAuthStore";
-const drawerWidth = 300;
+const drawerWidth = 250;
 
 const subNavigation = [
   { name: "Dashboard", to: "/dashboard", icon: <GridViewIcon /> },

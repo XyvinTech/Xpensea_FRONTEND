@@ -7,7 +7,7 @@ const buttonVariants = css`
     css`
       border: none;
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 600; 
       color: #ffffff;
       line-height: 18px;
       background-color: #002B9B;
