@@ -472,7 +472,7 @@ const Layout = (props) => {
                   marginRight: "5px",
                 }}
               >
-                4 minutes ago
+                0 minutes ago
               </span>{" "}
               <SyncIcon />
             </Typography>
