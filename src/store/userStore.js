@@ -6,6 +6,7 @@ const useUserStore = create((set) => ({
   users: [],
   user: null,
   isUpdate: false,
+  loading: false,
   updateChange: (isUpdate) => {
     set({ isUpdate: !isUpdate });
   },
@@ -14,8 +15,10 @@ const useUserStore = create((set) => ({
     set((state) => ({ users: [...state.users, newUser] }));
   },
   fetchUserById: async (userId) => {
+    set({ loading: true });
     const user = await getUser(userId);
     set({ user: user.data });
+    set({ loading: false });
   },
   updateUsers: async (userId, newData) => {
     const updatedUser = await updateUser(userId, newData);

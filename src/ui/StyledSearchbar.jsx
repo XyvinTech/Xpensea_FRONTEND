@@ -7,7 +7,7 @@ const StyledSearchbar = () => {
     <Box sx={{ display: "flex", alignItems: "center" }}>
       <TextField
         variant="outlined"
-        placeholder="Search Event"
+        placeholder="Search ...."
         sx={{
           width: "320px",
 
