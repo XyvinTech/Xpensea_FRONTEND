@@ -2,16 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Box, Grid, LinearProgress, Stack, Typography } from "@mui/material";
 import StaffDetails from "../components/approvals/StaffDetails";
 import StyledButton from "../ui/StyledButton";
-import { GtIcon } from "../assets/icons/GtIcon";
 import Details from "../components/approvals/Details";
 import Description from "../components/approvals/Description";
 import Expenses from "../components/approvals/Expenses";
-import LiveLocation from "../components/approvals/LiveLocation";
-import RejectedForm from "../components/approvals/RejectedForm";
-import { useParams } from "react-router-dom";
-import ApproveComponent from "../components/ApproveComponent";
-import { useApprovalStore } from "../store/approvalstore";
 import Reimbursement from "../components/finance/Reimbursement";
+import { useParams } from "react-router-dom";
+import { useApprovalStore } from "../store/approvalstore";
 import PaymentDetails from "../components/approvals/PaymentDetails";
 
 const FinanceSinglePage = () => {
@@ -19,7 +15,8 @@ const FinanceSinglePage = () => {
   const [approveOpen, setApproveOpen] = useState(false);
   const [authenticExpenses, setAuthenticExpenses] = useState([]);
   const [rejectedExpenses, setRejectedExpenses] = useState([]);
-  const [isChange, setIsChange] = useState(false);
+  const [paymentAmount, setPaymentAmount] = useState("");
+  const [description, setDescription] = useState("");
   const { finance, fetchFinanceById, refresh, loading } = useApprovalStore();
   const { id } = useParams();
 
@@ -36,6 +33,11 @@ const FinanceSinglePage = () => {
       fetchFinanceById(id);
     }
   }, [refresh]);
+  const totalDeduction = finance?.deduction?.reduce(
+    (acc, item) => acc + item.amount,
+    0
+  );
+  const pendingAmount = finance?.totalAmount - totalDeduction;
   return (
     <>
       {loading ? (
@@ -62,7 +64,7 @@ const FinanceSinglePage = () => {
                   ) : (
                     <StyledButton
                       variant="primary"
-                      name="Make payment "
+                      name="Make payment"
                       onClick={handleOpenApprove}
                     />
                   )}
@@ -84,20 +86,27 @@ const FinanceSinglePage = () => {
               rejectedExpenses={rejectedExpenses}
               setRejectedExpenses={setRejectedExpenses}
             />
-          </Grid>{" "}
+          </Grid>
           <Grid item xs={12} md={12}>
             <Description data={finance?.description} />
           </Grid>
           {finance?.deduction?.length > 0 && (
             <Grid item xs={12} md={12}>
-              <PaymentDetails data={finance?.deduction[0]} />
+              <PaymentDetails
+                data={finance?.deduction[0]}
+                amount={pendingAmount}
+              />
             </Grid>
           )}
           <Reimbursement
             open={approveOpen}
             onClose={handleCloseApprove}
             data={finance}
-          />{" "}
+            paymentAmount={paymentAmount}
+            setPaymentAmount={setPaymentAmount}
+            description={description}
+            setDescription={setDescription}
+          />
         </Grid>
       )}
     </>

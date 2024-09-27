@@ -1,7 +1,7 @@
 import { Divider, Grid, Stack, Typography } from "@mui/material";
 import React from "react";
 
-const PaymentDetails = ({ data }) => {
+const PaymentDetails = ({ data ,amount}) => {
   return (
     <Stack
       bgcolor={"#fff"}
@@ -20,7 +20,7 @@ const PaymentDetails = ({ data }) => {
             <Typography variant="h3">
               Amount paid : {data?.amount}
             </Typography>{" "}
-            <Typography variant="h3">Pending : Nil</Typography>
+            <Typography variant="h3">Pending : {amount===0? 'Nil':amount}</Typography>
           </Stack>
         </Grid>
         <Grid item md={4} xs={6}>
