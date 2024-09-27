@@ -2,7 +2,8 @@ import axios from "axios";
 import axiosInstance from "./axiosintercepter";
 import { handleAsync } from "../utils/handleAsync";
 import { toast } from "react-toastify";
-const baseURL = "https://dev-api.xpensea.com/api/v1/";
+const baseURL =
+  "https://xpensea--backend-393541516579.asia-south1.run.app/api/v1/";
 export const getLogin = async (datas) => {
   try {
     const response = await axios.post(`${baseURL}admin/login`, datas);

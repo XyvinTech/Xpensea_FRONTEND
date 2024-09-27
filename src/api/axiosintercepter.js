@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
  
-  baseURL: "https://dev-api.xpensea.com/api/v1"
+  baseURL: "https://xpensea--backend-393541516579.asia-south1.run.app/api/v1"
 });
 axiosInstance.interceptors.request.use(
   config => {
