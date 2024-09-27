@@ -10,7 +10,8 @@ import { useListStore } from "../../store/listStore";
 import { useUserStore } from "../../store/userStore";
 const StaffPage = () => {
   const navigate = useNavigate();
-  const { fetchLists, pageNo } = useListStore();
+  const { fetchLists} = useListStore();
+  const [pageNo, setPageNo] = useState(1);
   const { fetchUserById, deleteUsers } = useUserStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [isChange, setIsChange] = useState(false);
@@ -229,6 +230,8 @@ const StaffPage = () => {
           onSort={handleSort}
           onDelete={handleDelete}
           showEdit
+          pageNo={pageNo}
+          setPageNo={setPageNo}
           onView={handleView}
         />
       </Box>

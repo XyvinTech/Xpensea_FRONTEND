@@ -75,6 +75,8 @@ const StyledTable = ({
   onEdit,
   onSort,
   onShare,
+  pageNo,
+  setPageNo,
   showMenu,
   showView,
   showEdit,
@@ -85,8 +87,7 @@ const StyledTable = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const [rowId, setRowId] = useState(null);
   const [isChange, setIsChange] = useState(false);
-  const { lists, totalCount, rowPerSize, rowChange, pageNo, pageInc, pageDec } =
-    useListStore();
+  const { lists, totalCount, rowPerSize, rowChange } = useListStore();
   const handleSelectAllClick = (event) => {
     const isChecked = event.target.checked;
     const newSelectedIds = isChecked ? lists.map((row) => row._id) : [];
@@ -186,7 +187,6 @@ const StyledTable = ({
 
   const getEventIcon = (event) => {
     switch (event) {
-     
       case "User":
         return <Icon2 />;
       case "Admin":
@@ -195,7 +195,12 @@ const StyledTable = ({
         return <Icon1 />;
     }
   };
-
+  const pageInc = () => {
+    setPageNo((prev) => prev + 1);
+  };
+  const pageDec = () => {
+    setPageNo((prev) => prev - 1);
+  };
   return (
     <Box>
       <TableContainer sx={{ border: "none" }}>

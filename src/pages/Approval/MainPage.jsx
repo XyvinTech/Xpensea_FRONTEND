@@ -8,11 +8,12 @@ import { useListStore } from "../../store/listStore";
 import { useApprovalStore } from "../../store/approvalstore";
 const MainPage = () => {
   const navigate = useNavigate();
-  const { fetchLists, pageNo } = useListStore();
+  const { fetchLists } = useListStore();
   const [isChange, setIsChange] = useState(false);
   const [status, setStatus] = useState(null);
   const { deleteApprovals } = useApprovalStore();
   const [selectedRows, setSelectedRows] = useState([]);
+  const [pageNo, setPageNo] = useState(1);
   const [filterOpen, setFilterOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
@@ -150,6 +151,8 @@ const MainPage = () => {
           onSelectionChange={handleSelectionChange}
           onView={handleView}
           onSort={handleSort}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
           onDelete={handleDelete}
           onDeleteRow={handleRowDelete}
         />

@@ -18,7 +18,8 @@ const PolicyPage = () => {
   const [isChange, setIsChange] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [policyOpen, setPolicyOpen] = useState(false);
-  const { fetchLists, pageNo } = useListStore();
+  const [pageNo, setPageNo] = useState(1);
+  const { fetchLists } = useListStore();
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     // console.log("Selected items:", newSelectedIds);
@@ -186,6 +187,8 @@ const PolicyPage = () => {
           onSelectionChange={handleSelectionChange}
           onShare={handleShare}
           onSort={handleSort}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
           onDelete={handleDelete}
           onView={handleView}
           onEdit={handleEdit}

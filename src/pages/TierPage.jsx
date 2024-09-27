@@ -8,11 +8,12 @@ import AddExpense from "../components/tier/AddExpense";
 import { useListStore } from "../store/listStore";
 import { useTierStore } from "../store/tierStore";
 const TierPage = () => {
-  const { fetchLists, pageNo } = useListStore();
+  const { fetchLists } = useListStore();
   const { fetchTierById, deleteTiers } = useTierStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [status, setStatus] = useState(null);
+  const [pageNo, setPageNo] = useState(1);
   const [isUpdate, setIsUpdate] = useState(false);
   const [isChange, setIsChange] = useState(false);
   const [expenseOpen, setExpenseOpen] = useState(false);
@@ -166,7 +167,8 @@ const TierPage = () => {
       <Box bgcolor={"white"} paddingTop={0}>
         <StyledTable
           columns={userColumns}
-          // data={lists}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
           onSelectionChange={handleSelectionChange}
           onDelete={handleDelete}
           onSort={handleSort}

@@ -7,7 +7,8 @@ import CreateEvent from "../components/events/CreateEvent";
 import { useListStore } from "../store/listStore";
 import { useEventStore } from "../store/eventStore";
 const EventsPage = () => {
-  const { fetchLists, pageNo } = useListStore();
+  const { fetchLists } = useListStore();
+  const [pageNo, setPageNo] = useState(1);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
@@ -184,6 +185,8 @@ const EventsPage = () => {
           onDeleteRow={handleRowDelete}
           onSelectionChange={handleSelectionChange}
           onSort={handleSort}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
           onDelete={handleDelete}
           onEdit={handleEdit}
           showEdit

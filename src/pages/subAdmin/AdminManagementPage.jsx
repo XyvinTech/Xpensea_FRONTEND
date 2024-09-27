@@ -10,7 +10,8 @@ import { useAdminStore } from "../../store/adminStore";
 
 const AdminManagementPage = () => {
   const { fetchAdminById, deleteAdmins } = useAdminStore();
-  const { lists, fetchLists, rowPerSize, pageNo } = useListStore();
+  const { lists, fetchLists, rowPerSize} = useListStore();
+  const [pageNo, setPageNo] = useState(1);
   const [isChange, setIsChange] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -131,6 +132,8 @@ const AdminManagementPage = () => {
           onSelectionChange={handleSelectionChange}
           onEdit={handleEdit}
           showEdit
+          pageNo={pageNo}
+          setPageNo={setPageNo}
           onSort={handleSort}
           onView={handleView}
           onDelete={handleDelete}

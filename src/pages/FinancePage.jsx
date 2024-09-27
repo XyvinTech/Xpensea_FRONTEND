@@ -7,7 +7,8 @@ import { FilterIcon } from "../assets/icons/FilterIcon";
 import { useListStore } from "../store/listStore";
 const FinancePage = () => {
   const navigate = useNavigate();
-  const { fetchLists, pageNo } = useListStore();
+  const { fetchLists} = useListStore();
+  const [pageNo, setPageNo] = useState(1);
   const [isChange, setIsChange] = useState(false);
   const [status, setStatus] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
@@ -126,6 +127,8 @@ const FinancePage = () => {
         <StyledTable
           columns={userColumns}
           onSelectionChange={handleSelectionChange}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
           onView={handleView}
           onSort={handleSort}
           onDelete={handleDelete}

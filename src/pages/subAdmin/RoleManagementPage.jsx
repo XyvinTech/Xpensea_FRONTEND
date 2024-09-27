@@ -8,11 +8,12 @@ import RoleManagement from "../../components/subAdmin/RoleManagement";
 import { useListStore } from "../../store/listStore";
 import { useRoleStore } from "../../store/roleStore";
 const RoleManagementPage = () => {
-  const { fetchLists, pageNo } = useListStore();
+  const { fetchLists} = useListStore();
   const { fetchRoleById, deleteRoles } = useRoleStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [isChange, setIsChange] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [pageNo, setPageNo] = useState(1);
   const [filterOpen, setFilterOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
@@ -116,6 +117,8 @@ const RoleManagementPage = () => {
           onSelectionChange={handleSelectionChange}
           onEdit={handleEdit}
           showEdit
+          pageNo={pageNo}
+          setPageNo={setPageNo}
           onSort={handleSort}
           onDelete={handleDelete}
         />

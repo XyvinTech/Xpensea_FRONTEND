@@ -16,7 +16,8 @@ const Transaction = () => {
   const { fetchTransactionById } = useTransactionStore();
   const [filterOpen, setFilterOpen] = useState(false);
   const [open, setOpen] = useState(false);
-  const { fetchLists, pageNo } = useListStore();
+  const { fetchLists } = useListStore();
+  const [pageNo, setPageNo] = useState(1);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     // console.log("Selected items:", newSelectedIds);
@@ -145,6 +146,8 @@ const Transaction = () => {
           onSelectionChange={handleSelectionChange}
           onEdit={handleView}
           onSort={handleSort}
+          pageNo={pageNo}
+          setPageNo={setPageNo}
           onDelete={handleDelete}
           showView
         />
