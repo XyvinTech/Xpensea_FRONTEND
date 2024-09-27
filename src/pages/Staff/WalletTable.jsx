@@ -19,6 +19,7 @@ const WalletTable = ({ id }) => {
   const userColumns = [
     { title: "tRANSACTION ID", field: "_id", sortable: true },
     { title: "AMOUNT", field: "amount", sortable: true },
+    { title: "report name", field: "report", sortable: true },
     { title: "PAYMENT METHOD", field: "paymentMethod", sortable: true },
     { title: "Status", field: "status", sortable: true },
   ];
