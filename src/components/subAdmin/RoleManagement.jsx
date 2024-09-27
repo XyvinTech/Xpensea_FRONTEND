@@ -35,6 +35,10 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
     tierManagement_modify: false,
     financeManagement_view: false,
     financeManagement_modify: false,
+    policyManagement_view: false,
+    policyManagement_modify: false,
+    transactionManagement_view: false,
+    transactionManagement_modify: false,
   };
 
   const [isChecked, setIsChecked] = useState(false);
@@ -140,6 +144,14 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
     {
       key: "financeManagement",
       label: "Finance Management",
+    },
+    {
+      key: "policyManagement",
+      label: "Policy Management",
+    },
+    {
+      key: "transactionManagement",
+      label: "Transaction Management",
     },
   ];
 
