@@ -107,9 +107,12 @@ const ApprovalPage = () => {
           <Grid item xs={12} md={6}>
             <Details data={approval} />
           </Grid>
-          <Grid item xs={12} md={12}>
-            <PaymentDetails data={approval} />
-          </Grid>
+          {approval?.status==='reimbursed'&& (
+              <Grid item xs={12} md={12}>
+              <PaymentDetails data={approval} />
+            </Grid>
+          )}
+        
           {approval?.expenses?.length > 0 && (
             <Grid item xs={12} md={12}>
               <Expenses
