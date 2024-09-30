@@ -59,6 +59,7 @@ const Transaction = () => {
     if (status !== null) {
       filter.status = status;
     }
+    filter.transactionType = "credit";
     filter.pageNo = pageNo;
     fetchLists(filter);
   }, [isChange, fetchLists, pageNo, status]);
