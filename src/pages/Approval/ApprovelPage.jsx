@@ -52,6 +52,11 @@ const ApprovalPage = () => {
     setIsChange(!isChange);
     setRejectOpen(false);
   };
+  const totalDeduction = approval?.deduction?.reduce(
+    (acc, item) => acc + item.amount,
+    0
+  );
+  const pendingAmount = approval?.totalAmount - totalDeduction;
   useEffect(() => {
     if (id) {
       fetchApprovalById(id);
@@ -109,7 +114,8 @@ const ApprovalPage = () => {
           </Grid>
           {approval?.status==='reimbursed'&& (
               <Grid item xs={12} md={12}>
-              <PaymentDetails data={approval} />
+              <PaymentDetails data={approval?.deduction[0]}
+                amount={pendingAmount} />
             </Grid>
           )}
         

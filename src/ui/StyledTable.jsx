@@ -352,7 +352,7 @@ const StyledTable = ({
                   ))}
 
                   <StyledTableCell padding="normal">
-                    {!showMenu && (
+                    {!showMenu && row.status !== "done" && (
                       <IconButton
                         aria-controls="simple-menu"
                         aria-haspopup="true"

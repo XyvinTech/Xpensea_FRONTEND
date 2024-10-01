@@ -17,6 +17,7 @@ import { useUserStore } from "../../store/userStore";
 import ReportTable from "./ReportTable";
 import WalletTable from "./WalletTable";
 import WalletComponent from "../../components/staff/WalletComponent";
+import WalletTables from "./WalletTables";
 const StaffView = () => {
   const { user, fetchUserById, loading } = useUserStore();
   const [selectedTab, setSelectedTab] = useState(0);
@@ -93,7 +94,7 @@ const StaffView = () => {
               <Tab label="Reports" />
             </Tabs>
           </Box>
-          {selectedTab === 0 && <WalletTable id={id} />}
+          {selectedTab === 0 && <WalletTables id={id} />}
           {selectedTab === 1 && <ReportTable id={id} />}
         </>
       )}

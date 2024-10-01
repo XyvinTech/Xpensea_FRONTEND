@@ -64,7 +64,7 @@ const Transaction = () => {
   }, [isChange, pageNo, status]);
   const userColumns = [
     { title: "STAFF NAME", field: "user", sortable: false },
-    { title: "tRANSACTION ID", field: "id", sortable: true },
+    { title: "tRANSACTION ID", field: "_id", sortable: true },
     { title: "AMOUNT", field: "amount", sortable: true },
     { title: "PAYMENT METHOD", field: "paymentMethod", sortable: true },
     { title: "PERFORMED BY", field: "performedBy", sortable: true },
