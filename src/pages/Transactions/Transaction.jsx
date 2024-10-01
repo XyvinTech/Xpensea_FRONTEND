@@ -16,7 +16,7 @@ const Transaction = () => {
   const { fetchTransactionById } = useTransactionStore();
   const [filterOpen, setFilterOpen] = useState(false);
   const [open, setOpen] = useState(false);
-  const { fetchLists } = useListStore();
+  const { fetchWallet } = useListStore();
   const [pageNo, setPageNo] = useState(1);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
@@ -54,21 +54,20 @@ const Transaction = () => {
     setFilterOpen(false);
   };
   useEffect(() => {
-    let filter = { type: "transactions" };
+    let filter = {};
 
     if (status !== null) {
       filter.status = status;
     }
-    filter.transactionType = "credit";
     filter.pageNo = pageNo;
-    fetchLists(filter);
-  }, [isChange, fetchLists, pageNo, status]);
+    fetchWallet(filter);
+  }, [isChange, pageNo, status]);
   const userColumns = [
-    { title: "STAFF NAME", field: "receiver", sortable: false },
-    { title: "tRANSACTION ID", field: "reportDate", sortable: true },
+    { title: "STAFF NAME", field: "user", sortable: false },
+    { title: "tRANSACTION ID", field: "id", sortable: true },
     { title: "AMOUNT", field: "amount", sortable: true },
     { title: "PAYMENT METHOD", field: "paymentMethod", sortable: true },
-    { title: "REQUESTED BY", field: "sender", sortable: true },
+    { title: "PERFORMED BY", field: "performedBy", sortable: true },
     { title: "Status", field: "status", sortable: true },
   ];
 

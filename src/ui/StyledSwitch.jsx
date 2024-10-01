@@ -27,9 +27,9 @@ const SwitchHandle = styled.div`
   top: 50%;
   left: ${(props) => {
     if (props.variant === 'primary') {
-      return props.checked ? '4px' : '22px';
-    } else {
       return props.checked ? '22px' : '4px';
+    } else {
+      return props.checked ? '24px' : '4px';
     }
   }};
   background: white;

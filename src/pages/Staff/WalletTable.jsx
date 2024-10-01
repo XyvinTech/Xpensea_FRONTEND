@@ -4,23 +4,23 @@ import StyledTable from "../../ui/StyledTable";
 import { useListStore } from "../../store/listStore";
 
 const WalletTable = ({ id }) => {
-  const { fetchLists } = useListStore();
+  const { fetchWallet } = useListStore();
   const [status, setStatus] = useState(null);
   const [pageNo, setPageNo] = useState(1);
   useEffect(() => {
-    let filter = { type: "transactions" };
+    let filter = {};
     if (status !== null) {
       filter.transactionType = status;
     }
     filter.staffId = id;
     filter.pageNo = pageNo;
-    fetchLists(filter);
-  }, [fetchLists, pageNo, status]);
+    fetchWallet(filter);
+  }, [fetchWallet, pageNo, status]);
   const userColumns = [
-    { title: "tRANSACTION ID", field: "_id", sortable: true },
+    { title: "tRANSACTION ID", field: "id", sortable: true },
     { title: "AMOUNT", field: "amount", sortable: true },
-    { title: "report name", field: "report", sortable: true },
     { title: "PAYMENT METHOD", field: "paymentMethod", sortable: true },
+    { title: "PERFORMED BY", field: "performedBy", sortable: true },
     { title: "Status", field: "status", sortable: true },
   ];
   return (

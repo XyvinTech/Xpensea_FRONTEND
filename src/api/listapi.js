@@ -7,7 +7,12 @@ export const fetchList = handleAsync(async (filter) => {
   });
   return response.data;
 });
-
+export const fetchTransaction = handleAsync(async (filter) => {
+  const response = await axiosInstance.get("/admin/transaction", {
+    params: filter,
+  });
+  return response.data;
+});
 export const getReport = handleAsync(async (id, filter) => {
   const response = await axiosInstance.get(`/admin/user/reports/${id}`, {
     params: filter,

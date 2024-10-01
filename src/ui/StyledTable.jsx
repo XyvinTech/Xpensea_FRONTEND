@@ -162,6 +162,8 @@ const StyledTable = ({
     switch (status) {
       case "pending":
         return "pending";
+        case "deducted":
+        return "deducted";
       case "scheduled":
         return "pending";
       case "in-progress":

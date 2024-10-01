@@ -22,7 +22,7 @@ const TextSpan = styled.span`
       color: #059691;
       background-color: rgba(209, 250, 229, 0.5);
     `}
- ${(props) =>
+  ${(props) =>
     props.variant === "completed" &&
     `
       background-color: rgba(46, 125, 50, 0.1);
@@ -56,7 +56,12 @@ const TextSpan = styled.span`
       background-color: rgba(255, 247, 243, 1);
       color: #79001D;
     `}
-
+ ${(props) =>
+    props.variant === "deducted" &&
+    `
+      background-color: rgba(204, 229, 255, 0.7); 
+      color: #00529B; 
+    `}
   ${(props) =>
     props.variant === "edit" &&
     `padding: 10px 40px;
