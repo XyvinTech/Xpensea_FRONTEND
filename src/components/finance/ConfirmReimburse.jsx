@@ -9,12 +9,15 @@ import {
 } from "@mui/material";
 import { useApprovalStore } from "../../store/approvalstore";
 
-const ConfirmReimburse = ({ open, onClose, formData ,description,amount}) => {
-  const { updateFinances,setRefresh} = useApprovalStore();
+const ConfirmReimburse = ({ open, onClose, formData, description, amount }) => {
+  const { updateFinances, setRefresh } = useApprovalStore();
   const handleSubmit = async () => {
-    await updateFinances(formData._id, { descriptionFinance: description,amount:amount }   );
-    setRefresh();
-    onClose(); 
+    await updateFinances(formData._id, {
+      descriptionFinance: description,
+      amount: amount,
+    });
+setRefresh();
+    onClose();
   };
 
   const handleClear = (event) => {

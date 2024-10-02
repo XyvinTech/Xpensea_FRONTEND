@@ -9,15 +9,16 @@ import {
 } from "@mui/material";
 import { useApprovalStore } from "../../store/approvalstore";
 
-const DeductConfirm = ({ open, onClose, formData, paymentAmount }) => {
-  const { deductWallet, setRefresh } = useApprovalStore();
+const DeductConfirm = ({ open, onClose, formData, paymentAmount,setIsChange }) => {
+  const { deductWallet} = useApprovalStore();
+
   const handleSubmit = async () => {
     const data = {
       amount: paymentAmount,
       report: formData._id,
     };
     await deductWallet(data);
-    setRefresh();
+    setIsChange();
     onClose();
   };
 

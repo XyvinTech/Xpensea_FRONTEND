@@ -14,11 +14,20 @@ import StyledTextArea from "../../ui/StyledTextArea";
 import StyledInput from "../../ui/StyledInput";
 import ConfirmReimburse from "./ConfirmReimburse";
 import DeductConfirm from "./DeductConfirm";
+import { useApprovalStore } from "../../store/approvalstore";
 
-const Reimbursement = ({ open, onClose, data, paymentAmount, setPaymentAmount, description, setDescription }) => {
+const Reimbursement = ({
+  open,
+  onClose,
+  data,
+  paymentAmount,
+  setPaymentAmount,
+  description,
+  setDescription,
+}) => {
   const [approveOpen, setApproveOpen] = useState(false);
   const [deductOpen, setDeductOpen] = useState(false);
-
+  const [totalAmount, setTotalAmount] = useState(data?.totalAmount);
   const handleReimburse = () => {
     setApproveOpen(true);
   };
@@ -36,7 +45,10 @@ const Reimbursement = ({ open, onClose, data, paymentAmount, setPaymentAmount, d
     setDeductOpen(false);
     onClose();
   };
-
+  const handleAmount = () => {
+    setTotalAmount(totalAmount - paymentAmount);
+    setPaymentAmount(totalAmount - paymentAmount);
+  };
   return (
     <Dialog open={open} onClose={onClose} maxWidth="481px">
       <DialogContent sx={{ height: "auto", width: "480px", padding: 2 }}>
@@ -59,27 +71,47 @@ const Reimbursement = ({ open, onClose, data, paymentAmount, setPaymentAmount, d
               Amount in wallet : {data?.walletAmount}
             </Typography>
             <Typography variant="h4">
-              Amount to be paid : {data?.totalAmount-paymentAmount}
+              Amount to be paid : {totalAmount}
             </Typography>
           </Stack>
           <StyledInput
             placeholder="Payment Amount"
-            value={paymentAmount} 
-            onChange={(e) => setPaymentAmount(e.target.value)} 
+            value={paymentAmount}
+            onChange={(e) => setPaymentAmount(e.target.value)}
           />
           <StyledTextArea
             placeholder="Description"
-            value={description} 
-            onChange={(e) => setDescription(e.target.value)} 
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </Stack>
       </DialogContent>
       <Stack direction="row" spacing={3} padding={3}>
-        <StyledButton variant="secondary" name="Mark as Reimbursed" onClick={handleReimburse} />
-        <StyledButton variant="primary" name="Deduct from wallet" onClick={handleDeduct} />
+        <StyledButton
+          variant="secondary"
+          name="Mark as Reimbursed"
+          onClick={handleReimburse}
+        />
+        <StyledButton
+          variant="primary"
+          name="Deduct from wallet"
+          onClick={handleDeduct}
+        />
       </Stack>
-      <ConfirmReimburse open={approveOpen} onClose={handleCloseApprove} formData={data} description={description} amount={paymentAmount} />
-      <DeductConfirm open={deductOpen} onClose={handleCloseDeduct} formData={data} paymentAmount={paymentAmount} />
+      <ConfirmReimburse
+        open={approveOpen}
+        onClose={handleCloseApprove}
+        formData={data}
+        description={description}
+        amount={paymentAmount}
+      />
+      <DeductConfirm
+        open={deductOpen}
+        onClose={handleCloseDeduct}
+        formData={data}
+        paymentAmount={paymentAmount}
+        setIsChange={handleAmount}
+      />
     </Dialog>
   );
 };

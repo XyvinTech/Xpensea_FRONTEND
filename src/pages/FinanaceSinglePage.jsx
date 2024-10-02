@@ -11,7 +11,6 @@ import { useApprovalStore } from "../store/approvalstore";
 import PaymentDetails from "../components/approvals/PaymentDetails";
 
 const FinanceSinglePage = () => {
-  const [rejectOpen, setRejectOpen] = useState(false);
   const [approveOpen, setApproveOpen] = useState(false);
   const [authenticExpenses, setAuthenticExpenses] = useState([]);
   const [rejectedExpenses, setRejectedExpenses] = useState([]);
@@ -31,6 +30,7 @@ const FinanceSinglePage = () => {
   useEffect(() => {
     if (id) {
       fetchFinanceById(id);
+      setPaymentAmount(finance?.totalAmount);
     }
   }, [refresh]);
   const totalDeduction = finance?.deduction?.reduce(
