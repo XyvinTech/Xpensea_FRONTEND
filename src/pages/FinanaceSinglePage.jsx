@@ -92,11 +92,13 @@ const FinanceSinglePage = () => {
           </Grid>
           {finance?.deduction?.length > 0 && (
             <Grid item xs={12} md={12}>
+            {finance.deduction.map((deduction, index) => (
               <PaymentDetails
-                data={finance?.deduction[0]}
-                amount={pendingAmount}
+                key={deduction._id}
+                data={deduction}amount={pendingAmount}
               />
-            </Grid>
+            ))}
+          </Grid>
           )}
           <Reimbursement
             open={approveOpen}
