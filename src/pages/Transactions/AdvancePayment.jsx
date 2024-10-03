@@ -49,7 +49,7 @@ const AdvancePayment = ({ open, onClose, onChange, isUpdate = false }) => {
                     <Typography variant="h3" color={"#79747E"}>
                       Transaction ID :
                     </Typography>
-                    <Typography variant="h3">{transaction?.id}</Typography>{" "}
+                    <Typography variant="h3">{transaction?._id}</Typography>{" "}
                   </Stack>
                 </Grid>
               )}

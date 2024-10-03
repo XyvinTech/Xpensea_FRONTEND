@@ -16,7 +16,7 @@ const CreditTable = ({ id }) => {
   const userColumns = [
     { title: "tRANSACTION ID", field: "_id", sortable: true },
     { title: "AMOUNT", field: "amount", sortable: true },
-    { title: "PAID ON", field: "date", sortable: true },
+    { title: "REQUESTED ON", field: "date", sortable: true },
     { title: "REQUESTED BY", field: "performedBy", sortable: true },
     { title: "Status", field: "status", sortable: true },
   ];
