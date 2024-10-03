@@ -30,7 +30,6 @@ const FinanceSinglePage = () => {
   useEffect(() => {
     if (id) {
       fetchFinanceById(id);
-      setPaymentAmount(finance?.totalAmount);
     }
   }, [refresh]);
   const totalDeduction = finance?.deduction?.reduce(
