@@ -194,7 +194,7 @@ const StyledTable = ({
       case "Admin":
         return <AdminEventIcon />;
       default:
-        return <Icon1 />;
+        return null;
     }
   };
   const pageInc = () => {
