@@ -193,6 +193,8 @@ const StyledTable = ({
         return <Icon2 />;
       case "Admin":
         return <AdminEventIcon />;
+      case "other":
+        return <Icon1 />;
       default:
         return null;
     }
