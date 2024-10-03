@@ -1,8 +1,13 @@
 import { Box, Grid, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { VerticalIcon } from "../../assets/icons/VerticalIcon";
+import { useTransactionStore } from "../../store/transactionStore";
 
-const Report = () => {
+const Report = ({id}) => {
+  const { fetchWallet, transaction } = useTransactionStore();
+  useEffect(() => {
+    fetchWallet(id);
+  }, []);
   return (
     <Box bgcolor={"#fff"} height={"338px"}display={"flex"} alignItems={"center"} justifyContent={"center"}>
     <Grid container spacing={2}>
@@ -16,7 +21,7 @@ const Report = () => {
           <Typography variant="h5">Total Report Submitted</Typography>
           <VerticalIcon />
           <Typography variant="h12" fontWeight={700}>
-            65
+           {transaction?.totalReportSubmitted}
           </Typography>
         </Stack>
       </Grid>
@@ -30,7 +35,7 @@ const Report = () => {
           <Typography variant="h5">Total Report Reimbursed</Typography>
           <VerticalIcon />
           <Typography variant="h12" fontWeight={700}>
-            21
+          {transaction?.totalReportReimbursed}
           </Typography>
         </Stack>
       </Grid>
@@ -44,7 +49,7 @@ const Report = () => {
           <Typography variant="h5">Total Report Rejected</Typography>
           <VerticalIcon />
           <Typography variant="h12" fontWeight={700}>
-            22
+          {transaction?.totalReportRejected}
           </Typography>
         </Stack>
       </Grid>
@@ -58,7 +63,7 @@ const Report = () => {
           <Typography variant="h5">Total Report Pending</Typography>
           <VerticalIcon />
           <Typography variant="h12" fontWeight={700}>
-            23
+          {transaction?.totalReportPending}
           </Typography>
         </Stack>
       </Grid>

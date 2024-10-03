@@ -132,7 +132,7 @@ const StyledChart = () => {
         </Stack>
       </Stack>
       <Divider />
-      <Box padding={2} height="370px">
+      <Box padding={2} height="370px" width={"100%"}>
         <Line data={data} options={options} />
       </Box>
      
