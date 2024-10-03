@@ -12,13 +12,14 @@ import React, { useEffect, useState } from "react";
 import { GtIcon } from "../../assets/icons/GtIcon";
 import StaffDetail from "../../components/staff/StaffDetail";
 import Report from "../../components/staff/Report";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useUserStore } from "../../store/userStore";
 import ReportTable from "./ReportTable";
 import WalletTable from "./WalletTable";
 import WalletComponent from "../../components/staff/WalletComponent";
 import WalletTables from "./WalletTables";
 const StaffView = () => {
+  const navigate = useNavigate();
   const { user, fetchUserById, loading } = useUserStore();
   const [selectedTab, setSelectedTab] = useState(0);
 
@@ -40,7 +41,15 @@ const StaffView = () => {
       ) : (
         <>
           <Box display="flex" alignItems="center">
-            <Typography variant="h11" marginRight={1}>
+            <Typography variant="h11" marginRight={1} onClick={() => {
+                    navigate(-1);
+                  }}
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": {
+                      color: "#002B9B",
+                    },
+                  }}>
               Staff Page
             </Typography>
             <Typography variant="h11" marginRight={1}>

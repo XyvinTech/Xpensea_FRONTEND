@@ -4,8 +4,10 @@ import React, { useEffect, useState } from "react";
 import StyledTable from "../../ui/StyledTable";
 import StyledFilter from "../../components/StyledFilter";
 import { useListStore } from "../../store/listStore";
+import { useNavigate } from "react-router-dom";
 
 const ReportTable = ({ id }) => {
+  const navigate = useNavigate();
   const [filterOpen, setFilterOpen] = useState(false);
   const { fetchReportById } = useListStore();
   const [selectedRows, setSelectedRows] = useState([]);
@@ -15,7 +17,10 @@ const ReportTable = ({ id }) => {
     // console.log("Selected items:", newSelectedIds);
   };
 
-  const handleDelete = async () => {};
+  const handleView = async (id) => {
+   navigate(`/approvals/view/${id}`);
+    
+  };
   const handleSort = (field) => {
     // console.log(`Sorting by ${field}`);
   };
@@ -136,7 +141,8 @@ const ReportTable = ({ id }) => {
           columns={userColumns}
           onSelectionChange={handleSelectionChange}
           onSort={handleSort}
-          onDelete={handleDelete}
+          showReport
+          onEdit={handleView}
         />
       </Box>
       <StyledFilter open={filterOpen} onClose={handleCloseFilter} />

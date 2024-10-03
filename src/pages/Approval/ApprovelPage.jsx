@@ -8,11 +8,12 @@ import Description from "../../components/approvals/Description";
 import Expenses from "../../components/approvals/Expenses";
 import LiveLocation from "../../components/approvals/LiveLocation";
 import RejectedForm from "../../components/approvals/RejectedForm";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useApprovalStore } from "../../store/approvalstore";
 import ApproveComponent from "../../components/ApproveComponent";
 import PaymentDetails from "../../components/approvals/PaymentDetails";
 const ApprovalPage = () => {
+  const navigate = useNavigate();
   const [rejectOpen, setRejectOpen] = useState(false);
   const [approveOpen, setApproveOpen] = useState(false);
   const [authenticExpenses, setAuthenticExpenses] = useState([]);
@@ -71,7 +72,19 @@ const ApprovalPage = () => {
           <Grid item xs={12} md={12} bgcolor={"#F7F7F7"}>
             <Stack direction={"row"} justifyContent={"space-between"}>
               <Box display="flex" alignItems="center">
-                <Typography variant="h11" marginRight={1}>
+                <Typography
+                  variant="h11"
+                  marginRight={1}
+                  onClick={() => {
+                    navigate(-1);
+                  }}
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": {
+                      color: "#002B9B",
+                    },
+                  }}
+                >
                   Approvals
                 </Typography>
                 <Typography variant="h11" marginRight={1}>
@@ -112,13 +125,14 @@ const ApprovalPage = () => {
           <Grid item xs={12} md={6}>
             <Details data={approval} />
           </Grid>
-          {approval?.status==='reimbursed'&& (
-              <Grid item xs={12} md={12}>
-              <PaymentDetails data={approval?.deduction[0]}
-                amount={pendingAmount} />
+          {approval?.status === "reimbursed" && (
+            <Grid item xs={12} md={12}>
+              <PaymentDetails
+                data={approval?.deduction[0]}
+                amount={pendingAmount}
+              />
             </Grid>
           )}
-        
           {approval?.expenses?.length > 0 && (
             <Grid item xs={12} md={12}>
               <Expenses

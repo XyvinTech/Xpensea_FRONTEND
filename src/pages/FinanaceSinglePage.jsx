@@ -6,11 +6,12 @@ import Details from "../components/approvals/Details";
 import Description from "../components/approvals/Description";
 import Expenses from "../components/approvals/Expenses";
 import Reimbursement from "../components/finance/Reimbursement";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useApprovalStore } from "../store/approvalstore";
 import PaymentDetails from "../components/approvals/PaymentDetails";
 
 const FinanceSinglePage = () => {
+  const navigate = useNavigate();
   const [approveOpen, setApproveOpen] = useState(false);
   const [authenticExpenses, setAuthenticExpenses] = useState([]);
   const [rejectedExpenses, setRejectedExpenses] = useState([]);
@@ -46,7 +47,15 @@ const FinanceSinglePage = () => {
           <Grid item xs={12} md={12} bgcolor={"#F7F7F7"}>
             <Stack direction={"row"} justifyContent={"space-between"}>
               <Box display="flex" alignItems="center">
-                <Typography variant="h11" marginRight={1}>
+                <Typography variant="h11" marginRight={1} onClick={() => {
+                    navigate(-1);
+                  }}
+                  sx={{
+                    cursor: "pointer",
+                    "&:hover": {
+                      color: "#002B9B",
+                    },
+                  }}>
                   Finance
                 </Typography>
                 <Typography variant="h11" marginRight={1}>

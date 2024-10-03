@@ -7,7 +7,7 @@ import { FilterIcon } from "../assets/icons/FilterIcon";
 import { useListStore } from "../store/listStore";
 const FinancePage = () => {
   const navigate = useNavigate();
-  const { fetchLists} = useListStore();
+  const { fetchLists } = useListStore();
   const [pageNo, setPageNo] = useState(1);
   const [isChange, setIsChange] = useState(false);
   const [status, setStatus] = useState(null);
@@ -88,7 +88,7 @@ const FinancePage = () => {
             }}
             onClick={() => setStatus("reimbursed")}
           >
-           Reimbursed
+            Reimbursed
           </Button>
           <Button
             style={{
@@ -104,7 +104,6 @@ const FinancePage = () => {
           >
             Approved
           </Button>
-          
         </Box>
         <Box
           display="flex"
@@ -131,6 +130,7 @@ const FinancePage = () => {
           setPageNo={setPageNo}
           onView={handleView}
           onSort={handleSort}
+          showMenu
           onDelete={handleDelete}
         />
       </Box>

@@ -77,6 +77,7 @@ const StyledTable = ({
   onShare,
   pageNo,
   setPageNo,
+  showReport,
   showMenu,
   showView,
   showEdit,
@@ -408,6 +409,19 @@ const StyledTable = ({
                               />
                             </MenuItem>,
                           ]
+                          : showReport
+                          ? [
+                              <MenuItem key="view" onClick={handleView}>
+                                <StyledSpan
+                                  variant={"view"}
+                                  text={
+                                    <>
+                                       <ViewIcon /> View
+                                    </>
+                                  }
+                                />
+                              </MenuItem>,
+                            ]
                         : showView
                         ? [
                             <MenuItem key="view" onClick={handleView}>
