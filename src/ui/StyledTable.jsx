@@ -444,7 +444,7 @@ const StyledTable = ({
           </TableBody>
         </Table>
         <Divider />
-        {!dashboard && (
+        {!dashboard && totalCount > 0 && (
           <Stack
             padding={2}
             component="div"
