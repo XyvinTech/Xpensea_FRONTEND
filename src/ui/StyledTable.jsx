@@ -191,6 +191,8 @@ const StyledTable = ({
     switch (event) {
       case "User":
         return <Icon2 />;
+        case "event":
+        return <Icon2 />;
       case "Admin":
         return <AdminEventIcon />;
       case "other":
