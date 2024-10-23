@@ -10,13 +10,14 @@ import { useAdminStore } from "../../store/adminStore";
 
 const AdminManagementPage = () => {
   const { fetchAdminById, deleteAdmins } = useAdminStore();
-  const { lists, fetchLists, rowPerSize} = useListStore();
+  const { lists, fetchLists, rowPerSize } = useListStore();
   const [pageNo, setPageNo] = useState(1);
+  const [row, setRow] = useState(10);
   const [isChange, setIsChange] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
-  const [isUpdate, setIsUpdate] = useState(false); 
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
@@ -25,8 +26,8 @@ const AdminManagementPage = () => {
 
   const handleEdit = async (id) => {
     await fetchAdminById(id);
-  
-    setIsUpdate(true); 
+
+    setIsUpdate(true);
     setEventOpen(true);
   };
 
@@ -55,12 +56,13 @@ const AdminManagementPage = () => {
   };
 
   const handleOpenEvent = () => {
-    setIsUpdate(false); 
+    setIsUpdate(false);
     setEventOpen(true);
   };
 
   const handleCloseEvent = () => {
-    setEventOpen(false);setIsUpdate(false); 
+    setEventOpen(false);
+    setIsUpdate(false);
   };
 
   const handleChange = () => {
@@ -77,11 +79,12 @@ const AdminManagementPage = () => {
   ];
 
   useEffect(() => {
-    const limit = rowPerSize;
-    let filter = { limit, pageNo };
+    let filter = {};
     filter.type = "admins";
+    filter.limit = row;
+    filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists, rowPerSize, pageNo]);
+  }, [isChange, fetchLists, rowPerSize, pageNo, row]);
 
   return (
     <>
@@ -133,6 +136,8 @@ const AdminManagementPage = () => {
           onEdit={handleEdit}
           showEdit
           pageNo={pageNo}
+          rowPerSize={row}
+          setRowPerSize={setRow}
           setPageNo={setPageNo}
           onSort={handleSort}
           onView={handleView}
@@ -144,7 +149,7 @@ const AdminManagementPage = () => {
         open={eventOpen}
         onClose={handleCloseEvent}
         onChange={handleChange}
-        isUpdate={isUpdate} 
+        isUpdate={isUpdate}
       />
     </>
   );

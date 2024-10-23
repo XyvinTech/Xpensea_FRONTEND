@@ -14,6 +14,7 @@ const TierPage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [status, setStatus] = useState(null);
   const [pageNo, setPageNo] = useState(1);
+  const [row, setRow] = useState(10);
   const [isUpdate, setIsUpdate] = useState(false);
   const [isChange, setIsChange] = useState(false);
   const [expenseOpen, setExpenseOpen] = useState(false);
@@ -75,8 +76,9 @@ const TierPage = () => {
       filter.status = status;
     }
     filter.pageNo = pageNo;
+    filter.limit = row;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo, status]);
+  }, [isChange, fetchLists, pageNo, status,row]);
   // console.log(lists);
 
   return (
@@ -171,6 +173,8 @@ const TierPage = () => {
           setPageNo={setPageNo}
           onSelectionChange={handleSelectionChange}
           onDelete={handleDelete}
+          rowPerSize={row}
+          setRowPerSize={setRow}
           onSort={handleSort}
           showEdit
           onEdit={handleEdit}

@@ -12,6 +12,7 @@ const MainPage = () => {
   const [isChange, setIsChange] = useState(false);
   const [status, setStatus] = useState(null);
   const { deleteApprovals } = useApprovalStore();
+  const [row, setRow] = useState(10);
   const [selectedRows, setSelectedRows] = useState([]);
   const [pageNo, setPageNo] = useState(1);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -59,8 +60,9 @@ const MainPage = () => {
       filter.status = status;
     }
     filter.pageNo = pageNo;
+    filter.limit = row;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo, status]);
+  }, [isChange, fetchLists, pageNo, status,row]);
   // console.log(lists);
   return (
     <>
@@ -152,6 +154,8 @@ const MainPage = () => {
           onView={handleView}
           onSort={handleSort}
           pageNo={pageNo}
+          rowPerSize={row}
+          setRowPerSize={setRow}
           setPageNo={setPageNo}
           onDelete={handleDelete}
           onDeleteRow={handleRowDelete}

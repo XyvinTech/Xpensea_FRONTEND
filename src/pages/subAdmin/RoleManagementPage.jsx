@@ -14,6 +14,7 @@ const RoleManagementPage = () => {
   const [isChange, setIsChange] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [pageNo, setPageNo] = useState(1);
+  const [row, setRow] = useState(10);
   const [filterOpen, setFilterOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
@@ -68,7 +69,8 @@ const RoleManagementPage = () => {
     filter.type = "roles";
     fetchLists(filter);
     filter.pageNo = pageNo;
-  }, [isChange, fetchLists, pageNo]);
+    filter.limit = row;
+  }, [isChange, fetchLists, pageNo,row]);
   return (
     <>
       <Stack
@@ -119,6 +121,8 @@ const RoleManagementPage = () => {
           showEdit
           pageNo={pageNo}
           setPageNo={setPageNo}
+          rowPerSize={row}
+          setRowPerSize={setRow}
           onSort={handleSort}
           onDelete={handleDelete}
         />

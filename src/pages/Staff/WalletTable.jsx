@@ -7,15 +7,17 @@ const WalletTable = ({ id }) => {
   const { fetchWallet } = useListStore();
   const [status, setStatus] = useState(null);
   const [pageNo, setPageNo] = useState(1);
+  const [row, setRow] = useState(10);
   useEffect(() => {
     let filter = {};
     if (status !== null) {
       filter.transactionType = status;
     }
     filter.staffId = id;
+    filter.limit = row;
     filter.pageNo = pageNo;
     fetchWallet(filter);
-  }, [fetchWallet, pageNo, status]);
+  }, [fetchWallet, pageNo, status, row]);
   const userColumns = [
     { title: "tRANSACTION ID", field: "id", sortable: true },
     { title: "AMOUNT", field: "amount", sortable: true },
@@ -75,6 +77,8 @@ const WalletTable = ({ id }) => {
           columns={userColumns}
           pageNo={pageNo}
           setPageNo={setPageNo}
+          rowPerSize={row}
+          setRowPerSize={setRow}
         />
       </Box>
     </Stack>

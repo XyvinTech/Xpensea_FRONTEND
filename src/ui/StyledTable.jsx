@@ -83,12 +83,14 @@ const StyledTable = ({
   showEdit,
   showShare,
   dashboard,
+  rowPerSize,
+  setRowPerSize,
 }) => {
   const [selectedIds, setSelectedIds] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const [rowId, setRowId] = useState(null);
   const [isChange, setIsChange] = useState(false);
-  const { lists, totalCount, rowPerSize, rowChange } = useListStore();
+  const { lists, totalCount } = useListStore();
   const handleSelectAllClick = (event) => {
     const isChecked = event.target.checked;
     const newSelectedIds = isChecked ? lists.map((row) => row._id) : [];
@@ -163,7 +165,7 @@ const StyledTable = ({
     switch (status) {
       case "pending":
         return "pending";
-        case "deducted":
+      case "deducted":
         return "deducted";
       case "scheduled":
         return "pending";
@@ -192,7 +194,7 @@ const StyledTable = ({
     switch (event) {
       case "User":
         return <Icon2 />;
-        case "event":
+      case "event":
         return <Icon2 />;
       case "Admin":
         return <AdminEventIcon />;
@@ -207,6 +209,10 @@ const StyledTable = ({
   };
   const pageDec = () => {
     setPageNo((prev) => prev - 1);
+  };
+  const handleChangeRowsPerPage = (event) => {
+    setRowPerSize(parseInt(event.target.value, 10));
+    setPageNo(1);
   };
   return (
     <Box>
@@ -409,19 +415,19 @@ const StyledTable = ({
                               />
                             </MenuItem>,
                           ]
-                          : showReport
-                          ? [
-                              <MenuItem key="view" onClick={handleView}>
-                                <StyledSpan
-                                  variant={"view"}
-                                  text={
-                                    <>
-                                       <ViewIcon /> View
-                                    </>
-                                  }
-                                />
-                              </MenuItem>,
-                            ]
+                        : showReport
+                        ? [
+                            <MenuItem key="view" onClick={handleView}>
+                              <StyledSpan
+                                variant={"view"}
+                                text={
+                                  <>
+                                    <ViewIcon /> View
+                                  </>
+                                }
+                              />
+                            </MenuItem>,
+                          ]
                         : showView
                         ? [
                             <MenuItem key="view" onClick={handleView}>
@@ -497,6 +503,7 @@ const StyledTable = ({
                       totalCount / rowPerSize
                     )} of ${totalCount}`
                   }
+                  onRowsPerPageChange={handleChangeRowsPerPage}
                   ActionsComponent={({ onPageChange }) => (
                     <Stack
                       direction="row"

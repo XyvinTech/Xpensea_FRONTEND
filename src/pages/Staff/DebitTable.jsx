@@ -6,13 +6,15 @@ import { useListStore } from "../../store/listStore";
 const DebitTable = ({ id }) => {
   const { fetchWallet } = useListStore();
   const [pageNo, setPageNo] = useState(1);
+  const [row, setRow] = useState(10);
   useEffect(() => {
     let filter = {};
     filter.type = "debit";
     filter.staffId = id;
     filter.pageNo = pageNo;
+    filter.limit = row;
     fetchWallet(filter);
-  }, [fetchWallet, pageNo]);
+  }, [fetchWallet, pageNo, row]);
   const userColumns = [
     { title: "tRANSACTION ID", field: "_id", sortable: true },
     { title: "AMOUNT", field: "amount", sortable: true },
@@ -27,6 +29,8 @@ const DebitTable = ({ id }) => {
           columns={userColumns}
           pageNo={pageNo}
           setPageNo={setPageNo}
+          rowPerSize={row}
+          setRowPerSize={setRow}
         />
       </Box>
     </Stack>

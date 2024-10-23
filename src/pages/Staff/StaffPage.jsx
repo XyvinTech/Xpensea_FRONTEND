@@ -10,11 +10,12 @@ import { useListStore } from "../../store/listStore";
 import { useUserStore } from "../../store/userStore";
 const StaffPage = () => {
   const navigate = useNavigate();
-  const { fetchLists} = useListStore();
+  const { fetchLists } = useListStore();
   const [pageNo, setPageNo] = useState(1);
   const { fetchUserById, deleteUsers } = useUserStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [isChange, setIsChange] = useState(false);
+  const [row, setRow] = useState(10);
   const [isUpdate, setIsUpdate] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
   const [status, setStatus] = useState(null);
@@ -88,10 +89,10 @@ const StaffPage = () => {
     }
 
     filter.isDeleted = isDelete;
-
+    filter.limit = row;
     filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo, status, isDelete]);
+  }, [isChange, fetchLists, pageNo, status, isDelete,row]);
 
   return (
     <>
@@ -113,9 +114,8 @@ const StaffPage = () => {
             }}
             onClick={() => {
               setStatus(null);
-              setIsDelete('');
+              setIsDelete("");
             }}
-            
           >
             All
           </Button>
@@ -132,9 +132,8 @@ const StaffPage = () => {
             }}
             onClick={() => {
               setStatus(true);
-              setIsDelete('');
+              setIsDelete("");
             }}
-            
           >
             Activated{" "}
           </Button>
@@ -150,9 +149,8 @@ const StaffPage = () => {
             }}
             onClick={() => {
               setStatus(false);
-              setIsDelete('');
+              setIsDelete("");
             }}
-            
           >
             Deactivated
           </Button>
@@ -167,10 +165,9 @@ const StaffPage = () => {
               color: isDelete === true ? "#fff" : "#4D515A",
             }}
             onClick={() => {
-              setStatus('');
+              setStatus("");
               setIsDelete(true);
             }}
-            
           >
             Deleted
           </Button>
@@ -230,6 +227,8 @@ const StaffPage = () => {
           onSort={handleSort}
           onDelete={handleDelete}
           showEdit
+          rowPerSize={row}
+          setRowPerSize={setRow}
           pageNo={pageNo}
           setPageNo={setPageNo}
           onView={handleView}

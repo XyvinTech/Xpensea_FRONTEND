@@ -11,6 +11,7 @@ const FinancePage = () => {
   const [pageNo, setPageNo] = useState(1);
   const [isChange, setIsChange] = useState(false);
   const [status, setStatus] = useState(null);
+  const [row, setRow] = useState(10);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const handleSelectionChange = (newSelectedIds) => {
@@ -51,8 +52,9 @@ const FinancePage = () => {
       filter.status = status;
     }
     filter.pageNo = pageNo;
+    filter.limit = row;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo, status]);
+  }, [isChange, fetchLists, pageNo, status,row]);
   return (
     <>
       <Stack
@@ -128,6 +130,8 @@ const FinancePage = () => {
           onSelectionChange={handleSelectionChange}
           pageNo={pageNo}
           setPageNo={setPageNo}
+          rowPerSize={row}
+          setRowPerSize={setRow}
           onView={handleView}
           onSort={handleSort}
           showMenu

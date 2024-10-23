@@ -15,6 +15,7 @@ const PolicyPage = () => {
   const {  fetchPolicyById } = usePolicyStore();
   const [filterOpen, setFilterOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
+  const [row, setRow] = useState(10);
   const [isChange, setIsChange] = useState(false);
   const [isUpdate, setIsUpdate] = useState(false);
   const [policyOpen, setPolicyOpen] = useState(false);
@@ -80,8 +81,9 @@ const PolicyPage = () => {
     //   filter.status = status;
     // }
     filter.pageNo = pageNo;
+    filter.limit = row;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo]);
+  }, [isChange, fetchLists, pageNo,row]);
   return (
     <>
       <Stack
@@ -189,6 +191,8 @@ const PolicyPage = () => {
           onSort={handleSort}
           pageNo={pageNo}
           setPageNo={setPageNo}
+          rowPerSize={row}
+          setRowPerSize={setRow}
           onDelete={handleDelete}
           onView={handleView}
           onEdit={handleEdit}

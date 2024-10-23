@@ -9,6 +9,7 @@ import { useEventStore } from "../store/eventStore";
 const EventsPage = () => {
   const { fetchLists } = useListStore();
   const [pageNo, setPageNo] = useState(1);
+  const [row, setRow] = useState(10);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterOpen, setFilterOpen] = useState(false);
   const [isChange, setIsChange] = useState(false);
@@ -30,7 +31,7 @@ const EventsPage = () => {
   };
   const handleEdit = async (id) => {
     await fetchEventById(id);
-   
+
     setIsUpdate(true);
     setEventOpen(true);
   };
@@ -68,7 +69,7 @@ const EventsPage = () => {
     { title: "End Date", field: "endDate", sortable: true },
     { title: "No of Staffs", field: "staffCount", sortable: true },
     { title: "Locations", field: "location", sortable: true },
-    { title: "Status", field: "status", sortable: true }
+    { title: "Status", field: "status", sortable: true },
   ];
   useEffect(() => {
     let filter = { type: "events" };
@@ -77,8 +78,9 @@ const EventsPage = () => {
       filter.status = status;
     }
     filter.pageNo = pageNo;
+    filter.limit = row;
     fetchLists(filter);
-  }, [isChange, fetchLists, status, pageNo]);
+  }, [isChange, fetchLists, status, pageNo, row]);
   // console.log(lists);
   return (
     <>
@@ -186,6 +188,8 @@ const EventsPage = () => {
           onSelectionChange={handleSelectionChange}
           onSort={handleSort}
           pageNo={pageNo}
+          rowPerSize={row}
+          setRowPerSize={setRow}
           setPageNo={setPageNo}
           onDelete={handleDelete}
           onEdit={handleEdit}

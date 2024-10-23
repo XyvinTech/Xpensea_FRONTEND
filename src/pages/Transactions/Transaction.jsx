@@ -18,6 +18,7 @@ const Transaction = () => {
   const [open, setOpen] = useState(false);
   const { fetchLists } = useListStore();
   const [pageNo, setPageNo] = useState(1);
+  const [row, setRow] = useState(10);
   const handleSelectionChange = (newSelectedIds) => {
     setSelectedRows(newSelectedIds);
     // console.log("Selected items:", newSelectedIds);
@@ -59,9 +60,11 @@ const Transaction = () => {
     if (status !== null) {
       filter.status = status;
     }
+
+    filter.limit = row;
     filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo, status]);
+  }, [isChange, fetchLists, pageNo, status, row]);
   const userColumns = [
     { title: "STAFF NAME", field: "user", sortable: false },
     { title: "tRANSACTION ID", field: "_id", sortable: true },
@@ -148,6 +151,8 @@ const Transaction = () => {
           onSort={handleSort}
           pageNo={pageNo}
           setPageNo={setPageNo}
+          rowPerSize={row}
+          setRowPerSize={setRow}
           onDelete={handleDelete}
           showView
         />
