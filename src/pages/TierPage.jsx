@@ -76,9 +76,8 @@ const TierPage = () => {
       filter.status = status;
     }
     filter.pageNo = pageNo;
-    filter.limit = row;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo, status,row]);
+  }, [isChange, fetchLists, pageNo, status]);
   // console.log(lists);
 
   return (

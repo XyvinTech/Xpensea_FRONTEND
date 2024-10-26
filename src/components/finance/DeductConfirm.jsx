@@ -8,19 +8,25 @@ import {
   Stack,
 } from "@mui/material";
 import { useApprovalStore } from "../../store/approvalstore";
+import { toast } from "react-toastify";
 
 const DeductConfirm = ({ open, onClose, formData, paymentAmount,setIsChange }) => {
   const { deductWallet} = useApprovalStore();
 
   const handleSubmit = async () => {
-    const data = {
-      amount: paymentAmount,
-      report: formData._id,
-    };
-    await deductWallet(data);
-    setIsChange();
-    onClose();
+    try {
+      const data = {
+        amount: paymentAmount,
+        report: formData._id,
+      };
+      await deductWallet(data);
+      setIsChange();
+      onClose();
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
+  
 
   const handleClear = (event) => {
     event.preventDefault();

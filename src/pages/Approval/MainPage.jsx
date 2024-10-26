@@ -62,7 +62,7 @@ const MainPage = () => {
     filter.pageNo = pageNo;
     filter.limit = row;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo, status,row]);
+  }, [isChange, pageNo, status, row]);
   // console.log(lists);
   return (
     <>

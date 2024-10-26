@@ -25,7 +25,11 @@ export const updateTier = async (tierId, data) => {
     toast.error(error.response.data.message);
   }
 };
-export const deleteTier = handleAsync(async (tierId) => {
-  const response = await axiosInstance.delete(`/admin/tier/${tierId}`);
-  return response.data;
-});
+export const deleteTier = async (tierId) => {
+  try {
+    const response = await axiosInstance.delete(`/admin/tier/${tierId}`);
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.message);
+  }
+};

@@ -26,28 +26,21 @@ const useAdminStore = create((set) => ({
     set({ admin: fetch.data });
   },
   addAdmins: async (adminData) => {
-    const newAdmin = await addAdmin(adminData);
-    set((state) => ({ data: [...state.data, newAdmin] }));
+    await addAdmin(adminData);
   },
   fetchAdminById: async (adminId) => {
     const Admin = await getSingleAdmin(adminId);
     set({ admins: Admin.data });
   },
   updateAdmins: async (adminId, newData) => {
-    const updatedAdmin = await updateAdmin(adminId, newData);
-    set((state) => ({
-      data: state.data.map((item) =>
-        item.id === adminId ? { ...item, ...updatedAdmin } : item
-      ),
-      admins: updatedAdmin,
-    }));
+    await updateAdmin(adminId, newData);
   },
   deleteAdmins: async (adminId) => {
     await deleteAdmin(adminId);
   },
   getDashboardData: async () => {
     const fetch = await getDashboard();
-    set({dashboard: fetch.data });
+    set({ dashboard: fetch.data });
   },
 }));
 

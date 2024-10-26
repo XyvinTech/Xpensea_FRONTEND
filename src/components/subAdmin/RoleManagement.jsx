@@ -20,6 +20,7 @@ import StyledInput from "../../ui/StyledInput";
 import StyledSelectField from "../../ui/StyledSelectField";
 import { Controller, useForm } from "react-hook-form";
 import { useRoleStore } from "../../store/roleStore";
+import { toast } from "react-toastify";
 
 const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
   const initialPermissions = {
@@ -182,36 +183,40 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
   };
 
   const onSubmit = async (data) => {
-    const selectedPermissions = Object.keys(permissions).filter(
-      (key) => permissions[key]
-    );
+    try {
+      const selectedPermissions = Object.keys(permissions).filter(
+        (key) => permissions[key]
+      );
 
-    const formData = {
-      roleName: data.roleName,
-      locationAccess: Array.isArray(data.location)
-        ? data.location.map((location) => location.value)
-        : [data.location.value],
-      permissions: selectedPermissions,
-      status: isChecked,
-    };
+      const formData = {
+        roleName: data.roleName,
+        locationAccess: Array.isArray(data.location)
+          ? data.location.map((location) => location.value)
+          : [data.location.value],
+        permissions: selectedPermissions,
+        status: isChecked,
+      };
 
-    if (isUpdate) {
-      if (role?._id) {
-        await updateRoles(role._id, formData);
+      if (isUpdate) {
+        if (role?._id) {
+          await updateRoles(role._id, formData);
+        } else {
+          console.error("Role ID is undefined");
+        }
       } else {
-        console.error("Role ID is undefined");
+        await addRoles(formData);
       }
-    } else {
-      await addRoles(formData);
-    }
 
-    onClose();
-    onChange();
-    reset({
-      roleName: "",
-      location: [],
-    });
-    setPermissions(initialPermissions);
+      onClose();
+      onChange();
+      reset({
+        roleName: "",
+        location: [],
+      });
+      setPermissions(initialPermissions);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -235,7 +240,11 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
             paddingBottom={0}
           >
             <Typography variant="h11">Role Management</Typography>
-            <StyledSwitch checked={isChecked} onChange={handleSwitchChange}variant={"primary"} />
+            <StyledSwitch
+              checked={isChecked}
+              onChange={handleSwitchChange}
+              variant={"primary"}
+            />
           </Box>
           <Divider />
 
@@ -296,7 +305,7 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
                   }}
                 >
                   <TableRow sx={{ textTransform: "uppercase" }}>
-                    <TableCell  sx={tableCellStyle}>Permission</TableCell>
+                    <TableCell sx={tableCellStyle}>Permission</TableCell>
                     <TableCell sx={tableCellStyle}>View</TableCell>
                     <TableCell sx={tableCellStyle}>Modify</TableCell>
                   </TableRow>

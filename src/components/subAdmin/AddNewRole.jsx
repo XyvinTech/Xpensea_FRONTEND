@@ -8,6 +8,7 @@ import { Divider } from "antd";
 import { Controller, useForm } from "react-hook-form";
 import { useDropDownStore } from "../../store/useDropDownStore";
 import { useAdminStore } from "../../store/adminStore";
+import { toast } from "react-toastify";
 
 const AddNewRole = ({ open, onClose, onChange, isUpdate = false }) => {
   const { roles, fetchRoles } = useDropDownStore();
@@ -71,9 +72,10 @@ const AddNewRole = ({ open, onClose, onChange, isUpdate = false }) => {
     onClose();
   };
 
-  const designation = [{ value: "Administrator", label: "Administrator" },
+  const designation = [
+    { value: "Administrator", label: "Administrator" },
     { value: "Tester", label: "Tester" },
-    { value: "Financer", label: "Financer" }
+    { value: "Financer", label: "Financer" },
   ];
 
   useEffect(() => {
@@ -89,39 +91,43 @@ const AddNewRole = ({ open, onClose, onChange, isUpdate = false }) => {
       : [];
 
   const onSubmit = async (data) => {
-    const formData = {
-      name: data.name,
-      email: data.email,
-      mobile: data.mobile,
-      role: data.role.value,
-      password: "12345",
-      designation: data.designation.value,
-      status: isChecked,
-    };
-    const upData = {
-      name: data.name,
-      email: data.email,
-      mobile: data.mobile,
-      role: data.role.value,
-      designation: data.designation.value,
-      status: isChecked,
-    };
+    try {
+      const formData = {
+        name: data.name,
+        email: data.email,
+        mobile: data.mobile,
+        role: data.role.value,
+        password: "12345",
+        designation: data.designation.value,
+        status: isChecked,
+      };
+      const upData = {
+        name: data.name,
+        email: data.email,
+        mobile: data.mobile,
+        role: data.role.value,
+        designation: data.designation.value,
+        status: isChecked,
+      };
 
-    if (isUpdate) {
-      await updateAdmins(admins._id, upData);
-    } else {
-      await addAdmins(formData);
+      if (isUpdate) {
+        await updateAdmins(admins._id, upData);
+      } else {
+        await addAdmins(formData);
+      }
+      onClose();
+      onChange();
+      reset({
+        name: "",
+        email: "",
+        mobile: "",
+        designation: "",
+        role: "",
+      });
+      setIsChecked(false);
+    } catch (err) {
+      toast.error(err.message);
     }
-    onClose();
-    onChange();
-    reset({
-      name: "",
-      email: "",
-      mobile: "",
-      designation: "",
-      role: "",
-    });
-    setIsChecked(false);
   };
 
   return (

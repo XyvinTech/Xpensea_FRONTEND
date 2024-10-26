@@ -29,7 +29,7 @@ export const addAdmin = async (data) => {
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };
 export const getSingleAdmin = handleAsync(async (id) => {
@@ -43,16 +43,16 @@ export const updateAdmin = async (adminId, data) => {
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };
 export const deleteAdmin = async (adminId) => {
   try {
     const response = await axiosInstance.delete(`/admin/admin/${adminId}`);
-    toast.success(response.data.message);
+
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };
 export const getDashboard = async () => {

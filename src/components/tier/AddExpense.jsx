@@ -44,8 +44,8 @@ const AddExpense = ({ open, onClose, onChange, isUpdate = false }) => {
         activationDate: "",
         tierTitle: "",
         level: "",
-        
-      }); setCategories([]);
+      });
+      setCategories([]);
     }
   }, [isUpdate, tier, reset]);
 
@@ -123,9 +123,9 @@ const AddExpense = ({ open, onClose, onChange, isUpdate = false }) => {
     });
     setCategories(updatedCategories);
   };
-// console.log('updatedCategor',isUpdate)
+  // console.log('updatedCategor',isUpdate)
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth >
+    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box padding={3}>
           <Box
@@ -249,7 +249,7 @@ const AddExpense = ({ open, onClose, onChange, isUpdate = false }) => {
               </Grid>
             ))}{" "}
             <>
-              <Grid item md="6" minHeight={'300px'}>
+              <Grid item md="6" minHeight={"300px"}>
                 <Controller
                   name="title"
                   control={control}

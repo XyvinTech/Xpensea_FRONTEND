@@ -8,16 +8,21 @@ import {
   Stack,
 } from "@mui/material";
 import { useApprovalStore } from "../../store/approvalstore";
+import { toast } from "react-toastify";
 
 const ConfirmReimburse = ({ open, onClose, formData, description, amount }) => {
   const { updateFinances, setRefresh } = useApprovalStore();
   const handleSubmit = async () => {
-    await updateFinances(formData._id, {
-      descriptionFinance: description,
-      amount: amount,
-    });
-setRefresh();
-    onClose();
+    try {
+      await updateFinances(formData._id, {
+        descriptionFinance: description,
+        amount: amount,
+      });
+      setRefresh();
+      onClose();
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleClear = (event) => {

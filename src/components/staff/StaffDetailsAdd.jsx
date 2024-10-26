@@ -9,6 +9,7 @@ import StyledInputFile from "../../ui/StyledInputfile";
 import { Controller, useForm } from "react-hook-form";
 import { useDropDownStore } from "../../store/useDropDownStore";
 import { useUserStore } from "../../store/userStore";
+import { toast } from "react-toastify";
 
 const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
   const { tiers, fetchTiers, fetchApprovers, approvers } = useDropDownStore();
@@ -81,40 +82,43 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
   };
 
   const onSubmit = async (data) => {
-    const formData = {
-      name: data.name,
-      email: data.email,
-      mobile: data.mobile,
-      designation: data.designation,
-      employeeId: data.employeeId,
-      tier: data.tier.value,
-      approver: data.approver.value,
-      userType: data.userType.value,
-      location: data.location.value,
-      status: isChecked,
-    };
+    try {
+      const formData = {
+        name: data.name,
+        email: data.email,
+        mobile: data.mobile,
+        designation: data.designation,
+        employeeId: data.employeeId,
+        tier: data.tier.value,
+        approver: data.approver.value,
+        userType: data.userType.value,
+        location: data.location.value,
+        status: isChecked,
+      };
 
-    if (isUpdate) {
-      await updateUsers(user._id, formData);
-    } else {
-      await addUsers(formData);
+      if (isUpdate) {
+        await updateUsers(user._id, formData);
+      } else {
+        await addUsers(formData);
+      }
 
+      onChange();
+      reset({
+        name: "",
+        email: "",
+        mobile: "",
+        employeeId: "",
+        tier: "",
+        designation: "",
+        approver: "",
+        userType: "",
+        location: "",
+      });
+      onClose();
+      setIsChange(!isChange);
+    } catch (error) {
+      toast.error(error.message);
     }
-
-    onChange();
-    reset({
-      name: "",
-      email: "",
-      mobile: "",
-      employeeId: "",
-      tier: "",
-      designation: "",
-      approver: "",
-      userType: "",
-      location: "",
-    });
-    onClose();
-    setIsChange(!isChange);
   };
 
   const handleSwitchChange = (event) => {

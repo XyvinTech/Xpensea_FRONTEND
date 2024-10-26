@@ -2,10 +2,15 @@ import { toast } from "react-toastify";
 import { handleAsync } from "../utils/handleAsync";
 import axiosInstance from "./axiosintercepter";
 
-export const getApproval = handleAsync(async (id) => {
-  const response = await axiosInstance.get(`/admin/approval/${id}`);
-  return response.data;
-});
+export const getApproval = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/admin/approval/${id}`);
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const updateApproval = async (Id, action, data) => {
   try {
     const response = await axiosInstance.put(
@@ -15,7 +20,7 @@ export const updateApproval = async (Id, action, data) => {
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };
 export const deleteApproval = handleAsync(async (approvalId) => {
@@ -32,7 +37,7 @@ export const updateFinance = async (Id, data) => {
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };
 export const financeDeduct = async (data) => {
@@ -41,6 +46,6 @@ export const financeDeduct = async (data) => {
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };

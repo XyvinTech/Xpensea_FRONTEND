@@ -12,6 +12,7 @@ import CalendarInput from "../../ui/CalenderInput";
 import { Controller, useForm } from "react-hook-form";
 import { useDropDownStore } from "../../store/useDropDownStore";
 import { usePolicyStore } from "../../store/policyStore";
+import { toast } from "react-toastify";
 
 const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
   const { control, handleSubmit, reset } = useForm();
@@ -42,28 +43,31 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
         }))
       : [];
   const onSubmit = async (data) => {
-    const formData = {
-      policyTitle: data?.policyTitle,
-      tier: data.tier.value,
-      userType: data.userType.value,
-      location: data.location.value,
-      activationDate: data?.activationDate,
-      policyDetails: data?.policyDetails,
-      accuracy: data?.accuracy,
-      authenticity: data?.authenticity,
-      compliance: data?.compliance,
-      relevance: data?.relevance,
-      completeness: data?.completeness,
-    };
-    if (isUpdate) {
-      await updatePolicies(policy._id, formData);
-    } else {
-      await addPolicies(formData);
+    try {
+      const formData = {
+        policyTitle: data?.policyTitle,
+        tier: data.tier.value,
+        userType: data.userType.value,
+        location: data.location.value,
+        activationDate: data?.activationDate,
+        policyDetails: data?.policyDetails,
+        accuracy: data?.accuracy,
+        authenticity: data?.authenticity,
+        compliance: data?.compliance,
+        relevance: data?.relevance,
+        completeness: data?.completeness,
+      };
+      if (isUpdate) {
+        await updatePolicies(policy._id, formData);
+      } else {
+        await addPolicies(formData);
+      }
+      onChange();
+      onClose();
+      reset();
+    } catch (error) {
+      toast.error(error.message);
     }
-
-    onChange();
-    onClose();
-    reset();
   };
   useEffect(() => {
     if (isUpdate && policy) {
@@ -97,7 +101,6 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
         compliance: "",
         authenticity: "",
         completeness: "",
-       
       });
     }
     // setIsChecked(admins?.status || false);

@@ -5,21 +5,14 @@ const useEventStore = create((set) => ({
   events: [],
   event: null,
   addEvents: async (eventData) => {
-    const newEvent = await addEvent(eventData);
-    set((state) => ({ events: [...state.events, newEvent] }));
+    await addEvent(eventData);
   },
   fetchEventById: async (eventId) => {
     const event = await getEvent(eventId);
     set({ event: event.data });
   },
   updateEvents: async (eventId, newData) => {
-    const updatedEvent = await updateEvent(eventId, newData);
-    set((state) => ({
-      events: state.events.map((event) =>
-        event._id === eventId ? { ...event, ...updatedEvent } : event
-      ),
-      event: updatedEvent,
-    }));
+    await updateEvent(eventId, newData);
   },
   deleteEvents: async (eventId) => {
     await deleteEvent(eventId);

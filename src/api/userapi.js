@@ -8,7 +8,7 @@ export const addUser = async (data) => {
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };
 export const getUser = handleAsync(async (id) => {
@@ -23,15 +23,15 @@ export const updateUser = async (userId, data) => {
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };
 export const deleteUser = async (userId) => {
   try {
     const response = await axiosInstance.delete(`/admin/user/${userId}`);
-    toast.success(response.data.message);
+
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };

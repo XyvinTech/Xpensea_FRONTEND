@@ -6,6 +6,7 @@ import StyledFilter from "../components/StyledFilter";
 import CreateEvent from "../components/events/CreateEvent";
 import { useListStore } from "../store/listStore";
 import { useEventStore } from "../store/eventStore";
+import { toast } from "react-toastify";
 const EventsPage = () => {
   const { fetchLists } = useListStore();
   const [pageNo, setPageNo] = useState(1);
@@ -23,10 +24,15 @@ const EventsPage = () => {
   };
 
   const handleDelete = async () => {
-    if (selectedRows.length > 0) {
-      await Promise.all(selectedRows.map((id) => deleteEvents(id)));
-      setIsChange(!isChange);
-      setSelectedRows([]);
+    try {
+      if (selectedRows.length > 0) {
+        await Promise.all(selectedRows.map((id) => deleteEvents(id)));
+        toast.success("Deleted successfully");
+        setIsChange(!isChange);
+        setSelectedRows([]);
+      }
+    } catch (e) {
+      toast.error("Something went wrong");
     }
   };
   const handleEdit = async (id) => {
@@ -36,9 +42,13 @@ const EventsPage = () => {
     setEventOpen(true);
   };
   const handleRowDelete = async (id) => {
-    await deleteEvents(id);
-    setIsChange(!isChange);
-    // setSelectedRows((prevSelectedRows) => prevSelectedRows.filter(rowId => rowId !== id));
+    try {
+      await deleteEvents(id);
+      setIsChange(!isChange);
+      toast.success("Deleted successfully");
+    } catch (e) {
+      toast.error("Something went wrong");
+    }
   };
   const handleSort = (field) => {
     // console.log(`Sorting by ${field}`);

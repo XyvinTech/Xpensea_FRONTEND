@@ -24,11 +24,7 @@ const useApprovalStore = create((set) => ({
     await deleteApproval(approvalId);
   },
   updateApprovals: async (approvalId, action, data) => {
-    const updatedApproval = await updateApproval(approvalId, action, data);
-    set((state) => ({
-      ...state,
-      approval: updatedApproval.data,
-    }));
+    await updateApproval(approvalId, action, data);
   },
   fetchFinanceById: async (id) => {
     set({ loading: true });
@@ -37,11 +33,7 @@ const useApprovalStore = create((set) => ({
     set({ loading: false });
   },
   updateFinances: async (id, data) => {
-    const updated = await updateFinance(id, data);
-    set((state) => ({
-      ...state,
-      finance: updated.data,
-    }));
+    await updateFinance(id, data);
   },
   deductWallet: async (data) => {
     await financeDeduct(data);

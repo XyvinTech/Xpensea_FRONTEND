@@ -7,8 +7,9 @@ import StyledSearchbar from "../../ui/StyledSearchbar";
 import RoleManagement from "../../components/subAdmin/RoleManagement";
 import { useListStore } from "../../store/listStore";
 import { useRoleStore } from "../../store/roleStore";
+import { toast } from "react-toastify";
 const RoleManagementPage = () => {
-  const { fetchLists} = useListStore();
+  const { fetchLists } = useListStore();
   const { fetchRoleById, deleteRoles } = useRoleStore();
   const [selectedRows, setSelectedRows] = useState([]);
   const [isChange, setIsChange] = useState(false);
@@ -29,10 +30,15 @@ const RoleManagementPage = () => {
   };
 
   const handleDelete = async () => {
-    if (selectedRows.length > 0) {
-      await Promise.all(selectedRows.map((id) => deleteRoles(id)));
-      setIsChange(!isChange);
-      setSelectedRows([]);
+    try {
+      if (selectedRows.length > 0) {
+        await Promise.all(selectedRows.map((id) => deleteRoles(id)));
+        toast.success("Deleted successfully");
+        setIsChange(!isChange);
+        setSelectedRows([]);
+      }
+    } catch (e) {
+      toast.error("Something went wrong");
     }
   };
   const handleSort = (field) => {
@@ -70,7 +76,7 @@ const RoleManagementPage = () => {
     fetchLists(filter);
     filter.pageNo = pageNo;
     filter.limit = row;
-  }, [isChange, fetchLists, pageNo,row]);
+  }, [isChange, fetchLists, pageNo, row]);
   return (
     <>
       <Stack

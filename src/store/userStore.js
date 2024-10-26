@@ -11,8 +11,7 @@ const useUserStore = create((set) => ({
     set({ isUpdate: !isUpdate });
   },
   addUsers: async (userData) => {
-    const newUser = await addUser(userData);
-    set((state) => ({ users: [...state.users, newUser] }));
+    await addUser(userData);
   },
   fetchUserById: async (userId) => {
     set({ loading: true });
@@ -21,13 +20,7 @@ const useUserStore = create((set) => ({
     set({ loading: false });
   },
   updateUsers: async (userId, newData) => {
-    const updatedUser = await updateUser(userId, newData);
-    set((state) => ({
-      users: state.users.map((user) =>
-        user._id === userId ? { ...user, ...updatedUser } : user
-      ),
-      user: updatedUser,
-    }));
+    await updateUser(userId, newData);
   },
   deleteUsers: async (userId) => {
     await deleteUser(userId);

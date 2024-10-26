@@ -12,6 +12,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useApprovalStore } from "../../store/approvalstore";
 import ApproveComponent from "../../components/ApproveComponent";
 import PaymentDetails from "../../components/approvals/PaymentDetails";
+import { toast } from "react-toastify";
 const ApprovalPage = () => {
   const navigate = useNavigate();
   const [rejectOpen, setRejectOpen] = useState(false);
@@ -40,19 +41,29 @@ const ApprovalPage = () => {
   };
 
   const handleApprove = async () => {
-    await updateApprovals(id, "approve", { expenses: authenticExpenses });
-    setIsChange(!isChange);
-    handleCloseApprove();
+    try {
+      await updateApprovals(id, "approve", {
+        expenses: authenticExpenses,
+      });
+      setIsChange(!isChange);
+      handleCloseApprove();
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
-  // const handleReject = (description) => {
-  //   console.log("Rejection Description:", description);
-  //   setRejectOpen(false);
-  // };
   const handleReject = async (reason) => {
-    await updateApprovals(id, "reject", { expenses: rejectedExpenses, reason });
-    setIsChange(!isChange);
-    setRejectOpen(false);
+    try {
+      await updateApprovals(id, "reject", {
+        expenses: rejectedExpenses,
+        reason,
+      });
+      setIsChange(!isChange);
+      setRejectOpen(false);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
+
   const totalDeduction = approval?.deduction?.reduce(
     (acc, item) => acc + item.amount,
     0
@@ -62,7 +73,7 @@ const ApprovalPage = () => {
     if (id) {
       fetchApprovalById(id);
     }
-  }, [id, fetchApprovalById, isChange]);
+  }, [id, isChange]);
   return (
     <>
       {loading ? (

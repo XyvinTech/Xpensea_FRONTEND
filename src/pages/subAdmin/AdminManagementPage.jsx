@@ -7,6 +7,7 @@ import StyledSearchbar from "../../ui/StyledSearchbar";
 import AddNewRole from "../../components/subAdmin/AddNewRole";
 import { useListStore } from "../../store/listStore";
 import { useAdminStore } from "../../store/adminStore";
+import { toast } from "react-toastify";
 
 const AdminManagementPage = () => {
   const { fetchAdminById, deleteAdmins } = useAdminStore();
@@ -36,15 +37,16 @@ const AdminManagementPage = () => {
   };
 
   const handleDelete = async () => {
-    if (selectedRows.length > 0) {
-      await Promise.all(selectedRows.map((id) => deleteAdmins(id)));
-      setIsChange(!isChange);
-      setSelectedRows([]);
+    try {
+      if (selectedRows.length > 0) {
+        await Promise.all(selectedRows.map((id) => deleteAdmins(id)));
+        toast.success("Deleted successfully");
+        setIsChange(!isChange);
+        setSelectedRows([]);
+      }
+    } catch (e) {
+      toast.error("Something went wrong");
     }
-  };
-
-  const handleSort = (field) => {
-    // console.log(`Sorting by ${field}`);
   };
 
   const handleOpenFilter = () => {
@@ -139,7 +141,6 @@ const AdminManagementPage = () => {
           rowPerSize={row}
           setRowPerSize={setRow}
           setPageNo={setPageNo}
-          onSort={handleSort}
           onView={handleView}
           onDelete={handleDelete}
         />

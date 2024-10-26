@@ -10,21 +10,14 @@ const useRoleStore = create((set) => ({
     set({ isUpdate: !isUpdate });
   },
   addRoles: async (roleData) => {
-    const newRole = await addRole(roleData);
-    set((state) => ({ roles: [...state.roles, newRole] }));
+    await addRole(roleData);
   },
   fetchRoleById: async (roleId) => {
     const role = await getRole(roleId);
     set({ role: role.data });
   },
   updateRoles: async (roleId, newData) => {
-    const updatedRole = await updateRole(roleId, newData);
-    set((state) => ({
-      roles: state.roles.map((role) =>
-        role._id === roleId ? { ...role, ...updatedRole } : role
-      ),
-      role: updatedRole,
-    }));
+    await updateRole(roleId, newData);
   },
   deleteRoles: async (roleId) => {
     await deleteRole(roleId);

@@ -8,29 +8,34 @@ export const addRole = async (data) => {
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };
-export const getRole = handleAsync(async (id) => {
-  const response = await axiosInstance.get(`/admin/role/${id}`);
+export const getRole = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/admin/role/${id}`);
 
-  return response.data;
-});
+    return response.data;
+  } catch (error) {
+    return null;
+  }
+};
+
 export const updateRole = async (roleId, data) => {
   try {
     const response = await axiosInstance.put(`/admin/role/${roleId}`, data);
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };
 export const deleteRole = async (roleId) => {
   try {
     const response = await axiosInstance.delete(`/admin/role/${roleId}`);
-    toast.success(response.data.message);
+
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };

@@ -13,6 +13,7 @@ import StyledTimeInput from "../../ui/StyledTimeInput";
 import dayjs from "dayjs";
 import ApproveComponent from "../ApproveComponent";
 import StopComponent from "../StopComponent";
+import { toast } from "react-toastify";
 
 const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
   const { staffs, fetchTiers, fetchStaffs, tiers } = useDropDownStore();
@@ -67,43 +68,47 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
     setApproveOpen(false);
   };
   const onSubmit = async (data) => {
-    const updateData = {
-      eventName: data.eventName,
-      days: data.days,
-      // startDate: data.startDate,
-      endDate: data.endDate,
-      // startTime: data?.startTime,
-      endTime: data?.endTime,
-      // status: status,
-    };
-    if (status !== null) {
-      updateData.status = status;
-    }
-    const formData = {
-      eventName: data?.eventName,
-      days: data?.days,
-      startDate: data?.startDate,
-      endDate: data?.endDate,
-      description: data.description,
-      staffs: Array.isArray(data?.staff)
-        ? data?.staff?.map((staff) => staff?.value)
-        : [data?.staff?.value],
-      location: data?.location?.value,
-      startTime: data?.startTime,
-      endTime: data?.endTime,
-    };
+    try {
+      const updateData = {
+        eventName: data.eventName,
+        days: data.days,
+        // startDate: data.startDate,
+        endDate: data.endDate,
+        // startTime: data?.startTime,
+        endTime: data?.endTime,
+        // status: status,
+      };
+      if (status !== null) {
+        updateData.status = status;
+      }
+      const formData = {
+        eventName: data?.eventName,
+        days: data?.days,
+        startDate: data?.startDate,
+        endDate: data?.endDate,
+        description: data.description,
+        staffs: Array.isArray(data?.staff)
+          ? data?.staff?.map((staff) => staff?.value)
+          : [data?.staff?.value],
+        location: data?.location?.value,
+        startTime: data?.startTime,
+        endTime: data?.endTime,
+      };
 
-    // console.log("Form data:", formData);
-    if (isUpdate) {
-      await updateEvents(event._id, updateData);
-    } else {
-      await addEvents(formData);
-    }
+      // console.log("Form data:", formData);
+      if (isUpdate) {
+        await updateEvents(event._id, updateData);
+      } else {
+        await addEvents(formData);
+      }
 
-    onChange();
-    onClose();
-    reset();
-    setStatus(null);
+      onChange();
+      onClose();
+      reset();
+      setStatus(null);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   const loc = [
     { value: "option1", label: "Option 1" },
@@ -149,7 +154,10 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
             position="relative"
           >
             <Box flexGrow={1} />
-            <h2 style={{ flexGrow: 1 }}> {isUpdate ? "Extend Event" : "Create an Event"}</h2>
+            <h2 style={{ flexGrow: 1 }}>
+              {" "}
+              {isUpdate ? "Extend Event" : "Create an Event"}
+            </h2>
             {/* <Box position="absolute" right={0}>
               <MoreVert />
             </Box> */}{" "}
@@ -366,30 +374,33 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
                   )}
                 />
               </Grid>{" "}
-              <> {!isUpdate && (
-                <Grid item md="6">
-                  <Controller
-                    name="startTime"
-                    control={control}
-                    rules={{ required: "Start Time is required" }}
-                    render={({ field }) => (
-                      <>
-                        <StyledTimeInput
-                          {...field}
-                          placeholder={"Choose Start Time"}
-                          value={field.value}
-                          onChange={field.onChange}
-                          sx={{ flex: 1 }}
-                        />
-                        {errors.startTime && (
-                          <span style={{ color: "red" }}>
-                            {errors.startTime.message}
-                          </span>
-                        )}
-                      </>
-                    )}
-                  />
-                </Grid> )}
+              <>
+                {" "}
+                {!isUpdate && (
+                  <Grid item md="6">
+                    <Controller
+                      name="startTime"
+                      control={control}
+                      rules={{ required: "Start Time is required" }}
+                      render={({ field }) => (
+                        <>
+                          <StyledTimeInput
+                            {...field}
+                            placeholder={"Choose Start Time"}
+                            value={field.value}
+                            onChange={field.onChange}
+                            sx={{ flex: 1 }}
+                          />
+                          {errors.startTime && (
+                            <span style={{ color: "red" }}>
+                              {errors.startTime.message}
+                            </span>
+                          )}
+                        </>
+                      )}
+                    />
+                  </Grid>
+                )}
                 <Grid item md="6">
                   <Controller
                     name="endTime"

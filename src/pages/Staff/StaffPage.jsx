@@ -8,6 +8,7 @@ import UpoloadBulk from "../../components/staff/UploadBulk";
 import StaffDetailsAdd from "../../components/staff/StaffDetailsAdd";
 import { useListStore } from "../../store/listStore";
 import { useUserStore } from "../../store/userStore";
+import { toast } from "react-toastify";
 const StaffPage = () => {
   const navigate = useNavigate();
   const { fetchLists } = useListStore();
@@ -37,12 +38,18 @@ const StaffPage = () => {
     navigate(`/staffs/${id}`);
   };
   const handleDelete = async () => {
-    if (selectedRows.length > 0) {
-      await Promise.all(selectedRows?.map((id) => deleteUsers(id)));
-      setIsChange(!isChange);
-      setSelectedRows([]);
+    try {
+      if (selectedRows.length > 0) {
+        await Promise.all(selectedRows?.map((id) => deleteUsers(id)));
+        toast.success("Deleted successfully");
+        setIsChange(!isChange);
+        setSelectedRows([]);
+      }
+    } catch (error) {
+      toast.log("Something went wrong");
     }
   };
+
   const handleSort = (field) => {
     // console.log(`Sorting by ${field}`);
   };
@@ -92,7 +99,7 @@ const StaffPage = () => {
     filter.limit = row;
     filter.pageNo = pageNo;
     fetchLists(filter);
-  }, [isChange, fetchLists, pageNo, status, isDelete,row]);
+  }, [isChange, fetchLists, pageNo, status, isDelete, row]);
 
   return (
     <>
