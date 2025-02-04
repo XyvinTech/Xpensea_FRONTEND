@@ -39,6 +39,7 @@ import { NotificationIcon } from "../assets/icons/NotificationIcon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Avatar,
+  Button,
   Collapse,
   Dialog,
   Stack,
@@ -49,6 +50,12 @@ import StyledSearchbar from "../ui/StyledSearchbar";
 import { SyncIcon } from "../assets/icons/SyncIcon";
 import { useAdminStore } from "../store/adminStore";
 import { useAuthStore } from "../store/useAuthStore";
+import { Controller, useForm } from "react-hook-form";
+import StyledInput from "../ui/StyledInput";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import StyledButton from "../ui/StyledButton";
+import { changePassword } from "../api/adminapi";
 const drawerWidth = 250;
 
 const subNavigation = [
@@ -136,9 +143,176 @@ const filterNavigation = (navItems, permissions) => {
     return acc;
   }, []);
 };
+
+const ChangePasswordDialog = ({ open, onClose }) => {
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const {
+    control,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+  });
+
+  const newPassword = watch("newPassword");
+
+  const onSubmit = async (data) => {
+    if (data.newPassword !== data.confirmPassword) {
+      return;
+    }
+
+    try {
+      await changePassword({
+        oldPassword: data.oldPassword,
+        newPassword: data.newPassword
+      });
+      reset();
+      onClose();
+    } catch (error) {
+      console.error("Password change failed", error);
+    }
+  };
+
+  const handleClickShowOldPassword = () => setShowOldPassword(!showOldPassword);
+  const handleClickShowNewPassword = () => setShowNewPassword(!showNewPassword);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
+
+  return (
+    <>
+      <Dialog
+        open={open}
+        onClose={onClose}
+        PaperProps={{
+          sx: {
+            width: "400px",
+            padding: "20px",
+            borderRadius: "10px",
+          },
+        }}
+      >
+        <Typography variant="h4" fontWeight="bold" textAlign="center">
+          Change Password
+        </Typography>
+        <Divider sx={{ my: 2 }} />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Stack spacing={2}>
+            <Controller
+              name="oldPassword"
+              control={control}
+              rules={{ required: "Old password is required" }}
+              render={({ field }) => (
+                <StyledInput
+                  {...field}
+                  type={showOldPassword ? "text" : "password"}
+                  placeholder="Old Password"
+                  endIcon={
+                    showOldPassword ? (
+                      <Visibility onClick={handleClickShowOldPassword} />
+                    ) : (
+                      <VisibilityOff onClick={handleClickShowOldPassword} />
+                    )
+                  }
+                />
+              )}
+            />
+            {errors.oldPassword && (
+              <Typography color="error">
+                {errors.oldPassword.message}
+              </Typography>
+            )}
+
+            <Controller
+              name="newPassword"
+              control={control}
+              rules={{
+                required: "New password is required",
+                minLength: {
+                  value: 5,
+                  message: "Password must be at least 6 characters",
+                },
+              }}
+              render={({ field }) => (
+                <StyledInput
+                  {...field}
+                  type={showNewPassword ? "text" : "password"}
+                  placeholder="New Password"
+                  endIcon={
+                    showNewPassword ? (
+                      <Visibility onClick={handleClickShowNewPassword} />
+                    ) : (
+                      <VisibilityOff onClick={handleClickShowNewPassword} />
+                    )
+                  }
+                />
+              )}
+            />
+            {errors.newPassword && (
+              <Typography color="error">
+                {errors.newPassword.message}
+              </Typography>
+            )}
+
+            <Controller
+              name="confirmPassword"
+              control={control}
+              rules={{
+                required: "Confirm password is required",
+                validate: (value) =>
+                  value === newPassword || "Passwords do not match",
+              }}
+              render={({ field }) => (
+                <StyledInput
+                  {...field}
+                  placeholder="Confirm Password"
+                  type={showConfirmPassword ? "text" : "password"}
+                  endIcon={
+                    showConfirmPassword ? (
+                      <Visibility onClick={handleClickShowConfirmPassword} />
+                    ) : (
+                      <VisibilityOff onClick={handleClickShowConfirmPassword} />
+                    )
+                  }
+                />
+              )}
+            />
+            {errors.confirmPassword && (
+              <Typography color="error">
+                {errors.confirmPassword.message}
+              </Typography>
+            )}
+
+            <Stack direction="row" spacing={2} justifyContent="flex-end">
+              <StyledButton
+                name="Cancel"
+                variant="secondary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onClose();
+                  reset();
+                }}
+              />
+              <StyledButton name="Save" variant="primary" type="submit" />
+            </Stack>
+          </Stack>
+        </form>
+      </Dialog>
+    </>
+  );
+};
 const SimpleDialog = ({ open, onClose }) => {
   const { admin, getAdmin, isChange } = useAdminStore();
   const { logoutAuth } = useAuthStore();
+  const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     getAdmin();
@@ -149,79 +323,94 @@ const SimpleDialog = ({ open, onClose }) => {
     navigate("/");
   };
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      PaperProps={{
-        sx: {
-          position: "fixed",
-          top: 50,
-          right: 50,
-          m: 0,
-          height: "330px",
-          width: "270px",
-          borderRadius: "10px",
-          boxShadow: "rgba(0, 0, 0, 0.25)",
-        },
-      }}
-    >
-      <Stack spacing={2} borderRadius={3} padding="10px" paddingTop={"20px"}>
-        <Stack direction="row" alignItems="center" spacing={3}>
-          <Avatar
-            alt="Remy Sharp"
-            src={profile}
-            sx={{ width: 60, height: 60 }}
-          />
-          <Box>
-            <Typography variant="h3" color="#292D32" paddingBottom={1}>
-              {admin?.name}
-            </Typography>
-            <Typography variant="h4" color="rgba(41, 45, 50, 0.44)">
-              {admin?.designation}
-            </Typography>
-          </Box>
-        </Stack>
-        <Divider />
-        <Stack spacing={2} padding={1}>
+    <>
+      <Dialog
+        open={open}
+        onClose={onClose}
+        PaperProps={{
+          sx: {
+            position: "fixed",
+            top: 50,
+            right: 50,
+            m: 0,
+            height: "300px",
+            width: "270px",
+            borderRadius: "10px",
+            boxShadow: "rgba(0, 0, 0, 0.25)",
+          },
+        }}
+      >
+        <Stack spacing={1} borderRadius={3} padding="0px" paddingTop={"10px"}>
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Avatar
+              alt="Remy Sharp"
+              src={profile}
+              sx={{ width: 60, height: 60 }}
+            />
+            <Box>
+              <Typography variant="h3" color="#292D32" paddingBottom={1}>
+                {admin?.name}
+              </Typography>
+              <Typography variant="h4" color="rgba(41, 45, 50, 0.44)">
+                {admin?.designation}
+              </Typography>
+            </Box>
+          </Stack>
+          <Divider />
+          <Stack spacing={2} padding={1}>
+            <Stack
+              direction="row"
+              spacing={1}
+              paddingTop={2}
+              paddingBottom={2}
+              paddingLeft={1}
+              bgcolor={"#F4F4F5"}
+            >
+              <EmailIcon />
+              <Typography variant="h5">{admin?.email}</Typography>
+            </Stack>
+            <Stack
+              direction="row"
+              paddingTop={2}
+              paddingBottom={2}
+              paddingLeft={1}
+              spacing={1}
+              bgcolor={"#F4F4F5"}
+            >
+              <PhoneIcon />
+              <Typography variant="h5">{admin?.mobile}</Typography>
+            </Stack>
+            <Stack direction="row" justifyContent={"center"}>
+              <Typography
+                variant="h5"
+                sx={{ cursor: "pointer" }}
+                onClick={() => setPasswordDialogOpen(true)}
+              >
+                Change Password
+              </Typography>
+            </Stack>
+          </Stack>
+          <Divider />
           <Stack
             direction="row"
-            spacing={1}
-            paddingTop={2}
-            paddingBottom={2}
-            paddingLeft={1}
-            bgcolor={"#F4F4F5"}
+            alignItems="center"
+            justifyContent="center"
+            spacing={2}
+            onClick={handleLogout}
+            sx={{ cursor: "pointer" }}
           >
-            <EmailIcon />
-            <Typography variant="h4">{admin?.email}</Typography>
-          </Stack>
-          <Stack
-            direction="row"
-            paddingTop={2}
-            paddingBottom={2}
-            paddingLeft={1}
-            spacing={1}
-            bgcolor={"#F4F4F5"}
-          >
-            <PhoneIcon />
-            <Typography variant="h4">+91 7452136556</Typography>
+            <LogoutIcon />
+            <Typography variant="h5" color="#F22E22">
+              Logout
+            </Typography>
           </Stack>
         </Stack>
-        <Divider />
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="center"
-          spacing={2}
-          onClick={handleLogout}
-          sx={{ cursor: "pointer" }}
-        >
-          <LogoutIcon />
-          <Typography variant="h4" color="#F22E22">
-            Logout
-          </Typography>
-        </Stack>
-      </Stack>
-    </Dialog>
+      </Dialog>
+      <ChangePasswordDialog
+        open={passwordDialogOpen}
+        onClose={() => setPasswordDialogOpen(false)}
+      />
+    </>
   );
 };
 

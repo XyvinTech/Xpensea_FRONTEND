@@ -12,6 +12,7 @@ import { getLogin } from "../api/adminapi";
 import ForgotPassword from "../components/login/ForgotPassword";
 import ChangePassword from "../components/login/ChangePassword";
 import PasswordSuccess from "../components/login/PasswordSuccess";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [currentPaper, setCurrentPaper] = useState(1);
@@ -34,7 +35,7 @@ const LoginPage = () => {
       localStorage.setItem("token", user.data);
       navigate("/dashboard");
     } catch (error) {
-      console.error("error", error);
+     toast.error(error.message);
     }
   };
   const isAuth = localStorage.getItem("token");

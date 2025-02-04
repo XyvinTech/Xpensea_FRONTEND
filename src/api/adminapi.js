@@ -11,7 +11,7 @@ export const getLogin = async (datas) => {
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    console.error(error.response.data.message);
+    throw error.response.data;
   }
 };
 
@@ -21,6 +21,15 @@ export const getAdmin = async () => {
     return response.data;
   } catch (error) {
     console.error("Error caught:", error);
+  }
+};
+export const changePassword = async (data) => {
+  try {
+    const response = await axiosInstance.patch("/admin", data);
+    toast.success(response.data.message);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
   }
 };
 export const addAdmin = async (data) => {
