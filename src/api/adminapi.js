@@ -2,11 +2,10 @@ import axios from "axios";
 import axiosInstance from "./axiosintercepter";
 import { handleAsync } from "../utils/handleAsync";
 import { toast } from "react-toastify";
-const baseURL =
-  "https://xpensea-backend-189792861103.us-central1.run.app/api/v1/";
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 export const getLogin = async (datas) => {
   try {
-    const response = await axios.post(`${baseURL}admin/login`, datas);
+    const response = await axios.post(`${baseURL}/admin/login`, datas);
 
     toast.success(response.data.message);
     return response.data;

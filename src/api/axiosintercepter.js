@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
- 
-  baseURL: "https://xpensea-backend-189792861103.us-central1.run.app/api/v1"
+  baseURL: import.meta.env.VITE_API_BASE_URL,
+
 });
 axiosInstance.interceptors.request.use(
   config => {
