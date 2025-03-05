@@ -63,12 +63,15 @@ const ExpenseDetail = ({
         <Divider />
         <Stack direction="column" padding={2} spacing={5}>
           <Stack direction={"row"} padding={2} bgcolor={"#F3F3F3"} spacing={2}>
-            <img
-              src={expense.image}
-              width={"68px"}
-              height={"68px"}
-              alt="Receipt"
-            />
+            {expense?.image?.map((imgSrc, index) => (
+              <img
+                key={index}
+                src={imgSrc}
+                width={"68px"}
+                height={"68px"}
+                alt={`Receipt ${index + 1}`}
+              />
+            ))}
             <Stack direction="column" justifyContent={"center"}>
               <Typography variant="h4" fontWeight={600}>
                 {expense.receiptNumber}
