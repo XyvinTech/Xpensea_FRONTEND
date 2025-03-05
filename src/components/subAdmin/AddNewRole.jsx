@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 
 const AddNewRole = ({ open, onClose, onChange, isUpdate = false }) => {
   const { roles, fetchRoles } = useDropDownStore();
+  const[loading, setLoading] = useState(false);
   const { addAdmins, updateAdmins, admins } = useAdminStore();
 
   const {
@@ -91,6 +92,7 @@ const AddNewRole = ({ open, onClose, onChange, isUpdate = false }) => {
       : [];
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const formData = {
         name: data.name,
@@ -127,6 +129,9 @@ const AddNewRole = ({ open, onClose, onChange, isUpdate = false }) => {
       setIsChecked(false);
     } catch (err) {
       toast.error(err.message);
+    }
+    finally{
+      setLoading(false);
     }
   };
 
@@ -272,7 +277,7 @@ const AddNewRole = ({ open, onClose, onChange, isUpdate = false }) => {
                   <StyledButton
                     variant="primary"
                     padding="15px 50px"
-                    name="Save"
+                    name={loading ? "Loading..." : "Save"}
                     type="submit"
                   />
                 </Stack>

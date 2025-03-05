@@ -21,6 +21,7 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
   const [approveOpen, setApproveOpen] = useState(false);
   const [role, setRole] = useState([]);
   const [tier, setTier] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
   const {
     control,
@@ -68,6 +69,7 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
     setApproveOpen(false);
   };
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const updateData = {
         eventName: data.eventName,
@@ -108,6 +110,8 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
       setStatus(null);
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
   const loc = [
@@ -463,7 +467,7 @@ const CreateEvent = ({ open, onClose, onChange, isUpdate = false }) => {
                     variant="primary"
                     type="submit"
                     padding="15px 50px 15px 50px"
-                    name="Save"
+                    name={loading ? "Loading..." : "Submit"}
                   />
                 </Stack>
               </Grid>

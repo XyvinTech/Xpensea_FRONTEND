@@ -8,7 +8,7 @@ export const addTier = async (data) => {
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };
 export const getTier = handleAsync(async (id) => {
@@ -22,7 +22,7 @@ export const updateTier = async (tierId, data) => {
     toast.success(response.data.message);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };
 export const deleteTier = async (tierId) => {
@@ -30,6 +30,6 @@ export const deleteTier = async (tierId) => {
     const response = await axiosInstance.delete(`/admin/tier/${tierId}`);
     return response.data;
   } catch (error) {
-    toast.error(error.response.data.message);
+    throw error.response.data;
   }
 };

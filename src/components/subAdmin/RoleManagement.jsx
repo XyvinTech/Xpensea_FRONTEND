@@ -43,6 +43,7 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
   };
 
   const [isChecked, setIsChecked] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { addRoles, updateRoles, role } = useRoleStore();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -183,6 +184,7 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
   };
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const selectedPermissions = Object.keys(permissions).filter(
         (key) => permissions[key]
@@ -216,6 +218,8 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
       setPermissions(initialPermissions);
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -345,7 +349,11 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
             name="Cancel"
             onClick={(event) => handleClear(event)}
           />
-          <StyledButton variant="primary" name="Save" type="submit" />
+          <StyledButton
+            variant="primary"
+            name={loading ? "Loading..." : "Save"}
+            type="submit"
+          />
         </Box>
       </form>
     </Dialog>

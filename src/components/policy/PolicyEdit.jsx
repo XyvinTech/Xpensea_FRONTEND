@@ -18,6 +18,7 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
   const { control, handleSubmit, reset } = useForm();
   const { addPolicies, policy, updatePolicies } = usePolicyStore();
   const { tiers, fetchTiers } = useDropDownStore();
+  const[loading, setLoading] = useState(false);
   const handleClear = (event) => {
     event.preventDefault();
     onClose();
@@ -43,6 +44,7 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
         }))
       : [];
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const formData = {
         policyTitle: data?.policyTitle,
@@ -67,6 +69,9 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
       reset();
     } catch (error) {
       toast.error(error.message);
+    }
+    finally{
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -300,7 +305,7 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
                 variant="primary"
                 type="submit"
                 padding="15px 50px 15px 50px"
-                name="Save"
+                name={loading ? "Saving..." : "Save"}
               />
             </Stack>
           </form>

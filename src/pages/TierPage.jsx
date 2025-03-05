@@ -7,6 +7,7 @@ import StyledFilter from "../components/StyledFilter";
 import AddExpense from "../components/tier/AddExpense";
 import { useListStore } from "../store/listStore";
 import { useTierStore } from "../store/tierStore";
+import { toast } from "react-toastify";
 const TierPage = () => {
   const { fetchLists } = useListStore();
   const { fetchTierById, deleteTiers } = useTierStore();
@@ -32,10 +33,15 @@ const TierPage = () => {
   };
 
   const handleDelete = async () => {
-    if (selectedRows.length > 0) {
-      await Promise.all(selectedRows.map((id) => deleteTiers(id)));
-      setIsChange(!isChange);
-      setSelectedRows([]);
+    try {
+      if (selectedRows.length > 0) {
+        await Promise.all(selectedRows.map((id) => deleteTiers(id)));
+        setIsChange(!isChange);
+        setSelectedRows([]);
+        toast.success("Deleted successfully");
+      }
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 

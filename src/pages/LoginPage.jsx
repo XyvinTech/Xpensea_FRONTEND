@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 const LoginPage = () => {
   const [currentPaper, setCurrentPaper] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
+  const[loading,setLoading]=useState(false)
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -29,6 +30,7 @@ const LoginPage = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setLoading(true)
     try {
       const user = await getLogin(data);
       // console.log(user.data);
@@ -36,6 +38,9 @@ const LoginPage = () => {
       navigate("/dashboard");
     } catch (error) {
      toast.error(error.message);
+    }
+    finally{
+      setLoading(false)
     }
   };
   const isAuth = localStorage.getItem("token");
@@ -141,8 +146,8 @@ const LoginPage = () => {
               {errors.password && (
                 <span className="text-red-500">{errors.password.message}</span>
               )}
-              <StyledButton type="submit" variant="primary" name="Sign in" />
-              <Link
+              <StyledButton type="submit" variant="primary" name={loading ? "Loading..." : "Sign In"} disabled={loading} />
+              {/* <Link
                 style={{
                   color: "#2D9CDB",
                   textDecoration: "none",
@@ -151,7 +156,7 @@ const LoginPage = () => {
                 onClick={() => setCurrentPaper(2)}
               >
                 Forgot Your Password?
-              </Link>
+              </Link> */}
             </Stack>
           </Box>
         </Paper>

@@ -46,7 +46,7 @@ const StaffPage = () => {
         setSelectedRows([]);
       }
     } catch (error) {
-      toast.log("Something went wrong");
+      toast.error(error.message);
     }
   };
 

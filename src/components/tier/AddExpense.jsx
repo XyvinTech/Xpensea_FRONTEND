@@ -9,9 +9,11 @@ import CalendarInput from "../../ui/CalenderInput";
 import { useTierStore } from "../../store/tierStore";
 import StyledSelectField from "../../ui/StyledSelectField";
 import { DeleteIcon } from "../../assets/icons/DeleteIcon";
+import { toast } from "react-toastify";
 
 const AddExpense = ({ open, onClose, onChange, isUpdate = false }) => {
   const { addTiers, tier, updateTiers } = useTierStore();
+  const [loading, setLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -73,35 +75,42 @@ const AddExpense = ({ open, onClose, onChange, isUpdate = false }) => {
   };
 
   const onSubmit = async (data) => {
-    let totalMaxAmount = 0;
-    categories?.forEach((item) => {
-      if (item.status) {
-        totalMaxAmount += parseFloat(item.maxAmount);
+    setLoading(true);
+    try {
+      let totalMaxAmount = 0;
+      categories?.forEach((item) => {
+        if (item.status) {
+          totalMaxAmount += parseFloat(item.maxAmount);
+        }
+      });
+
+      const formData = {
+        activationDate: data.activationDate,
+        title: data.tierTitle,
+        categories,
+        totalAmount: totalMaxAmount,
+        level: data.level,
+      };
+
+      if (isUpdate) {
+        await updateTiers(tier._id, formData);
+      } else {
+        await addTiers(formData);
       }
-    });
+      onClose();
+      onChange();
 
-    const formData = {
-      activationDate: data.activationDate,
-      title: data.tierTitle,
-      categories,
-      totalAmount: totalMaxAmount,
-      level: data.level,
-    };
-
-    if (isUpdate) {
-      await updateTiers(tier._id, formData);
-    } else {
-      await addTiers(formData);
+      reset({
+        activationDate: "",
+        tierTitle: "",
+        categories: [],
+      });
+      setCategories([]);
+    } catch (error) {
+      toast.error(error?.message);
+    } finally {
+      setLoading(false);
     }
-    onClose();
-    onChange();
-
-    reset({
-      activationDate: "",
-      tierTitle: "",
-      categories: [],
-    });
-    setCategories([]);
   };
 
   const handleSwitchChange = (index) => (e) => {
@@ -295,7 +304,8 @@ const AddExpense = ({ open, onClose, onChange, isUpdate = false }) => {
                   variant="primary"
                   type="submit"
                   padding="15px 50px"
-                  name="Save"
+                  name={loading ? "Loading..." : "Submit"}
+                  disabled={loading}
                 />
               </Stack>
             </Grid>

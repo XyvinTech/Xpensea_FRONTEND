@@ -16,6 +16,7 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
   const { addUsers, updateUsers, user } = useUserStore();
   const [isChecked, setIsChecked] = useState(true);
   const [isChange, setIsChange] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -82,6 +83,7 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
   };
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const formData = {
         name: data.name,
@@ -118,6 +120,8 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
       setIsChange(!isChange);
     } catch (error) {
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -406,7 +410,8 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
                     type="submit"
                     variant="primary"
                     sx={{ padding: "15px 50px" }}
-                    name="Save"
+                    name={loading ? "Loading..." : "Save"}
+                    disabled={loading}
                   />
                 </Stack>
               </Grid>
