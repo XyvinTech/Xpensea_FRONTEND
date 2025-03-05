@@ -273,12 +273,14 @@ const AddNewRole = ({ open, onClose, onChange, isUpdate = false }) => {
                     padding="15px 50px"
                     name="Cancel"
                     onClick={(event) => handleClear(event)}
+                    disabled={loading}
                   />
                   <StyledButton
                     variant="primary"
                     padding="15px 50px"
                     name={loading ? "Loading..." : "Save"}
                     type="submit"
+                    disabled={loading}
                   />
                 </Stack>
               </Grid>

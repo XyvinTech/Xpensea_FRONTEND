@@ -300,12 +300,14 @@ const PolicyEdit = ({ open, onClose, onChange, isUpdate = false }) => {
                 padding="15px 50px 15px 50px"
                 name="Back"
                 onClick={(event) => handleClear(event)}
+                disabled={loading}
               />
               <StyledButton
                 variant="primary"
                 type="submit"
                 padding="15px 50px 15px 50px"
                 name={loading ? "Saving..." : "Save"}
+                disabled={loading}
               />
             </Stack>
           </form>

@@ -405,6 +405,7 @@ const StaffDetailsAdd = ({ open, onClose, onChange, isUpdate = false }) => {
                     sx={{ padding: "15px 50px" }}
                     onClick={(event) => handleClear(event)}
                     name="Back"
+                    disabled={loading}
                   />
                   <StyledButton
                     type="submit"

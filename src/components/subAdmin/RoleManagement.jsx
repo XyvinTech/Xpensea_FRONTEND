@@ -348,11 +348,13 @@ const RoleManagement = ({ open, onClose, onChange, isUpdate = false }) => {
             variant="secondary"
             name="Cancel"
             onClick={(event) => handleClear(event)}
+            disabled={loading}
           />
           <StyledButton
             variant="primary"
             name={loading ? "Loading..." : "Save"}
             type="submit"
+            disabled={loading}
           />
         </Box>
       </form>
