@@ -27,7 +27,12 @@ const Reimbursement = ({
 }) => {
   const [approveOpen, setApproveOpen] = useState(false);
   const [deductOpen, setDeductOpen] = useState(false);
-  const [totalAmount, setTotalAmount] = useState(data?.totalAmount);
+  const totalDeductions = data?.deduction?.reduce(
+    (acc, curr) => acc + curr.amount,
+    0
+  );
+
+  const amountToBePaid = data?.totalAmount - totalDeductions;
   const handleReimburse = () => {
     setApproveOpen(true);
   };
@@ -45,10 +50,7 @@ const Reimbursement = ({
     setDeductOpen(false);
     onClose();
   };
-  const handleAmount = () => {
-    setTotalAmount(totalAmount - paymentAmount);
-    setPaymentAmount(totalAmount - paymentAmount);
-  };
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="481px">
       <DialogContent sx={{ height: "auto", width: "480px", padding: 2 }}>
@@ -71,7 +73,7 @@ const Reimbursement = ({
               Amount in wallet : {data?.walletAmount}
             </Typography>
             <Typography variant="h4">
-              Amount to be paid : {totalAmount}
+              Amount to be paid :{amountToBePaid}
             </Typography>
           </Stack>
           <StyledInput
@@ -110,7 +112,6 @@ const Reimbursement = ({
         onClose={handleCloseDeduct}
         formData={data}
         paymentAmount={paymentAmount}
-        setIsChange={handleAmount}
       />
     </Dialog>
   );

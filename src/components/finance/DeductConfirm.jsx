@@ -10,8 +10,8 @@ import {
 import { useApprovalStore } from "../../store/approvalstore";
 import { toast } from "react-toastify";
 
-const DeductConfirm = ({ open, onClose, formData, paymentAmount,setIsChange }) => {
-  const { deductWallet} = useApprovalStore();
+const DeductConfirm = ({ open, onClose, formData, paymentAmount }) => {
+  const { deductWallet, setRefresh } = useApprovalStore();
 
   const handleSubmit = async () => {
     try {
@@ -20,10 +20,11 @@ const DeductConfirm = ({ open, onClose, formData, paymentAmount,setIsChange }) =
         report: formData._id,
       };
       await deductWallet(data);
-      setIsChange();
+      setRefresh();
       onClose();
     } catch (error) {
       toast.error(error.message);
+    
     }
   };
   
