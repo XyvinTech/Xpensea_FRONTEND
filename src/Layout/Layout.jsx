@@ -35,6 +35,7 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import PaymentIcon from "@mui/icons-material/Payment";
 import AlignVerticalBottomIcon from "@mui/icons-material/AlignVerticalBottom";
 import PolicyIcon from "@mui/icons-material/Policy";
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import { NotificationIcon } from "../assets/icons/NotificationIcon";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
@@ -121,6 +122,12 @@ const subNavigation = [
     name: "Policy",
     to: "/policy",
     icon: <PolicyIcon />,
+    permissions: ["policyManagement_view", "policyManagement_modify"],
+  },
+  {
+    name: "Support",
+    to: "/support",
+    icon: <SupportAgentIcon />,
     permissions: ["policyManagement_view", "policyManagement_modify"],
   },
 ];

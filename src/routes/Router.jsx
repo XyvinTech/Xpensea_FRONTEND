@@ -8,6 +8,7 @@ import EventsPage from "../pages/EventsPage";
 import AdminManagementPage from "../pages/subAdmin/AdminManagementPage";
 import RoleManagementPage from "../pages/subAdmin/RoleManagementPage";
 import AdminActivityPage from "../pages/subAdmin/AdminActivityPage";
+import SupportPage from "../pages/SupportPage";
 import FinancePage from "../pages/FinancePage";
 import StaffPage from "../pages/Staff/StaffPage";
 import TierPage from "../pages/TierPage";
@@ -182,6 +183,16 @@ const router = createBrowserRouter([
       <PrivateRoute>
         <Layout>
           <PolicyPage />
+        </Layout>{" "}
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/support",
+    element: (
+      <PrivateRoute>
+        <Layout>
+          <SupportPage />
         </Layout>{" "}
       </PrivateRoute>
     ),
